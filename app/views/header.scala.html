@@ -1,0 +1,77 @@
+<header class="main-header">
+        <!-- Logo -->
+    <a href="https://www.bmd-software.com/" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>BMD</b></span>
+            <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>BMD</b> Software</span>
+    </a>
+
+    <nav class="navbar navbar-static-top">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Transformation<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">New Transformation</a></li>
+                    <li><a href="#">Open Transformation</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Save Transformation</a></li>
+                    <li><a href="#">Save Transformation As...</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Import<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" onclick="importXml();">XML file</a></li>
+                </ul>
+                <script>
+                    function importXml(){
+                        document.getElementById('source').click();
+                        document.getElementById('board').style.height = '75vh';
+                        document.getElementById('xmlBtn').style.display = 'block';
+                    }
+                </script>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" onclick="document.getElementById('cut').click();">Cut</a></li>
+                    <li><a href="#" onclick="document.getElementById('copy').click();">Copy</a></li>
+                    <li><a href="#" onclick="document.getElementById('paste').click();">Paste</a></li>
+                    <li><a href="#" onclick="document.getElementById('delete').click();">Delete</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" onclick="document.getElementById('undo').click();">Undo</a></li>
+                    <li><a href="#" onclick="document.getElementById('redo').click();">Redo</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Select<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" onclick="document.getElementById('all').click();">All</a></li>
+                    <li><a href="#" onclick="document.getElementById('none').click();">None</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" onclick="document.getElementById('vertices').click();">Vertices</a></li>
+                    <li><a href="#" onclick="document.getElementById('edges').click();">Edges</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onClick="runTransformation();">Run</a>
+                <script>
+                    function runTransformation(){
+                        var enc = new mxCodec(mxUtils.createXmlDocument());
+                        var node = enc.encode(global_editor.graph.getModel())
+
+                        $.post('/graph/run', { graph: mxUtils.getPrettyXml(node), execution:"" },
+                            function(returnedData){
+                                console.log(returnedData);
+                        });
+                    }
+                </script>
+            </li>
+            <li>
+                <a href="#" onclick="document.getElementById('print').click();">Print</a>
+            </li>
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,18 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+############################################################################
+##########  Application
+############################################################################
+# An example controller showing a sample home page
+GET        /                                      controllers.HomeController.index
+GET        /assets/javascripts/jsroutes.js        controllers.Application.javascriptRoutes
+GET        /assets/javascripts/messages.js        controllers.Application.jsMessages
+GET        /langs                                 controllers.Application.supportedLanguages
+
+# Map static resources from the /public folder to the /assets URL path
+GET        /assets/*file                          controllers.Assets.versioned(path="/public", file: Asset)
+
+GET        /graph/load                            controllers.TransGraphController.load(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")
+POST       /graph/run                             controllers.TransGraphController.run()
