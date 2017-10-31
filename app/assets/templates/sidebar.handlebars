@@ -9,13 +9,13 @@
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="#"><i class="fa fa-file-text-o"></i> Generate Rows</a>
+                <a href="#" onmousedown="addDragContent('Generate Rows','RowGenerator');"><i class="fa fa-file-text-o"></i> Generate Rows</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-file-code-o"></i> Json Input</a>
+                <a href="#" onmousedown="addDragContent('Json Input','JsonInput');"><i class="fa fa-file-code-o"></i> Json Input</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-table"></i> Table Input</a>
+                <a href="#" onmousedown="addDragContent('Table Input','TableInput');"><i class="fa fa-table"></i> Table Input</a>
             </li>
         </ul>
     </li>
@@ -28,13 +28,13 @@
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="#"><i class="fa fa-refresh"></i> Insert/Update</a>
+                <a href="#" onmousedown="addDragContent('Insert/Update','InsertUpdate');"><i class="fa fa-refresh"></i> Insert/Update</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-file-text-o"></i> Sql File Output</a>
+                <a href="#" onmousedown="addDragContent('SQL File Output','SQLFileOutput');"><i class="fa fa-file-text-o"></i> Sql File Output</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-table"></i> Table Output</a>
+                <a href="#" onmousedown="addDragContent('Table Output','TableOutput');"><i class="fa fa-table"></i> Table Output</a>
             </li>
         </ul>
     </li>
@@ -42,15 +42,15 @@
         <a href="#">
             <i class="fa fa-folder"></i> <span>Transform</span>
             <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="#"><i class="fa fa-file-zip-o"></i> Add Checksum</a>
+                <a href="#" onmousedown="addDragContent('Add checksum','Checksum');"><i class="fa fa-file-zip-o"></i> Add Checksum</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-hand-o-right"></i> Select Values</a>
+                <a href="#" onmousedown="addDragContent('Select Values','SelectValues');"><i class="fa fa-hand-o-right"></i> Select Values</a>
             </li>
         </ul>
     </li>
@@ -63,7 +63,7 @@
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="#"><i class="fa fa-envelope-o"></i> Mail</a>
+                <a href="#" onmousedown="addDragContent('Mail','Mail');" ><i class="fa fa-envelope-o"></i> Mail</a>
             </li>
         </ul>
     </li>
@@ -76,10 +76,10 @@
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="#"><i class="fa fa-anchor"></i> Dummy</a>
+                <a href="#" onmousedown="addDragContent('Dummy (do nothing)','Dummy');"><i class="fa fa-anchor"></i> Dummy</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-exchange"></i> Switch/Case</a>
+                <a href="#" onmousedown="addDragContent('Switch/Case','SwitchCase');"><i class="fa fa-exchange"></i> Switch/Case</a>
             </li>
         </ul>
     </li>
@@ -92,8 +92,16 @@
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="#"><i class="fa fa-hand-o-right"></i> Execute SQL script</a>
+                <a href="#" onmousedown="addDragContent('Execute SQL script','ExecSQL');"><i class="fa fa-hand-o-right"></i> Execute SQL script</a>
             </li>
         </ul>
     </li>
 </ul>
+<script>
+    var drag_content = {};
+    function addDragContent(label,ctype){
+        drag_content['label'] = label;
+        drag_content['ctype'] = ctype;
+        $("[title='"+label+"']")[0].click();
+    }
+</script>

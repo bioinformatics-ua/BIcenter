@@ -32,7 +32,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
          */
 	@Override
 	public StepMeta decodeStep(mxCell cell, List<DatabaseMeta> databases, IMetaStore metaStore) throws Exception {
-            String stepid = cell.getAttribute("ctype");
+		String stepid = cell.getAttribute("ctype");
 	    String stepname = cell.getAttribute("label");
 		
 	    PluginRegistry registry = PluginRegistry.getInstance();

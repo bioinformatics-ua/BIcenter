@@ -60,8 +60,10 @@ libraryDependencies ++= Seq(
   // Jackson
   "com.fasterxml.jackson.core" % "jackson-core" % "2.3.3",
   "org.codehaus.jackson" % "jackson-core-asl" % "1.9.2",
-  "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.2"
+  "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.2",
 
+  //ESAPI
+  "org.owasp.esapi" % "esapi" % "2.1.0"
 )
 
 // Testing libraries for dealing with CompletionStage...

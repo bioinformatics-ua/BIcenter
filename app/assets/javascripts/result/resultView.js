@@ -9,8 +9,6 @@ define('ResultView', ['View'], function (View) {
 
     ResultView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
-
-        this.$elements.title.html("Hello Test");
     };
 
     ResultView.prototype.testClick = function () {

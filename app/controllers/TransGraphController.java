@@ -9,6 +9,7 @@ import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.logging.LogLevel;
+import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.trans.TransExecutionConfiguration;
@@ -26,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.w3c.dom.Document;
-import play.mvc.Http;
 import play.mvc.Result;
 
 import static play.mvc.Http.Context.Implicit.request;

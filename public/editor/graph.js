@@ -1,4 +1,4 @@
- // Program starts here. The document.onLoad executes the
+// Program starts here. The document.onLoad executes the
 // createEditor function with a given configuration.
 // In the config file, the mxEditor.onInit method is
 // overridden to invoke this global function as the

@@ -1,5 +1,5 @@
 define('GraphView', ['View'], function (View) {
-    var TestView = function (controller) {
+    var GraphView = function (controller) {
         View.call(this, controller, 'graph');
     };
 
@@ -10,15 +10,20 @@ define('GraphView', ['View'], function (View) {
     GraphView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
 
-        this.$elements.title.html("Hello Test");
-    };
-
-    GraphView.prototype.testClick = function () {
-        console.log("Testing clicks from view");
-
-        //var template = JST[]();
-        //this.$elements.container.html(template);
-        //this._loadViewComponents();
+        // Load and convert the default transformation.
+        var xhttp = new XMLHttpRequest();
+        var transXml;
+        var dom = this.$elements;
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                transXml = this.responseText;
+                document.getElementById("source").click();
+                document.getElementById("xml").value = transXml;
+                document.getElementById("source").click();
+            }
+        };
+        xhttp.open("GET", "/graph/load", true);
+        xhttp.send();
     };
 
     return GraphView;

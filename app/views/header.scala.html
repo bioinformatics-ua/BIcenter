@@ -1,3 +1,4 @@
+<script type="text/javascript" src="@routes.Assets.versioned("header/utils.js")"></script>
 <header class="main-header">
         <!-- Logo -->
     <a href="https://www.bmd-software.com/" class="logo">
@@ -24,13 +25,6 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#" onclick="importXml();">XML file</a></li>
                 </ul>
-                <script>
-                    function importXml(){
-                        document.getElementById('source').click();
-                        document.getElementById('board').style.height = '75vh';
-                        document.getElementById('xmlBtn').style.display = 'block';
-                    }
-                </script>
             </li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit<span class="caret"></span></a>
@@ -57,17 +51,6 @@
             </li>
             <li>
                 <a href="#" onClick="runTransformation();">Run</a>
-                <script>
-                    function runTransformation(){
-                        var enc = new mxCodec(mxUtils.createXmlDocument());
-                        var node = enc.encode(global_editor.graph.getModel())
-
-                        $.post('/graph/run', { graph: mxUtils.getPrettyXml(node), execution:"" },
-                            function(returnedData){
-                                console.log(returnedData);
-                        });
-                    }
-                </script>
             </li>
             <li>
                 <a href="#" onclick="document.getElementById('print').click();">Print</a>

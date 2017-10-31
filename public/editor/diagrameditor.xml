@@ -12,11 +12,6 @@
 		<add as="toolbar" element="toolbar"/>
 	</ui>
 	<Array as="templates">
-		<add as="group">
-			<Group label="" href="">
-				<mxCell vertex="1" style="group" connectable="0"/>
-			</Group>
-		</add>
 		<add as="connector">
 			<Connector label="" href="">
 				<mxCell edge="1">
@@ -24,68 +19,65 @@
 				</mxCell>
 			</Connector>
 		</add>
-		<add as="container">
-			<Container label="Container" href="">
-				<mxCell vertex="1" style="swimlane" connectable="0">
-					<mxGeometry as="geometry" width="200" height="200"/>
-				</mxCell>
-			</Container>
+		<add as="RowGenerator">
+			<mxCell style="icon;image=middle/RowGenerator.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
-		<add as="rectangle">
-			<Rect label="Rectangle" href="">
-				<mxCell vertex="1">	
-					<mxGeometry as="geometry" width="80" height="40"/>
-				</mxCell>
-			</Rect>
+		<add as="JsonInput">
+			<mxCell style="icon;image=middle/JsonInput.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
-		<add as="text">
-			<Text label="Text Here" href="">
-				<mxCell vertex="1" style="text">	
-					<mxGeometry as="geometry" width="80" height="20"/>
-				</mxCell>
-			</Text>
+		<add as="TableInput">
+			<mxCell style="icon;image=middle/TableInput.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
-		<add as="image">
-			<Image label="" href="">
-				<mxCell vertex="1" style="image">	
-					<mxGeometry as="geometry" width="80" height="50"/>
-				</mxCell>
-			</Image>
+		<add as="InsertUpdate">
+			<mxCell style="icon;image=middle/InsertUpdate.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
-		<add as="rounded">
-			<Roundrect label="Rounded" href="">
-				<mxCell vertex="1" style="rounded">		
-					<mxGeometry as="geometry" width="80" height="40"/>
-				</mxCell>
-			</Roundrect>
+		<add as="SQLFileOutput">
+			<mxCell style="icon;image=middle/SQLFileOutput.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
-		<add as="shape">
-			<Shape label="Shape" href="">
-				<mxCell vertex="1" style="ellipse">		
-					<mxGeometry as="geometry" width="60" height="60"/>
-				</mxCell>
-			</Shape>
+		<add as="TableOutput">
+			<mxCell style="icon;image=middle/TableOutput.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
-		<add as="actor">
-			<Shape label="Shape" href="">
-				<mxCell vertex="1" style="actor">		
-					<mxGeometry as="geometry" width="40" height="60"/>
-				</mxCell>
-			</Shape>
+		<add as="Checksum">
+			<mxCell style="icon;image=middle/Checksum.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
-		<add as="cloud">
-			<Shape label="Shape" href="">
-				<mxCell vertex="1" style="cloud">		
-					<mxGeometry as="geometry" width="80" height="60"/>
-				</mxCell>
-			</Shape>
+		<add as="SelectValues">
+			<mxCell style="icon;image=middle/SelectValues.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
-		<add as="hline">
-			<Shape label="" href="">
-				<mxCell vertex="1" style="ellipse">		
-					<mxGeometry as="geometry" width="60" height="10"/>
-				</mxCell>
-			</Shape>
+		<add as="Mail">
+			<mxCell style="icon;image=middle/Mail.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
+		</add>
+		<add as="Dummy">
+			<mxCell style="icon;image=middle/Dummy.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
+		</add>
+		<add as="SwitchCase">
+			<mxCell style="icon;image=middle/SwitchCase.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
+		</add>
+		<add as="ExecSQL">
+			<mxCell style="icon;image=middle/ExecSQL.svg" parent="1" vertex="1">
+				<mxGeometry width="40" height="40" as="geometry"/>
+			</mxCell>
 		</add>
 	</Array>
 	<mxGraph as="graph" alternateEdgeStyle="verticalConnector" allowLoops="1" dropEnabled="1">
@@ -286,19 +278,17 @@
 			}
 		]]></add>
 		<br/><br/>
-		<add as="Text" template="text" icon="assets/images/editor/text.gif"/>
-		<add as="Container" template="container" icon="assets/images/editor/swimlane.gif"/>
-		<add as="Rectangle" template="rectangle" icon="assets/images/editor/rectangle.gif"/>
-		<add as="Rounded" template="rounded" icon="assets/images/editor/rounded.gif"/>
-		<add as="Ellipse" template="shape" style="ellipse" icon="assets/images/editor/ellipse.gif"/>
-		<add as="Double Ellipse" template="shape" style="doubleEllipse" icon="assets/images/editor/doubleellipse.gif"/>
-		<add as="Rhombus" template="shape" style="rhombus" icon="assets/images/editor/rhombus.gif"/>
-		<add as="Triangle" template="actor" style="triangle" icon="assets/images/editor/triangle.gif"/>
-		<add as="Hexagon" template="cloud" style="hexagon" icon="assets/images/editor/hexagon.gif"/>
-		<add as="Actor" template="actor" style="actor" icon="assets/images/editor/actor.gif"/>
-		<add as="Cylinder" template="shape" style="cylinder" icon="assets/images/editor/cylinder.gif"/>
-		<add as="Cloud" template="cloud" style="cloud" icon="assets/images/editor/cloud.gif"/>
-		<add as="Line" template="hline" style="hline" icon="assets/images/editor/hline.gif"/>
-		<add as="Image" template="image" icon="assets/images/editor/image.gif"/>
+		<add as="Generate Rows" template="RowGenerator" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Json Input" template="JsonInput" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Table Input" template="TableInput" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Insert/Update" template="InsertUpdate" icon="assets/images/editor/rectangle.gif"/>
+		<add as="SQLFileOutput" template="SQLFileOutput" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Table Output" template="TableOutput" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Add Checksum" template="Checksum" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Select Values" template="SelectValues" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Mail" template="Mail" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Dummy" template="Dummy" icon="assets/images/editor/rectangle.gif"/>
+		<add as="SwitchCase" template="SwitchCase" icon="assets/images/editor/rectangle.gif"/>
+		<add as="Execute SQL script" template="ExecSQL" icon="assets/images/editor/rectangle.gif"/>
 	</mxDefaultToolbar>
 </mxEditor>

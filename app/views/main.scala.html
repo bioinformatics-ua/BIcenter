@@ -18,14 +18,6 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
     </head>
     <body onload="createEditor('assets/editor/diagrameditor.xml');" class="sidebar-mini skin-darkblue-light fixed">
-        <div id="loading-mask"></div>
-        <div id="loading">
-            <div class="loading-indicator">
-                <img src="@routes.Assets.versioned("images/extanim32.gif")" width="32" height="32" style="margin-right:8px;" align="absmiddle" />
-                Loading...&hellip;
-            </div>
-        </div>
-
         <script type="text/javascript" src="@routes.Assets.versioned("lib/mxgraph2/js/mxClient.js")"></script>
         <script type="text/javascript" src="@routes.Assets.versioned("editor/editor.js")"></script>
 
@@ -35,6 +27,7 @@
             @sidebar()
 
             <script type="text/javascript" src="@routes.Assets.versioned("editor/graph.js")"></script>
+            <script type="text/javascript" src="@routes.Assets.versioned("main/utils.js")"></script>
             <div class="content-wrapper">
             <section class="content">
                 <div id="page">
@@ -59,13 +52,6 @@
                     </table>
                     <input id="source" type="checkbox" style="display:none;"/>
                     <button id="xmlBtn" type="button" class="btn bg-navy margin" onclick="loadXml();" style="display:none;float:right">Import Transaction</button>
-                    <script>
-                            function loadXml(){
-                                document.getElementById('source').click();
-                                document.getElementById('board').style.height = '80vh';
-                                document.getElementById('xmlBtn').style.display = 'none';
-                            }
-                    </script>
                     <div id="zoomActions" style="display:none;">
                     </div>
                 </div>
