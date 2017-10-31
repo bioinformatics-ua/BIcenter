@@ -11,19 +11,13 @@ define('GraphView', ['View'], function (View) {
         _super_.initialize.call(this, $container);
 
         // Load and convert the default transformation.
-        var xhttp = new XMLHttpRequest();
-        var transXml;
-        var dom = this.$elements;
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                transXml = this.responseText;
-                document.getElementById("source").click();
-                document.getElementById("xml").value = transXml;
-                document.getElementById("source").click();
+        $.get("/graph/load",
+            function(transXml){
+                $("#source").click();
+                $("#xml").val(transXml);
+                $("#source").click();
             }
-        };
-        xhttp.open("GET", "/graph/load", true);
-        xhttp.send();
+        );
     };
 
     return GraphView;

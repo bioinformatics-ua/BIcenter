@@ -19,10 +19,6 @@ requirejs.config({
         'Modal': 'core/modal',
         'Color': 'core/color',
 
-        // Test
-        'TestController': 'test/testController',
-        'TestView': 'test/testView',
-
         // Graph
         'GraphController': 'graph/graphController',
         'GraphView': 'graph/graphView',

@@ -52,7 +52,7 @@ var mxClient = {
 "undefined" != typeof mxImageBasePath && 0 < mxImageBasePath.length ? ("/" == mxImageBasePath.substring(mxImageBasePath.length - 1) && (mxImageBasePath = mxImageBasePath.substring(0, mxImageBasePath.length - 1)), mxClient.imageBasePath = mxImageBasePath) : mxClient.imageBasePath = mxClient.basePath + "/images";
 mxClient.language = "undefined" != typeof mxLanguage && null != mxLanguage ? mxLanguage : mxClient.IS_IE ? navigator.userLanguage : navigator.language;
 mxClient.defaultLanguage = "undefined" != typeof mxDefaultLanguage && null != mxDefaultLanguage ? mxDefaultLanguage : "en";
-mxLoadStylesheets && mxClient.link("stylesheet", mxClient.basePath + "/css/common.css");
+mxLoadStylesheets && mxClient.link("stylesheet", "assets/lib/mxgraph2/css/common.css");
 "undefined" != typeof mxLanguages && null != mxLanguages && (mxClient.languages = mxLanguages);
 if (mxClient.IS_VML)
     if (mxClient.IS_SVG) mxClient.IS_VML = !1;
@@ -3308,7 +3308,7 @@ function mxPopupMenu(a) {
 }
 mxPopupMenu.prototype = new mxEventSource;
 mxPopupMenu.prototype.constructor = mxPopupMenu;
-mxPopupMenu.prototype.submenuImage = mxClient.imageBasePath + "/submenu.gif";
+mxPopupMenu.prototype.submenuImage = "assets/images/editor/submenu.gif";
 mxPopupMenu.prototype.zIndex = 10006;
 mxPopupMenu.prototype.factoryMethod = null;
 mxPopupMenu.prototype.useLeftButtonForPopup = !1;
@@ -9817,7 +9817,7 @@ mxPrintPreview.prototype.open = function (a) {
 mxPrintPreview.prototype.writeHead = function (a, b) {
     null != this.title && a.writeln("<title>" + this.title + "</title>");
     mxClient.IS_VML && a.writeln('<style type="text/css">v\\:*{behavior:url(#default#VML)}o\\:*{behavior:url(#default#VML)}</style>');
-    mxClient.link("stylesheet", mxClient.basePath + "/css/common.css", a);
+    mxClient.link("stylesheet", "assets/lib/mxgraph2/css/common.css", a);
     a.writeln('<style type="text/css">');
     a.writeln("@media print {");
     a.writeln("  table.mxPageSelector { display: none; }");

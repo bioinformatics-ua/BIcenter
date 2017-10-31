@@ -6,20 +6,29 @@ div.mxRubberband {
 	border-color: #0000FF;
 	background: #0077FF;
 }
-textarea.mxCellEditor {
-	background: url(../AppData/Local/Microsoft/Windows/Temporary Internet Files/Content.IE5/images/transparent.gif);
+.mxCellEditor {
+	background: url('../images/transparent.gif');
+	border-color: transparent;
 	border-style: solid;
-	border-color: black;
+	position: absolute;
+	overflow: visible;
+	word-wrap: normal;
 	border-width: 0;
-	overflow: auto;
+	min-width: 1px;
+	resize: none;
+	padding: 0px;
+	margin: 0px;
+}
+.mxPlainTextEditor * {
+	padding: 0px;
+	margin: 0px;
 }
 div.mxWindow {
 	-webkit-box-shadow: 3px 3px 12px #C0C0C0;
 	-moz-box-shadow: 3px 3px 12px #C0C0C0;
 	box-shadow: 3px 3px 12px #C0C0C0;
-	background: url(../AppData/Local/Microsoft/Windows/Temporary Internet Files/Content.IE5/images/window.gif);
-	border-style: outset;
-	border-width: 1px;
+	background: url('../images/window.gif');
+	border:1px solid #c3c3c3;
 	position: absolute;
 	overflow: hidden;
 	z-index: 1;
@@ -27,21 +36,21 @@ div.mxWindow {
 table.mxWindow {
 	border-collapse: collapse;
 	table-layout: fixed;
-  	font-family: Arial;
+	font-family: Arial;
 	font-size: 8pt;
 }
 td.mxWindowTitle {
-	background: url(../AppData/Local/Microsoft/Windows/Temporary Internet Files/Content.IE5/images/window-title.gif) repeat-x;
+	background: url('../images/window-title.gif') repeat-x;
 	text-overflow: ellipsis;
 	white-space: nowrap;
- 	text-align: center;
- 	font-weight: bold;
- 	overflow: hidden;
+	text-align: center;
+	font-weight: bold;
+	overflow: hidden;
 	height: 13px;
 	padding: 2px;
- 	padding-top: 4px;
- 	padding-bottom: 6px;
- 	color: black;
+	padding-top: 4px;
+	padding-bottom: 6px;
+	color: black;
 }
 td.mxWindowPane {
 	vertical-align: top;
@@ -49,24 +58,25 @@ td.mxWindowPane {
 }
 div.mxWindowPane {
 	overflow: hidden;
+	position: relative;
 }
 td.mxWindowPane td {
-  	font-family: Arial;
+	font-family: Arial;
 	font-size: 8pt;
 }
 td.mxWindowPane input, td.mxWindowPane select, td.mxWindowPane textarea, td.mxWindowPane radio {
-  	border-color: #8C8C8C;
-  	border-style: solid;
-  	border-width: 1px;
-  	font-family: Arial;
+	border-color: #8C8C8C;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial;
 	font-size: 8pt;
- 	padding: 1px;
+	padding: 1px;
 }
 td.mxWindowPane button {
-	background: url(../AppData/Local/Microsoft/Windows/Temporary Internet Files/Content.IE5/images/button.gif) repeat-x;
-  	font-family: Arial;
-  	font-size: 8pt;
-  	padding: 2px;
+	background: url('../images/button.gif') repeat-x;
+	font-family: Arial;
+	font-size: 8pt;
+	padding: 2px;
 	float: left;
 }
 img.mxToolbarItem {
@@ -114,12 +124,11 @@ div.mxPopupMenu {
 	-webkit-box-shadow: 3px 3px 12px #C0C0C0;
 	-moz-box-shadow: 3px 3px 12px #C0C0C0;
 	box-shadow: 3px 3px 12px #C0C0C0;
-	background: url(../AppData/Local/Microsoft/Windows/Temporary Internet Files/Content.IE5/images/window.gif);
+	background: url('../images/window.gif');
 	position: absolute;
 	border-style: solid;
 	border-width: 1px;
 	border-color: black;
-	cursor: default;
 }
 table.mxPopupMenu {
 	border-collapse: collapse;
@@ -128,25 +137,24 @@ table.mxPopupMenu {
 }
 tr.mxPopupMenuItem {
 	color: black;
-	cursor: default;
-}
-td.mxPopupMenuItem.disabled {
-	opacity: 0.2;
-}
-td.mxPopupMenuItem.disabled {
-	_filter:alpha(opacity=20) !important;
+	cursor: pointer;
 }
 tr.mxPopupMenuItemHover {
 	background-color: #000066;
 	color: #FFFFFF;
+	cursor: pointer;
 }
 td.mxPopupMenuItem {
-	padding: 2px 30px 2px 10px;
+	padding: 2px 10px 2px 10px;
 	white-space: nowrap;
 	font-family: Arial;
-	font-size: 8pt;
+	font-size: 10pt;
 }
 td.mxPopupMenuIcon {
 	background-color: #D0D0D0;
 	padding: 2px 4px 2px 4px;
+}
+.mxDisabled {
+	opacity: 0.2 !important;
+	cursor:default !important;
 }

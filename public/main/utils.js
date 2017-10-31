@@ -1,5 +1,5 @@
 function loadXml(){
-    document.getElementById('source').click();
-    document.getElementById('board').style.height = '80vh';
-    document.getElementById('xmlBtn').style.display = 'none';
+    $('#source').click();
+    $('#board').css({'height': '80vh'});
+    $('#xmlBtn').css("display","none");
 }
