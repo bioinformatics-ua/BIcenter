@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import kettleExt.utils.SvgImageUrl;
+import play.mvc.Controller;
 import play.mvc.Result;
 import utils.StepImageManager;
 import org.pentaho.di.core.plugins.PluginInterface;
@@ -17,7 +18,7 @@ import static play.mvc.Controller.request;
 import static play.mvc.Results.notFound;
 import static play.mvc.Results.ok;
 
-public class SvgController {
+public class SvgController extends Controller {
 
     public Result service(String image) throws IOException {
         String url = request().path();

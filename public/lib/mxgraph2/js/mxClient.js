@@ -18119,6 +18119,18 @@ mxEditor.prototype.addActions = function () {
     this.addAction("toggleConsole", function (a) {
         mxLog.setVisible(!mxLog.isVisible())
     })
+
+    // Transformation mxPopupMenu
+    this.addAction("graphics",function(a) {
+        console.log("Check the graphics file.")
+    })
+    this.addAction("engine",function(a) {
+        console.log("Check the engine file.")
+    })
+    this.addAction("settings",function(a) {
+        console.log("Check the engine file.")
+    })
+
 };
 mxEditor.prototype.createSession = function () {
     var a = mxUtils.bind(this, function (a) {

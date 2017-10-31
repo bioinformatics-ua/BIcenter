@@ -27,12 +27,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.w3c.dom.Document;
+import play.mvc.Controller;
 import play.mvc.Result;
 
 import static play.mvc.Http.Context.Implicit.request;
 import static play.mvc.Results.ok;
 
-public class TransGraphController {
+public class TransGraphController extends Controller {
     public Result load(String filename) throws Exception {
         File file = new File("app/assets/reposity",filename);
 

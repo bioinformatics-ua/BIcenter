@@ -1,4 +1,41 @@
-<script type="text/javascript" src="@routes.Assets.versioned("javascripts/header/utils.js")"></script>
+<script type="text/javascript" src="@routes.Assets.versioned("header/utils.js")"></script>
+<style>
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu>.dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dropdown-submenu:hover>.dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu>a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+
+    .dropdown-submenu:hover>a:after {
+        border-left-color: #fff;
+    }
+</style>
 <header class="main-header">
         <!-- Logo -->
     <a href="https://www.bmd-software.com/" class="logo">
@@ -10,6 +47,7 @@
 
     <nav class="navbar navbar-static-top">
         <ul class="nav navbar-nav">
+
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Transformation<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -20,14 +58,16 @@
                     <li><a href="#">Save Transformation As...</a></li>
                 </ul>
             </li>
+
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Import<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#" onclick="importXml();">XML file</a></li>
                 </ul>
             </li>
+
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit Pipeline<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#" onclick="document.getElementById('cut').click();">Cut</a></li>
                     <li><a href="#" onclick="document.getElementById('copy').click();">Copy</a></li>
@@ -40,7 +80,7 @@
             </li>
 
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Select<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Select Nodes<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#" onclick="document.getElementById('all').click();">All</a></li>
                     <li><a href="#" onclick="document.getElementById('none').click();">None</a></li>
@@ -49,9 +89,18 @@
                     <li><a href="#" onclick="document.getElementById('edges').click();">Edges</a></li>
                 </ul>
             </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="getSteps();">Edit Nodes<span class="caret"></span></a>
+                <ul id="steps" class="dropdown-menu" role="menu">
+                    <!-- getSteps() will had the existent steps -->
+                </ul>
+            </li>
+
             <li>
                 <a href="#" onClick="runTransformation();">Run</a>
             </li>
+
             <li>
                 <a href="#" onclick="document.getElementById('print').click();">Print</a>
             </li>
