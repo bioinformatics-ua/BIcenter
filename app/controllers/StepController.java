@@ -30,6 +30,40 @@ import com.mxgraph.view.mxGraph;
  */
 public class StepController extends Controller {
     /**
+     * Returns the input fields name of a given step.
+     * @return
+     * @throws Exception
+     */
+    public Result inputFieldsName() throws Exception{
+        Object step_name = request().body().as(Map.class).get("stepName");
+        String stepName = (String) ((String[]) step_name)[0];
+        Object graph_xml = request().body().as(Map.class).get("graph");
+        String graphXml = (String) ((String[]) graph_xml)[0];
+
+        mxGraph graph = new mxGraph();
+        mxCodec codec = new mxCodec();
+        Document doc = mxUtils.parseXml(graphXml);
+        codec.decode(doc.getDocumentElement(), graph.getModel());
+
+        TransMeta transMeta = TransDecoder.decode(graph);
+
+        StepMeta stepMeta = getStep(transMeta, stepName);
+        SearchFieldsProgress op = new SearchFieldsProgress(transMeta, stepMeta, true);
+        op.run();
+        RowMetaInterface rowMetaInterface = op.getFields();
+
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < rowMetaInterface.size(); i++) {
+            ValueMetaInterface v = rowMetaInterface.getValueMeta(i);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", v.getName());
+            jsonArray.add(jsonObject);
+        }
+
+        return ok(Json.toJson(jsonArray));
+    }
+
+    /**
      * Given a certain mxGraph and a certain step name, it return the input or the output fields details
      * (depending on the before value; if true it returns the input fields else it returns the output fields).
      * @return Json with all desired fields details.

@@ -30,6 +30,7 @@
             <script type="text/javascript" src="@routes.Assets.versioned("main/utils.js")"></script>
             <div class="content-wrapper">
             <section class="content">
+
                 <!-- Transformation Pipeline -->
                 <div id="main_page">
                     <div id="selectActions" valign="top" style="display:none;">
@@ -73,9 +74,47 @@
                         </table>
                         <p id="fields_error"></p>
                     </div>
+                    <div class="box-footer">
+                        <button type="submit" onclick="return2Pipeline('fields_page');" class="btn bg-navy margin pull-right">Ok</button>
+                    </div>
                 </div>
 
-                <!-- Edit Step -->
+                <!-- Edit Row Generator Step -->
+                <div id="RowGenerator" class="box box-default" style="display:none;">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Generate Rows</h3>
+                    </div>
+                    <div class="box-body">
+                        <div module="MainModule">
+                            <div controller="RowGeneratorController"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Add Checksum Step -->
+                <div id="Checksum" class="box box-default" style="display:none;">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Add Checksum</h3>
+                    </div>
+                    <div class="box-body">
+                        <div module="MainModule">
+                            <div controller="ChecksumController"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Add Sequence Step -->
+                <div id="Sequence" class="box box-default" style="display:none;">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Add Sequence</h3>
+                    </div>
+                    <div class="box-body">
+                        <div module="MainModule">
+                            <div controller="SequenceController"></div>
+                        </div>
+                    </div>
+                </div>
+
             @content
 
             </section>

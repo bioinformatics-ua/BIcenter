@@ -1,0 +1,68 @@
+<form class="form-horizontal">
+    <div class="box-body">
+        <div class="form-group">
+            <label for="checksum_step_name" class="col-sm-2 control-label">Step Name</label>
+
+            <div class="col-sm-5">
+                <input class="form-control" id="checksum_step_name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="checksum_type" class="col-sm-2 control-label">Checksum Type</label>
+            <div class="col-sm-5">
+                <select id="checksum_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    <option>CRC 32</option>
+                    <option>ADLER 32</option>
+                    <option>MD5</option>
+                    <option>SHA-1</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="checksum_result_type" class="col-sm-2 control-label">Checksum Type</label>
+            <div class="col-sm-5">
+                <select id="checksum_result_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    <option>String</option>
+                    <option>Hexadecimal</option>
+                    <option>Binary</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="checksum_result_field" class="col-sm-2 control-label">Result Field</label>
+
+            <div class="col-sm-5">
+                <input class="form-control" id="checksum_result_field">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+                <div class="checkbox">
+                    <label>
+                        <input id="checksum_mode" type="checkbox"> Compatibility mode.
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="checksum_fields" class="col-sm-2 control-label">Fields used on checksum</label>
+            <div id="checksum_fields" class="col-sm-5">
+                <select multiple="" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <button id="checksum_cancel" type="submit" class="btn btn-default">Cancel</button>
+        <button id="checksum_submit" type="submit" class="btn bg-navy margin pull-right">Submit</button>
+    </div>
+    <!-- /.box-footer -->
+</form>

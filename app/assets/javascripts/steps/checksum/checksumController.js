@@ -1,0 +1,19 @@
+define('ChecksumController', ['Controller', 'ChecksumView'], function (Controller, ChecksumView) {
+    var ChecksumController = function (module) {
+        Controller.call(this, module, new ChecksumView(this));
+    };
+
+    // Inheritance from super class
+    ChecksumController.prototype = Object.create(Controller.prototype);
+    var _super_ = Controller.prototype;
+
+    ChecksumController.prototype.initialize = function ($container) {
+        _super_.initialize.call(this, $container);
+    };
+
+    ChecksumController.prototype.testClick = function () {
+        console.log("Testing clicks from controller");
+    };
+
+    return ChecksumController;
+});

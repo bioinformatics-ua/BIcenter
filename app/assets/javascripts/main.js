@@ -23,6 +23,19 @@ requirejs.config({
         'GraphController': 'graph/graphController',
         'GraphView': 'graph/graphView',
 
+        // Edit Step Dialogs
+        // Row Generator
+        'RowGeneratorController': 'steps/rowgenerator/rowGeneratorController',
+        'RowGeneratorView': 'steps/rowgenerator/rowGeneratorView',
+
+        // Checksum
+        'ChecksumController': 'steps/checksum/checksumController',
+        'ChecksumView': 'steps/checksum/checksumView',
+
+        // Sequence
+        'SequenceController': 'steps/sequence/sequenceController',
+        'SequenceView': 'steps/sequence/sequenceView',
+
         // Result
         'ResultController': 'result/resultController',
         'ResultView': 'result/resultView',

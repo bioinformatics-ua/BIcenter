@@ -17,4 +17,5 @@ GET        /assets/*file                          controllers.Assets.versioned(p
 GET        /middle/:image                         controllers.SvgController.service(image:String)
 GET        /graph/load                            controllers.TransGraphController.load(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")
 POST       /graph/run                             controllers.TransGraphController.run()
+POST       /step/inputFieldsName                  controllers.StepController.inputFieldsName()
 POST       /step/inputOutputFields                controllers.StepController.inputOutputFields()
