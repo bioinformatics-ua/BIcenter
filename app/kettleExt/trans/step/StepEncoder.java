@@ -5,6 +5,6 @@ import org.w3c.dom.Element;
 
 public interface StepEncoder {
 
-	public Element encodeStep(StepMeta stepMeta) throws Exception;
+	Element encodeStep(StepMeta stepMeta) throws Exception;
 	
 }

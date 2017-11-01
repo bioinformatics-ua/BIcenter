@@ -1,9 +1,15 @@
+/**
+ *  Allows to write a transformation xml, to be converted in a mxGraph.
+ */
 function importXml(){
     $('#source').click();
     $('#board').css({'height': '75vh'});
     $('#xmlBtn').css("display","block");
 }
 
+/**
+ *  Returns the steps of the actual transformation.
+ */
 function getSteps(){
     $('#source').click();
     var transXml = $($('#xml')[0]).val();
@@ -43,15 +49,52 @@ function getSteps(){
     }
 }
 
+/**
+ *  Returns the input or the output fields of a given step.
+ */
 function inputOutputFields(stepName,before){
     var enc = new mxCodec(mxUtils.createXmlDocument());
     var node = enc.encode(global_editor.graph.getModel())
     $.post('/step/inputOutputFields', { stepName:stepName, graph: mxUtils.getPrettyXml(node), before:before },
         function(returnedData){
-            console.log(returnedData);
+            $('#main_page').hide();
+
+            $('#fields_header').empty();
+            $('#fields_header').append( "Step fields and its source: <strong>"+stepName+"</strong>" );
+
+            $("#fields_table_body").empty();
+            $("#fields_error").empty();
+
+            if(returnedData.length == 0){
+                $("#fields_error").text(stepName+" is the first step!");
+            }
+            else {
+                var header = "<tr id='fields_table_header'>";
+                var columns = Object.keys(returnedData[0]);
+                for (var i = 0; i < columns.length; i++) {
+                    header += "<th>" + columns[i] + "</th>";
+                }
+                header += "</tr>"
+                $('#fields_table_body').append(header);
+
+                for (var i = 0; i < returnedData.length; i++) {
+                    var values = Object.values(returnedData[i]);
+                    var row = "<tr>";
+                    for (var j = 0; j < values.length; j++) {
+                        row += "<td>" + values[j] + "</td>";
+                    }
+                    row += "</tr>";
+                    $('#fields_table_body').append(row);
+                }
+            }
+
+            $('#fields_page').show();
         });
 }
 
+/**
+ *  Calls the API that runs the transformation.
+ */
 function runTransformation(){
     var enc = new mxCodec(mxUtils.createXmlDocument());
     var node = enc.encode(global_editor.graph.getModel())

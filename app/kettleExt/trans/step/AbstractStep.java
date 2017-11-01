@@ -22,14 +22,14 @@ import com.mxgraph.model.mxCell;
  */
 public abstract class AbstractStep implements StepEncoder, StepDecoder {
         
-        /**
-         * Converts a graph vertex into a Pentaho step.
-         * @param cell Draw.io cell.
-         * @param databases 
-         * @param metaStore
-         * @return
-         * @throws Exception 
-         */
+	/**
+	 * Converts a graph vertex into a Pentaho step.
+	 * @param cell Draw.io cell.
+	 * @param databases
+	 * @param metaStore
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public StepMeta decodeStep(mxCell cell, List<DatabaseMeta> databases, IMetaStore metaStore) throws Exception {
 		String stepid = cell.getAttribute("ctype");

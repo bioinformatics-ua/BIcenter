@@ -30,7 +30,8 @@
             <script type="text/javascript" src="@routes.Assets.versioned("main/utils.js")"></script>
             <div class="content-wrapper">
             <section class="content">
-                <div id="page">
+                <!-- Transformation Pipeline -->
+                <div id="main_page">
                     <div id="selectActions" valign="top" style="display:none;">
                             <!-- Select Actions Here -->
                     </div>
@@ -56,6 +57,25 @@
                     </div>
                 </div>
 
+                <!-- Step Input and Output Fields -->
+                <div id="fields_page" class="box box-default" style="display:none;">
+                    <div class="box-header with-border">
+                        <h3 id="fields_header" class="box-title"> </h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody id="fields_table_body">
+                                <tr id="fields_table_header">
+                                    <!-- inputOutputFields() will fill the header -->
+                                </tr>
+                                <!-- inputOutputFields() write the values -->
+                            </tbody>
+                        </table>
+                        <p id="fields_error"></p>
+                    </div>
+                </div>
+
+                <!-- Edit Step -->
             @content
 
             </section>

@@ -25,8 +25,16 @@ import com.mxgraph.io.mxCodec;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxGraph;
 
+/**
+ * Controller that manages all steps of the transformation.
+ */
 public class StepController extends Controller {
-
+    /**
+     * Given a certain mxGraph and a certain step name, it return the input or the output fields details
+     * (depending on the before value; if true it returns the input fields else it returns the output fields).
+     * @return Json with all desired fields details.
+     * @throws Exception
+     */
     public Result inputOutputFields() throws Exception {
         Object step_name = request().body().as(Map.class).get("stepName");
         String stepName = (String) ((String[]) step_name)[0];
@@ -69,6 +77,12 @@ public class StepController extends Controller {
         return ok(Json.toJson(jsonArray));
     }
 
+    /**
+     * Returns the step meta, given a certain step label and the actual transformation meta.
+     * @param transMeta Current transformation meta.
+     * @param label Step label.
+     * @return Step meta.
+     */
     public StepMeta getStep(TransMeta transMeta, String label) {
         List<StepMeta> list = transMeta.getSteps();
         for (int i = 0; i < list.size(); i++) {

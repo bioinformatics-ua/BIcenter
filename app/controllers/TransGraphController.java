@@ -1,15 +1,14 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import kettleExt.App;
 import kettleExt.TransExecutor;
 import kettleExt.trans.TransDecoder;
 import kettleExt.trans.TransEncoder;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
+
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.logging.LogLevel;
-import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.trans.TransExecutionConfiguration;
@@ -30,10 +29,16 @@ import org.w3c.dom.Document;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import static play.mvc.Http.Context.Implicit.request;
-import static play.mvc.Results.ok;
-
+/**
+ * Controller that manages the mxGraph.
+ */
 public class TransGraphController extends Controller {
+    /**
+     * Get Method, that convert a given Pentaho (.ktr) file into a mxGraph (.xml) file, and returns it back.
+     * @param filename Pentaho file.
+     * @return mxGraph file.
+     * @throws Exception
+     */
     public Result load(String filename) throws Exception {
         File file = new File("app/assets/reposity",filename);
 
@@ -46,6 +51,12 @@ public class TransGraphController extends Controller {
         return ok(graphXml).as("text/html");
     }
 
+    /**
+     * Post Method, that given a mxGraph (XML) file and a execution configuration (XML) specification,
+     * runs the defined transformation.
+     * @return Transformation Results.
+     * @throws Exception
+     */
     public Result run() throws Exception {
         String execution_configuration = "{\"executeMethod\":{\"execMethod\":\"1\"},\"details\":{\"gatheringMetrics\":\"on\",\"clearingLog\":\"on\",\"logLevel\":\"3\",\"replayDate\":\"\"},\"parameters\":[],\"variables\":[{\"var_name\":\"Internal.Entry.Current.Directory\",\"var_value\":\"file:///home/leonardo/Documentos/tese/Kettle-web/kettle/kettle-webapp/target/kettle-webapp-0.0.1-SNAPSHOT/reposity/transformations\"},{\"var_name\":\"Internal.Job.Filename.Directory\",\"var_value\":\"Parent Job File Directory\"},{\"var_name\":\"Internal.Job.Filename.Name\",\"var_value\":\"Parent Job Filename\"},{\"var_name\":\"Internal.Job.Name\",\"var_value\":\"Parent Job Name\"},{\"var_name\":\"Internal.Job.Repository.Directory\",\"var_value\":\"Parent Job Repository Directory\"}]}";
 

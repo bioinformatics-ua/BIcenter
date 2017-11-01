@@ -10,6 +10,6 @@ import com.mxgraph.model.mxCell;
 
 public interface StepDecoder {
 
-	public StepMeta decodeStep(mxCell cell, List<DatabaseMeta> databases, IMetaStore metaStore) throws Exception;
+	StepMeta decodeStep(mxCell cell, List<DatabaseMeta> databases, IMetaStore metaStore) throws Exception;
 	
 }

@@ -7,19 +7,26 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import kettleExt.utils.SvgImageUrl;
-import play.mvc.Controller;
-import play.mvc.Result;
+
 import utils.StepImageManager;
+
 import org.pentaho.di.core.plugins.PluginInterface;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.StepPluginType;
 
-import static play.mvc.Controller.request;
-import static play.mvc.Results.notFound;
-import static play.mvc.Results.ok;
+import play.mvc.Controller;
+import play.mvc.Result;
 
+/**
+ * Controller that manages all SVGs.
+ */
 public class SvgController extends Controller {
-
+    /**
+     * Given a certain stepName, it returns the correspondent PNG image.
+     * @param image stepName.svg.
+     * @return PNG file.
+     * @throws IOException
+     */
     public Result service(String image) throws IOException {
         String url = request().path();
         String stepId = SvgImageUrl.getStepId(url);
