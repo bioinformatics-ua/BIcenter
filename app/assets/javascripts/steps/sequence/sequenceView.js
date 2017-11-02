@@ -10,13 +10,11 @@ define('SequenceView', ['View'], function (View) {
     SequenceView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
 
-        /*
-        $('#rowgen_cancel')[0].onclick =
+        $('#sequence_cancel')[0].onclick =
             function () {
-                $('#RowGenerator').hide();
+                $('#Sequence').hide();
                 $('#main_page').show();
             }
-         */
     };
 
     SequenceView.prototype.testClick = function () {

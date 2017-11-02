@@ -1,0 +1,79 @@
+<form class="form-horizontal">
+    <div class="box-body">
+
+        <div class="form-group">
+            <label for="sequence_step_name" class="col-sm-2 control-label">Step Name</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="sequence_step_name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="sequence_value_name" class="col-sm-2 control-label">Value Name</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="sequence_value_name">
+            </div>
+        </div>
+
+        <label>Use a database to generate a sequence:</label>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+                <div class="checkbox">
+                    <label>
+                        <input id="sequence_database" type="checkbox"> Use a database to get the sequence.
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <label>Use a transformation counter to generate the sequence:</label>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+                <div class="checkbox">
+                    <label>
+                        <input id="sequence_counter" type="checkbox"> Use a counter to generate the sequence.
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="sequence_counter_name" class="col-sm-2 control-label">Counter Name (optional)</label>
+
+            <div class="col-sm-5">
+                <input class="form-control" id="sequence_counter_name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="sequence_start_value" class="col-sm-2 control-label">Start Value</label>
+
+            <div class="col-sm-5">
+                <input type="number" class="form-control" id="sequence_start_value">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="sequence_increment" class="col-sm-2 control-label">Increment</label>
+
+            <div class="col-sm-5">
+                <input type="number" class="form-control" id="sequence_increment">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="sequence_max_value" class="col-sm-2 control-label">Maximum Value</label>
+
+            <div class="col-sm-5">
+                <input type="number" class="form-control" id="sequence_max_value">
+            </div>
+        </div>
+
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <button id="sequence_cancel" type="submit" class="btn btn-default">Cancel</button>
+        <button id="sequence_submit" type="submit" class="btn bg-navy margin pull-right">Submit</button>
+    </div>
+    <!-- /.box-footer -->
+</form>

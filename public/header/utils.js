@@ -205,6 +205,32 @@ function stepDialog(stepType){
             }
         );
     }
+    else if(stepType == "Sequence") {
+        $("#Sequence").show(
+            function () {
+                $($("#sequence_step_name")[0]).val(global_step.getAttribute("label"));
+                $($("#checksum_value_name")[0]).val(global_step.getAttribute("valuename"));
+
+                if(global_step.getAttribute("use_database") == "Y"){
+                    $('#sequence_database').prop( "checked", true );
+                }
+                else{
+                    $('#sequence_database').prop( "checked", false );
+                }
+
+                if(global_step.getAttribute("use_counter") == "Y"){
+                    $('#sequence_counter').prop( "checked", true );
+                }
+                else{
+                    $('#sequence_counter').prop( "checked", false );
+                }
+                $($("#sequence_counter_name")[0]).val(global_step.getAttribute("counter_name"));
+                $($("#sequence_start_value")[0]).val(global_step.getAttribute("start_at"));
+                $($("#sequence_increment")[0]).val(global_step.getAttribute("increment_by"));
+                $($("#sequence_max_value")[0]).val(global_step.getAttribute("max_value"));
+            }
+        )
+    }
 }
 
 /**
@@ -218,4 +244,29 @@ function runTransformation(){
         function(returnedData){
             console.log(returnedData);
         });
+}
+
+function showRunOptions(){
+    $('#main_page').hide();
+    $('#RunOptions').show(
+        function(){
+            $('#runoptions_table_variables').empty();
+
+            var $tr = $('<tr>').append(
+                $('<th>').text("Variable"),
+                $('<th>').text("Value")
+            );
+            $('#runoptions_table_variables').append($tr[0]);
+
+            var rows = $.parseJSON(global_editor['graph'].getDefaultParent().getAttribute('variables'));
+            for(var i=0; i<rows.length; i++) {
+                var item = rows[i];
+                var $tr = $('<tr>').append(
+                    $('<td>').text(item.var_name),
+                    $('<td>').text(item.var_value)
+                );
+                $('#runoptions_table_variables').append($tr[0]);
+            }
+        }
+    );
 }

@@ -23,6 +23,10 @@ requirejs.config({
         'GraphController': 'graph/graphController',
         'GraphView': 'graph/graphView',
 
+        // Run Options Dialog
+        'RunOptionsController':'run/runOptionsController',
+        'RunOptionsView':'run/runOptionsView',
+
         // Edit Step Dialogs
         // Row Generator
         'RowGeneratorController': 'steps/rowgenerator/rowGeneratorController',

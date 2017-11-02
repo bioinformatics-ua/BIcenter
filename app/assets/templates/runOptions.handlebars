@@ -1,0 +1,97 @@
+<form class="form-horizontal">
+    <div class="box-body">
+
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Details</a></li>
+                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Parameters</a></li>
+                <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Variables</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-5">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="runoptions_safemode" type="checkbox"> Enable safe mode.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-5">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="runoptions_performance" type="checkbox"> Gather performance metrics.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-5">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="runoptions_clear_log" type="checkbox"> Clear log before execution.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="runoptions_log_level" class="col-sm-2 control-label">Log Level</label>
+                        <div class="col-sm-5">
+                            <select id="runoptions_log_level" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                <option>No Log</option>
+                                <option>Error Log</option>
+                                <option>Minimum Log</option>
+                                <option>Basic Log</option>
+                                <option>Detailed Log</option>
+                                <option>Debugging</option>
+                                <option>Line-level Log (very detailed)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="runoptions_playback" class="col-sm-2 control-label">Playback Date&Time (yyyy/MM/dd HH:mm:ss)</label>
+
+                        <div class="col-sm-5">
+                            <input class="form-control" id="runoptions_playback">
+                        </div>
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+                    The European languages are members of the same family. Their separate existence is a myth.
+                    For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                    in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                    new common language would be desirable: one could refuse to pay expensive translators. To
+                    achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                    words. If several languages coalesce, the grammar of the resulting language is more simple
+                    and regular than that of the individual languages.
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_3">
+                    <table class="table table-bordered">
+                        <tbody id="runoptions_table_variables">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- nav-tabs-custom -->
+
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <button id="runoptions_cancel" type="submit" class="btn btn-default">Cancel</button>
+        <button id="runoptions_submit" type="submit" class="btn bg-navy margin pull-right">Submit</button>
+    </div>
+    <!-- /.box-footer -->
+</form>
