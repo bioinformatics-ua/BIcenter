@@ -1,6 +1,6 @@
 define('RunOptionsView', ['View'], function (View) {
     var RunOptionsView = function (controller) {
-        View.call(this, controller, 'runOptions');
+        View.call(this, controller, 'run/runOptions');
     };
 
     // Inheritance from super class

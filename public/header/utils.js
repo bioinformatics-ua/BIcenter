@@ -22,7 +22,30 @@ function getSteps(){
 
     $("#steps").empty();
     for (var i = 0; i < nodes.length; i++) {
-        if (nodes[i].tagName == "Step" && nodes[i].hasAttribute('ctype')) {
+        // Append the transaction node to the nodes list.
+        if (nodes[i].tagName == "Step" && nodes[i].hasAttribute('name')){
+            var transName = nodes[i].getAttribute("name");
+            var trans = nodes[i]['id'] + ": " + transName;
+            var first_method = "setGlobalStep('"+i+"')";
+            var second_method = "transSettingsDialog()";
+
+            var item = '<li class="dropdown-submenu">';
+            item += '<a tabindex="-1" href="#">';
+            item += trans;
+            item += '</a>';
+            item += '<ul class="dropdown-menu">';
+            item += '<li><a tabindex="-1" href="#" onclick="';
+            item += first_method;
+            item += ";";
+            item += second_method;
+            item += '">Edit Transformation</a></li>';
+            item += '</ul>';
+            item += '</li>';
+
+            $("#steps").append(item);
+        }
+        // Append each step to the nodes list.
+        else if (nodes[i].tagName == "Step" && nodes[i].hasAttribute('ctype')) {
             var stepName = nodes[i].getAttribute("label");
             var step = nodes[i].getAttribute("id") + ": " + stepName;
             var first_method = "inputOutputFields('"+stepName+"',"+true+")";
@@ -101,11 +124,39 @@ function inputOutputFields(stepName,before){
         });
 }
 
+/**
+ * Sets the current select step.
+ */
 var global_step;
 function setGlobalStep(i){
     global_step = global_nodes[i];
 }
 
+/**
+ * Shows the transaction settings configuration dialog, for the current transaction.
+ */
+function transSettingsDialog(){
+    $('#main_page').hide();
+    $('#TransSettings').show(
+        function () {
+            $($("#trans_settings_name")[0]).val(global_step.getAttribute("name"));
+            $($("#trans_settings_file")[0]).val(global_step.getAttribute("fileName"));
+            $($("#trans_settings_description")[0]).val(global_step.getAttribute("description"));
+            $($("#trans_settings_status")[0]).val(global_step.getAttribute("trans_status"));
+            $($("#trans_settings_version")[0]).val(global_step.getAttribute("trans_version"));
+            $($("#trans_settings_directory")[0]).val(global_step.getAttribute("trans_directory"));
+            $($("#trans_settings_creator")[0]).val(global_step.getAttribute("created_user"));
+            $($("#trans_settings_date")[0]).val(global_step.getAttribute("created_date"));
+            $($("#trans_settings_modified_user")[0]).val(global_step.getAttribute("modified_user"));
+            $($("#trans_settings_modified_date")[0]).val(global_step.getAttribute("modified_date"));
+        }
+    );
+}
+
+/**
+ * Shows the step configuration dialog, for a specific step type.
+ * @param stepType
+ */
 function stepDialog(stepType){
     $('#main_page').hide();
 
@@ -266,6 +317,9 @@ function runTransformation(method){
         });
 }
 
+/**
+ * Shows the run settings configuration dialog.
+ */
 function showRunOptions(){
     $('#main_page').hide();
     $('#RunOptions').show(
@@ -289,6 +343,8 @@ function showRunOptions(){
                 );
                 $('#runoptions_table_parameters').append($tr[0]);
             }
+
+            $('#runoptions_table_variables').empty();
 
             var $tr = $('<tr>').append(
                 $('<th>').text("Variable"),

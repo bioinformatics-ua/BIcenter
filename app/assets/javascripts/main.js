@@ -27,6 +27,10 @@ requirejs.config({
         'RunOptionsController':'run/runOptionsController',
         'RunOptionsView':'run/runOptionsView',
 
+        // Edit Transformation Dialog
+        'TransSettingsController': 'trans/transSettingsController',
+        'TransSettingsView': 'trans/transSettingsView',
+
         // Edit Step Dialogs
         // Row Generator
         'RowGeneratorController': 'steps/rowgenerator/rowGeneratorController',
