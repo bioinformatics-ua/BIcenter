@@ -58,7 +58,8 @@ public class TransGraphController extends Controller {
      * @throws Exception
      */
     public Result run() throws Exception {
-        String execution_configuration = "{\"executeMethod\":{\"execMethod\":\"1\"},\"details\":{\"gatheringMetrics\":\"on\",\"clearingLog\":\"on\",\"logLevel\":\"3\",\"replayDate\":\"\"},\"parameters\":[],\"variables\":[{\"var_name\":\"Internal.Entry.Current.Directory\",\"var_value\":\"file:///home/leonardo/Documentos/tese/Kettle-web/kettle/kettle-webapp/target/kettle-webapp-0.0.1-SNAPSHOT/reposity/transformations\"},{\"var_name\":\"Internal.Job.Filename.Directory\",\"var_value\":\"Parent Job File Directory\"},{\"var_name\":\"Internal.Job.Filename.Name\",\"var_value\":\"Parent Job Filename\"},{\"var_name\":\"Internal.Job.Name\",\"var_value\":\"Parent Job Name\"},{\"var_name\":\"Internal.Job.Repository.Directory\",\"var_value\":\"Parent Job Repository Directory\"}]}";
+        Object execution_json = request().body().as(Map.class).get("execution");
+        String execution_configuration = (String)((String[])execution_json)[0];
 
         Object graph_xml = request().body().as(Map.class).get("graph");
         mxGraph graph = new mxGraph();

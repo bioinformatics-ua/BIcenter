@@ -236,11 +236,31 @@ function stepDialog(stepType){
 /**
  *  Calls the API that runs the transformation.
  */
-function runTransformation(){
+function runTransformation(method){
     var enc = new mxCodec(mxUtils.createXmlDocument());
     var node = enc.encode(global_editor.graph.getModel())
 
-    $.post('/graph/run', { graph: mxUtils.getPrettyXml(node), execution:"" },
+    var exec_method = new Object();
+    exec_method.execMethod = method;
+
+    var details = new Object();
+
+    if($('#runoptions_safemode').is('checked'))
+        details.safeModeEnabled = "on"
+    if($('#runoptions_performance').is(':checked'))
+        details.gatheringMetrics = "on";
+    if($('#runoptions_clear_log').is(':checked'))
+        details.clearingLog = "on";
+    details.logLevel = $("#runoptions_log_level").prop('selectedIndex');
+    details.parameters = global_editor['graph'].getDefaultParent().getAttribute('parameters');
+    details.variables = global_editor['graph'].getDefaultParent().getAttribute('variables');
+
+    var execution = new Object();
+    execution.executeMethod = exec_method;
+    execution.details = details
+    var execution_configuration= JSON.stringify(execution);
+
+    $.post('/graph/run', { graph: mxUtils.getPrettyXml(node), execution:execution_configuration },
         function(returnedData){
             console.log(returnedData);
         });
@@ -250,7 +270,25 @@ function showRunOptions(){
     $('#main_page').hide();
     $('#RunOptions').show(
         function(){
-            $('#runoptions_table_variables').empty();
+            $('#runoptions_table_parameters').empty();
+
+            var $tr = $('<tr>').append(
+                $('<th>').text("Parameter"),
+                $('<th>').text("Value"),
+                $('<th>').text("Defaults")
+            );
+            $('#runoptions_table_parameters').append($tr[0]);
+
+            var rows = $.parseJSON(global_editor['graph'].getDefaultParent().getAttribute('parameters'));
+            for(var i=0; i<rows.length; i++) {
+                var item = rows[i];
+                var $tr = $('<tr>').append(
+                    $('<td>').text(item.param_name),
+                    $('<td>').text(item.param_value),
+                    $('<td>').text(item.param_defaults)
+                );
+                $('#runoptions_table_parameters').append($tr[0]);
+            }
 
             var $tr = $('<tr>').append(
                 $('<th>').text("Variable"),
