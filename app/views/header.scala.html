@@ -46,65 +46,9 @@
     </a>
 
     <nav class="navbar navbar-static-top">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav" controller="HeaderController">
 
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Transformation<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">New Transformation</a></li>
-                    <li><a href="#">Open Transformation</a></li>
-                    <li><a href="#" onclick="importXml();">Import As XML</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Save Transformation</a></li>
-                    <li><a href="#">Save Transformation As...</a></li>
-                </ul>
-            </li>
 
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit Pipeline<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" onclick="document.getElementById('cut').click();">Cut</a></li>
-                    <li><a href="#" onclick="document.getElementById('copy').click();">Copy</a></li>
-                    <li><a href="#" onclick="document.getElementById('paste').click();">Paste</a></li>
-                    <li><a href="#" onclick="document.getElementById('delete').click();">Delete</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" onclick="document.getElementById('undo').click();">Undo</a></li>
-                    <li><a href="#" onclick="document.getElementById('redo').click();">Redo</a></li>
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Select Nodes<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" onclick="document.getElementById('all').click();">All</a></li>
-                    <li><a href="#" onclick="document.getElementById('none').click();">None</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" onclick="document.getElementById('vertices').click();">Vertices</a></li>
-                    <li><a href="#" onclick="document.getElementById('edges').click();">Edges</a></li>
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="getSteps();">Edit Steps<span class="caret"></span></a>
-                <ul id="steps" class="dropdown-menu" role="menu">
-                    <!-- getSteps() will had the existent steps -->
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Run<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" onClick="runTransformation(1);">Local Execution</a></li>
-                    <li><a href="#">Remote Execution</a></li>
-                    <li><a href="#">Cluster Mode Execution</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" onclick="showRunOptions();">Run Options...</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="#" onclick="document.getElementById('print').click();">Print</a>
-            </li>
         </ul>
     </nav>
 </header>

@@ -11,9 +11,15 @@ define('SequenceController', ['Controller', 'SequenceView'], function (Controlle
         _super_.initialize.call(this, $container);
     };
 
-    SequenceController.prototype.testClick = function () {
-        console.log("Testing clicks from controller");
-    };
+    SequenceController.prototype.cancelClick = function(){
+        var controller = 'GraphController';
+        var containerController = this.module.controllers.ContainerController;
+        if (!containerController) {
+            console.err('Container controller not found!');
+        }
+
+        containerController.loadController(controller);
+    }
 
     return SequenceController;
 });

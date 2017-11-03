@@ -15,5 +15,15 @@ define('RunOptionsController', ['Controller', 'RunOptionsView'], function (Contr
         console.log("Testing clicks from controller");
     };
 
+    RunOptionsController.prototype.cancelClick = function(){
+        var controller = 'GraphController';
+        var containerController = this.module.controllers.ContainerController;
+        if (!containerController) {
+            console.err('Container controller not found!');
+        }
+
+        containerController.loadController(controller);
+    }
+
     return RunOptionsController;
 });

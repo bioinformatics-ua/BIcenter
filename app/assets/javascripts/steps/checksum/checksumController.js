@@ -11,9 +11,15 @@ define('ChecksumController', ['Controller', 'ChecksumView'], function (Controlle
         _super_.initialize.call(this, $container);
     };
 
-    ChecksumController.prototype.testClick = function () {
-        console.log("Testing clicks from controller");
-    };
+    ChecksumController.prototype.cancelClick = function(){
+        var controller = 'GraphController';
+        var containerController = this.module.controllers.ContainerController;
+        if (!containerController) {
+            console.err('Container controller not found!');
+        }
+
+        containerController.loadController(controller);
+    }
 
     return ChecksumController;
 });

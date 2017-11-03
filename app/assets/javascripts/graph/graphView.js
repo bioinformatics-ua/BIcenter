@@ -9,16 +9,28 @@ define('GraphView', ['View'], function (View) {
 
     GraphView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
+        this._loadViewComponents();
 
         // Load and convert the default transformation.
+        var context = this;
         $.get("/graph/load",
             function(transXml){
-                $("#source").click();
-                $("#xml").val(transXml);
-                $("#source").click();
+                context.$elements.source.click();
+                context.$elements.xml.val(transXml);
+                context.$elements.source.click();
             }
         );
     };
+
+
+    /**
+     * Returns back to the pipeline, after XML import.
+     */
+    GraphView.prototype.loadXml = function(){
+        this.$elements.source.click();
+        this.$elements.board.css({'height': '80vh'});
+        this.$elements.xmlBtn.css("display","none");
+    }
 
     return GraphView;
 });

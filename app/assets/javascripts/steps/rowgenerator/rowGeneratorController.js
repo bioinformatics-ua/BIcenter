@@ -11,9 +11,15 @@ define('RowGeneratorController', ['Controller', 'RowGeneratorView'], function (C
         _super_.initialize.call(this, $container);
     };
 
-    RowGeneratorController.prototype.testClick = function () {
-        console.log("Testing clicks from controller");
-    };
+    RowGeneratorController.prototype.cancelClick = function(){
+        var controller = 'GraphController';
+        var containerController = this.module.controllers.ContainerController;
+        if (!containerController) {
+            console.err('Container controller not found!');
+        }
+
+        containerController.loadController(controller);
+    }
 
     return RowGeneratorController;
 });

@@ -1,4 +1,4 @@
-define('GraphController', ['Controller', 'GraphView'], function (Controller, GraphView) {
+define('GraphController', ['Controller', 'GraphView', 'editor'], function (Controller, GraphView) {
     var GraphController = function (module) {
         Controller.call(this, module, new GraphView(this));
     };
@@ -9,10 +9,8 @@ define('GraphController', ['Controller', 'GraphView'], function (Controller, Gra
 
     GraphController.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
-    };
-
-    GraphController.prototype.testClick = function () {
-        console.log("Testing clicks from controller");
+        // Load the mxEditor after elements rendering.
+        createEditor('assets/editor/diagrameditor.xml');
     };
 
     return GraphController;

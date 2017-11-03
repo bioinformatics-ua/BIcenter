@@ -10,19 +10,46 @@ define('RunOptionsView', ['View'], function (View) {
     RunOptionsView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
 
-        $('#runoptions_cancel')[0].onclick =
-            function () {
-                $('#RunOptions').hide();
-                $('#main_page').show();
-            }
-    };
+        var controllers = this.controller.module.controllers;
+        var headerController = controllers.HeaderController;
 
-    RunOptionsView.prototype.testClick = function () {
-        console.log("Testing clicks from view");
+        this.$elements.runoptions_table_parameters.empty();
 
-        //var template = JST[]();
-        //this.$elements.container.html(template);
-        //this._loadViewComponents();
+        var $tr = $('<tr>').append(
+            $('<th>').text("Parameter"),
+            $('<th>').text("Value"),
+            $('<th>').text("Defaults")
+        );
+        this.$elements.runoptions_table_parameters.append($tr[0]);
+
+        var rows = $.parseJSON(global_editor['graph'].getDefaultParent().getAttribute('parameters'));
+        for(var i=0; i<rows.length; i++) {
+            var item = rows[i];
+            var $tr = $('<tr>').append(
+                $('<td>').text(item.param_name),
+                $('<td>').text(item.param_value),
+                $('<td>').text(item.param_defaults)
+            );
+            this.$elements.runoptions_table_parameters.append($tr[0]);
+        }
+
+        this.$elements.runoptions_table_variables.empty();
+
+        var $tr = $('<tr>').append(
+            $('<th>').text("Variable"),
+            $('<th>').text("Value")
+        );
+        this.$elements.runoptions_table_variables.append($tr[0]);
+
+        var rows = $.parseJSON(global_editor['graph'].getDefaultParent().getAttribute('variables'));
+        for(var i=0; i<rows.length; i++) {
+            var item = rows[i];
+            var $tr = $('<tr>').append(
+                $('<td>').text(item.var_name),
+                $('<td>').text(item.var_value)
+            );
+            this.$elements.runoptions_table_variables.append($tr[0]);
+        }
     };
 
     return RunOptionsView;

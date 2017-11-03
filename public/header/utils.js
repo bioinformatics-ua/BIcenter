@@ -61,8 +61,8 @@ function getSteps(){
             item += '<li><a tabindex="-1" href="#" onclick="';
             item += fourth_method;
             item += ";";
-            item += third_method;
-            item += '">Edit Step</a></li>';
+            //item += third_method;
+            item += '" view-c>Edit Step</a></li>';
             item += '<li><a tabindex="-1" href="#">Edit Step Description</a></li>';
             item += '<li class="divider"></li>';
             item += '<li><a tabindex="-1" href="#" onclick="'
@@ -212,6 +212,7 @@ function stepDialog(stepType){
     else if(stepType == "CheckSum") {
         $("#Checksum").show(
             function(){
+                /*
                 $($("#checksum_step_name")[0]).val(global_step.getAttribute("label"));
 
                 var index = global_step.getAttribute('checkSumType');
@@ -253,34 +254,35 @@ function stepDialog(stepType){
                         }
                     }
                 );
+                */
             }
         );
     }
     else if(stepType == "Sequence") {
-        $("#Sequence").show(
-            function () {
-                $($("#sequence_step_name")[0]).val(global_step.getAttribute("label"));
-                $($("#checksum_value_name")[0]).val(global_step.getAttribute("valuename"));
-
-                if(global_step.getAttribute("use_database") == "Y"){
-                    $('#sequence_database').prop( "checked", true );
-                }
-                else{
-                    $('#sequence_database').prop( "checked", false );
-                }
-
-                if(global_step.getAttribute("use_counter") == "Y"){
-                    $('#sequence_counter').prop( "checked", true );
-                }
-                else{
-                    $('#sequence_counter').prop( "checked", false );
-                }
-                $($("#sequence_counter_name")[0]).val(global_step.getAttribute("counter_name"));
-                $($("#sequence_start_value")[0]).val(global_step.getAttribute("start_at"));
-                $($("#sequence_increment")[0]).val(global_step.getAttribute("increment_by"));
-                $($("#sequence_max_value")[0]).val(global_step.getAttribute("max_value"));
-            }
-        )
+        // $("#Sequence").show(
+        //     function () {
+        //         $($("#sequence_step_name")[0]).val(global_step.getAttribute("label"));
+        //         $($("#sequence_value_name")[0]).val(global_step.getAttribute("valuename"));
+        //
+        //         if(global_step.getAttribute("use_database") == "Y"){
+        //             $('#sequence_database').prop( "checked", true );
+        //         }
+        //         else{
+        //             $('#sequence_database').prop( "checked", false );
+        //         }
+        //
+        //         if(global_step.getAttribute("use_counter") == "Y"){
+        //             $('#sequence_counter').prop( "checked", true );
+        //         }
+        //         else{
+        //             $('#sequence_counter').prop( "checked", false );
+        //         }
+        //         $($("#sequence_counter_name")[0]).val(global_step.getAttribute("counter_name"));
+        //         $($("#sequence_start_value")[0]).val(global_step.getAttribute("start_at"));
+        //         $($("#sequence_increment")[0]).val(global_step.getAttribute("increment_by"));
+        //         $($("#sequence_max_value")[0]).val(global_step.getAttribute("max_value"));
+        //     }
+        // )
     }
 }
 

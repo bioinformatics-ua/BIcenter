@@ -1,0 +1,21 @@
+<!-- Step Input and Output Fields -->
+<div id="fields_page" class="box box-default">
+    <div class="box-header with-border">
+        <h3 view-element="fields_header" class="box-title"> </h3>
+        </div>
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody view-element="fields_table_body">
+            <tr view-element="fields_table_header">
+                <!-- inputOutputFields() will fill the header -->
+                </tr>
+            <!-- inputOutputFields() write the values -->
+            </tbody>
+            </table>
+        <p view-element="fields_error"></p>
+        </div>
+    <div class="box-footer">
+        <button type="submit" view-click="controller.ok()" class="btn bg-navy margin pull-right">Ok</button>
+        </div>
+    </div>
+</div>

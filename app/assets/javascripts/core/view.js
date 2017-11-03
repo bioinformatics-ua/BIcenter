@@ -145,6 +145,13 @@ define('View', ['jquery', 'underscore', 'core/utils', 'messages', 'templates'], 
             // Clean up to avoid conflicts
             $element.removeAttr('view-submit');
         });
+
+        this.$container.find('[controller]').each(function () {
+            var $element = $(this);
+            var name = $element.attr('controller');
+
+            self.controller.module._setController($element, name);
+        });
     };
 
     View.prototype._setKeyValuePairs = function (text) {

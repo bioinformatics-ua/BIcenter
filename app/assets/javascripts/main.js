@@ -11,6 +11,7 @@ requirejs.config({
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'adminLTE': '../lib/adminLTE/js/app.min',
         'handlebars.runtime': '../lib/handlebars/handlebars.runtime',
+        'editor':'../editor/editor',
 
         // Core
         'Module': 'core/module',
@@ -19,9 +20,21 @@ requirejs.config({
         'Modal': 'core/modal',
         'Color': 'core/color',
 
+        // Header
+        'HeaderController':'header/headerController',
+        'HeaderView':'header/headerView',
+
+        // Main Container
+        'ContainerController':'container/containerController',
+        'ContainerView':'container/containerView',
+
         // Graph
         'GraphController': 'graph/graphController',
         'GraphView': 'graph/graphView',
+
+        // Input and Ouput fields Dialog
+        'FieldsController': 'steps/fields/fieldsController',
+        'FieldsView': 'steps/fields/fieldsView',
 
         // Run Options Dialog
         'RunOptionsController':'run/runOptionsController',

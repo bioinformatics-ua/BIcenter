@@ -1,95 +1,99 @@
-<form class="form-horizontal">
+<div id="RunOptions" class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Run Options</h3>
+    </div>
+
     <div class="box-body">
+        <form class="form-horizontal">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Details</a></li>
+                    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Parameters</a></li>
+                    <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Variables</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-5">
+                                <div class="checkbox">
+                                    <label>
+                                        <input view-element="runoptions_safemode" type="checkbox"> Enable safe mode.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-        <!-- Custom Tabs -->
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Details</a></li>
-                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Parameters</a></li>
-                <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Variables</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tab_1">
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-5">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="runoptions_safemode" type="checkbox"> Enable safe mode.
-                                </label>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-5">
+                                <div class="checkbox">
+                                    <label>
+                                        <input view-element="runoptions_performance" type="checkbox" checked> Gather performance metrics.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-5">
+                                <div class="checkbox">
+                                    <label>
+                                        <input view-element="runoptions_clear_log" type="checkbox" checked> Clear log before execution.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="runoptions_log_level" class="col-sm-2 control-label">Log Level</label>
+                            <div class="col-sm-5">
+                                <select view-element="runoptions_log_level" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                    <option>No Log</option>
+                                    <option>Error Log</option>
+                                    <option>Minimum Log</option>
+                                    <option selected>Basic Log</option>
+                                    <option>Detailed Log</option>
+                                    <option>Debugging</option>
+                                    <option>Line-level Log (very detailed)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="runoptions_playback" class="col-sm-2 control-label">Playback Date&Time (yyyy/MM/dd HH:mm:ss)</label>
+
+                            <div class="col-sm-5">
+                                <input class="form-control" view-element="runoptions_playback">
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-5">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="runoptions_performance" type="checkbox" checked> Gather performance metrics.
-                                </label>
-                            </div>
-                        </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_2">
+                        <table class="table table-bordered">
+                            <tbody view-element="runoptions_table_parameters">
+                                <!-- showRunOptions() will write defined all parameters -->
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-5">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="runoptions_clear_log" type="checkbox" checked> Clear log before execution.
-                                </label>
-                            </div>
-                        </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_3">
+                        <table class="table table-bordered">
+                            <tbody view-element="runoptions_table_variables">
+                            <!-- showRunOptions() will write defined all variables -->
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div class="form-group">
-                        <label for="runoptions_log_level" class="col-sm-2 control-label">Log Level</label>
-                        <div class="col-sm-5">
-                            <select id="runoptions_log_level" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                <option>No Log</option>
-                                <option>Error Log</option>
-                                <option>Minimum Log</option>
-                                <option selected>Basic Log</option>
-                                <option>Detailed Log</option>
-                                <option>Debugging</option>
-                                <option>Line-level Log (very detailed)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="runoptions_playback" class="col-sm-2 control-label">Playback Date&Time (yyyy/MM/dd HH:mm:ss)</label>
-
-                        <div class="col-sm-5">
-                            <input class="form-control" id="runoptions_playback">
-                        </div>
-                    </div>
+                    <!-- /.tab-pane -->
                 </div>
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="tab_2">
-                    <table class="table table-bordered">
-                        <tbody id="runoptions_table_parameters">
-                            <!-- showRunOptions() will write defined all parameters -->
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="tab_3">
-                    <table class="table table-bordered">
-                        <tbody id="runoptions_table_variables">
-                        <!-- showRunOptions() will write defined all variables -->
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.tab-pane -->
+                <!-- /.tab-content -->
             </div>
-            <!-- /.tab-content -->
-        </div>
-        <!-- nav-tabs-custom -->
-
+            <!-- nav-tabs-custom -->
+        </form>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
-        <button id="runoptions_cancel" type="submit" class="btn btn-default">Cancel</button>
+        <button view-click="controller.cancelClick()" type="submit" class="btn btn-default">Cancel</button>
         <button id="runoptions_submit" type="submit" class="btn bg-navy margin pull-right">Submit</button>
     </div>
     <!-- /.box-footer -->
-</form>
+</div>

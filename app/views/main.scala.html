@@ -17,11 +17,11 @@
 
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
     </head>
-    <body onload="createEditor('assets/editor/diagrameditor.xml');" class="sidebar-mini skin-darkblue-light fixed">
+    <body style="min-height:100%;height:auto;" class="sidebar-mini skin-darkblue-light fixed">
         <script type="text/javascript" src="@routes.Assets.versioned("lib/mxgraph2/js/mxClient.js")"></script>
         <script type="text/javascript" src="@routes.Assets.versioned("editor/editor.js")"></script>
 
-        <div class="wrapper">
+        <div class="wrapper" module="MainModule">
             @header()
 
             @sidebar()
@@ -31,113 +31,78 @@
             <div class="content-wrapper">
             <section class="content">
 
-                <!-- Transformation Pipeline -->
-                <div id="main_page">
-                    <div id="selectActions" valign="top" style="display:none;">
-                            <!-- Select Actions Here -->
-                    </div>
-                    <div id="mainActions" valign="top" style="display:none;">
-                            <!-- Main Actions Here -->
-                    </div>
-                    <table border="0" style="height:100%;width:100%;">
-                        <tr>
-                            <td id="toolbar" style="display:none;" valign="top">
-                                    <!-- Toolbar Here -->
-                            </td>
-                            <td id="board" valign="top" style="height:80vh;width:100%;border-width:1px;border-style:solid;border-color:black;">
-                                <div id="graph" tabindex="-1" style="height:100%;width:100%;position:relative;overflow:hidden;cursor:default;">
-                                        <!-- Graph Here -->
-                                </div>
-                                <textarea id="xml" style="height:100%;width:100%;display:none;border-style:none;"></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                    <input id="source" type="checkbox" style="display:none;"/>
-                    <button id="xmlBtn" type="button" class="btn bg-navy margin" onclick="loadXml();" style="display:none;float:right">Import Transaction</button>
-                    <div id="zoomActions" style="display:none;">
-                    </div>
-                </div>
+                @**@
 
-                <!-- Edit Transformation -->
-                <div id="TransSettings" class="box box-default" style="display:none;">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Transaction Properties</h3>
-                    </div>
-                    <div class="box-body">
-                        <div module="TransSettingsModule">
-                            <div controller="TransSettingsController"></div>
-                        </div>
-                    </div>
-                </div>
+                @*<!-- Edit Transformation -->*@
+                @*<div id="TransSettings" class="box box-default" style="display:none;">*@
+                    @*<div class="box-header with-border">*@
+                        @*<h3 class="box-title">Transaction Properties</h3>*@
+                    @*</div>*@
+                    @*<div class="box-body">*@
+                        @*<div controller="TransSettingsController"></div>*@
+                    @*</div>*@
+                @*</div>*@
 
-                <!-- Step Input and Output Fields -->
-                <div id="fields_page" class="box box-default" style="display:none;">
-                    <div class="box-header with-border">
-                        <h3 id="fields_header" class="box-title"> </h3>
-                    </div>
-                    <div class="box-body">
-                        <table class="table table-bordered">
-                            <tbody id="fields_table_body">
-                                <tr id="fields_table_header">
-                                    <!-- inputOutputFields() will fill the header -->
-                                </tr>
-                                <!-- inputOutputFields() write the values -->
-                            </tbody>
-                        </table>
-                        <p id="fields_error"></p>
-                    </div>
-                    <div class="box-footer">
-                        <button type="submit" onclick="return2Pipeline('fields_page');" class="btn bg-navy margin pull-right">Ok</button>
-                    </div>
-                </div>
+                @*<!-- Step Input and Output Fields -->*@
+                @*<div id="fields_page" class="box box-default" style="display:none;">*@
+                    @*<div class="box-header with-border">*@
+                        @*<h3 id="fields_header" class="box-title"> </h3>*@
+                    @*</div>*@
+                    @*<div class="box-body">*@
+                        @*<table class="table table-bordered">*@
+                            @*<tbody id="fields_table_body">*@
+                                @*<tr id="fields_table_header">*@
+                                    @*<!-- inputOutputFields() will fill the header -->*@
+                                @*</tr>*@
+                                @*<!-- inputOutputFields() write the values -->*@
+                            @*</tbody>*@
+                        @*</table>*@
+                        @*<p id="fields_error"></p>*@
+                    @*</div>*@
+                    @*<div class="box-footer">*@
+                        @*<button type="submit" onclick="return2Pipeline('fields_page');" class="btn bg-navy margin pull-right">Ok</button>*@
+                    @*</div>*@
+                @*</div>*@
 
-                <!-- Edit Row Generator Step -->
-                <div id="RowGenerator" class="box box-default" style="display:none;">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Generate Rows</h3>
-                    </div>
-                    <div class="box-body">
-                        <div module="MainModule">
-                            <div controller="RowGeneratorController"></div>
-                        </div>
-                    </div>
-                </div>
+                @*<!-- Edit Row Generator Step -->*@
+                @*<div id="RowGenerator" class="box box-default" style="display:none;">*@
+                    @*<div class="box-header with-border">*@
+                        @*<h3 class="box-title">Generate Rows</h3>*@
+                    @*</div>*@
+                    @*<div class="box-body">*@
+                        @*<div controller="RowGeneratorController"></div>*@
+                    @*</div>*@
+                @*</div>*@
 
-                <!-- Edit Add Checksum Step -->
-                <div id="Checksum" class="box box-default" style="display:none;">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Add Checksum</h3>
-                    </div>
-                    <div class="box-body">
-                        <div module="MainModule">
-                            <div controller="ChecksumController"></div>
-                        </div>
-                    </div>
-                </div>
+                @*<!-- Edit Add Checksum Step -->*@
+                @*<div id="Checksum" class="box box-default" style="display:none;">*@
+                    @*<div class="box-header with-border">*@
+                        @*<h3 class="box-title">Add Checksum</h3>*@
+                    @*</div>*@
+                    @*<div class="box-body">*@
+                        @*<div controller="ChecksumController"></div>*@
+                    @*</div>*@
+                @*</div>*@
 
-                <!-- Edit Add Sequence Step -->
-                <div id="Sequence" class="box box-default" style="display:none;">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Add Sequence</h3>
-                    </div>
-                    <div class="box-body">
-                        <div module="MainModule">
-                            <div controller="SequenceController"></div>
-                        </div>
-                    </div>
-                </div>
+                @*<!-- Edit Add Sequence Step -->*@
+                @*<div id="Sequence" class="box box-default" style="display:none;">*@
+                    @*<div class="box-header with-border">*@
+                        @*<h3 class="box-title">Add Sequence</h3>*@
+                    @*</div>*@
+                    @*<div class="box-body">*@
+                        @*<div controller="SequenceController"></div>*@
+                    @*</div>*@
+                @*</div>*@
 
-                <!-- Run Options Dialog -->
-                <div id="RunOptions" class="box box-default" style="display:none;">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Run Options</h3>
-                    </div>
-                    <div class="box-body">
-                        <div module="MainModule">
-                            <div controller="RunOptionsController"></div>
-                        </div>
-                    </div>
-                </div>
+                @*<!-- Run Options Dialog -->*@
+                @*<div id="RunOptions" class="box box-default" style="display:none;">*@
+                    @*<div class="box-header with-border">*@
+                        @*<h3 class="box-title">Run Options</h3>*@
+                    @*</div>*@
+                    @*<div class="box-body">*@
+                        @*<div controller="RunOptionsController"></div>*@
+                    @*</div>*@
+                @*</div>*@
 
             @content
 
