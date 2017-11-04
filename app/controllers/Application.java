@@ -39,8 +39,7 @@ public class Application extends Controller {
     public Result javascriptRoutes() {
         response().setHeader(Http.HeaderNames.CONTENT_TYPE, "text/javascript");
         return ok(JavaScriptReverseRouter.create("jsRoutes",
-                routes.javascript.Application.supportedLanguages(),
-                routes.javascript.StepConfigurationController.showChecksumDialog()
+                routes.javascript.Application.supportedLanguages()
         ));
 //        return ok(
 //                Routes.javascriptRouter("jsRoutes",

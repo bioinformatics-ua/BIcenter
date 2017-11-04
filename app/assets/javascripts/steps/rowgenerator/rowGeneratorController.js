@@ -11,6 +11,9 @@ define('RowGeneratorController', ['Controller', 'RowGeneratorView'], function (C
         _super_.initialize.call(this, $container);
     };
 
+    /**
+     * Returns to the pipeline view.
+     */
     RowGeneratorController.prototype.cancelClick = function(){
         var controller = 'GraphController';
         var containerController = this.module.controllers.ContainerController;

@@ -58,6 +58,7 @@ public class TransGraphController extends Controller {
      * @throws Exception
      */
     public Result run() throws Exception {
+        /*
         Object execution_json = request().body().as(Map.class).get("execution");
         String execution_configuration = (String)((String[])execution_json)[0];
 
@@ -150,6 +151,13 @@ public class TransGraphController extends Controller {
         jsonObject = new JSONObject();
         jsonObject.put("success", true);
         jsonObject.put("executionId", transExecutor.getExecutionId());
+
+        return ok(jsonObject.toString()).as("text/html");
+        */
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("success", true);
+        jsonObject.put("executionId", 1234);
 
         return ok(jsonObject.toString()).as("text/html");
     }

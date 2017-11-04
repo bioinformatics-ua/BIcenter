@@ -11,6 +11,9 @@ define('FieldsController', ['Controller', 'FieldsView'], function (Controller, F
         _super_.initialize.call(this, $container);
     };
 
+    /**
+     * Returns to the pipeline view.
+     */
     FieldsController.prototype.ok = function(){
         var controller = 'GraphController';
         var containerController = this.module.controllers.ContainerController;

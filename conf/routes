@@ -19,6 +19,3 @@ GET         /graph/load                            controllers.TransGraphControl
 POST        /graph/run                             controllers.TransGraphController.run()
 POST        /step/inputFieldsName                  controllers.StepController.inputFieldsName()
 POST        /step/inputOutputFields                controllers.StepController.inputOutputFields()
-
-## Steps configurations
-GET         /configuration/step/checksum           controllers.StepConfigurationController.showChecksumDialog()

@@ -11,6 +11,9 @@ define('ChecksumController', ['Controller', 'ChecksumView'], function (Controlle
         _super_.initialize.call(this, $container);
     };
 
+    /**
+     * Returns to the pipeline view.
+     */
     ChecksumController.prototype.cancelClick = function(){
         var controller = 'GraphController';
         var containerController = this.module.controllers.ContainerController;

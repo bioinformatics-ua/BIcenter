@@ -48,8 +48,6 @@ define('FieldsView', ['View'], function (View) {
                         context.$elements.fields_table_body.append(row);
                     }
                 }
-
-                this.$elements.fields_page.show();
             }
         );
     };

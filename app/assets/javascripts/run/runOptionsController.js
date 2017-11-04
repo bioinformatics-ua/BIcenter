@@ -11,10 +11,9 @@ define('RunOptionsController', ['Controller', 'RunOptionsView'], function (Contr
         _super_.initialize.call(this, $container);
     };
 
-    RunOptionsController.prototype.testClick = function () {
-        console.log("Testing clicks from controller");
-    };
-
+    /**
+     * Returns to the pipeline view.
+     */
     RunOptionsController.prototype.cancelClick = function(){
         var controller = 'GraphController';
         var containerController = this.module.controllers.ContainerController;

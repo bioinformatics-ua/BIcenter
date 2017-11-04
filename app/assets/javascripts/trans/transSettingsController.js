@@ -11,6 +11,9 @@ define('TransSettingsController', ['Controller', 'TransSettingsView'], function 
         _super_.initialize.call(this, $container);
     };
 
+    /**
+     * Returns to the pipeline view.
+     */
     TransSettingsController.prototype.cancelClick = function(){
         var controller = 'GraphController';
         var containerController = this.module.controllers.ContainerController;
