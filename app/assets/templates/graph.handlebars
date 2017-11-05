@@ -1,26 +1,40 @@
-<!-- Transformation Pipeline -->
-<div view-element="main_page">
-    <div id="selectActions" valign="top" style="display:none;">
-        <!-- Select Actions Here -->
-    </div>
-    <div id="mainActions" valign="top" style="display:none;">
-        <!-- Main Actions Here -->
-    </div>
-    <table border="0" style="height:100%;width:100%;">
-        <tr>
-            <td id="toolbar" style="display:none;" valign="top">
-                <!-- Toolbar Here -->
-            </td>
-            <td id="board" view-element="board" valign="top" style="height:80vh;width:100%;border-width:1px;border-style:solid;border-color:black;">
-                <div id="graph" tabindex="-1" style="height:100%;width:100%;position:relative;overflow:hidden;cursor:default;">
-                    <!-- Graph Here -->
-                </div>
-                <textarea id="xml" view-element="xml" style="height:100%;width:100%;display:none;border-style:none;"></textarea>
-            </td>
-        </tr>
-    </table>
-    <input id="source" view-element="source" type="checkbox" style="display:none;"/>
-    <button id="xmlBtn" view-element="xmlBtn" type="button" class="btn bg-navy margin" view-click="loadXml();" style="display:none;float:right">Import Transaction</button>
-    <div id="zoomActions" style="display:none;">
+<style>
+    .nav-tabs > li .close {
+        margin: -2px 0 0 10px;
+        font-size: 18px;
+    }
+</style>
+<div class="box box-default">
+    <div class="box-body">
+        <ul view-element="graph_tabs" class="nav nav-tabs">
+            <!-- The name of all open transformations -->
+        </ul>
+
+        <!-- Transformation Pipeline -->
+        <div view-element="main_page">
+            <div id="selectActions" valign="top" style="display:none;">
+                <!-- Select Actions Here -->
+            </div>
+            <div id="mainActions" valign="top" style="display:none;">
+                <!-- Main Actions Here -->
+            </div>
+            <table border="0" style="height:100%;width:100%;">
+                <tr>
+                    <td id="toolbar" style="display:none;" valign="top">
+                        <!-- Toolbar Here -->
+                    </td>
+                    <td id="board" view-element="board" valign="top" style="height:80vh;width:100%;border-width:1px;border-style:solid;border-color:black;">
+                        <div id="graph" tabindex="-1" style="height:100%;width:100%;position:relative;overflow:hidden;cursor:default;">
+                            <!-- Graph Here -->
+                        </div>
+                        <textarea id="xml" view-element="xml" style="height:100%;width:100%;display:none;border-style:none;"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <input id="source" view-element="source" type="checkbox" style="display:none;"/>
+            <button id="xmlBtn" view-element="xmlBtn" type="button" class="btn bg-navy margin" view-click="loadXml();" style="display:none;float:right">Import</button>
+            <div id="zoomActions" style="display:none;">
+            </div>
+        </div>
     </div>
 </div>
