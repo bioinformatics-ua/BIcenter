@@ -30,7 +30,8 @@ libraryDependencies ++= Seq(
   guice,
   javaJdbc,
   javaWs,
-  cache,
+  cacheApi,
+  ehcache,
   // Multi-language
   "org.julienrf" %% "play-jsmessages" % "3.0.0",
   // RequireJS
@@ -73,6 +74,9 @@ libraryDependencies ++= Seq(
   // Test Database
   "com.h2database" % "h2" % "1.4.194"
 )
+
+libraryDependencies += jcache
+libraryDependencies += "org.jsr107.ri" % "cache-annotations-ri-guice" % "1.0.0"
 
 ////////////////////////////////////////////////////////////////////////////
 // Test settings

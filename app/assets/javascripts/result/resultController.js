@@ -11,9 +11,5 @@ define('ResultController', ['Controller', 'ResultView'], function (Controller, R
         _super_.initialize.call(this, $container);
     };
 
-    ResultController.prototype.testClick = function () {
-        console.log("Testing clicks from controller");
-    };
-
     return ResultController;
 });

@@ -11,13 +11,5 @@ define('ResultView', ['View'], function (View) {
         _super_.initialize.call(this, $container);
     };
 
-    ResultView.prototype.testClick = function () {
-        console.log("Testing clicks from view");
-
-        //var template = JST[]();
-        //this.$elements.container.html(template);
-        //this._loadViewComponents();
-    };
-
     return ResultView;
 });

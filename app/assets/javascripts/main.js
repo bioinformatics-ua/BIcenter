@@ -57,6 +57,10 @@ requirejs.config({
         'SequenceController': 'steps/sequence/sequenceController',
         'SequenceView': 'steps/sequence/sequenceView',
 
+        // PreviewResults
+        'PreviewResultsController': 'previewResults/previewResultsController',
+        'PreviewResultsView': 'previewResults/previewResultsView',
+
         // Result
         'ResultController': 'result/resultController',
         'ResultView': 'result/resultView',

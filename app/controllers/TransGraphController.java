@@ -1,5 +1,9 @@
 package controllers;
 
+import akka.Done;
+import play.cache.*;
+import play.mvc.*;
+
 import kettleExt.App;
 import kettleExt.TransExecutor;
 import kettleExt.trans.TransDecoder;
@@ -18,21 +22,31 @@ import com.mxgraph.io.mxCodec;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxGraph;
 
-import java.io.DataOutputStream;
-import java.io.File;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletionStage;
 
 import org.w3c.dom.Document;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import javax.inject.Inject;
+
 /**
  * Controller that manages the mxGraph.
  */
 public class TransGraphController extends Controller {
+    private SyncCacheApi cache;
+
+    @Inject
+    public TransGraphController(SyncCacheApi cache) {
+        this.cache = cache;
+    }
+
     /**
      * Get Method, that convert a given Pentaho (.ktr) file into a mxGraph (.xml) file, and returns it back.
      * @param filename Pentaho file.
@@ -58,7 +72,6 @@ public class TransGraphController extends Controller {
      * @throws Exception
      */
     public Result run() throws Exception {
-        /*
         Object execution_json = request().body().as(Map.class).get("execution");
         String execution_configuration = (String)((String[])execution_json)[0];
 
@@ -70,10 +83,12 @@ public class TransGraphController extends Controller {
 
         TransMeta transMeta = TransDecoder.decode(graph);
 
+        /*
         String xml = XMLHandler.getXMLHeader() + transMeta.getXML();
         DataOutputStream dos = new DataOutputStream(KettleVFS.getOutputStream(transMeta.getFilename(), false));
         dos.write(xml.getBytes(Const.XML_ENCODING));
         dos.close();
+        */
 
         JSONObject jsonObject = JSONObject.fromObject(execution_configuration);
         TransExecutionConfiguration executionConfiguration = new TransExecutionConfiguration();
@@ -144,21 +159,39 @@ public class TransGraphController extends Controller {
         }
         executionConfiguration.setVariables( map );
 
-
         TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta);
         new Thread(transExecutor).start();
 
+        cache.set(transExecutor.getExecutionId(), transExecutor);
+
         jsonObject = new JSONObject();
-        jsonObject.put("success", true);
+        jsonObject.put("state", "RUNNING");
         jsonObject.put("executionId", transExecutor.getExecutionId());
+        jsonObject.put("transName", transMeta.getName());
 
         return ok(jsonObject.toString()).as("text/html");
-        */
+    }
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("success", true);
-        jsonObject.put("executionId", 1234);
+    public Result result(String executionId) throws Exception {
+        JSONObject jsonReply = new JSONObject();
 
-        return ok(jsonObject.toString()).as("text/html");
+        TransExecutor transExecutor = cache.get(executionId);
+
+        jsonReply.put("finished", transExecutor.isFinished());
+        if(transExecutor.isFinished()) {
+            session().remove(executionId);
+
+            jsonReply.put("stepMeasure", transExecutor.getStepMeasure());
+            jsonReply.put("log", transExecutor.getExecutionLog());
+            jsonReply.put("stepStatus", transExecutor.getStepStatus());
+            jsonReply.put("previewData", transExecutor.getPreviewData());
+        } else {
+            jsonReply.put("stepMeasure", transExecutor.getStepMeasure());
+            jsonReply.put("log", transExecutor.getExecutionLog());
+            jsonReply.put("stepStatus", transExecutor.getStepStatus());
+            jsonReply.put("previewData", transExecutor.getPreviewData());
+        }
+
+        return ok(jsonReply.toString()).as("text/html");
     }
 }
