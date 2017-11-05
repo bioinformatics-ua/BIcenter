@@ -9,18 +9,22 @@ define('PreviewResultsView', ['View'], function (View) {
 
     PreviewResultsView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
-        var transName = MainModule.controllers.HeaderController.transName;
-        var executionId = MainModule.controllers.HeaderController.executionId;
-        this.$elements.preview_title.text("Preview "+transName);
+        this.transName = MainModule.controllers.HeaderController.transName;
+        this.executionId = MainModule.controllers.HeaderController.executionId;
+        this.$elements.preview_title.text("Preview "+this.transName);
 
         // Render the transformation with a success icon on each step.
         this.renderGraph(this.$elements.preview_graph[0]);
 
         // Request for transformation results.
         var context = this;
-        $.get("/graph/result",{execution: executionId},
+        $.get("/graph/result",{execution: context.executionId},
             function(data){
-                console.log(data);
+
+                if(JSON.parse(data)['finished'] == true){
+                    MainModule.controllers.HeaderController.view.removeTransNotification(context.executionId);
+                }
+
                 context.$elements.preview_log.append(JSON.parse(data)['log']);
 
                 context.$elements.preview_steps_measures.empty();
@@ -89,7 +93,7 @@ define('PreviewResultsView', ['View'], function (View) {
             dec.decode(node, graph.getStylesheet());
 
             graph.setConnectable(false);
-            graph.setDropEnabled(false);
+            graph.setEnabled(false);
             graph.setCellsEditable(false);
             graph.setCellsDeletable(false);
             graph.setCellsMovable(false);
