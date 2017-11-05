@@ -49,7 +49,7 @@ define('GraphView', ['View'], function (View) {
      */
     GraphView.prototype.loadXml = function(){
         this.$elements.source.click();
-        this.$elements.board.css({'height': '80vh'});
+        this.$elements.board.css({'height': '70vh'});
         this.$elements.xmlBtn.css("display","none");
     }
 

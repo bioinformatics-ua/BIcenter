@@ -13,6 +13,9 @@ define('PreviewResultsView', ['View'], function (View) {
         var executionId = MainModule.controllers.HeaderController.executionId;
         this.$elements.preview_title.text("Preview "+transName);
 
+        // Render the transformation with a success icon on each step.
+        this.renderGraph(this.$elements.preview_graph[0]);
+
         // Request for transformation results.
         var context = this;
         $.get("/graph/result",{execution: executionId},
@@ -61,6 +64,45 @@ define('PreviewResultsView', ['View'], function (View) {
             }
         );
     };
+
+    /**
+     * Render a mxGraph that only allows cell selection.
+     * @param container The mxGraph div.
+     */
+    PreviewResultsView.prototype.renderGraph = function(container){
+        // Checks if the browser is supported
+        if (!mxClient.isBrowserSupported())
+        {
+            // Displays an error message if the browser is not supported.
+            mxUtils.error('Browser is not supported!', 200, false);
+        }
+        else
+        {
+            // Disables the built-in context menu
+            mxEvent.disableContextMenu(container);
+
+            // Creates the graph inside the given container
+
+            var graph = this.graph = new mxGraph(container);
+            var node = mxUtils.load('assets/lib/mxgraph2/style/default-style.xml').getDocumentElement();
+            var dec = new mxCodec(node.ownerDocument);
+            dec.decode(node, graph.getStylesheet());
+
+            graph.setConnectable(false);
+            graph.setDropEnabled(false);
+            graph.setCellsEditable(false);
+            graph.setCellsDeletable(false);
+            graph.setCellsMovable(false);
+            graph.setCellsResizable(false);
+
+            var enc = new mxCodec();
+            var xml = enc.encode(global_editor.graph.getModel());
+            var decoder = new mxCodec(xml);
+
+            decoder.decode(xml, graph.getModel());
+            graph.resizeContainer = false;
+        }
+    }
 
     return PreviewResultsView;
 });
