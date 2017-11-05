@@ -20,9 +20,9 @@ define('PreviewResultsView', ['View'], function (View) {
         var context = this;
         $.get("/graph/result",{execution: context.executionId},
             function(data){
-
                 if(JSON.parse(data)['finished'] == true){
                     MainModule.controllers.HeaderController.view.removeTransNotification(context.executionId);
+                    context.updateStatus(context.graph,JSON.parse(data)['stepStatus']);
                 }
 
                 context.$elements.preview_log.append(JSON.parse(data)['log']);
@@ -93,7 +93,6 @@ define('PreviewResultsView', ['View'], function (View) {
             dec.decode(node, graph.getStylesheet());
 
             graph.setConnectable(false);
-            graph.setEnabled(false);
             graph.setCellsEditable(false);
             graph.setCellsDeletable(false);
             graph.setCellsMovable(false);
@@ -105,6 +104,41 @@ define('PreviewResultsView', ['View'], function (View) {
 
             decoder.decode(xml, graph.getModel());
             graph.resizeContainer = false;
+            this.graph = graph;
+        }
+    }
+
+    /**
+     * Draws a success/failure icon for each transformation step.
+     * @param stepStatus All step status, stating the execution output.
+     */
+    PreviewResultsView.prototype.updateStatus = function(graph,status){
+        for(var i=0; i<status.length; i++) {
+            var cells = graph.getModel().getChildCells(graph.getDefaultParent(), true, false);
+            for(var j=0; j<cells.length; j++) {
+                var cell = cells[j];
+                if(cell.getAttribute('label') == status[i].stepName) {
+                    graph.cellLabelChanged(cell,cell.getAttribute('label',''))
+                    var overlays = graph.getCellOverlays(cell) || [];
+                    for(var k=0; k<overlays.length; k++) {
+                        var overlay = overlays[k];
+
+                        if(overlay.align == mxConstants.ALIGN_RIGHT && overlay.verticalAlign == mxConstants.ALIGN_TOP
+                            && overlay.offset.x == 0 && overlay.offset.y == 0) {
+                            graph.removeCellOverlay(cell, overlay);
+                        }
+                    }
+
+                    if(status[i].stepStatus > 0) {
+                        var overlay = new mxCellOverlay(new mxImage('assets/lib/mxgraph2/editors/images/overlays/false.png', 16, 16), status[i].logText, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
+                        graph.addCellOverlay(cell, overlay);
+                    } else {
+                        var overlay = new mxCellOverlay(new mxImage('assets/lib/mxgraph2/editors/images/overlays/true.png', 16, 16), null, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
+                        graph.addCellOverlay(cell, overlay);
+                    }
+                    break;
+                }
+            }
         }
     }
 

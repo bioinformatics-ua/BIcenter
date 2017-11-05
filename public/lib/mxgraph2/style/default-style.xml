@@ -3,7 +3,7 @@
 		<add as="strokeColor" value="#5d65df"/>
 		<add as="fontSize" value="12"/>
 		<add as="fontColor" value="#000000"/>
-		<add as="fontFamily" value="宋体"/>
+		<add as="fontFamily" value="Arial"/>
 	</add>
 	<add as="defaultEdge">
 		<add as="shape" value="connector"/>
@@ -11,7 +11,7 @@
 		<add as="edgeStyle" value="elbowEdgeStyle"/>
 		<add as="endArrow" value="classic"/>
 		<add as="fontSize" value="11"/>
-		<add as="fontFamily" value="宋体"/>
+		<add as="fontFamily" value="Arial"/>
 		<add as="align" value="center"/>
 		<add as="verticalAlign" value="middle"/>
 		<add as="labelBackgroundColor" value="#ffffff"/>
