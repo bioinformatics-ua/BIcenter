@@ -11,6 +11,11 @@ define('GraphController', ['Controller', 'GraphView', 'editor'], function (Contr
         _super_.initialize.call(this, $container);
         // Load the mxEditor after elements rendering.
         createEditor('assets/editor/diagrameditor.xml');
+
+        if(global_editor!=null){
+            this.view.$elements.source.click();
+            this.view.$elements.source.click();
+        }
     };
 
     return GraphController;

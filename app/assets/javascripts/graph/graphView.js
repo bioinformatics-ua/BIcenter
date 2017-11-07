@@ -13,34 +13,37 @@ define('GraphView', ['View'], function (View) {
 
         // Load and convert the default transformation.
         var context = this;
-        $.get("/graph/load",
-            function(transXml){
-                context.$elements.source.click();
-                context.$elements.xml.val(transXml);
-                context.$elements.source.click();
+        if(global_editor==null)
+        {
+            $.get("/graph/load",
+                function (transXml) {
+                    context.$elements.source.click();
+                    context.$elements.xml.val(transXml);
+                    context.$elements.source.click();
 
-                var node = (new DOMParser()).parseFromString(transXml, "text/xml").documentElement;
-                var nodes = node.querySelectorAll("*");
-                var name = null;
-                for (var i = 0; i < nodes.length; i++) {
-                    // Append the transaction node to the nodes list.
-                    if (nodes[i].tagName == "Step" && nodes[i].hasAttribute('name')) {
-                        name = nodes[i].getAttribute('name');
-                        break;
+                    var node = (new DOMParser()).parseFromString(transXml, "text/xml").documentElement;
+                    var nodes = node.querySelectorAll("*");
+                    var name = null;
+                    for (var i = 0; i < nodes.length; i++) {
+                        // Append the transaction node to the nodes list.
+                        if (nodes[i].tagName == "Step" && nodes[i].hasAttribute('name')) {
+                            name = nodes[i].getAttribute('name');
+                            break;
+                        }
                     }
-                }
 
-                var $tab =
-                    $('<li class="active">').append(
-                        $('<a href="javascript:;">').append(
-                            $('<button class="close" type="button">').text("x"),
-                            name
-                        )
-                    );
-                context.$elements.graph_tabs.append($tab);
-                context._loadViewComponents();
-            }
-        );
+                    var $tab =
+                        $('<li class="active">').append(
+                            $('<a href="javascript:;">').append(
+                                $('<button class="close" type="button">').text("x"),
+                                name
+                            )
+                        );
+                    context.$elements.graph_tabs.append($tab);
+                    context._loadViewComponents();
+                }
+            );
+        }
     };
 
 

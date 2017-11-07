@@ -7,7 +7,6 @@
  var global_editor = null;
 function onInit(editor)
 {
-    global_editor = editor;
     // Enables rotation handle
     mxVertexHandler.prototype.rotationEnabled = true;
 
@@ -82,7 +81,11 @@ function onInit(editor)
             textNode.style.display = 'inline';
 
             var enc = new mxCodec();
-            var node = enc.encode(editor.graph.getModel());
+            if(global_editor==null)
+                var node = enc.encode(editor.graph.getModel());
+            else
+                var node = enc.encode(global_editor.graph.getModel());
+            global_editor = editor;
 
             textNode.value = mxUtils.getPrettyXml(node);
             textNode.originalValue = textNode.value;
@@ -92,12 +95,9 @@ function onInit(editor)
         {
             graphNode.style.display = '';
 
-            if (textNode.value != textNode.originalValue)
-            {
-                var doc = mxUtils.parseXml(textNode.value);
-                var dec = new mxCodec(doc);
-                dec.decode(doc.documentElement, editor.graph.getModel());
-            }
+            var doc = mxUtils.parseXml(textNode.value);
+            var dec = new mxCodec(doc);
+            dec.decode(doc.documentElement, editor.graph.getModel());
 
             textNode.originalValue = null;
 

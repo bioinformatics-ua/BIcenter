@@ -4,73 +4,70 @@
     </div>
 
     <div class="box-body">
-        <form class="form-horizontal">
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="checksum_step_name" class="col-sm-2 control-label">Step Name</label>
+        <form view-element="checksum_form" class="form-horizontal">
+            <div class="form-group">
+                <label for="label" class="col-sm-2 control-label">Step Name</label>
 
-                    <div class="col-sm-5">
-                        <input class="form-control" view-element="checksum_step_name">
+                <div class="col-sm-5">
+                    <input class="form-control" name="label" view-element="checksum_step_name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="checkSumType" class="col-sm-2 control-label">Checksum Type</label>
+                <div class="col-sm-5">
+                    <select name="checkSumType" view-element="checksum_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value="0">CRC 32</option>
+                        <option value="1">ADLER 32</option>
+                        <option value="2">MD5</option>
+                        <option value="3">SHA-1</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="resultfieldName" class="col-sm-2 control-label">Checksum Type</label>
+                <div class="col-sm-5">
+                    <select view-element="checksum_result_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" disabled>
+                        <option value="0">String</option>
+                        <option value="1">Hexadecimal</option>
+                        <option value="2">Binary</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="checksum_result_field" class="col-sm-2 control-label">Result Field</label>
+
+                <div class="col-sm-5">
+                    <input class="form-control" name="resultfieldName" view-element="checksum_result_field" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-5">
+                    <div class="checkbox">
+                        <label>
+                            <input name="compatibilityMode" view-element="checksum_mode" type="checkbox"> Compatibility mode.
+                        </label>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="checksum_type" class="col-sm-2 control-label">Checksum Type</label>
-                    <div class="col-sm-5">
-                        <select view-element="checksum_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                            <option value="0">CRC 32</option>
-                            <option value="1">ADLER 32</option>
-                            <option value="2">MD5</option>
-                            <option value="3">SHA-1</option>
-                        </select>
-                    </div>
+            <div class="form-group">
+                <label for="checksum_fields" class="col-sm-2 control-label">Fields used on checksum</label>
+                <div class="col-sm-5">
+                    <select view-element="checksum_fields" multiple="" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+
+                    </select>
                 </div>
-
-                <div class="form-group">
-                    <label for="checksum_result_type" class="col-sm-2 control-label">Checksum Type</label>
-                    <div class="col-sm-5">
-                        <select view-element="checksum_result_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                            <option value="0">String</option>
-                            <option value="1">Hexadecimal</option>
-                            <option value="2">Binary</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="checksum_result_field" class="col-sm-2 control-label">Result Field</label>
-
-                    <div class="col-sm-5">
-                        <input class="form-control" view-element="checksum_result_field">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-5">
-                        <div class="checkbox">
-                            <label>
-                                <input view-element="checksum_mode" type="checkbox"> Compatibility mode.
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="checksum_fields" class="col-sm-2 control-label">Fields used on checksum</label>
-                    <div class="col-sm-5">
-                        <select view-element="checksum_fields" multiple="" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-
-                        </select>
-                    </div>
-                </div>
-
             </div>
         </form>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
         <button view-click="controller.cancelClick()" type="submit" class="btn btn-default">Cancel</button>
-        <button id="checksum_submit" type="submit" class="btn bg-navy margin pull-right">Submit</button>
+        <button view-click="controller.submitClick()" type="submit" class="btn bg-navy margin pull-right">Submit</button>
     </div>
     <!-- /.box-footer -->
 </div>
