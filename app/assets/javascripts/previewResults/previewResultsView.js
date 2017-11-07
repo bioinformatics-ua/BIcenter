@@ -17,6 +17,7 @@ define('PreviewResultsView', ['View'], function (View) {
         this.renderGraph(this.$elements.preview_graph[0]);
 
         // Request for transformation results.
+        this.data;
         var context = this;
         $.get("/graph/result",{execution: context.executionId},
             function(data){
@@ -24,6 +25,7 @@ define('PreviewResultsView', ['View'], function (View) {
                     MainModule.controllers.HeaderController.view.removeTransNotification(context.executionId);
                     context.updateStatus(context.graph,JSON.parse(data)['stepStatus']);
                 }
+                context.data = JSON.parse(data).previewData;
 
                 context.$elements.preview_log.append(JSON.parse(data)['log']);
 
@@ -104,6 +106,36 @@ define('PreviewResultsView', ['View'], function (View) {
 
             decoder.decode(xml, graph.getModel());
             graph.resizeContainer = false;
+
+            var context = this;
+            graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt)
+            {
+                context.$elements.preview_table.hide();
+                var cell = evt.getProperty('edit').changes[0].removed[0]
+                context.$elements.preview_data.show();
+                context.$elements.preview_data_title.text(cell.value);
+
+                context.$elements.preview_data_table.empty();
+
+                var columns = context.data[cell.value].columns;
+                var $tr = '<tr>';
+                for(var i=0; i<columns.length; i++)
+                    $tr += '<th>'+columns[i]['header']+'</th>';
+                $tr += '</tr>';
+                context.$elements.preview_data_table.append($tr);
+
+                var rows = context.data[cell.value].firstRecords;
+                for(var i=0; i<rows.length; i++) {
+                    var $tr = '<tr>';
+                    for(var j=0; j<columns.length; j++) {
+                        $tr += '<td>' + rows[i][columns[j]['header']] + '</td>';
+                    }
+                    $tr += '</tr>';
+                    context.$elements.preview_data_table.append($tr);
+                }
+
+            });
+
             this.graph = graph;
         }
     }

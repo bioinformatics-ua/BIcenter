@@ -251,8 +251,8 @@
     <last_time_field/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>200</xloc>
-      <yloc>200</yloc>
+      <xloc>184</xloc>
+      <yloc>213</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

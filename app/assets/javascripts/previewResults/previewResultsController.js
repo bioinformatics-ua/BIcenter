@@ -15,13 +15,18 @@ define('PreviewResultsController', ['Controller', 'PreviewResultsView'], functio
      * Returns to the pipeline view.
      */
     PreviewResultsController.prototype.cancelClick = function(){
-        var controller = 'GraphController';
-        var containerController = this.module.controllers.ContainerController;
-        if (!containerController) {
-            console.err('Container controller not found!');
+        if(this.view.$elements.preview_data.is(":visible")){
+            this.view.$elements.preview_data.hide();
+            this.view.$elements.preview_table.show();
         }
-
-        containerController.loadController(controller);
+        else {
+            var controller = 'GraphController';
+            var containerController = this.module.controllers.ContainerController;
+            if (!containerController) {
+                console.err('Container controller not found!');
+            }
+            containerController.loadController(controller);
+        }
     }
 
     return PreviewResultsController;

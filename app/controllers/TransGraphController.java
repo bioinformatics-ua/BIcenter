@@ -1,8 +1,6 @@
 package controllers;
 
-import akka.Done;
 import play.cache.*;
-import play.mvc.*;
 
 import kettleExt.App;
 import kettleExt.TransExecutor;
@@ -25,10 +23,8 @@ import com.mxgraph.view.mxGraph;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletionStage;
 
 import org.w3c.dom.Document;
 import play.mvc.Controller;
