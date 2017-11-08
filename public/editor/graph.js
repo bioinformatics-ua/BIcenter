@@ -89,7 +89,6 @@ function onInit(editor)
 
             textNode.value = mxUtils.getPrettyXml(node);
             textNode.originalValue = textNode.value;
-            textNode.focus();
         }
         else
         {
@@ -108,9 +107,6 @@ function onInit(editor)
             }
 
             textNode.style.display = 'none';
-
-            // Moves the focus back to the graph
-            editor.graph.container.focus();
         }
     };
 

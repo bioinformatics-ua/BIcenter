@@ -11,6 +11,10 @@ define('GraphView', ['View'], function (View) {
         _super_.initialize.call(this, $container);
         this._loadViewComponents();
 
+        // Initialize tab list if it doesn't exists yet.
+        var controller = MainModule.controllers.GraphController;
+        this.tabs = (controller != undefined) ? controller.view.tabs : [];
+
         // Load and convert the default transformation.
         var context = this;
         if(global_editor==null)
@@ -40,9 +44,26 @@ define('GraphView', ['View'], function (View) {
                             )
                         );
                     context.$elements.graph_tabs.append($tab);
+
+                    // Add the loaded graph to the tab list.
+                    context.tabs.push(name);
                     context._loadViewComponents();
                 }
             );
+        }
+        // Draw the current open tabs.
+        else{
+            for(var i=0; i<this.tabs.length; i++){
+                var $tab =
+                    $('<li class="active">').append(
+                        $('<a href="javascript:;">').append(
+                            $('<button class="close" type="button">').text("x"),
+                            this.tabs[i]
+                        )
+                    );
+                this.$elements.graph_tabs.append($tab);
+                context._loadViewComponents();
+            }
         }
     };
 

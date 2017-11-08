@@ -52,6 +52,15 @@ define('ChecksumController', ['Controller', 'ChecksumView'], function (Controlle
             global_editor.graph.getModel().endUpdate();
         }
 
+        var fields = $('#checksum_fields option:selected').map(function(){ return this.value }).get();
+        var fields_list = [];
+        for(var i=0; i<fields.length; i++){
+            fields_list.push({"name":fields[i]});
+        }
+
+        var edit = new mxCellAttributeChange(cell, 'fields', JSON.stringify(fields_list));
+        global_editor.graph.getModel().execute(edit);
+
         // In order to return to the graph view.
         this.cancelClick();
     }
