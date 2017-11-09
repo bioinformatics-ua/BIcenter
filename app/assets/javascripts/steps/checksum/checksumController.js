@@ -28,14 +28,14 @@ define('ChecksumController', ['Controller', 'ChecksumView'], function (Controlle
      * Save checksum settings changes.
      */
     ChecksumController.prototype.submitClick = function(){
-        var $form = this.view.$elements.checksum_form;
-        var formValues = getFormData($form);
-
         var cell_name = MainModule.controllers.HeaderController.global_step.getAttribute("ctype");
         var cell;
         for(var i=0; i<Object.keys(global_editor.graph.getModel().cells).length; i++)
             if(global_editor.graph.getModel().cells[i].getAttribute("ctype") == cell_name)
                 cell = global_editor.graph.getModel().cells[i];
+
+        var $form = this.view.$elements.checksum_form;
+        var formValues = getFormData($form);
 
         formValues.compatibilityMode = formValues.compatibilityMode ? true : false;
 

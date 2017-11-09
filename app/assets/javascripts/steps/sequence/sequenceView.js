@@ -7,6 +7,10 @@ define('SequenceView', ['View'], function (View) {
     SequenceView.prototype = Object.create(View.prototype);
     var _super_ = View.prototype;
 
+    /**
+     * Fill form with Sequence settings.
+     * @param $container Form container.
+     */
     SequenceView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
         this._loadViewComponents();

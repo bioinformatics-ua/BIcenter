@@ -7,6 +7,10 @@ define('ChecksumView', ['View'], function (View) {
     ChecksumView.prototype = Object.create(View.prototype);
     var _super_ = View.prototype;
 
+    /**
+     * Fill form with Checksum settings.
+     * @param $container Form container.
+     */
     ChecksumView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
 
