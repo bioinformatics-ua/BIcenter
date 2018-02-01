@@ -11,8 +11,6 @@ import kettleExt.utils.JSONObject;
 
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.logging.LogLevel;
-import org.pentaho.di.core.vfs.KettleVFS;
-import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.trans.TransExecutionConfiguration;
 import org.pentaho.di.trans.TransMeta;
 
@@ -63,6 +61,7 @@ public class TransGraphController extends Controller {
 
     /**
      * Post Method, that given a mxGraph (XML) file and a execution configuration (XML) specification,
+     * runs the defined transformation.
      * runs the defined transformation.
      * @return Transformation Results.
      * @throws Exception

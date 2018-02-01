@@ -14,6 +14,7 @@ import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
 import org.pentaho.di.cluster.SlaveServer;
 import org.pentaho.di.core.Const;
+import org.pentaho.di.core.Result;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.exception.KettleStepException;
 import org.pentaho.di.core.logging.KettleLogLayout;
@@ -111,6 +112,7 @@ public class TransExecutor implements Runnable, Serializable {
     public void run() {
         try {
             if (executionConfiguration.isExecutingLocally()) {
+                // Set the variables.
                 // Set the variables.
                 transMeta.injectVariables( executionConfiguration.getVariables() );
                 
@@ -416,68 +418,76 @@ public class TransExecutor implements Runnable, Serializable {
      * Returns the result of the transformation.
      * @return 
      */
-    public JSONObject getPreviewData() {
+    public JSONObject getPreviewData() throws Exception{
         JSONObject jsonObject = new JSONObject();
-        for (StepMetaDataCombi combi : trans.getSteps()) {
-            RowMetaInterface rowMeta = previewMetaMap.get(combi.stepMeta);
 
-            if (rowMeta != null) {
-                JSONObject stepJson = new JSONObject();
-                List<ValueMetaInterface> valueMetas = rowMeta.getValueMetaList();
+        if(executionConfiguration.isExecutingLocally()) {
+            for (StepMetaDataCombi combi : trans.getSteps()) {
+                RowMetaInterface rowMeta = previewMetaMap.get(combi.stepMeta);
 
-                JSONArray columns = new JSONArray();
-                JSONObject metaData = new JSONObject();
-                JSONArray fields = new JSONArray();
-                for (int i = 0; i < valueMetas.size(); i++) {
-                    ValueMetaInterface valueMeta = rowMeta.getValueMeta(i);
-                    fields.add(valueMeta.getName());
+                if (rowMeta != null) {
+                    JSONObject stepJson = new JSONObject();
+                    List<ValueMetaInterface> valueMetas = rowMeta.getValueMetaList();
 
-                    JSONObject column = new JSONObject();
-                    column.put("dataIndex", valueMeta.getName());
-                    column.put("width", 100);
-                    column.put("header", valueMeta.getComments() == null ? valueMeta.getName() : valueMeta.getComments());
-                    column.put("width", valueMeta.getLength() > 0 ? valueMeta.getLength() : 150);
-                    columns.add(column);
-                }
-                metaData.put("fields", fields);
-                metaData.put("root", "firstRecords");
-                stepJson.put("metaData", metaData);
-                stepJson.put("columns", columns);
+                    JSONArray columns = new JSONArray();
+                    JSONObject metaData = new JSONObject();
+                    JSONArray fields = new JSONArray();
+                    for (int i = 0; i < valueMetas.size(); i++) {
+                        ValueMetaInterface valueMeta = rowMeta.getValueMeta(i);
+                        fields.add(valueMeta.getName());
 
-                List<Object[]> rowsData = previewDataMap.get(combi.stepMeta);
-                JSONArray firstRecords = new JSONArray();
-                JSONArray lastRecords = new JSONArray();
-                for (int rowNr = 0; rowNr < rowsData.size(); rowNr++) {
-                    Object[] rowData = rowsData.get(rowNr);
-                    JSONObject row = new JSONObject();
-                    for (int colNr = 0; colNr < rowMeta.size(); colNr++) {
-                        String string;
-                        ValueMetaInterface valueMetaInterface;
-                        try {
-                            valueMetaInterface = rowMeta.getValueMeta(colNr);
-                            if (valueMetaInterface.isStorageBinaryString()) {
-                                Object nativeType = valueMetaInterface.convertBinaryStringToNativeType((byte[]) rowData[colNr]);
-                                string = valueMetaInterface.getStorageMetadata().getString(nativeType);
-                            } else {
-                                string = rowMeta.getString(rowData, colNr);
+                        JSONObject column = new JSONObject();
+                        column.put("dataIndex", valueMeta.getName());
+                        column.put("width", 100);
+                        column.put("header", valueMeta.getComments() == null ? valueMeta.getName() : valueMeta.getComments());
+                        column.put("width", valueMeta.getLength() > 0 ? valueMeta.getLength() : 150);
+                        columns.add(column);
+                    }
+                    metaData.put("fields", fields);
+                    metaData.put("root", "firstRecords");
+                    stepJson.put("metaData", metaData);
+                    stepJson.put("columns", columns);
+
+                    List<Object[]> rowsData = previewDataMap.get(combi.stepMeta);
+                    JSONArray firstRecords = new JSONArray();
+                    JSONArray lastRecords = new JSONArray();
+                    for (int rowNr = 0; rowNr < rowsData.size(); rowNr++) {
+                        Object[] rowData = rowsData.get(rowNr);
+                        JSONObject row = new JSONObject();
+                        for (int colNr = 0; colNr < rowMeta.size(); colNr++) {
+                            String string;
+                            ValueMetaInterface valueMetaInterface;
+                            try {
+                                valueMetaInterface = rowMeta.getValueMeta(colNr);
+                                if (valueMetaInterface.isStorageBinaryString()) {
+                                    Object nativeType = valueMetaInterface.convertBinaryStringToNativeType((byte[]) rowData[colNr]);
+                                    string = valueMetaInterface.getStorageMetadata().getString(nativeType);
+                                } else {
+                                    string = rowMeta.getString(rowData, colNr);
+                                }
+                            } catch (Exception e) {
+                                string = "Conversion error: " + e.getMessage();
                             }
-                        } catch (Exception e) {
-                            string = "Conversion error: " + e.getMessage();
-                        }
 
-                        ValueMetaInterface valueMeta = rowMeta.getValueMeta( colNr );
-                        row.put(valueMeta.getName(), string);
+                            ValueMetaInterface valueMeta = rowMeta.getValueMeta(colNr);
+                            row.put(valueMeta.getName(), string);
+                        }
+                        if (firstRecords.size() <= 50) {
+                            firstRecords.add(row);
+                        }
+                        lastRecords.add(row);
+                        if (lastRecords.size() > 50)
+                            lastRecords.remove(0);
                     }
-                    if(firstRecords.size() <= 50) {
-                        firstRecords.add(row);
-                    }
-                    lastRecords.add(row);
-                    if(lastRecords.size() > 50)
-                        lastRecords.remove(0);
+                    stepJson.put("firstRecords", firstRecords);
+                    jsonObject.put(combi.stepname, stepJson);
                 }
-                stepJson.put("firstRecords", firstRecords);
-                jsonObject.put(combi.stepname, stepJson);
             }
+        }
+        else{
+            SlaveServer remoteSlaveServer = executionConfiguration.getRemoteServer();
+            SlaveServerTransStatus transStatus = remoteSlaveServer.getTransStatus(transMeta.getName(), carteObjectId, 0);
+            Result result = transStatus.getResult();
         }
 
         return jsonObject;

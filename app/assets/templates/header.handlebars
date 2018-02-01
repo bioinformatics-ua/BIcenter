@@ -1,0 +1,88 @@
+<ul class="nav navbar-nav" >
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Transformation<span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">New Transformation</a></li>
+            <li><a href="#">Open Transformation</a></li>
+            <li><a href="#" view-click="importXml();">Import As XML</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Save Transformation</a></li>
+            <li><a href="#">Save Transformation As...</a></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit Pipeline<span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" onclick="document.getElementById('cut').click();">Cut</a></li>
+            <li><a href="#" onclick="document.getElementById('copy').click();">Copy</a></li>
+            <li><a href="#" onclick="document.getElementById('paste').click();">Paste</a></li>
+            <li><a href="#" onclick="document.getElementById('delete').click();">Delete</a></li>
+            <li class="divider"></li>
+            <li><a href="#" onclick="document.getElementById('undo').click();">Undo</a></li>
+            <li><a href="#" onclick="document.getElementById('redo').click();">Redo</a></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Select Nodes<span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" onclick="document.getElementById('all').click();">All</a></li>
+            <li><a href="#" onclick="document.getElementById('none').click();">None</a></li>
+            <li class="divider"></li>
+            <li><a href="#" onclick="document.getElementById('vertices').click();">Vertices</a></li>
+            <li><a href="#" onclick="document.getElementById('edges').click();">Edges</a></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" view-click="view.getSteps();">Edit Steps<span class="caret"></span></a>
+        <ul view-element="steps" class="dropdown-menu" role="menu">
+            <!-- getSteps() will had the existent steps -->
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Run<span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" view-click="controller.runTransformation(1);">Local Execution</a></li>
+            <li><a href="#">Remote Execution</a></li>
+            <li><a href="#">Cluster Mode Execution</a></li>
+            <li class="divider"></li>
+            <li><a href="#" view-click="controller.showRunOptions();">Run Options...</a></li>
+        </ul>
+    </li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" view-click="view.getExecutions();" data-toggle="dropdown">Preview Results<span class="caret"></span></a>
+        <ul class="dropdown-menu" view-element="executions" role="menu">
+            <!-- getExecutions() will had the existent transformations under execution. -->
+        </ul>
+    </li>
+
+    <li>
+        <a href="#" onclick="document.getElementById('print').click();">Print</a>
+    </li>
+</ul>
+
+<div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+        <!-- Notifications: style can be found in dropdown.less -->
+        <li class="dropdown notifications-menu open" style="float:right;">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-warning">
+               <p view-element="notification_counter">0</p>
+            </span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul view-element="notification_list" class="menu">
+
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,46 @@
+{
+  "name": "Add Sequence",
+  "shortName": "sequence",
+  "properties":[
+    {
+      "name": "Step Name",
+      "shortName": "step_name",
+      "type": "input"
+    },
+    {
+      "name": "Value Name",
+      "shortName": "value_name",
+      "type": "input"
+    },
+    {
+      "name": "Use a database to get the sequence.",
+      "shortName": "database",
+      "type": "checkbox"
+    },
+    {
+      "name": "Use a counter to generate the sequence.",
+      "shortName": "counter",
+      "type": "checkbox"
+    },
+    {
+      "name": "Counter Name (optional)",
+      "shortName": "counter_name",
+      "type": "input"
+    },
+    {
+      "name": "Start Value",
+      "shortName": "start_value",
+      "type": "number"
+    },
+    {
+      "name": "Increment",
+      "shortName": "increment",
+      "type": "number"
+    },
+    {
+      "name": "Maximum Value",
+      "shortName": "max_value",
+      "type": "number"
+    }
+  ]
+}

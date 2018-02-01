@@ -1,16 +1,18 @@
 package services;
 
-import java.time.Clock;
-import java.time.Instant;
-import java.util.concurrent.CompletableFuture;
 import javax.inject.*;
 
+import models.Component;
+import models.ComponentMetadata;
+import models.ComponentProperty;
 import org.pentaho.di.core.KettleEnvironment;
 import org.pentaho.di.core.Props;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.logging.KettleLogStore;
-import play.Logger;
 import play.inject.ApplicationLifecycle;
+import repositories.ComponentMetadataRepository;
+import repositories.ComponentPropertyRepository;
+import repositories.ComponentRepository;
 
 /**
  * This class demonstrates how to run code when the
@@ -33,10 +35,12 @@ public class ApplicationStart {
 
     @Inject
     public ApplicationStart() {
+
+        // Setting up Kettle environment.
         logger.info("Setting up Kettle environment.");
         try {
             KettleLogStore.init( 5000, 720 );
-            KettleEnvironment.init();
+            KettleEnvironment.init(false);
             try{
                 Props.init( Props.TYPE_PROPERTIES_SPOON );
             }catch(RuntimeException e){
@@ -46,5 +50,4 @@ public class ApplicationStart {
             e.printStackTrace();
         }
     }
-
 }

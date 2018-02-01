@@ -32,6 +32,10 @@ libraryDependencies ++= Seq(
   javaWs,
   cacheApi,
   ehcache,
+  // Database
+  javaJpa,
+  "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final", // replace by your jpa implementation
+  "mysql" % "mysql-connector-java" % "5.1.38",
   // Multi-language
   "org.julienrf" %% "play-jsmessages" % "3.0.0",
   // RequireJS
@@ -47,6 +51,8 @@ libraryDependencies ++= Seq(
   // Handlebars
   "org.webjars" % "handlebars" % "4.0.5",
 
+  //  libraryDependencies += "org.hibernate.javax.persistence" % "hibernate-jpa-2.0-api" % "1.0.1.Final"
+
   // Pentaho SDK
   "pentaho-kettle" % "kettle-core" % "6.1.0.0-184",
   "pentaho-kettle" % "kettle-dbdialog" % "6.1.0.0-184",
@@ -61,10 +67,10 @@ libraryDependencies ++= Seq(
   // Jackson
   "com.fasterxml.jackson.core" % "jackson-core" % "2.3.3",
   "org.codehaus.jackson" % "jackson-core-asl" % "1.9.2",
-  "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.2",
+  "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.2"
 
   //ESAPI
-  "org.owasp.esapi" % "esapi" % "2.1.0"
+  //  "org.owasp.esapi" % "esapi" % "2.1.0"
 )
 
 // Testing libraries for dealing with CompletionStage...
@@ -75,8 +81,8 @@ libraryDependencies ++= Seq(
   "com.h2database" % "h2" % "1.4.194"
 )
 
-libraryDependencies += jcache
-libraryDependencies += "org.jsr107.ri" % "cache-annotations-ri-guice" % "1.0.0"
+//libraryDependencies += jcache
+//libraryDependencies += "org.jsr107.ri" % "cache-annotations-ri-guice" % "1.0.0"
 
 ////////////////////////////////////////////////////////////////////////////
 // Test settings
@@ -103,7 +109,7 @@ buildInfoPackage := "com.bmd.heartteam"
 ////////////////////////////////////////////////////////////////////////////
 // Play settings
 ////////////////////////////////////////////////////////////////////////////
-PlayKeys.externalizeResources := true
+PlayKeys.externalizeResources := false
 
 JsEngineKeys.engineType := JsEngineKeys.EngineType.Node
 
