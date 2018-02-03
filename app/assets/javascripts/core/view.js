@@ -1,4 +1,4 @@
-define('View', ['jquery', 'underscore', 'core/utils', 'messages', 'templates'], function ($, _, Utils, Messages) {
+define('View', ['jquery', 'underscore', 'Utils', 'messages', 'templates'], function ($, _, Utils, Messages) {
     var View = function (controller, template) {
         this.controller = controller;
         this.template = template;

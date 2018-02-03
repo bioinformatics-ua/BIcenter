@@ -26,12 +26,18 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], fu
         //         self.loadControllers('MainModule', ['PatientController', 'PatientFormsController', 'PatientExamsController'], opts)
         //     })
         //     .add(/graph\/(.*)\/step\/(.*)/, function(graphId, stepName) {
-            .add(new RegExp(jsRoutes.controllers.HomeController.editStep('(.*)', '(.*)').url.substr(1), 'i'), function(graphId, stepName) {
+            .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)', '(.*)').url.substr(1), 'i'), function (graphId, stepName) {
                 console.log('Editar step', stepName, 'do graph', graphId);
+
+                var opts = {
+                    graphId: graphId,
+                    stepName: stepName
+                };
+                self.loadController('MainModule', 'StepController', opts);
             })
             .add(function () {
                 console.log('homepage');
-                self.loadController('MainModule', 'TestController');
+                self.loadController('MainModule', 'GraphController');
             });
 
         // Start listening

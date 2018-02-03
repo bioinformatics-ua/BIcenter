@@ -12,7 +12,7 @@ define('GraphView', ['View'], function (View) {
         this._loadViewComponents();
 
         // Initialize tab list if it doesn't exists yet.
-        var controller = MainModule.controllers.GraphController;
+        var controller = app.modules.MainModule.controllers.GraphController;
         this.tabs = (controller != undefined) ? controller.view.tabs : [];
 
         // Load and convert the default transformation.

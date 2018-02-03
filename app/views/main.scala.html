@@ -21,8 +21,10 @@
         <script type="text/javascript" src="@routes.Assets.versioned("lib/mxgraph2/js/mxClient.js")"></script>
         <script type="text/javascript" src="@routes.Assets.versioned("editor/editor.js")"></script>
 
-        <div class="wrapper" module="MainModule">
+        <div class="wrapper">
+            <div module="HeaderModule">
             @header()
+            </div>
 
             @sidebar()
 

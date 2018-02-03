@@ -11,6 +11,8 @@ public class ComponentMetadata implements Serializable {
     private Long id;
 
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private ComponentProperty componentProperty;
 
     public ComponentMetadata() {
@@ -36,11 +38,11 @@ public class ComponentMetadata implements Serializable {
         this.name = name;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "component_property_id")
     public ComponentProperty getComponentProperty() {
         return componentProperty;
     }
 
-    public void setComponentProperty(ComponentProperty componentProperty){ this.componentProperty = componentProperty; }
+    public void setComponentProperty(ComponentProperty componentProperty) {
+        this.componentProperty = componentProperty;
+    }
 }

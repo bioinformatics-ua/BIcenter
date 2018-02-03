@@ -47,7 +47,7 @@ public class TransGraphController extends Controller {
      * @return mxGraph file.
      * @throws Exception
      */
-    public Result load(String filename) throws Exception {
+    public Result load_trans(String filename) throws Exception {
         File file = new File("app/assets/reposity",filename);
 
         TransMeta transMeta = new TransMeta(file.getAbsolutePath());
@@ -57,6 +57,24 @@ public class TransGraphController extends Controller {
         String graphXml = mxUtils.getPrettyXml(codec.encode(graph.getModel()));
 
         return ok(graphXml).as("text/html");
+    }
+
+    /**
+     * Creates a new task with the specified name, and return the mxGraph.
+     * @param taskName Task name.
+     * @return mxGrpoh file
+     */
+    public Result new_task(String taskName){
+        return null;
+    }
+
+    /**
+     * Get Method, that search for the task and converts it to a mxGraph.
+     * @param taskName Task name.
+     * @return mxGraph file
+     */
+    public Result open_task(String taskName){
+        return null;
     }
 
     /**

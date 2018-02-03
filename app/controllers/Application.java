@@ -5,7 +5,6 @@ import jsmessages.JsMessagesFactory;
 import jsmessages.japi.Helper;
 import play.i18n.Lang;
 import play.i18n.Langs;
-import play.i18n.MessagesApi;
 import play.libs.Scala;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -39,7 +38,9 @@ public class Application extends Controller {
     public Result javascriptRoutes() {
         response().setHeader(Http.HeaderNames.CONTENT_TYPE, "text/javascript");
         return ok(JavaScriptReverseRouter.create("jsRoutes",
-                routes.javascript.Application.supportedLanguages()
+                routes.javascript.Application.supportedLanguages(),
+                routes.javascript.StepController.configure(),
+                routes.javascript.StepController.getSchema()
         ));
 //        return ok(
 //                Routes.javascriptRouter("jsRoutes",

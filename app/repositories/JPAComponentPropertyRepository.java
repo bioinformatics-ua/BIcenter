@@ -13,6 +13,19 @@ public class JPAComponentPropertyRepository extends JPARepository implements Com
         super(jpaApi, executionContext);
     }
 
+    public static List<ComponentProperty> list(EntityManager em) {
+        return em.createQuery("select p from ComponentProperty p", ComponentProperty.class).getResultList();
+    }
+
+    public static ComponentProperty get(EntityManager em, long id) {
+        return em.find(ComponentProperty.class, id);
+    }
+
+    public static ComponentProperty createOrUpdate(EntityManager em, ComponentProperty componentProperty) {
+        componentProperty = em.merge(componentProperty);
+        return componentProperty;
+    }
+
     @Override
     public ComponentProperty get(long id) {
         return wrap(em -> get(em, id));
@@ -26,19 +39,6 @@ public class JPAComponentPropertyRepository extends JPARepository implements Com
     @Override
     public List<ComponentProperty> list() {
         return wrap(em -> list(em));
-    }
-
-    private List<ComponentProperty> list(EntityManager em) {
-        return em.createQuery("select p from ComponentProperty p", ComponentProperty.class).getResultList();
-    }
-
-    private ComponentProperty get(EntityManager em, long id) {
-        return em.find(ComponentProperty.class, id);
-    }
-
-    private ComponentProperty createOrUpdate(EntityManager em, ComponentProperty componentProperty) {
-        em.merge(componentProperty);
-        return componentProperty;
     }
 }
 

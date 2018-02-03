@@ -11,22 +11,30 @@ requirejs.config({
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'adminLTE': '../lib/adminLTE/js/app.min',
         'handlebars.runtime': '../lib/handlebars/handlebars.runtime',
-        'editor':'../editor/editor',
+        'handlebarsHelpers': 'core/handlebarsHelpers',
+        'editor': '../editor/editor',
 
         // Core
+        'Application': 'application/application',
+        'Router': 'application/router',
         'Module': 'core/module',
         'Controller': 'core/controller',
         'View': 'core/view',
         'Modal': 'core/modal',
         'Color': 'core/color',
+        'Utils': 'core/utils',
+        'jsRoutes': 'jsroutes',
+
+        // services
+        'Step': 'services/step',
 
         // Header
-        'HeaderController':'header/headerController',
-        'HeaderView':'header/headerView',
+        'HeaderController': 'header/headerController',
+        'HeaderView': 'header/headerView',
 
         // Main Container
-        'ContainerController':'container/containerController',
-        'ContainerView':'container/containerView',
+        'ContainerController': 'container/containerController',
+        'ContainerView': 'container/containerView',
 
         // Graph
         'GraphController': 'graph/graphController',
@@ -37,25 +45,28 @@ requirejs.config({
         'FieldsView': 'steps/fields/fieldsView',
 
         // Run Options Dialog
-        'RunOptionsController':'run/runOptionsController',
-        'RunOptionsView':'run/runOptionsView',
+        'RunOptionsController': 'run/runOptionsController',
+        'RunOptionsView': 'run/runOptionsView',
 
         // Edit Transformation Dialog
         'TransSettingsController': 'trans/transSettingsController',
         'TransSettingsView': 'trans/transSettingsView',
 
         // Edit Step Dialogs
+        'StepController': 'step/stepController',
+        'StepView': 'step/stepView',
+
         // Row Generator
-        'RowGeneratorController': 'steps/rowgenerator/rowGeneratorController',
-        'RowGeneratorView': 'steps/rowgenerator/rowGeneratorView',
+        //'RowGeneratorController': 'steps/rowgenerator/rowGeneratorController',
+        //'RowGeneratorView': 'steps/rowgenerator/rowGeneratorView',
 
         // Checksum
-        'ChecksumController': 'steps/checksum/checksumController',
-        'ChecksumView': 'steps/checksum/checksumView',
+        //'ChecksumController': 'steps/checksum/checksumController',
+        //'ChecksumView': 'steps/checksum/checksumView',
 
         // Sequence
-        'SequenceController': 'steps/sequence/sequenceController',
-        'SequenceView': 'steps/sequence/sequenceView',
+        //'SequenceController': 'steps/sequence/sequenceController',
+        //'SequenceView': 'steps/sequence/sequenceView',
 
         // PreviewResults
         'PreviewResultsController': 'previewResults/previewResultsController',
@@ -103,26 +114,16 @@ requirejs.config({
         },
         'datatables-bootstrap': {
             deps: ['jquery', 'bootstrap', 'datatables']
+        },
+        'templates': {
+            deps: ['handlebarsHelpers']
         }
     }
 });
 
 var DEBUG = true;
 
-require(['jquery', 'Module', 'adminLTE'], function ($, Module) {
-    $(document).ready(function () {
-        $(this).find('[module]').each(function () {
-            var $element = $(this);
-            var name = $element.attr('module');
 
-            // Create module and initialize it
-            var module = new Module(name);
-            module.initialize($element);
-
-            if (DEBUG) {
-                window[name] = module;
-            }
-
-        });
-    });
+require(['Application'], function (Application) {
+    window.app = new Application();
 });

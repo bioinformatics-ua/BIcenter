@@ -16,18 +16,21 @@ define('HeaderView', ['View'], function (View) {
      * Allows to write a transformation xml, to be converted in a mxGraph.
      */
     HeaderView.prototype.importXml = function () {
-        MainModule.controllers.GraphController.view.$elements.source.click();
-        MainModule.controllers.GraphController.view.$elements.board.css({'height': '65vh'});
-        MainModule.controllers.GraphController.view.$elements.xmlBtn.css("display", "block");
+        var graphController = app.modules.MainModule.controllers.GraphController;
+        graphController.view.$elements.source.click();
+        graphController.view.$elements.board.css({'height': '65vh'});
+        graphController.view.$elements.xmlBtn.css("display", "block");
     }
 
     /**
      * Returns the steps of the actual transformation.
      */
     HeaderView.prototype.getSteps = function(){
-        MainModule.controllers.GraphController.view.$elements.source.click();
-        var transXml = MainModule.controllers.GraphController.view.$elements.xml.val();
-        MainModule.controllers.GraphController.view.$elements.source.click();
+        var graphController = app.modules.MainModule.controllers.GraphController;
+
+        graphController.view.$elements.source.click();
+        var transXml = graphController.view.$elements.xml.val();
+        graphController.view.$elements.source.click();
 
         var node = (new DOMParser()).parseFromString(transXml, "text/xml").documentElement;
 

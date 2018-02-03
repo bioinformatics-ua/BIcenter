@@ -1,4 +1,4 @@
-define('Module', ['jquery', 'underscore', 'core/utils'], function ($, _, Utils) {
+define('Module', ['jquery', 'underscore', 'Utils'], function ($, _, Utils) {
     var Module = function (name) {
         this.name = name;
         this.$container = null;

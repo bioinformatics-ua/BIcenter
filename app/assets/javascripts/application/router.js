@@ -94,6 +94,11 @@ define('Router', [], function () {
             }
             return this;
         },
+        navigatePrevious: function () {
+            if (this.mode === 'history') {
+                history.back();
+            }
+        },
         updatePageLinks: function () {
             var self = this;
 

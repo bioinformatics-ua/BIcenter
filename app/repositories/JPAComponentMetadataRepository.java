@@ -13,6 +13,19 @@ public class JPAComponentMetadataRepository extends JPARepository implements Com
         super(jpaApi, executionContext);
     }
 
+    public static List<ComponentMetadata> list(EntityManager em) {
+        return em.createQuery("select p from ComponentMetadata p", ComponentMetadata.class).getResultList();
+    }
+
+    public static ComponentMetadata get(EntityManager em, long id) {
+        return em.find(ComponentMetadata.class, id);
+    }
+
+    public static ComponentMetadata createOrUpdate(EntityManager em, ComponentMetadata componentMetadata) {
+        componentMetadata = em.merge(componentMetadata);
+        return componentMetadata;
+    }
+
     @Override
     public ComponentMetadata get(long id) {
         return wrap(em -> get(em, id));
@@ -26,18 +39,5 @@ public class JPAComponentMetadataRepository extends JPARepository implements Com
     @Override
     public List<ComponentMetadata> list() {
         return wrap(em -> list(em));
-    }
-
-    private List<ComponentMetadata> list(EntityManager em) {
-        return em.createQuery("select p from ComponentMetadata p", ComponentMetadata.class).getResultList();
-    }
-
-    private ComponentMetadata get(EntityManager em, long id) {
-        return em.find(ComponentMetadata.class, id);
-    }
-
-    private ComponentMetadata createOrUpdate(EntityManager em, ComponentMetadata componentMetadata) {
-        em.merge(componentMetadata);
-        return componentMetadata;
     }
 }

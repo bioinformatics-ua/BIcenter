@@ -1,18 +1,17 @@
 package controllers;
 
-import play.libs.Json;
-import play.mvc.Controller;
-
-import java.util.List;
-import java.util.Map;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.google.inject.Inject;
+import com.mxgraph.io.mxCodec;
+import com.mxgraph.util.mxUtils;
+import com.mxgraph.view.mxGraph;
 import kettleExt.trans.TransDecoder;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
-
-import play.mvc.Result;
-import utils.SearchFieldsProgress;
-
+import models.Component;
+import models.ComponentMetadata;
+import models.ComponentProperty;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMeta;
@@ -20,21 +19,40 @@ import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.StepMeta;
 import org.w3c.dom.Document;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+import repositories.ComponentRepository;
+import serializers.component.ComponentMetadataSerializer;
+import serializers.component.ComponentPropertySerializer;
+import serializers.component.ComponentSerializer;
+import utils.SearchFieldsProgress;
 
-import com.mxgraph.io.mxCodec;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxGraph;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller that manages all steps of the transformation.
  */
 public class StepController extends Controller {
+    private final ComponentRepository componentRepository;
+
+    @Inject
+    public StepController(ComponentRepository componentRepository) {
+        this.componentRepository = componentRepository;
+    }
+
+    public Result configure(String graphId, String stepName) {
+        return ok(views.html.index.render());
+    }
+
     /**
      * Returns the input fields name of a given step.
+     *
      * @return
      * @throws Exception
      */
-    public Result inputFieldsName() throws Exception{
+    public Result inputFieldsName() throws Exception {
         Object step_name = request().body().as(Map.class).get("stepName");
         String stepName = (String) ((String[]) step_name)[0];
         Object graph_xml = request().body().as(Map.class).get("graph");
@@ -66,6 +84,7 @@ public class StepController extends Controller {
     /**
      * Given a certain mxGraph and a certain step name, it return the input or the output fields details
      * (depending on the before value; if true it returns the input fields else it returns the output fields).
+     *
      * @return Json with all desired fields details.
      * @throws Exception
      */
@@ -113,8 +132,9 @@ public class StepController extends Controller {
 
     /**
      * Returns the step meta, given a certain step label and the actual transformation meta.
+     *
      * @param transMeta Current transformation meta.
-     * @param label Step label.
+     * @param label     Step label.
      * @return Step meta.
      */
     public StepMeta getStep(TransMeta transMeta, String label) {
@@ -125,5 +145,29 @@ public class StepController extends Controller {
                 return step;
         }
         return null;
+    }
+
+    /**
+     * Returns Component Step Schema by Name
+     *
+     * @param componentName Name of the desired Step Schema
+     * @return Step Schema
+     */
+    public Result getSchema(String componentName) {
+        Component component = componentRepository.getByName(componentName);
+
+        if (component == null) {
+            return notFound();
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Component.class, new ComponentSerializer());
+        module.addSerializer(ComponentProperty.class, new ComponentPropertySerializer());
+        module.addSerializer(ComponentMetadata.class, new ComponentMetadataSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(component));
     }
 }

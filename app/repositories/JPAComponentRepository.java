@@ -5,13 +5,31 @@ import models.Component;
 import play.db.jpa.JPAApi;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 
 public class JPAComponentRepository extends JPARepository implements ComponentRepository {
     @Inject
     public JPAComponentRepository(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
         super(jpaApi, executionContext);
+    }
+
+    public static List<Component> list(EntityManager em) {
+        return em.createQuery("select p from Component p", Component.class).getResultList();
+    }
+
+    public static Component getByName(EntityManager em, String name) {
+        return em.createQuery("select p from Component p where name=:nameparam", Component.class)
+                .setParameter("nameparam",name)
+                .getSingleResult();
+    }
+
+    public static Component get(EntityManager em, long id) {
+        return em.find(Component.class, id);
+    }
+
+    public static Component createOrUpdate(EntityManager em, Component component) {
+        component = em.merge(component);
+        return component;
     }
 
     @Override
@@ -29,16 +47,6 @@ public class JPAComponentRepository extends JPARepository implements ComponentRe
         return wrap(em -> list(em));
     }
 
-    private List<Component> list(EntityManager em) {
-        return em.createQuery("select p from Component p", Component.class).getResultList();
-    }
-
-    private Component get(EntityManager em, long id) {
-        return em.find(Component.class, id);
-    }
-
-    private Component createOrUpdate(EntityManager em, Component component) {
-        em.merge(component);
-        return component;
-    }
+    @Override
+    public Component getByName(String name) { return wrap(em -> getByName(em,name)); }
 }

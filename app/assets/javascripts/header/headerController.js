@@ -1,4 +1,4 @@
-define('HeaderController', ['Controller', 'HeaderView'], function (Controller, HeaderView) {
+define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router'], function (Controller, HeaderView, jsRoutes, Router) {
     var HeaderController = function (module) {
         Controller.call(this, module, new HeaderView(this));
     };
@@ -17,24 +17,18 @@ define('HeaderController', ['Controller', 'HeaderView'], function (Controller, H
      * @param stepType
      * @param i id of the step within the current transformation.
      */
-    HeaderController.prototype.showStepDialog = function (stepType,i) {
+    HeaderController.prototype.showStepDialog = function (stepType, i) {
         this.setGlobalStep(i);
-        if(stepType=="CheckSum") stepType="Checksum";
 
-        var controller = stepType + 'Controller';
-        var containerController = this.module.controllers.ContainerController;
-        if (!containerController) {
-            console.err('Container controller not found!');
-        }
-
-        containerController.loadController(controller);
+        var configStepUrl = jsRoutes.controllers.StepController.configure(1, stepType).url;
+        Router.navigate(configStepUrl);
     };
 
     /**
      * Shows the transaction settings configuration dialog, for the current transaction.
      * @param i id of the step within the current transformation.
      */
-    HeaderController.prototype.transSettingsDialog = function(i){
+    HeaderController.prototype.transSettingsDialog = function (i) {
         this.setGlobalStep(i);
 
         var controller = 'TransSettingsController';
@@ -50,7 +44,7 @@ define('HeaderController', ['Controller', 'HeaderView'], function (Controller, H
      * Sets the current select step.
      * @param i id of the step within the current transformation.
      */
-    HeaderController.prototype.setGlobalStep = function(i){
+    HeaderController.prototype.setGlobalStep = function (i) {
         this.global_step = this.view.global_nodes[i];
     }
 
@@ -59,7 +53,7 @@ define('HeaderController', ['Controller', 'HeaderView'], function (Controller, H
      * @param stepName step label.
      * @param before if true returns step input fields, else returns step output fields.
      */
-    HeaderController.prototype.showFieldsDialog = function(stepName,before){
+    HeaderController.prototype.showFieldsDialog = function (stepName, before) {
         this.stepName = stepName;
         this.before = before;
 
@@ -89,7 +83,7 @@ define('HeaderController', ['Controller', 'HeaderView'], function (Controller, H
      * Calls the API that runs the transformation.
      * @param method execute transformation locally, remotely or in cluster mode.
      */
-    HeaderController.prototype.runTransformation = function(method){
+    HeaderController.prototype.runTransformation = function (method) {
         var enc = new mxCodec(mxUtils.createXmlDocument());
         var node = enc.encode(global_editor.graph.getModel());
 
@@ -109,19 +103,19 @@ define('HeaderController', ['Controller', 'HeaderView'], function (Controller, H
         var execution = new Object();
         execution.executeMethod = exec_method;
         execution.details = details;
-        var execution_configuration= JSON.stringify(execution);
+        var execution_configuration = JSON.stringify(execution);
 
         this.transName;
         this.executionId;
 
         var context = this;
-        $.post('/graph/run', { graph: mxUtils.getPrettyXml(node), execution:execution_configuration },
-            function(returnedData){
+        $.post('/graph/run', {graph: mxUtils.getPrettyXml(node), execution: execution_configuration},
+            function (returnedData) {
                 console.log(returnedData);
                 data = JSON.parse(returnedData);
                 context.transName = data['transName'];
                 context.executionId = data['executionId'];
-                context.executions = context.executions.filter(function( exec ) {
+                context.executions = context.executions.filter(function (exec) {
                     return exec['transName'] !== data['transName'];
                 });
                 context.executions.push(data);
@@ -145,7 +139,7 @@ define('HeaderController', ['Controller', 'HeaderView'], function (Controller, H
     /**
      * Shows the preview results transformation dialog.
      */
-    HeaderController.prototype.showPreviewResults = function (transName,executionId) {
+    HeaderController.prototype.showPreviewResults = function (transName, executionId) {
         this.transName = transName;
         this.executionId = executionId;
 
