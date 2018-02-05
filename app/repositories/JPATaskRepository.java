@@ -2,9 +2,11 @@ package repositories;
 
 import com.google.inject.Inject;
 import models.Task;
+import org.hibernate.Hibernate;
 import play.db.jpa.JPAApi;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class JPATaskRepository extends JPARepository implements TaskRepository {
@@ -27,9 +29,16 @@ public class JPATaskRepository extends JPARepository implements TaskRepository {
         return em.find(Task.class, id);
     }
 
-    public static Task createOrUpdate(EntityManager em, Task Task) {
-        Task = em.merge(Task);
-        return Task;
+    public static Task createOrUpdate(EntityManager em, Task task) {
+        try{
+            task = getByName(em, task.getName());
+            //em.merge(task);
+        }
+        catch(NoResultException e){
+            em.persist(task);
+        }
+
+        return task;
     }
 
     @Override

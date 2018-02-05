@@ -1,4 +1,4 @@
-define('GraphView', ['View'], function (View) {
+define('GraphView', ['View', 'Task'], function (View, Task) {
     var GraphView = function (controller) {
         View.call(this, controller, 'graph');
     };
@@ -49,7 +49,6 @@ define('GraphView', ['View'], function (View) {
                     context.tabs.push(name);
                     context._loadViewComponents();
                     registerCloseEvent();
-                    registerTabClick();
                 }
             );
         }
@@ -68,7 +67,6 @@ define('GraphView', ['View'], function (View) {
         }
         this._loadViewComponents();
         registerCloseEvent();
-        registerTabClick();
     };
 
     /**
@@ -85,22 +83,12 @@ define('GraphView', ['View'], function (View) {
      */
     function registerCloseEvent() {
         $(".closeTab").click(function () {
-            //there are multiple elements which has .closeTab icon so close the tab whose close icon is clicked
+            //close the li closest to the close button.
             var tabContentId = $(this).parent().attr("href");
             $(this).parent().parent().remove(); //remove li of tab
             $('#myTab a:last').tab('show'); // Select first tab
             $(tabContentId).remove(); //remove respective tab content
 
-        });
-    }
-
-    /**
-     * Listener for task tab selection.
-     */
-    function registerTabClick() {
-        $(".graphTab").click(function () {
-            $(".graphTab").removeClass("active");
-            $(this).addClass("active");
         });
     }
 

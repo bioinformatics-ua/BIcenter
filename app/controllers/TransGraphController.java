@@ -1,7 +1,9 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import kettleExt.task.TaskEncoder;
 import models.Cell;
 import models.Hop;
 import models.Step;
@@ -92,6 +94,19 @@ public class TransGraphController extends Controller {
     }
 
     /**
+     * Converts Task to mxGraph
+     * @param graphId Task Id.
+     * @return mxGraph
+     */
+    public Result load_task(long graphId) throws Exception {
+        Task task = this.taskRepository.get(graphId);
+        mxCodec codec = new mxCodec();
+        mxGraph graph = TaskEncoder.encode(task);
+        String graphXml = mxUtils.getPrettyXml(codec.encode(graph.getModel()));
+        return ok(graphXml).as("text/html");
+    }
+
+    /**
      * Creates a new task with the specified name, and return the mxGraph.
      * @param name Task name.
      * @return mxGrpoh file
@@ -111,7 +126,25 @@ public class TransGraphController extends Controller {
 
         Task task = new Task(name);
         taskRepository.add(task);
+        return ok(task_to_json(task));
+    }
 
+    /**
+     * Get Task by name, and returns it as a Json.
+     * @param name Task name
+     * @return Task Json object
+     */
+    public Result get_task(String name) {
+        Task task = taskRepository.getByName(name);
+        return ok(task_to_json(task));
+    }
+
+    /**
+     * Serializes Task (JPA) to Json
+     * @param task
+     * @return
+     */
+    private JsonNode task_to_json(Task task){
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addSerializer(Task.class, new TaskSerializer());
@@ -121,7 +154,7 @@ public class TransGraphController extends Controller {
         mapper.registerModule(module);
         Json.setObjectMapper(mapper);
 
-        return ok(Json.toJson(taskRepository.getByName(name)));
+        return Json.toJson(task);
     }
 
     /**

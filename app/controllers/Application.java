@@ -40,6 +40,9 @@ public class Application extends Controller {
         return ok(JavaScriptReverseRouter.create("jsRoutes",
                 routes.javascript.Application.supportedLanguages(),
                 routes.javascript.TransGraphController.new_task(),
+                routes.javascript.TransGraphController.get_task(),
+                routes.javascript.TransGraphController.select_task(),
+                routes.javascript.TransGraphController.load_task(),
                 routes.javascript.TransGraphController.preview_results(),
                 routes.javascript.StepController.configure(),
                 routes.javascript.StepController.getSchema()

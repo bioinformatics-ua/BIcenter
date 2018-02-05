@@ -28,7 +28,11 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                         if ( event.which == 13 ) {
                             event.preventDefault();
                             Task.new_task(this.value, function (task) {
-                                console.log(task);
+                                Task.load_task(task.id, function(graph) {
+                                    context.view.$elements.source.click();
+                                    context.view.$elements.xml.val(graph);
+                                    context.view.$elements.source.click();
+                                });
                             });
                             var taskName = this.value;
                             this.replaceWith(taskName);
@@ -52,16 +56,16 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                 )
             );
         this.view.$elements.graph_tabs.append($tab);
-        registerCloseEvent();
-        registerTabClick();
+        this.registerCloseEvent();
+        this.registerTabClick();
     }
 
     /**
      * Listener for task tab close button.
      */
-    function registerCloseEvent() {
+    GraphController.prototype.registerCloseEvent = function() {
         $(".closeTab").click(function () {
-            //there are multiple elements which has .closeTab icon so close the tab whose close icon is clicked
+            //close the li closest to the close button.
             var tabContentId = $(this).parent().attr("href");
             $(this).parent().parent().remove(); //remove li of tab
             $('#myTab a:last').tab('show'); // Select first tab
@@ -73,8 +77,21 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
     /**
      * Listener for task tab selection.
      */
-    function registerTabClick() {
+    GraphController.prototype.registerTabClick = function() {
+        var context = this;
         $(".graphTab").click(function () {
+            var taskName = $(this).text().slice(1);
+            if(taskName) {
+                Task.get_task($(this).text().slice(1), function (task) {
+                    Task.load_task(task.id, function (graph) {
+                        if(context.view==undefined) debugger;
+                        context.view.$elements.source.click();
+                        context.view.$elements.xml.val(graph);
+                        context.view.$elements.source.click();
+                    });
+                });
+            }
+
             $(".graphTab").removeClass("active");
             $(this).addClass("active");
         });
