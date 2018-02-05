@@ -22,7 +22,8 @@ GET         /graph/new/:name                                controllers.TransGra
 GET         /graph/load                                     controllers.TransGraphController.load_trans(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")
 POST        /graph/run                                      controllers.TransGraphController.run()
 GET         /graph/result                                   controllers.TransGraphController.result(execution: String)
-GET         /graph/:graphId/preview                         controllers.TransGraphController.preview_results(graphId:String)
+GET         /graph/:graphId/preview                         controllers.TransGraphController.preview_results(graphId:Integer)
+GET         /graph/:graphId                                 controllers.TransGraphController.select_task(graphId:Integer)
 
 # Handles the steps.
 GET         /graph/:graphId/step/:stepName/configure        controllers.StepController.configure(graphId: String, stepName: String)

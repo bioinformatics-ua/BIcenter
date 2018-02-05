@@ -1,5 +1,10 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import models.Cell;
+import models.Hop;
+import models.Step;
 import models.Task;
 import play.cache.*;
 
@@ -26,11 +31,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.w3c.dom.Document;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import repositories.TaskRepository;
+import serializers.task.CellSerializer;
+import serializers.task.HopSerializer;
+import serializers.task.StepSerializer;
+import serializers.task.TaskSerializer;
 
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 /**
  * Controller that manages the mxGraph.
@@ -47,11 +58,18 @@ public class TransGraphController extends Controller {
     }
 
     /**
+     * Select a graph tab
+     * @param graphId
+     * @return
+     */
+    public Result select_task(int graphId) { return ok(views.html.index.render()); }
+
+    /**
      * Preview task Results
      * @param graphId
      * @return
      */
-    public Result preview_results(String graphId) {
+    public Result preview_results(int graphId) {
         return ok(views.html.index.render());
     }
 
@@ -79,11 +97,31 @@ public class TransGraphController extends Controller {
      * @return mxGrpoh file
      */
     public Result new_task(String name){
-        if(!taskRepository.list().isEmpty() && taskRepository.getByName(name)!=null){
-            return forbidden();
+        boolean exists = true;
+        if(taskRepository.list().isEmpty()) exists = false;
+        else{
+            try{
+                taskRepository.getByName(name);
+            }
+            catch(NoResultException e){
+                exists = false;
+            }
         }
-        taskRepository.add(new Task(name));
-        return  ok();
+        if(exists) return forbidden();
+
+        Task task = new Task(name);
+        taskRepository.add(task);
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new TaskSerializer());
+        module.addSerializer(Step.class, new StepSerializer());
+        module.addSerializer(Hop.class, new HopSerializer());
+        module.addSerializer(Cell.class, new CellSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(taskRepository.getByName(name)));
     }
 
     /**

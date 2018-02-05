@@ -37,9 +37,9 @@ define('GraphView', ['View'], function (View) {
                     }
 
                     var $tab =
-                        $('<li class="active">').append(
+                        $('<li class="graphTab">').append(
                             $('<a href="javascript:;">').append(
-                                $('<button class="close" type="button">').text("x"),
+                                $('<button class="close closeTab" type="button" >').text("x"),
                                 name
                             )
                         );
@@ -48,6 +48,8 @@ define('GraphView', ['View'], function (View) {
                     // Add the loaded graph to the tab list.
                     context.tabs.push(name);
                     context._loadViewComponents();
+                    registerCloseEvent();
+                    registerTabClick();
                 }
             );
         }
@@ -55,9 +57,9 @@ define('GraphView', ['View'], function (View) {
         else{
             for(var i=0; i<this.tabs.length; i++){
                 var $tab =
-                    $('<li class="active">').append(
+                    $('<li class="graphTab">').append(
                         $('<a href="javascript:;">').append(
-                            $('<button class="close" type="button">').text("x"),
+                            $('<button class="close closeTab" type="button" >').text("x"),
                             this.tabs[i]
                         )
                     );
@@ -65,6 +67,8 @@ define('GraphView', ['View'], function (View) {
             }
         }
         this._loadViewComponents();
+        registerCloseEvent();
+        registerTabClick();
     };
 
     /**
@@ -74,6 +78,30 @@ define('GraphView', ['View'], function (View) {
         this.$elements.source.click();
         this.$elements.board.css({'height': '70vh'});
         this.$elements.xmlBtn.css("display","none");
+    }
+
+    /**
+     * Listener for task tab close button.
+     */
+    function registerCloseEvent() {
+        $(".closeTab").click(function () {
+            //there are multiple elements which has .closeTab icon so close the tab whose close icon is clicked
+            var tabContentId = $(this).parent().attr("href");
+            $(this).parent().parent().remove(); //remove li of tab
+            $('#myTab a:last').tab('show'); // Select first tab
+            $(tabContentId).remove(); //remove respective tab content
+
+        });
+    }
+
+    /**
+     * Listener for task tab selection.
+     */
+    function registerTabClick() {
+        $(".graphTab").click(function () {
+            $(".graphTab").removeClass("active");
+            $(this).addClass("active");
+        });
     }
 
     return GraphView;
