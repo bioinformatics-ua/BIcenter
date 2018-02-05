@@ -1,4 +1,4 @@
-/*package models;
+package models;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,24 +12,19 @@ public class Task implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
     private String name;
 
     private String description;
     private Date date;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskHops", cascade = CascadeType.ALL)
     private List<Hop> hops;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL)
-    private List<Hop> steps;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskSteps", cascade = CascadeType.ALL)
+    private List<Step> steps;
 
     public Task(){ date = new Date(); }
     public Task(String name) { this.name = name; }
-    public Task(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 
     public Long getId() { return id; }
 
@@ -51,12 +46,11 @@ public class Task implements Serializable {
 
     public void setHops(List<Hop> hops) { this.hops = hops; }
 
-    public List<Hop> getSteps() {
+    public List<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<Hop> steps) {
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
 }
-*/

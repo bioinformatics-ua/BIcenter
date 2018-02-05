@@ -42,6 +42,12 @@ public class StepController extends Controller {
         this.componentRepository = componentRepository;
     }
 
+    /**
+     * Edit Step page
+     * @param graphId
+     * @param stepName
+     * @return
+     */
     public Result configure(String graphId, String stepName) {
         return ok(views.html.index.render());
     }

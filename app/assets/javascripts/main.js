@@ -27,6 +27,7 @@ requirejs.config({
 
         // services
         'Step': 'services/step',
+        'Task': 'services/task',
 
         // Header
         'HeaderController': 'header/headerController',

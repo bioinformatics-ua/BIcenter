@@ -9,8 +9,10 @@ define('PreviewResultsView', ['View'], function (View) {
 
     PreviewResultsView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
-        this.transName = MainModule.controllers.HeaderController.transName;
-        this.executionId = MainModule.controllers.HeaderController.executionId;
+
+        var headerController = app.modules.HeaderModule.controllers.HeaderController;
+        this.transName = headerController.transName;
+        this.executionId = headerController.executionId;
         this.$elements.preview_title.text("Preview "+this.transName);
 
         // Render the transformation with a success icon on each step.
@@ -22,7 +24,7 @@ define('PreviewResultsView', ['View'], function (View) {
         $.get("/graph/result",{execution: context.executionId},
             function(data){
                 if(JSON.parse(data)['finished'] == true){
-                    MainModule.controllers.HeaderController.view.removeTransNotification(context.executionId);
+                    headerController.view.removeTransNotification(context.executionId);
                     context.updateStatus(context.graph,JSON.parse(data)['stepStatus']);
                 }
                 context.data = JSON.parse(data).previewData;
@@ -90,7 +92,7 @@ define('PreviewResultsView', ['View'], function (View) {
             // Creates the graph inside the given container
 
             var graph = this.graph = new mxGraph(container);
-            var node = mxUtils.load('assets/lib/mxgraph2/style/default-style.xml').getDocumentElement();
+            var node = mxUtils.load('/assets/lib/mxgraph2/style/default-style.xml').getDocumentElement();
             var dec = new mxCodec(node.ownerDocument);
             dec.decode(node, graph.getStylesheet());
 
@@ -162,10 +164,10 @@ define('PreviewResultsView', ['View'], function (View) {
                     }
 
                     if(status[i].stepStatus > 0) {
-                        var overlay = new mxCellOverlay(new mxImage('assets/lib/mxgraph2/editors/images/overlays/false.png', 16, 16), status[i].logText, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
+                        var overlay = new mxCellOverlay(new mxImage('/assets/lib/mxgraph2/editors/images/overlays/false.png', 16, 16), status[i].logText, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
                         graph.addCellOverlay(cell, overlay);
                     } else {
-                        var overlay = new mxCellOverlay(new mxImage('assets/lib/mxgraph2/editors/images/overlays/true.png', 16, 16), null, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
+                        var overlay = new mxCellOverlay(new mxImage('/assets/lib/mxgraph2/editors/images/overlays/true.png', 16, 16), null, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
                         graph.addCellOverlay(cell, overlay);
                     }
                     break;

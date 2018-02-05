@@ -1,4 +1,3 @@
-/*
 package models;
 
 import javax.persistence.*;
@@ -22,7 +21,16 @@ public abstract class Step implements Serializable{
     private Component component;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Task task;
+    private Task taskSteps;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL)
+    private Cell cell;
+
+    @OneToOne(fetch= FetchType.LAZY)
+    private Hop source;
+
+    @OneToOne(fetch= FetchType.LAZY)
+    private Hop destiny;
 
     public Step() { date = new Date(); }
     public Step(String label) {
@@ -69,12 +77,29 @@ public abstract class Step implements Serializable{
         this.component = component;
     }
 
-    public Task getTask() {
-        return task;
+    public Task getTaskSteps() { return taskSteps; }
+
+    public void setTaskSteps(Task taskSteps) { this.taskSteps = taskSteps; }
+
+    public Cell getCell() { return cell; }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public Hop getSource() {
+        return source;
+    }
+
+    public void setSource(Hop source) {
+        this.source = source;
+    }
+
+    public Hop getDestiny() {
+        return destiny;
+    }
+
+    public void setDestiny(Hop destiny) {
+        this.destiny = destiny;
     }
 }
-*/

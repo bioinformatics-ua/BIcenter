@@ -26,6 +26,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], fu
         //         self.loadControllers('MainModule', ['PatientController', 'PatientFormsController', 'PatientExamsController'], opts)
         //     })
         //     .add(/graph\/(.*)\/step\/(.*)/, function(graphId, stepName) {
+            .add(new RegExp(jsRoutes.controllers.TransGraphController.preview_results('(.*)').url.substr(1), 'i'), function (graphId) {
+                console.log("Preview Results of Graph "+graphId);
+                var opts = { graphId: graphId }
+                self.loadController('MainModule','PreviewResultsController',opts);
+            })
             .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)', '(.*)').url.substr(1), 'i'), function (graphId, stepName) {
                 console.log('Editar step', stepName, 'do graph', graphId);
 

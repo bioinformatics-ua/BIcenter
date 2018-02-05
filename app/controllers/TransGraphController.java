@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Task;
 import play.cache.*;
 
 import kettleExt.App;
@@ -27,6 +28,7 @@ import java.util.Map;
 import org.w3c.dom.Document;
 import play.mvc.Controller;
 import play.mvc.Result;
+import repositories.TaskRepository;
 
 import javax.inject.Inject;
 
@@ -36,9 +38,21 @@ import javax.inject.Inject;
 public class TransGraphController extends Controller {
     private SyncCacheApi cache;
 
+    private TaskRepository taskRepository;
+
     @Inject
-    public TransGraphController(SyncCacheApi cache) {
+    public TransGraphController(SyncCacheApi cache, TaskRepository taskRepository) {
         this.cache = cache;
+        this.taskRepository = taskRepository;
+    }
+
+    /**
+     * Preview task Results
+     * @param graphId
+     * @return
+     */
+    public Result preview_results(String graphId) {
+        return ok(views.html.index.render());
     }
 
     /**
@@ -61,11 +75,15 @@ public class TransGraphController extends Controller {
 
     /**
      * Creates a new task with the specified name, and return the mxGraph.
-     * @param taskName Task name.
+     * @param name Task name.
      * @return mxGrpoh file
      */
-    public Result new_task(String taskName){
-        return null;
+    public Result new_task(String name){
+        if(!taskRepository.list().isEmpty() && taskRepository.getByName(name)!=null){
+            return forbidden();
+        }
+        taskRepository.add(new Task(name));
+        return  ok();
     }
 
     /**

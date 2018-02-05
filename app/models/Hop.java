@@ -1,10 +1,8 @@
-/*
 package models;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Hop implements Serializable {
@@ -12,15 +10,13 @@ public class Hop implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "hop", cascade = CascadeType.ALL)
-    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "source", cascade = CascadeType.ALL)
     private Step source;
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "hop", cascade = CascadeType.ALL)
-    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "destiny", cascade = CascadeType.ALL)
     private Step destiny;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Task task;
+    private Task taskHops;
 
     private Date date;
 
@@ -60,12 +56,7 @@ public class Hop implements Serializable {
         this.date = date;
     }
 
-    public Task getTask() {
-        return task;
-    }
+    public Task getTaskHops() { return taskHops; }
 
-    public void setTask(Task task) {
-        this.task = task;
-    }
+    public void setTaskHops(Task taskHops) { this.taskHops = taskHops; }
 }
-*/

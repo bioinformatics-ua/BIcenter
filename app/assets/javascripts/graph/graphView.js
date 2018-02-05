@@ -62,11 +62,10 @@ define('GraphView', ['View'], function (View) {
                         )
                     );
                 this.$elements.graph_tabs.append($tab);
-                context._loadViewComponents();
             }
         }
+        this._loadViewComponents();
     };
-
 
     /**
      * Returns back to the pipeline, after XML import.

@@ -1,4 +1,4 @@
-define('PreviewResultsController', ['Controller', 'PreviewResultsView'], function (Controller, PreviewResultsView) {
+define('PreviewResultsController', ['Controller', 'PreviewResultsView', 'Router'], function (Controller, PreviewResultsView, Router) {
     var PreviewResultsController = function (module) {
         Controller.call(this, module, new PreviewResultsView(this));
     };
@@ -20,12 +20,7 @@ define('PreviewResultsController', ['Controller', 'PreviewResultsView'], functio
             this.view.$elements.preview_table.show();
         }
         else {
-            var controller = 'GraphController';
-            var containerController = this.module.controllers.ContainerController;
-            if (!containerController) {
-                console.err('Container controller not found!');
-            }
-            containerController.loadController(controller);
+            Router.navigate('/');
         }
     }
 

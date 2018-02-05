@@ -1,4 +1,3 @@
-/*
 package models;
 
 import javax.persistence.*;
@@ -65,4 +64,3 @@ public class StepProperty implements Serializable {
         this.step = step;
     }
 }
-*/

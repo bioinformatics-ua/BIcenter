@@ -119,7 +119,7 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router'], f
                     return exec['transName'] !== data['transName'];
                 });
                 context.executions.push(data);
-                MainModule.controllers.HeaderController.view.transSubmissionNotification(context.transName, context.executionId, "Running");
+                context.view.transSubmissionNotification(context.transName, context.executionId, "Running");
             });
 
         var interval = setInterval(
@@ -127,7 +127,7 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router'], f
                 $.get("/graph/result", {execution: context.executionId},
                     function (data) {
                         if (JSON.parse(data)['finished'] == true) {
-                            MainModule.controllers.HeaderController.view.transSubmissionNotification(context.transName, context.executionId, "Finished");
+                            context.view.transSubmissionNotification(context.transName, context.executionId, "Finished");
                             clearInterval(interval);
                         }
                     }
@@ -143,13 +143,13 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router'], f
         this.transName = transName;
         this.executionId = executionId;
 
-        var controller = 'PreviewResultsController';
-        var containerController = this.module.controllers.ContainerController;
-        if (!containerController) {
-            console.err('Container controller not found!');
-        }
+        var configStepUrl = jsRoutes.controllers.TransGraphController.preview_results(1).url;
+        Router.navigate(configStepUrl);
+    }
 
-        containerController.loadController(controller);
+    HeaderController.prototype.createTask = function(){
+        var graphController = app.modules.MainModule.controllers.GraphController;
+        graphController.createTask();
     }
 
     return HeaderController;
