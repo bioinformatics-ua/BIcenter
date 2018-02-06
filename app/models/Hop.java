@@ -10,9 +10,9 @@ public class Hop implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "source", cascade = CascadeType.ALL)
+    @OneToOne(fetch= FetchType.LAZY)
     private Step source;
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "destiny", cascade = CascadeType.ALL)
+    @OneToOne(fetch= FetchType.LAZY)
     private Step destiny;
 
     @ManyToOne(fetch = FetchType.LAZY)

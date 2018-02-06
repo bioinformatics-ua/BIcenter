@@ -33,10 +33,7 @@ import org.w3c.dom.Document;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import repositories.CellRepository;
-import repositories.ComponentRepository;
-import repositories.StepRepository;
-import repositories.TaskRepository;
+import repositories.*;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
@@ -51,14 +48,16 @@ public class TransGraphController extends Controller {
     private StepRepository stepRepository;
     private CellRepository cellRepository;
     private ComponentRepository componentRepository;
+    private HopRepository hopRepository;
 
     @Inject
-    public TransGraphController(SyncCacheApi cache, TaskRepository taskRepository, StepRepository stepRepository, CellRepository cellRepository, ComponentRepository componentRepository) {
+    public TransGraphController(SyncCacheApi cache, TaskRepository taskRepository, StepRepository stepRepository, CellRepository cellRepository, ComponentRepository componentRepository, HopRepository hopRepository) {
         this.cache = cache;
         this.taskRepository = taskRepository;
         this.stepRepository = stepRepository;
         this.cellRepository = cellRepository;
         this.componentRepository = componentRepository;
+        this.hopRepository = hopRepository;
     }
 
     /**
@@ -170,17 +169,21 @@ public class TransGraphController extends Controller {
 
     /**
      * Store a certain step, within the given task.
-     * @param graphId Task Id.
+     * @param taskId Task Id.
      * @return
      */
-    public Result add_step(long graphId) {
+    public Result add_step(long taskId) {
         JsonNode stepMeta = request().body().as(JsonNode.class);
 
         // Build new step.
-        Step step = new Step(stepMeta.get("label").asText());
+        String label = stepMeta.get("label").asText();
+        int graphId = stepMeta.get("graphId").asInt();
+        Step step = new Step(label,graphId);
         String name = stepMeta.get("component").asText();
         Component component = componentRepository.getByName(name);
         step.setComponent(component);
+        Task task = taskRepository.get(taskId);
+        step.setTaskSteps(task);
         stepRepository.add(step);
 
         // Build the corresponding cell.
@@ -190,7 +193,6 @@ public class TransGraphController extends Controller {
         );
         cell.setStep(step);
         cellRepository.add(cell);
-
         return ok(step_to_json(step));
     }
 
@@ -211,6 +213,43 @@ public class TransGraphController extends Controller {
         Json.setObjectMapper(mapper);
 
         return Json.toJson(step);
+    }
+
+    /**
+     * Store a certain hop, within the given task.
+     * @param taskId Task Id.
+     * @return
+     */
+    public Result add_hop(long taskId) {
+        JsonNode hopMeta = request().body().as(JsonNode.class);
+
+        // Build new step.
+        Hop hop = new Hop();
+        Step source = stepRepository.getByTaskAndGraphId(taskId,hopMeta.get("source").asInt());
+        hop.setSource(source);
+        Step target = stepRepository.getByTaskAndGraphId(taskId,hopMeta.get("target").asInt());
+        hop.setDestiny(target);
+        Task task = taskRepository.get(taskId);
+        hop.setTaskHops(task);
+        hopRepository.add(hop);
+
+        return ok(hop_to_json(hop));
+    }
+
+    /**
+     * Serializes Hop (JPA) to Json
+     * @param hop
+     * @return
+     */
+    private JsonNode hop_to_json(Hop hop){
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Hop.class, new serializers.hop.HopSerializer());
+        module.addSerializer(Step.class, new serializers.hop.StepSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return Json.toJson(hop);
     }
 
     /**

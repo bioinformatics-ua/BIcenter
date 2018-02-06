@@ -58,5 +58,20 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     }
 
+    Task.add_hop = function(graphId, hopMeta, callback){
+        jsRoutes.controllers.TransGraphController.add_hop(graphId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(hopMeta),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Step service', response);
+            }
+        })
+    }
+
     return Task;
 });

@@ -12,4 +12,6 @@ public interface StepRepository {
     Step add(Step Step);
 
     List<Step> list();
+
+    Step getByTaskAndGraphId(long taskId, int graphId);
 }

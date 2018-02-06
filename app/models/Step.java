@@ -12,6 +12,7 @@ public class Step implements Serializable{
     private Long id;
 
     private String label;
+    private int graphId;
     private Date date;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL)
@@ -26,15 +27,15 @@ public class Step implements Serializable{
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL)
     private Cell cell;
 
-    @OneToOne(fetch= FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "source", cascade = CascadeType.ALL)
     private Hop source;
 
-    @OneToOne(fetch= FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "destiny", cascade = CascadeType.ALL)
     private Hop destiny;
 
     public Step() { date = new Date(); }
-    public Step(String label) {
-        this.label = label;
+    public Step(String label, int graphId) {
+        this.label = label; this.graphId = graphId;
     }
 
     public Long getId() {
@@ -52,6 +53,10 @@ public class Step implements Serializable{
     public void setLabel(String label) {
         this.label = label;
     }
+
+    public int getGraphId() { return graphId; }
+
+    public void setGraphId(int graphId) { this.graphId = graphId; }
 
     public Date getDate() {
         return date;

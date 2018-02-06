@@ -193,20 +193,30 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
      */
     GraphController.prototype.updateTask = function(evt){
         // Add event.
-        if(evt.properties.removed[0]){
+        if(evt.properties.removed != null && evt.properties.removed[0]){
+            var cell = evt.getProperties().removed[0];
+
             if(evt.properties.removed[0].isVertex()) {
-                var step = evt.getProperties().removed[0];
                 var stepMeta = new Object();
 
-                stepMeta.x = step.getGeometry().x;
-                stepMeta.y = step.getGeometry().y;
-                stepMeta.width = step.getGeometry().width;
-                stepMeta.height = step.getGeometry().height;
+                stepMeta.x = cell.getGeometry().x;
+                stepMeta.y = cell.getGeometry().y;
+                stepMeta.width = cell.getGeometry().width;
+                stepMeta.height = cell.getGeometry().height;
 
-                stepMeta.component = step.getValue().getAttribute("component");
-                stepMeta.label = step.getValue().getAttribute("label");
+                stepMeta.component = cell.getValue().getAttribute("component");
+                stepMeta.label = cell.getValue().getAttribute("label");
+                stepMeta.graphId = cell.getId();
 
                 Task.add_step(this.taskId,stepMeta);
+            }
+            else{
+                var hopMeta = new Object();
+
+                hopMeta.source = cell.source.getId();
+                hopMeta.target = cell.target.getId();
+
+                Task.add_hop(this.taskId,hopMeta);
             }
         }
     }
