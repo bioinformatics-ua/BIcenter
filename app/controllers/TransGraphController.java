@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import kettleExt.task.TaskEncoder;
-import models.Cell;
-import models.Hop;
-import models.Step;
-import models.Task;
+import models.*;
 import play.cache.*;
 
 import kettleExt.App;
@@ -36,11 +33,10 @@ import org.w3c.dom.Document;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import repositories.CellRepository;
+import repositories.ComponentRepository;
+import repositories.StepRepository;
 import repositories.TaskRepository;
-import serializers.task.CellSerializer;
-import serializers.task.HopSerializer;
-import serializers.task.StepSerializer;
-import serializers.task.TaskSerializer;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
@@ -52,11 +48,17 @@ public class TransGraphController extends Controller {
     private SyncCacheApi cache;
 
     private TaskRepository taskRepository;
+    private StepRepository stepRepository;
+    private CellRepository cellRepository;
+    private ComponentRepository componentRepository;
 
     @Inject
-    public TransGraphController(SyncCacheApi cache, TaskRepository taskRepository) {
+    public TransGraphController(SyncCacheApi cache, TaskRepository taskRepository, StepRepository stepRepository, CellRepository cellRepository, ComponentRepository componentRepository) {
         this.cache = cache;
         this.taskRepository = taskRepository;
+        this.stepRepository = stepRepository;
+        this.cellRepository = cellRepository;
+        this.componentRepository = componentRepository;
     }
 
     /**
@@ -147,10 +149,10 @@ public class TransGraphController extends Controller {
     private JsonNode task_to_json(Task task){
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        module.addSerializer(Task.class, new TaskSerializer());
-        module.addSerializer(Step.class, new StepSerializer());
-        module.addSerializer(Hop.class, new HopSerializer());
-        module.addSerializer(Cell.class, new CellSerializer());
+        module.addSerializer(Task.class, new serializers.task.TaskSerializer());
+        module.addSerializer(Step.class, new serializers.task.StepSerializer());
+        module.addSerializer(Hop.class, new serializers.task.HopSerializer());
+        module.addSerializer(Cell.class, new serializers.task.CellSerializer());
         mapper.registerModule(module);
         Json.setObjectMapper(mapper);
 
@@ -164,6 +166,51 @@ public class TransGraphController extends Controller {
      */
     public Result open_task(String taskName){
         return null;
+    }
+
+    /**
+     * Store a certain step, within the given task.
+     * @param graphId Task Id.
+     * @return
+     */
+    public Result add_step(long graphId) {
+        JsonNode stepMeta = request().body().as(JsonNode.class);
+
+        // Build new step.
+        Step step = new Step(stepMeta.get("label").asText());
+        String name = stepMeta.get("component").asText();
+        Component component = componentRepository.getByName(name);
+        step.setComponent(component);
+        stepRepository.add(step);
+
+        // Build the corresponding cell.
+        Cell cell = new Cell(
+            stepMeta.get("x").asInt(),stepMeta.get("y").asInt(),
+            stepMeta.get("width").asInt(),stepMeta.get("height").asInt()
+        );
+        cell.setStep(step);
+        cellRepository.add(cell);
+
+        return ok(step_to_json(step));
+    }
+
+    /**
+     * Serializes Step (JPA) to Json
+     * @param step
+     * @return
+     */
+    private JsonNode step_to_json(Step step){
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Step.class, new serializers.step.StepSerializer());
+        module.addSerializer(Cell.class, new serializers.step.CellSerializer());
+        module.addSerializer(Component.class, new serializers.step.ComponentSerializer());
+        module.addSerializer(ComponentProperty.class, new serializers.step.ComponentPropertySerializer());
+        module.addSerializer(ComponentMetadata.class, new serializers.step.ComponentMetadataSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return Json.toJson(step);
     }
 
     /**

@@ -21,9 +21,9 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
         return em.find(Step.class, id);
     }
 
-    public static Step createOrUpdate(EntityManager em, Step Step) {
-        Step = em.merge(Step);
-        return Step;
+    public static Step createOrUpdate(EntityManager em, Step step) {
+        em.persist(step);
+        return step;
     }
 
     @Override

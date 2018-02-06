@@ -43,5 +43,20 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Task.add_step = function(graphId, stepMeta, callback){
+        jsRoutes.controllers.TransGraphController.add_step(graphId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(stepMeta),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Step service', response);
+            }
+        })
+    }
+
     return Task;
 });

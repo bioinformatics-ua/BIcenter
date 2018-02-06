@@ -10,7 +10,7 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
     GraphController.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
         // Load the mxEditor after elements rendering.
-        createEditor('/assets/editor/diagrameditor.xml');
+        this.createEditor('/assets/editor/diagrameditor.xml');
 
         if(global_editor!=null){
             this.view.$elements.source.click();
@@ -28,6 +28,7 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                         if ( event.which == 13 ) {
                             event.preventDefault();
                             Task.new_task(this.value, function (task) {
+                                context.taskId = task.id;
                                 Task.load_task(task.id, function(graph) {
                                     context.view.$elements.source.click();
                                     context.view.$elements.xml.val(graph);
@@ -79,12 +80,13 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
      */
     GraphController.prototype.registerTabClick = function() {
         var context = this;
+        this.taskId;
         $(".graphTab").click(function () {
             var taskName = $(this).text().slice(1);
             if(taskName) {
                 Task.get_task($(this).text().slice(1), function (task) {
+                    context.taskId = task.id;
                     Task.load_task(task.id, function (graph) {
-                        if(context.view==undefined) debugger;
                         context.view.$elements.source.click();
                         context.view.$elements.xml.val(graph);
                         context.view.$elements.source.click();
@@ -95,6 +97,118 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
             $(".graphTab").removeClass("active");
             $(this).addClass("active");
         });
+    }
+
+    var editor = null;
+    /**
+     * Constructs a new application (returns an mxEditor instance)
+     */
+    GraphController.prototype.createEditor = function(config)
+    {
+        var controller = this;
+
+        var hideSplash = function()
+        {
+            // Fades-out the splash screen
+            var splash = document.getElementById('splash');
+
+            if (splash != null)
+            {
+                try
+                {
+                    mxEvent.release(splash);
+                    mxEffects.fadeOut(splash, 100, true);
+                }
+                catch (e)
+                {
+                    splash.parentNode.removeChild(splash);
+                }
+            }
+        };
+
+        try
+        {
+            if (!mxClient.isBrowserSupported())
+            {
+                mxUtils.error('Browser is not supported!', 200, false);
+            }
+            else
+            {
+                mxObjectCodec.allowEval = true;
+                var node = mxUtils.load(config).getDocumentElement();
+                editor = new mxEditor(node);
+                editor.graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender, evt)
+                {
+                    controller.updateTask(evt);
+                });
+                mxObjectCodec.allowEval = false;
+
+                // Adds active border for panning inside the container
+                editor.graph.createPanningManager = function()
+                {
+                    var pm = new mxPanningManager(this);
+                    pm.border = 30;
+
+                    return pm;
+                };
+
+                editor.graph.allowAutoPanning = true;
+                editor.graph.timerAutoScroll = true;
+
+                // Updates the window title after opening new files
+                var title = document.title;
+                var funct = function(sender)
+                {
+                    document.title = title + ' - ' + sender.getTitle();
+                };
+
+                editor.addListener(mxEvent.OPEN, funct);
+
+                // Prints the current root in the window title if the
+                // current root of the graph changes (drilling).
+                editor.addListener(mxEvent.ROOT, funct);
+                funct(editor);
+
+                // Displays version in statusbar
+                editor.setStatus('mxGraph '+mxClient.VERSION);
+
+                // Shows the application
+                hideSplash();
+            }
+        }
+        catch (e)
+        {
+            hideSplash();
+
+            // Shows an error message if the editor cannot start
+            console.log('Cannot start application: ' + e.message);
+        }
+
+        return editor;
+    }
+
+    /**
+     * Updates task based on a given graph event.
+     * @param evt
+     */
+    GraphController.prototype.updateTask = function(evt){
+        // Add event.
+        if(evt.properties.removed[0]){
+            if(evt.properties.removed[0].isVertex()) {
+                var step = evt.getProperties().removed[0];
+                var stepMeta = new Object();
+
+                stepMeta.x = step.getGeometry().x;
+                stepMeta.y = step.getGeometry().y;
+                stepMeta.width = step.getGeometry().width;
+                stepMeta.height = step.getGeometry().height;
+
+                stepMeta.component = step.getValue().getAttribute("component");
+                stepMeta.label = step.getValue().getAttribute("label");
+
+                Task.add_step(this.taskId,stepMeta);
+            }
+        }
     }
 
     return GraphController;

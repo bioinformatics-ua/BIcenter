@@ -90,7 +90,6 @@ define('PreviewResultsView', ['View'], function (View) {
             mxEvent.disableContextMenu(container);
 
             // Creates the graph inside the given container
-
             var graph = this.graph = new mxGraph(container);
             var node = mxUtils.load('/assets/lib/mxgraph2/style/default-style.xml').getDocumentElement();
             var dec = new mxCodec(node.ownerDocument);

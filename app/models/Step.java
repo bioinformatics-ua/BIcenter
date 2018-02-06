@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public abstract class Step implements Serializable{
+public class Step implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -41,6 +41,7 @@ public class Application extends Controller {
                 routes.javascript.Application.supportedLanguages(),
                 routes.javascript.TransGraphController.new_task(),
                 routes.javascript.TransGraphController.get_task(),
+                routes.javascript.TransGraphController.add_step(),
                 routes.javascript.TransGraphController.select_task(),
                 routes.javascript.TransGraphController.load_task(),
                 routes.javascript.TransGraphController.preview_results(),

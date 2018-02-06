@@ -20,9 +20,11 @@
 			</Connector>
 		</add>
 		<add as="RowGenerator">
-			<mxCell style="icon;image=/middle/RowGenerator.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
+			<Step component="RowGenerator" label = "Generate Rows">
+				<mxCell style="icon;image=/middle/RowGenerator.svg" parent="1" vertex="1">
+					<mxGeometry width="40" height="40" as="geometry"/>
+				</mxCell>
+			</Step>
 		</add>
 		<add as="JsonInput">
 			<mxCell style="icon;image=/middle/JsonInput.svg" parent="1" vertex="1">
@@ -50,9 +52,11 @@
 			</mxCell>
 		</add>
 		<add as="Checksum">
-			<mxCell style="icon;image=/middle/Checksum.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
+			<Step label = "Add a cecksum">
+				<mxCell style="icon;image=/middle/Checksum.svg" parent="1" vertex="1">
+					<mxGeometry width="40" height="40" as="geometry"/>
+				</mxCell>
+			</Step>
 		</add>
 		<add as="SelectValues">
 			<mxCell style="icon;image=/middle/SelectValues.svg" parent="1" vertex="1">

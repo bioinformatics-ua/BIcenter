@@ -74,21 +74,21 @@ public class ApplicationStart {
 
         // Load missing configurations.
         configuration.getComponents()
-                .stream()
-                .filter(component -> !components.contains(component.getName()))
-                .peek(component -> {
-                    component.getComponentProperties()
-                            .stream()
-                            .forEach(cp ->
-                            {
-                                cp.setComponent(component);
-                                if(cp.getComponentMetadatas() != null)
-                                    cp.getComponentMetadatas()
-                                            .stream()
-                                            .forEach(cm -> cm.setComponentProperty(cp));
-                            });
-                })
-                .forEach(componentRepository::add);
+            .stream()
+            .filter(component -> !components.contains(component.getName()))
+            .peek(component -> {
+                component.getComponentProperties()
+                        .stream()
+                        .forEach(cp ->
+                        {
+                            cp.setComponent(component);
+                            if(cp.getComponentMetadatas() != null)
+                                cp.getComponentMetadatas()
+                                        .stream()
+                                        .forEach(cm -> cm.setComponentProperty(cp));
+                        });
+            })
+            .forEach(componentRepository::add);
     }
 
     /**

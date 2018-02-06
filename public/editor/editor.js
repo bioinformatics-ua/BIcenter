@@ -41,6 +41,10 @@
                 mxObjectCodec.allowEval = true;
                 var node = mxUtils.load(config).getDocumentElement();
                 editor = new mxEditor(node);
+                editor.graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt)
+                {
+                    debugger;
+                });
                 mxObjectCodec.allowEval = false;
 
                 // Adds active border for panning inside the container

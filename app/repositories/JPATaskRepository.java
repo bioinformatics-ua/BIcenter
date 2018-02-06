@@ -30,14 +30,7 @@ public class JPATaskRepository extends JPARepository implements TaskRepository {
     }
 
     public static Task createOrUpdate(EntityManager em, Task task) {
-        try{
-            task = getByName(em, task.getName());
-            //em.merge(task);
-        }
-        catch(NoResultException e){
-            em.persist(task);
-        }
-
+        em.persist(task);
         return task;
     }
 

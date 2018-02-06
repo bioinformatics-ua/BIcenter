@@ -21,9 +21,9 @@ public class JPACellRepository extends JPARepository implements CellRepository {
         return em.find(Cell.class, id);
     }
 
-    public static Cell createOrUpdate(EntityManager em, Cell Cell) {
-        Cell = em.merge(Cell);
-        return Cell;
+    public static Cell createOrUpdate(EntityManager em, Cell cell) {
+        em.persist(cell);
+        return cell;
     }
 
     @Override

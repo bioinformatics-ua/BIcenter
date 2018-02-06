@@ -21,9 +21,9 @@ public class JPAHopRepository extends JPARepository implements HopRepository {
         return em.find(Hop.class, id);
     }
 
-    public static Hop createOrUpdate(EntityManager em, Hop Hop) {
-        Hop = em.merge(Hop);
-        return Hop;
+    public static Hop createOrUpdate(EntityManager em, Hop hop) {
+        em.persist(hop);
+        return hop;
     }
 
     @Override
