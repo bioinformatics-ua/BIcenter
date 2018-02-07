@@ -12,4 +12,6 @@ public interface CellRepository {
     Cell add(Cell Cell);
 
     List<Cell> list();
+
+    Cell getByStep(long stepId);
 }

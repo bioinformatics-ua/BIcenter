@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import kettleExt.task.TaskEncoder;
 import models.*;
+import org.hibernate.Hibernate;
 import play.cache.*;
 
 import kettleExt.App;
@@ -101,6 +102,15 @@ public class TransGraphController extends Controller {
      */
     public Result load_task(long graphId) throws Exception {
         Task task = this.taskRepository.get(graphId);
+        if(!task.getSteps().isEmpty()) {
+            Hibernate.initialize(task.getSteps());
+            for (Step step : task.getSteps()) {
+                Hibernate.initialize(step.getComponent());
+                Hibernate.initialize(step.getCell());
+            }
+        }
+        if(!task.getHops().isEmpty()) Hibernate.initialize(task.getHops());
+
         mxCodec codec = new mxCodec();
         mxGraph graph = TaskEncoder.encode(task);
         String graphXml = mxUtils.getPrettyXml(codec.encode(graph.getModel()));
@@ -193,26 +203,7 @@ public class TransGraphController extends Controller {
         );
         cell.setStep(step);
         cellRepository.add(cell);
-        return ok(step_to_json(step));
-    }
-
-    /**
-     * Serializes Step (JPA) to Json
-     * @param step
-     * @return
-     */
-    private JsonNode step_to_json(Step step){
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(Step.class, new serializers.step.StepSerializer());
-        module.addSerializer(Cell.class, new serializers.step.CellSerializer());
-        module.addSerializer(Component.class, new serializers.step.ComponentSerializer());
-        module.addSerializer(ComponentProperty.class, new serializers.step.ComponentPropertySerializer());
-        module.addSerializer(ComponentMetadata.class, new serializers.step.ComponentMetadataSerializer());
-        mapper.registerModule(module);
-        Json.setObjectMapper(mapper);
-
-        return Json.toJson(step);
+        return ok();
     }
 
     /**
@@ -232,24 +223,7 @@ public class TransGraphController extends Controller {
         Task task = taskRepository.get(taskId);
         hop.setTaskHops(task);
         hopRepository.add(hop);
-
-        return ok(hop_to_json(hop));
-    }
-
-    /**
-     * Serializes Hop (JPA) to Json
-     * @param hop
-     * @return
-     */
-    private JsonNode hop_to_json(Hop hop){
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(Hop.class, new serializers.hop.HopSerializer());
-        module.addSerializer(Step.class, new serializers.hop.StepSerializer());
-        mapper.registerModule(module);
-        Json.setObjectMapper(mapper);
-
-        return Json.toJson(hop);
+        return ok();
     }
 
     /**

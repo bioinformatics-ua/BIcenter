@@ -26,6 +26,12 @@ public class JPACellRepository extends JPARepository implements CellRepository {
         return cell;
     }
 
+    public static Cell getByStep(EntityManager em, long stepId) {
+        return em.createQuery("select p from Cell p where step_id=:stepId", Cell.class)
+                .setParameter("stepId",stepId)
+                .getSingleResult();
+    }
+
     @Override
     public Cell get(long id) {
         return wrap(em -> get(em, id));
@@ -40,6 +46,9 @@ public class JPACellRepository extends JPARepository implements CellRepository {
     public List<Cell> list() {
         return wrap(em -> list(em));
     }
+
+    @Override
+    public Cell getByStep(long stepId) { return wrap(em -> getByStep(em,stepId)); }
 }
 
 

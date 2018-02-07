@@ -26,6 +26,12 @@ public class JPAHopRepository extends JPARepository implements HopRepository {
         return hop;
     }
 
+    public static List<Hop> getByTask(EntityManager em, long taskId) {
+        return em.createQuery("select p from Hop p where taskHops_id=:taskHops_id", Hop.class)
+                .setParameter("taskHops_id",taskId)
+                .getResultList();
+    }
+
     @Override
     public Hop get(long id) {
         return wrap(em -> get(em, id));
@@ -40,6 +46,9 @@ public class JPAHopRepository extends JPARepository implements HopRepository {
     public List<Hop> list() {
         return wrap(em -> list(em));
     }
+
+    @Override
+    public List<Hop> getByTask(long taskId) { return wrap(em -> getByTask(em,taskId)); }
 }
 
 

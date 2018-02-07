@@ -12,4 +12,6 @@ public interface HopRepository {
     Hop add(Hop Hop);
 
     List<Hop> list();
+
+    List<Hop> getByTask(long taskId);
 }

@@ -33,6 +33,12 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
                 .getSingleResult();
     }
 
+    public static List<Step> getByTask(EntityManager em, long taskId) {
+        return em.createQuery("select p from Step p where taskSteps_id=:taskSteps_id", Step.class)
+                .setParameter("taskSteps_id",taskId)
+                .getResultList();
+    }
+
     @Override
     public Step get(long id) {
         return wrap(em -> get(em, id));
@@ -50,4 +56,7 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
 
     @Override
     public Step getByTaskAndGraphId(long taskId, int graphId) { return wrap(em -> getByTaskAndGraphId(em,taskId,graphId)); }
+
+    @Override
+    public List<Step> getByTask(long taskId) { return wrap(em -> getByTask(em,taskId)); }
 }
