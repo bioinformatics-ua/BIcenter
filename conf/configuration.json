@@ -1,0 +1,172 @@
+{
+  "components": [
+    {
+      "name": "CheckSum",
+      "description": "Add a Checksum",
+      "shortName": "checksum",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "step_name",
+          "type": "input"
+        },
+        {
+          "name": "Checksum Type",
+          "shortName": "type",
+          "type": "select",
+          "componentMetadatas": [
+            {
+              "name": "CRC 32"
+            },
+            {
+              "name": "ADLER 32"
+            },
+            {
+              "name": "MD5"
+            },
+            {
+              "name": "SHA-1"
+            }
+          ]
+        },
+        {
+          "name": "Result Type",
+          "shortName": "result_type",
+          "type": "select",
+          "componentMetadatas": [
+            {
+              "name": "String"
+            },
+            {
+              "name": "Hexadecimal"
+            },
+            {
+              "name": "Binary"
+            }
+          ]
+        },
+        {
+          "name": "Result Field",
+          "shortName": "result_field",
+          "type": "input"
+        },
+        {
+          "name": "Compatibility Mode.",
+          "shortName": "mode",
+          "type": "checkbox"
+        },
+        {
+          "name": "Fields used on checksum",
+          "shortName": "fields",
+          "type": "multi-select"
+        }
+      ]
+    },
+    {
+      "name": "RowGenerator",
+      "description": "Generate Rows",
+      "shortName": "rowgen",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "step_name",
+          "type": "input"
+        },
+        {
+          "name": "Limit",
+          "shortName": "step_limit",
+          "type": "number"
+        },
+        {
+          "name": "Never stop generating rows.",
+          "shortName": "never_ending",
+          "type": "checkbox"
+        },
+        {
+          "name": "Rows",
+          "shortName": "table_body",
+          "type": "table",
+          "componentMetadatas": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "type"
+            },
+            {
+              "name": "format"
+            },
+            {
+              "name": "length"
+            },
+            {
+              "name": "precision"
+            },
+            {
+              "name": "currency"
+            },
+            {
+              "name": "decimal"
+            },
+            {
+              "name": "grouping"
+            },
+            {
+              "name": "value"
+            },
+            {
+              "name": "Set empty String?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sequence",
+      "description": "Add Sequence",
+      "shortName": "sequence",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "step_name",
+          "type": "input"
+        },
+        {
+          "name": "Value Name",
+          "shortName": "value_name",
+          "type": "input"
+        },
+        {
+          "name": "Use a database to generate a sequence.",
+          "shortName": "database",
+          "type": "checkbox"
+        },
+        {
+          "name": "Use a counter to generate the sequence.",
+          "shortName": "counter",
+          "type": "checkbox"
+        },
+        {
+          "name": "Counter Name (optional)",
+          "shortName": "counter_name",
+          "type": "input"
+        },
+        {
+          "name": "Start Value",
+          "shortName": "start_value",
+          "type": "number"
+        },
+        {
+          "name": "Increment",
+          "shortName": "increment",
+          "type": "number"
+        },
+        {
+          "name": "Maximum Value",
+          "shortName": "max_value",
+          "type": "number"
+        }
+      ]
+    }
+  ]
+}
