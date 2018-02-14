@@ -22,7 +22,7 @@ public class JPAComponentMetadataRepository extends JPARepository implements Com
     }
 
     public static ComponentMetadata createOrUpdate(EntityManager em, ComponentMetadata componentMetadata) {
-        em.merge(componentMetadata);
+        em.persist(componentMetadata);
         return componentMetadata;
     }
 

@@ -22,7 +22,7 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
     }
 
     public static Step createOrUpdate(EntityManager em, Step step) {
-        em.merge(step);
+        em.persist(step);
         return step;
     }
 

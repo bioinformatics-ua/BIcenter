@@ -221,6 +221,7 @@ public class StepController extends Controller {
             (Map.Entry node) ->
             {
                 String value = node.getValue().toString();
+                value = value.substring(1,value.length()-1);
                 long componentPropertId = Long.parseLong(node.getKey().toString());
                 StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
                 if(stepProperty == null) {
