@@ -17,8 +17,9 @@ define('StepView', ['View', 'templates'], function (View) {
     };
 
     StepView.prototype.loadStep = function (step) {
-        var html = JST['step']({step: step});
+        var html = JST['step']({component: step.component});
         this.$container.html(html);
+        this._loadViewComponents();
     };
 
     return StepView;

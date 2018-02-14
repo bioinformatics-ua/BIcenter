@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import models.Cell;
-import models.Hop;
-import models.Step;
-import models.Task;
+import models.*;
 
 import java.io.IOException;
 
@@ -19,14 +16,26 @@ public class TaskSerializer extends JsonSerializer<Task> {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
 
-        JsonSerializer<Object> serializer = serializers.findValueSerializer(Step.class);
-        module.addSerializer(Step.class, serializer);
-
-        serializer = serializers.findValueSerializer(Hop.class);
+        JsonSerializer<Object>  serializer = serializers.findValueSerializer(Hop.class);
         module.addSerializer(Hop.class, serializer);
+
+        serializer = serializers.findValueSerializer(Step.class);
+        module.addSerializer(Step.class, serializer);
 
         serializer = serializers.findValueSerializer(Cell.class);
         module.addSerializer(Cell.class, serializer);
+
+        serializer = serializers.findValueSerializer(Component.class);
+        module.addSerializer(Component.class, serializer);
+
+        serializer = serializers.findValueSerializer(ComponentProperty.class);
+        module.addSerializer(ComponentProperty.class, serializer);
+
+        serializer = serializers.findValueSerializer(StepProperty.class);
+        module.addSerializer(StepProperty.class, serializer);
+
+        serializer = serializers.findValueSerializer(ComponentMetadata.class);
+        module.addSerializer(ComponentMetadata.class, serializer);
 
         mapper.registerModule(module);
 

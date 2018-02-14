@@ -19,11 +19,17 @@ public class StepSerializer extends JsonSerializer<Step> {
         JsonSerializer<Object> serializer = serializers.findValueSerializer(Cell.class);
         module.addSerializer(Cell.class, serializer);
 
+        serializer = serializers.findValueSerializer(Hop.class);
+        module.addSerializer(Hop.class, serializer);
+
         serializer = serializers.findValueSerializer(Component.class);
         module.addSerializer(Component.class, serializer);
 
         serializer = serializers.findValueSerializer(ComponentProperty.class);
         module.addSerializer(ComponentProperty.class, serializer);
+
+        serializer = serializers.findValueSerializer(StepProperty.class);
+        module.addSerializer(StepProperty.class, serializer);
 
         serializer = serializers.findValueSerializer(ComponentMetadata.class);
         module.addSerializer(ComponentMetadata.class, serializer);
@@ -36,8 +42,11 @@ public class StepSerializer extends JsonSerializer<Step> {
         gen.writeNumberField("id", value.getId());
 
         gen.writeStringField("label", value.getLabel());
+        gen.writeNumberField("graphId", value.getGraphId());
 
         gen.writeObjectField("cell", mapper.valueToTree(value.getCell()));
+        gen.writeObjectField("source", mapper.valueToTree(value.getSource()));
+        gen.writeObjectField("destiny", mapper.valueToTree(value.getDestiny()));
         gen.writeObjectField("component", mapper.valueToTree(value.getComponent()));
 
         // Finish output

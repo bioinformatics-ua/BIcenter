@@ -35,3 +35,4 @@ GET         /graph/:graphId/step/:stepId/configure          controllers.StepCont
 POST        /step/inputFieldsName                           controllers.StepController.inputFieldsName()
 POST        /step/inputOutputFields                         controllers.StepController.inputOutputFields()
 GET         /step/:stepId/schema                            controllers.StepController.getSchema(stepId:Long)
+GET         /step/:stepId                                   controllers.StepController.getStep(stepId:Long)

@@ -14,20 +14,10 @@ import java.io.IOException;
 public class HopSerializer extends JsonSerializer<Hop> {
     @Override
     public void serialize(Hop value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
-        // Setup object mapper
-        ObjectMapper mapper=new ObjectMapper();
-        SimpleModule module=new SimpleModule();
-
-        JsonSerializer<Object> serializer=serializers.findValueSerializer(Step.class);
-        module.addSerializer(Step.class,serializer);
-
         // Start composing output
         gen.writeStartObject();
 
         gen.writeNumberField("id", value.getId());
-
-        gen.writeObjectField("source", mapper.valueToTree(value.getSource()));
-        gen.writeObjectField("destiny", mapper.valueToTree(value.getDestiny()));
 
         // Finish output
         gen.writeEndObject();

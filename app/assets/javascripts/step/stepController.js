@@ -11,16 +11,17 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
         _super_.initialize.call(this, $container);
 
         if (this.stepId) {
-            this.getSchema(this.stepId);
+            this.getStep(this.stepId);
         }
     };
 
-    StepController.prototype.getSchema = function (stepId) {
+    StepController.prototype.getStep = function (stepId) {
         this.stepId = stepId;
 
         var self = this;
-        Step.getSchema(this.stepId, function (step) {
+        Step.getStep(this.stepId, function (step) {
             console.log(step);
+            self.step = step;
             self.formName = step.shortName+"_form";
             self.view.loadStep(step);
         });
@@ -37,15 +38,17 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
      * Apply step configuration changes.
      */
     StepController.prototype.submitClick = function () {
-        /*
-        var $form = this.view.$elements.checksum_form;
+        var shortName = this.step.shortName;
+        var $form = this.view.$elements[shortName + '_form'];
         var formValues = getFormData($form);
-
+        debugger;
+        console.log(formValues);
+        /*
         Step.applyChanges(this.stepId,function(step){
 
         });
-        Router.navigate('/');
         */
+        Router.navigate('/');
     };
 
     /**

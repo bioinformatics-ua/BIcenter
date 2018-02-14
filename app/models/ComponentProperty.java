@@ -18,6 +18,9 @@ public class ComponentProperty implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Component component;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "componentProperty", cascade = CascadeType.ALL)
+    private StepProperty stepProperty;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "componentProperty", cascade = CascadeType.ALL)
     private List<ComponentMetadata> componentMetadatas;
 
@@ -69,6 +72,10 @@ public class ComponentProperty implements Serializable {
     public void setComponent(Component component) {
         this.component = component;
     }
+
+    public StepProperty getStepProperty() { return stepProperty; }
+
+    public void setStepProperty(StepProperty stepProperty) { this.stepProperty = stepProperty; }
 
     public List<ComponentMetadata> getComponentMetadatas() {
         return componentMetadatas;

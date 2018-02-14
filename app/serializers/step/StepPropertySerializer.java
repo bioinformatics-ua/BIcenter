@@ -1,22 +1,22 @@
-package serializers.hop;
+package serializers.step;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import models.Step;
+import models.StepProperty;
 
 import java.io.IOException;
 
-public class StepSerializer extends JsonSerializer<Step> {
+public class StepPropertySerializer extends JsonSerializer<StepProperty> {
     @Override
-    public void serialize(Step value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(StepProperty value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         // Start composing output
         gen.writeStartObject();
 
         gen.writeNumberField("id", value.getId());
 
-        gen.writeStringField("label", value.getLabel());
+        gen.writeStringField("value", value.getValue());
 
         // Finish output
         gen.writeEndObject();

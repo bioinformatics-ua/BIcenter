@@ -37,6 +37,13 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import repositories.*;
+import serializers.component.ComponentMetadataSerializer;
+import serializers.component.ComponentPropertySerializer;
+import serializers.component.ComponentSerializer;
+import serializers.hop.HopSerializer;
+import serializers.step.CellSerializer;
+import serializers.step.StepPropertySerializer;
+import serializers.step.StepSerializer;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
@@ -120,11 +127,11 @@ public class TransGraphController extends Controller {
     }
 
     /**
-     * Creates a new task with the specified name, and return the mxGraph.
-     * @param name Task name.
-     * @return mxGrpoh file
+     * Check if a task with the given name exists.
+     * @param name
+     * @return
      */
-    public Result new_task(String name){
+    public boolean exists_task(String name){
         boolean exists = true;
         if(taskRepository.list().isEmpty()) exists = false;
         else{
@@ -135,7 +142,17 @@ public class TransGraphController extends Controller {
                 exists = false;
             }
         }
-        if(exists) return forbidden();
+        if(exists) return true;
+        return false;
+    }
+
+    /**
+     * Creates a new task with the specified name, and return the mxGraph.
+     * @param name Task name.
+     * @return mxGrpoh file
+     */
+    public Result new_task(String name){
+        if(exists_task(name)) forbidden();
 
         Task task = new Task(name);
         taskRepository.add(task);
@@ -148,17 +165,7 @@ public class TransGraphController extends Controller {
      * @return Task Json object
      */
     public Result get_task(String name) {
-        boolean exists = true;
-        if(taskRepository.list().isEmpty()) exists = false;
-        else{
-            try{
-                taskRepository.getByName(name);
-            }
-            catch(NoResultException e){
-                exists = false;
-            }
-        }
-        if(!exists) return ok("not found");
+        if(!exists_task(name)) return ok("not found");
 
         Task task = taskRepository.getByName(name);
         return ok(task_to_json(task));
@@ -173,9 +180,13 @@ public class TransGraphController extends Controller {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addSerializer(Task.class, new serializers.task.TaskSerializer());
-        module.addSerializer(Step.class, new serializers.task.StepSerializer());
-        module.addSerializer(Hop.class, new serializers.task.HopSerializer());
-        module.addSerializer(Cell.class, new serializers.task.CellSerializer());
+        module.addSerializer(Step.class, new StepSerializer());
+        module.addSerializer(Hop.class, new HopSerializer());
+        module.addSerializer(Cell.class, new CellSerializer());
+        module.addSerializer(Component.class, new ComponentSerializer());
+        module.addSerializer(ComponentProperty.class, new ComponentPropertySerializer());
+        module.addSerializer(StepProperty.class, new StepPropertySerializer());
+        module.addSerializer(ComponentMetadata.class, new ComponentMetadataSerializer());
         mapper.registerModule(module);
         Json.setObjectMapper(mapper);
 

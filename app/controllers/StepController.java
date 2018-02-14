@@ -9,10 +9,7 @@ import com.mxgraph.view.mxGraph;
 import kettleExt.trans.TransDecoder;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
-import models.Component;
-import models.ComponentMetadata;
-import models.ComponentProperty;
-import models.Step;
+import models.*;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMeta;
@@ -28,6 +25,10 @@ import repositories.StepRepository;
 import serializers.component.ComponentMetadataSerializer;
 import serializers.component.ComponentPropertySerializer;
 import serializers.component.ComponentSerializer;
+import serializers.hop.HopSerializer;
+import serializers.step.CellSerializer;
+import serializers.step.StepPropertySerializer;
+import serializers.step.StepSerializer;
 import utils.SearchFieldsProgress;
 
 import java.util.List;
@@ -156,7 +157,7 @@ public class StepController extends Controller {
     }
 
     /**
-     * Returns Component Step Schema by Name
+     * Returns Component Step Schema by Step Id
      *
      * @param stepId Step Id
      * @return Step Schema
@@ -178,5 +179,28 @@ public class StepController extends Controller {
         Json.setObjectMapper(mapper);
 
         return ok(Json.toJson(component));
+    }
+
+    /**
+     * Return Step by Id
+     * @param stepId
+     * @return
+     */
+    public Result getStep(long stepId){
+        Step step = stepRepository.get(stepId);
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Step.class, new StepSerializer());
+        module.addSerializer(Hop.class, new HopSerializer());
+        module.addSerializer(Cell.class, new CellSerializer());
+        module.addSerializer(Component.class, new ComponentSerializer());
+        module.addSerializer(ComponentProperty.class, new ComponentPropertySerializer());
+        module.addSerializer(StepProperty.class, new StepPropertySerializer());
+        module.addSerializer(ComponentMetadata.class, new ComponentMetadataSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(step));
     }
 }

@@ -11,7 +11,9 @@ public class StepProperty implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String field;
+    @OneToOne(fetch= FetchType.LAZY)
+    private ComponentProperty componentProperty;
+
     private String value;
     private Date date;
 
@@ -19,8 +21,7 @@ public class StepProperty implements Serializable {
     private Step step;
 
     public StepProperty(){ this.date = new Date(); }
-    public StepProperty(String field, String value) {
-        this.field = field;
+    public StepProperty(String value) {
         this.value = value;
     }
 
@@ -32,13 +33,9 @@ public class StepProperty implements Serializable {
         this.id = id;
     }
 
-    public String getField() {
-        return field;
-    }
+    public ComponentProperty getComponentProperty() { return componentProperty; }
 
-    public void setField(String field) {
-        this.field = field;
-    }
+    public void setComponentProperty(ComponentProperty componentProperty) { this.componentProperty = componentProperty; }
 
     public String getValue() {
         return value;
