@@ -10,7 +10,7 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
                 }
             },
             error: function (response) {
-                console.error('Error in Step service', response);
+                console.error('Error in Task service', response);
             }
         })
     };
@@ -24,7 +24,7 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
                 }
             },
             error: function (response) {
-                console.error('Error in Step service', response);
+                console.error('Error in Task service', response);
             }
         })
     };
@@ -38,7 +38,7 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
                 }
             },
             error: function (response) {
-                console.error('Error in Step service', response);
+                console.error('Error in Task service', response);
             }
         })
     };
@@ -53,7 +53,21 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
                 }
             },
             error: function (response) {
-                console.error('Error in Step service', response);
+                console.error('Error in Task service', response);
+            }
+        })
+    }
+
+    Task.get_steps = function(taskId, callback){
+        jsRoutes.controllers.TransGraphController.get_steps(taskId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
             }
         })
     }
@@ -68,7 +82,7 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
                 }
             },
             error: function (response) {
-                console.error('Error in Step service', response);
+                console.error('Error in Task service', response);
             }
         })
     }

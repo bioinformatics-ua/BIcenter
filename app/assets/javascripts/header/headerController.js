@@ -17,10 +17,8 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router'], f
      * @param stepType
      * @param i id of the step within the current transformation.
      */
-    HeaderController.prototype.showStepDialog = function (stepType, i) {
-        this.setGlobalStep(i);
-
-        var configStepUrl = jsRoutes.controllers.StepController.configure(1, stepType).url;
+    HeaderController.prototype.showStepDialog = function (stepId) {
+        var configStepUrl = jsRoutes.controllers.StepController.configure(1, stepId).url;
         Router.navigate(configStepUrl);
     };
 

@@ -12,6 +12,7 @@ import kettleExt.utils.JSONObject;
 import models.Component;
 import models.ComponentMetadata;
 import models.ComponentProperty;
+import models.Step;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMeta;
@@ -23,6 +24,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import repositories.ComponentRepository;
+import repositories.StepRepository;
 import serializers.component.ComponentMetadataSerializer;
 import serializers.component.ComponentPropertySerializer;
 import serializers.component.ComponentSerializer;
@@ -35,20 +37,20 @@ import java.util.Map;
  * Controller that manages all steps of the transformation.
  */
 public class StepController extends Controller {
-    private final ComponentRepository componentRepository;
+    private final StepRepository stepRepository;
 
     @Inject
-    public StepController(ComponentRepository componentRepository) {
-        this.componentRepository = componentRepository;
+    public StepController(StepRepository stepRepository) {
+        this.stepRepository = stepRepository;
     }
 
     /**
      * Edit Step page
      * @param graphId
-     * @param stepName
+     * @param stepId
      * @return
      */
-    public Result configure(String graphId, String stepName) {
+    public Result configure(long graphId, long stepId) {
         return ok(views.html.index.render());
     }
 
@@ -156,11 +158,12 @@ public class StepController extends Controller {
     /**
      * Returns Component Step Schema by Name
      *
-     * @param componentName Name of the desired Step Schema
+     * @param stepId Step Id
      * @return Step Schema
      */
-    public Result getSchema(String componentName) {
-        Component component = componentRepository.getByName(componentName);
+    public Result getSchema(long stepId) {
+        Step step = stepRepository.get(stepId);
+        Component component = step.getComponent();
 
         if (component == null) {
             return notFound();

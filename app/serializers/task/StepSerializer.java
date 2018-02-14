@@ -32,6 +32,7 @@ public class StepSerializer extends JsonSerializer<Step> {
         gen.writeNumberField("id", value.getId());
 
         gen.writeStringField("label", value.getLabel());
+        gen.writeNumberField("graphId", value.getGraphId());
 
         gen.writeObjectField("cell", mapper.valueToTree(value.getCell()));
         gen.writeObjectField("source", mapper.valueToTree(value.getSource()));

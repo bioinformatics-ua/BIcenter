@@ -17,33 +17,24 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], fu
 
         // Add routes
         Router
-        // .add(/patient\/(.*)\/foo\/(.*)/, function (patientId, fooId) {
-        //     .add(new RegExp(jsRoutes.controllers.patient.Patients.viewPatient('(.*)').url.substr(1), 'i'), function (patientId) {
-        //         console.log('patientId', patientId);
-        //         var opts = {
-        //             patientId: patientId
-        //         };
-        //         self.loadControllers('MainModule', ['PatientController', 'PatientFormsController', 'PatientExamsController'], opts)
-        //     })
-        //     .add(/graph\/(.*)\/step\/(.*)/, function(graphId, stepName) {
-            .add(new RegExp(jsRoutes.controllers.TransGraphController.select_task('(.*)').url.substr(1), 'i'), function (graphId) {
-                console.log("Preview Results of Graph "+graphId);
-                var opts = { graphId: graphId }
-                self.loadController('MainModule','GraphController',opts);
-            })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.preview_results('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Preview Results of Graph "+graphId);
                 var opts = { graphId: graphId }
                 self.loadController('MainModule','PreviewResultsController',opts);
             })
-            .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)', '(.*)').url.substr(1), 'i'), function (graphId, stepName) {
-                console.log('Editar step', stepName, 'do graph', graphId);
+            .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)', '(.*)').url.substr(1), 'i'), function (graphId, stepId) {
+                console.log('Edit step',stepId,'of graph', graphId);
 
                 var opts = {
                     graphId: graphId,
-                    stepName: stepName
+                    stepId: stepId
                 };
                 self.loadController('MainModule', 'StepController', opts);
+            })
+            .add(new RegExp(jsRoutes.controllers.TransGraphController.select_task('(.*)').url.substr(1), 'i'), function (graphId) {
+                console.log("Graph "+graphId+" has been selected");
+                var opts = { graphId: graphId }
+                self.loadController('MainModule','GraphController',opts);
             })
             .add(function () {
                 console.log('homepage');

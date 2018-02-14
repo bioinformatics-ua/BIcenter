@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.google.gson.Gson;
 import kettleExt.task.TaskEncoder;
 import models.*;
 import org.hibernate.Hibernate;
@@ -28,6 +29,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Document;
@@ -146,6 +148,18 @@ public class TransGraphController extends Controller {
      * @return Task Json object
      */
     public Result get_task(String name) {
+        boolean exists = true;
+        if(taskRepository.list().isEmpty()) exists = false;
+        else{
+            try{
+                taskRepository.getByName(name);
+            }
+            catch(NoResultException e){
+                exists = false;
+            }
+        }
+        if(!exists) return ok("not found");
+
         Task task = taskRepository.getByName(name);
         return ok(task_to_json(task));
     }
@@ -204,6 +218,17 @@ public class TransGraphController extends Controller {
         cell.setStep(step);
         cellRepository.add(cell);
         return ok();
+    }
+
+    /**
+     * Get all task steps.
+     * @param graphId Task id.
+     * @return List of steps.
+     */
+    public Result get_steps(long graphId) {
+        Task task = taskRepository.get(graphId);
+        List<Step> steps = task.getSteps();
+        return ok(task_to_json(task));
     }
 
     /**

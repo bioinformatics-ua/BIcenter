@@ -23,6 +23,7 @@ GET         /graph/:graphId/load                            controllers.TransGra
 GET         /graph/:name/task                               controllers.TransGraphController.get_task(name:String)
 GET         /graph/load                                     controllers.TransGraphController.load_trans(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")
 POST        /graph/:graphId/new/step                        controllers.TransGraphController.add_step(graphId:Long)
+GET         /graph/:graphId/steps                           controllers.TransGraphController.get_steps(graphId:Long)
 POST        /graph/:graphId/new/hop                         controllers.TransGraphController.add_hop(graphId:Long)
 POST        /graph/run                                      controllers.TransGraphController.run()
 GET         /graph/result                                   controllers.TransGraphController.result(execution: String)
@@ -30,7 +31,7 @@ GET         /graph/:graphId/preview                         controllers.TransGra
 GET         /graph/:graphId                                 controllers.TransGraphController.select_task(graphId:Integer)
 
 # Handles the steps.
-GET         /graph/:graphId/step/:stepName/configure        controllers.StepController.configure(graphId: String, stepName: String)
+GET         /graph/:graphId/step/:stepId/configure          controllers.StepController.configure(graphId:Long,stepId:Long)
 POST        /step/inputFieldsName                           controllers.StepController.inputFieldsName()
 POST        /step/inputOutputFields                         controllers.StepController.inputOutputFields()
-GET         /step/:componentName/schema                     controllers.StepController.getSchema(componentName:String)
+GET         /step/:stepId/schema                            controllers.StepController.getSchema(stepId:Long)

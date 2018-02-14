@@ -10,17 +10,18 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
     StepController.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
 
-        if (this.stepName) {
-            this.getSchema(this.stepName);
+        if (this.stepId) {
+            this.getSchema(this.stepId);
         }
     };
 
-    StepController.prototype.getSchema = function (stepType) {
-        this.stepType = stepType;
+    StepController.prototype.getSchema = function (stepId) {
+        this.stepId = stepId;
 
         var self = this;
-        Step.getSchema(this.stepType, function (step) {
+        Step.getSchema(this.stepId, function (step) {
             console.log(step);
+            self.formName = step.shortName+"_form";
             self.view.loadStep(step);
         });
     };
@@ -31,6 +32,37 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
     StepController.prototype.cancelClick = function () {
         Router.navigate('/');
     };
+
+    /**
+     * Apply step configuration changes.
+     */
+    StepController.prototype.submitClick = function () {
+        /*
+        var $form = this.view.$elements.checksum_form;
+        var formValues = getFormData($form);
+
+        Step.applyChanges(this.stepId,function(step){
+
+        });
+        Router.navigate('/');
+        */
+    };
+
+    /**
+     * Convert form data to json object.
+     * @param $form
+     * @returns {{}}
+     */
+    function getFormData($form){
+        var unindexed_array = $form.serializeArray();
+        var indexed_array = {};
+
+        $.map(unindexed_array, function(n, i){
+            indexed_array[n['name']] = n['value'];
+        });
+
+        return indexed_array;
+    }
 
     return StepController;
 });

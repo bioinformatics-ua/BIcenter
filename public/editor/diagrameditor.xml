@@ -52,8 +52,15 @@
 			</mxCell>
 		</add>
 		<add as="Checksum">
-			<Step label = "Add a cecksum">
+			<Step component="CheckSum" label = "Add a cecksum">
 				<mxCell style="icon;image=/middle/Checksum.svg" parent="1" vertex="1">
+					<mxGeometry width="40" height="40" as="geometry"/>
+				</mxCell>
+			</Step>
+		</add>
+		<add as="Sequence">
+			<Step component="Sequence" label = "Add sequence">
+				<mxCell style="icon;image=/middle/Sequence.svg" parent="1" vertex="1">
 					<mxGeometry width="40" height="40" as="geometry"/>
 				</mxCell>
 			</Step>

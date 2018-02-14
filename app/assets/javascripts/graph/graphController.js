@@ -27,14 +27,29 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                     $('<input style="height: 68%;">').keypress(function( event ) {
                         if ( event.which == 13 ) {
                             event.preventDefault();
-                            Task.new_task(this.value, function (task) {
-                                context.taskId = task.id;
-                                Task.load_task(task.id, function(graph) {
-                                    context.view.$elements.source.click();
-                                    context.view.$elements.xml.val(graph);
-                                    context.view.$elements.source.click();
-                                });
-                            });
+
+                            var taskName = this.value;
+                            Task.get_task(taskName, function(task){
+                                if(task == "not found"){
+                                    Task.new_task(taskName, function (task) {
+                                        context.taskId = task.id;
+                                        Task.load_task(task.id, function (graph) {
+                                            context.view.$elements.source.click();
+                                            context.view.$elements.xml.val(graph);
+                                            context.view.$elements.source.click();
+                                        });
+                                    });
+                                }
+                                else{
+                                    context.taskId = task.id;
+                                    Task.load_task(task.id, function (graph) {
+                                        context.view.$elements.source.click();
+                                        context.view.$elements.xml.val(graph);
+                                        context.view.$elements.source.click();
+                                    });
+                                }
+                            })
+
                             var taskName = this.value;
                             this.replaceWith(taskName);
 

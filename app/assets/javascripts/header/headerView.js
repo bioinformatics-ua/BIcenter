@@ -1,4 +1,4 @@
-define('HeaderView', ['View'], function (View) {
+define('HeaderView', ['View','Task'], function (View,Task) {
     var HeaderView = function (controller) {
         View.call(this, controller, 'header');
     };
@@ -27,59 +27,47 @@ define('HeaderView', ['View'], function (View) {
      */
     HeaderView.prototype.getSteps = function(){
         var graphController = app.modules.MainModule.controllers.GraphController;
+        var context = this;
 
-        graphController.view.$elements.source.click();
-        var transXml = graphController.view.$elements.xml.val();
-        graphController.view.$elements.source.click();
+        Task.get_steps(graphController.taskId,
+            function (task) {
+                context.$elements.steps.empty();
 
-        var node = (new DOMParser()).parseFromString(transXml, "text/xml").documentElement;
-
-        var nodes = node.querySelectorAll("*");
-
-        this.$elements.steps.empty();
-        for (var i = 0; i < nodes.length; i++) {
-            // Append the transaction node to the nodes list.
-            if (nodes[i].tagName == "Step" && nodes[i].hasAttribute('name')){
-                var transName = nodes[i].getAttribute("name");
-                var transId = nodes[i].getAttribute("id");
-                var transLabel = transId + ": " + transName;
-
+                var taskName = task.name;
                 var $item =
                     $('<li class="dropdown-submenu">').append(
-                        $('<a tabindex="-1" href="#">').text(transLabel),
+                        $('<a tabindex="-1">').text(taskName),
                         $('<ul class="dropdown-menu">').append(
                             $('<li>').append(
-                                $('<a tabindex="-1" href="#" view-click="controller.transSettingsDialog('+i+');">').text("Edit Transformation")
+                                $('<a tabindex="-1">').text("Edit Transformation")
                             )
                         )
                     );
-                this.$elements.steps.append($item);
-            }
-            // Append each step to the nodes list.
-            else if (nodes[i].tagName == "Step" && nodes[i].hasAttribute('ctype')) {
-                var stepType = nodes[i].getAttribute("ctype");
-                var stepName = nodes[i].getAttribute("label");
-                var stepId = nodes[i].getAttribute("id");
-                var stepLabel = stepId + ": " + stepName;
+                context.$elements.steps.append($item);
 
-                var item = '<li class="dropdown-submenu">';
-                item += '<a tabindex="-1" href="#">';
-                item += stepLabel;
-                item += '</a>';
-                item += '<ul class="dropdown-menu">';
-                item += '<li><a tabindex="-1" href="#" view-click="controller.showStepDialog('+nodes[i].getAttribute('ctype')+","+i+')">Edit Step</a></li>';
-                item += '<li><a tabindex="-1" href="#">Edit Step Description</a></li>';
-                item += '<li class="divider"></li>';
-                item += '<li><a tabindex="-1" href="#" view-click="controller.showFieldsDialog('+stepName+","+true+')">Show Input Fields</a></li>';
-                item += '<li><a tabindex="-1" href="#" view-click="controller.showFieldsDialog('+stepName+","+false+')">Show Output Fields</a></li>';
-                item += '</ul>';
-                item += '</li>';
+                var steps = task.steps;
+                for (var i = 0; i < steps.length; i++) {
+                    var stepId = steps[i].id;
+                    var vertexId = steps[i].graphId;
+                    var stepLabel = steps[i].label;
 
-                this.$elements.steps.append(item);
+                    var $item =
+                        $('<li class="dropdown-submenu">').append(
+                            $('<a tabindex="-1">').text(vertexId+": "+stepLabel),
+                            $('<ul class="dropdown-menu">').append(
+                                $('<li>').append($('<a tabindex="-1" view-click="controller.showStepDialog('+stepId+')">').text("Edit Step")),
+                                $('<li>').append($('<a tabindex="-1">').text("Edit Step Description")),
+                                $('<li class="divider">'),
+                                $('<li>').append($('<a tabindex="-1" view-click="controller.showFieldsDialog()">').text("Show Input Fields")),
+                                $('<li>').append($('<a tabindex="-1" view-click="controller.showFieldsDialog()">').text("Show Output Fields"))
+                            )
+                        )
+                    context.$elements.steps.append($item);
+                }
+
+                context._loadViewComponents();
             }
-        }
-        this.global_nodes = nodes;
-        this._loadViewComponents();
+        );
     }
 
     /**
