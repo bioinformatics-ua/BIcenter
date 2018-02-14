@@ -5,6 +5,7 @@ import models.StepProperty;
 import play.db.jpa.JPAApi;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class JPAStepPropertyRepository extends JPARepository implements StepPropertyRepository {
@@ -27,9 +28,14 @@ public class JPAStepPropertyRepository extends JPARepository implements StepProp
     }
 
     public static StepProperty getByComponentProperty(EntityManager em, long componentPropertyId) {
-        return em.createQuery("select p from StepProperty p where componentProperty_id=:param", StepProperty.class)
-                .setParameter("param",componentPropertyId)
-                .getSingleResult();
+        try{
+            return em.createQuery("select p from StepProperty p where componentProperty_id=:param", StepProperty.class)
+                    .setParameter("param",componentPropertyId)
+                    .getSingleResult();
+        }
+        catch(NoResultException e){
+            return null;
+        }
     }
 
     @Override
