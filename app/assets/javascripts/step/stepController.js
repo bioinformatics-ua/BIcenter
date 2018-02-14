@@ -22,7 +22,7 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
         Step.getStep(this.stepId, function (step) {
             console.log(step);
             self.step = step;
-            self.formName = step.shortName+"_form";
+            self.formName = step.component.shortName+"_form";
             self.view.loadStep(step);
         });
     };
@@ -38,16 +38,15 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
      * Apply step configuration changes.
      */
     StepController.prototype.submitClick = function () {
-        var shortName = this.step.shortName;
+        var shortName = this.step.component.shortName;
         var $form = this.view.$elements[shortName + '_form'];
         var formValues = getFormData($form);
-        debugger;
         console.log(formValues);
-        /*
-        Step.applyChanges(this.stepId,function(step){
 
+        Step.applyChanges(this.stepId,formValues,function(step){
+            debugger;
         });
-        */
+
         Router.navigate('/');
     };
 

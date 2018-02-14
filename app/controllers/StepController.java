@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.Inject;
@@ -20,7 +21,8 @@ import org.w3c.dom.Document;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import repositories.ComponentRepository;
+import repositories.ComponentPropertyRepository;
+import repositories.StepPropertyRepository;
 import repositories.StepRepository;
 import serializers.component.ComponentMetadataSerializer;
 import serializers.component.ComponentPropertySerializer;
@@ -39,10 +41,14 @@ import java.util.Map;
  */
 public class StepController extends Controller {
     private final StepRepository stepRepository;
+    private final StepPropertyRepository stepPropertyRepository;
+    private final ComponentPropertyRepository componentPropertyRepository;
 
     @Inject
-    public StepController(StepRepository stepRepository) {
+    public StepController(StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentPropertyRepository componentPropertyRepository) {
         this.stepRepository = stepRepository;
+        this.stepPropertyRepository = stepPropertyRepository;
+        this.componentPropertyRepository = componentPropertyRepository;
     }
 
     /**
@@ -202,5 +208,34 @@ public class StepController extends Controller {
         Json.setObjectMapper(mapper);
 
         return ok(Json.toJson(step));
+    }
+
+    /**
+     * Apply changes to the given step.
+     * @return
+     */
+    public Result apply_changes(long stepId){
+        JsonNode formData = request().body().asJson();
+
+        formData.fields().forEachRemaining(
+            (Map.Entry node) ->
+            {
+                String value = node.getValue().toString();
+                long componentPropertId = Long.parseLong(node.getKey().toString());
+                StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
+                if(stepProperty == null) {
+                    stepProperty = new StepProperty(node.getValue().toString());
+                    ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
+                    stepProperty.setComponentProperty(componentProperty);
+                    stepPropertyRepository.add(stepProperty);
+                }
+                else{
+                    stepProperty.setValue(value);
+                    stepPropertyRepository.add(stepProperty);
+                }
+            }
+        );
+
+        return ok();
     }
 }

@@ -28,7 +28,7 @@ public class JPAComponentRepository extends JPARepository implements ComponentRe
     }
 
     public static Component createOrUpdate(EntityManager em, Component component) {
-        em.persist(component);
+        em.merge(component);
         return component;
     }
 

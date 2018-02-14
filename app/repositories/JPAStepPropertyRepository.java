@@ -22,8 +22,14 @@ public class JPAStepPropertyRepository extends JPARepository implements StepProp
     }
 
     public static StepProperty createOrUpdate(EntityManager em, StepProperty stepProperty) {
-        em.persist(stepProperty);
+        em.merge(stepProperty);
         return stepProperty;
+    }
+
+    public static StepProperty getByComponentProperty(EntityManager em, long componentPropertyId) {
+        return em.createQuery("select p from StepProperty p where componentProperty_id=:param", StepProperty.class)
+                .setParameter("param",componentPropertyId)
+                .getSingleResult();
     }
 
     @Override
@@ -37,8 +43,11 @@ public class JPAStepPropertyRepository extends JPARepository implements StepProp
     }
 
     @Override
-    public List<StepProperty> list() {
-        return wrap(em -> list(em));
+    public List<StepProperty> list() { return wrap(em -> list(em)); }
+
+    @Override
+    public StepProperty getByComponentProperty(long componentPropertyId) {
+        return wrap(em -> getByComponentProperty(em,componentPropertyId));
     }
 }
 

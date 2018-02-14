@@ -12,4 +12,6 @@ public interface StepPropertyRepository {
     StepProperty add(StepProperty StepProperty);
 
     List<StepProperty> list();
+
+    StepProperty getByComponentProperty(long componentPropertyId);
 }

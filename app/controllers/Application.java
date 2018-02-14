@@ -49,7 +49,8 @@ public class Application extends Controller {
                 routes.javascript.TransGraphController.preview_results(),
                 routes.javascript.StepController.configure(),
                 routes.javascript.StepController.getSchema(),
-                routes.javascript.StepController.getStep()
+                routes.javascript.StepController.getStep(),
+                routes.javascript.StepController.apply_changes()
         ));
 //        return ok(
 //                Routes.javascriptRouter("jsRoutes",
