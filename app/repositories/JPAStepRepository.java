@@ -22,8 +22,14 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
     }
 
     public static Step createOrUpdate(EntityManager em, Step step) {
-        em.merge(step);
+        step = em.merge(step);
         return step;
+    }
+
+    public static boolean delete(EntityManager em, Step step){
+        step =  em.find(Step.class, step.getId());
+        em.remove(step);
+        return true;
     }
 
     public static Step getByTaskAndGraphId(EntityManager em, long taskId, int graphId) {
@@ -47,6 +53,11 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
     @Override
     public Step add(Step Step) {
         return wrap(em -> createOrUpdate(em, Step));
+    }
+
+    @Override
+    public void delete(Step step) {
+        wrap(em -> delete(em,step));
     }
 
     @Override

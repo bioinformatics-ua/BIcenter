@@ -33,7 +33,9 @@ public class TaskEncoder {
             List<Step> steps = task.getSteps();
             for(Step step : steps){
                 Element stepValue = doc.createElement("Step");
+                stepValue.setAttribute("stepId", Long.toString(step.getId()));
                 stepValue.setAttribute("label", step.getLabel());
+                stepValue.setAttribute("vertexId", Integer.toString(step.getGraphId()));
                 Component component = step.getComponent();
                 stepValue.setAttribute("component", component.getName());
 
@@ -44,9 +46,11 @@ public class TaskEncoder {
 
             List<Hop> hops = task.getHops();
             for(Hop hop : hops) {
+                Element hopValue = doc.createElement("Step");
+                hopValue.setAttribute("hopId", Long.toString(hop.getId()));
                 long source = hop.getSource().getId();
                 long destiny = hop.getDestiny().getId();
-                graph.insertEdge(parent, null, null, cells.get(source), cells.get(destiny));
+                graph.insertEdge(parent, null, hopValue, cells.get(source), cells.get(destiny));
             }
         }
         finally {

@@ -22,7 +22,7 @@ public class JPAComponentPropertyRepository extends JPARepository implements Com
     }
 
     public static ComponentProperty createOrUpdate(EntityManager em, ComponentProperty componentProperty) {
-        em.merge(componentProperty);
+        componentProperty = em.merge(componentProperty);
         return componentProperty;
     }
 

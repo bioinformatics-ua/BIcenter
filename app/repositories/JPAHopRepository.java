@@ -22,8 +22,14 @@ public class JPAHopRepository extends JPARepository implements HopRepository {
     }
 
     public static Hop createOrUpdate(EntityManager em, Hop hop) {
-        em.merge(hop);
+        hop = em.merge(hop);
         return hop;
+    }
+
+    public static boolean delete(EntityManager em, Hop hop){
+        hop =  em.find(Hop.class, hop.getId());
+        em.remove(hop);
+        return true;
     }
 
     public static List<Hop> getByTask(EntityManager em, long taskId) {
@@ -41,6 +47,9 @@ public class JPAHopRepository extends JPARepository implements HopRepository {
     public Hop add(Hop Hop) {
         return wrap(em -> createOrUpdate(em, Hop));
     }
+
+    @Override
+    public void delete(Hop hop) { wrap(em -> delete(em,hop)); }
 
     @Override
     public List<Hop> list() {

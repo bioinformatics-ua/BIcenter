@@ -22,7 +22,7 @@ public class JPACellRepository extends JPARepository implements CellRepository {
     }
 
     public static Cell createOrUpdate(EntityManager em, Cell cell) {
-        em.merge(cell);
+        cell = em.merge(cell);
         return cell;
     }
 

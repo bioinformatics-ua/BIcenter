@@ -11,6 +11,8 @@ public interface HopRepository {
 
     Hop add(Hop Hop);
 
+    void delete(Hop hop);
+
     List<Hop> list();
 
     List<Hop> getByTask(long taskId);

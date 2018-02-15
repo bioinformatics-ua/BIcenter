@@ -58,6 +58,20 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     }
 
+    Task.removeStep = function(stepId, callback){
+        jsRoutes.controllers.TransGraphController.remove_step(stepId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    }
+
     Task.get_steps = function(taskId, callback){
         jsRoutes.controllers.TransGraphController.get_steps(taskId).ajax({
             contentType: 'application/json; charset=utf-8',
@@ -76,6 +90,20 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         jsRoutes.controllers.TransGraphController.add_hop(graphId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(hopMeta),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    }
+
+    Task.removeHop = function(hopId, callback){
+        jsRoutes.controllers.TransGraphController.remove_hop(hopId).ajax({
+            contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
                     callback(response);

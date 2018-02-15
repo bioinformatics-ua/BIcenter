@@ -152,10 +152,17 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                 mxObjectCodec.allowEval = true;
                 var node = mxUtils.load(config).getDocumentElement();
                 editor = new mxEditor(node);
-                editor.graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender, evt)
+
+                editor.graph.addListener(mxEvent.CELLS_ADDED, function(sender, evt)
                 {
-                    controller.updateTask(evt);
+                    controller.addCell(evt);
                 });
+
+                editor.graph.addListener(mxEvent.CELLS_REMOVED, function(sender, evt)
+                {
+                    controller.removeCell(evt);
+                });
+
                 mxObjectCodec.allowEval = false;
 
                 // Adds active border for panning inside the container
@@ -203,35 +210,54 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
     }
 
     /**
-     * Updates task based on a given graph event.
+     * Add step or hop to the task, based on a given graph event.
      * @param evt
      */
-    GraphController.prototype.updateTask = function(evt){
+    GraphController.prototype.addCell = function(evt) {
         // Add event.
-        if(evt.properties.removed != null && evt.properties.removed[0]){
-            var cell = evt.getProperties().removed[0];
+        var cell = evt.properties.cells[0];
 
-            if(evt.properties.removed[0].isVertex()) {
-                var stepMeta = new Object();
+        if (cell.isVertex()) {
+            var stepMeta = new Object();
 
-                stepMeta.x = cell.getGeometry().x;
-                stepMeta.y = cell.getGeometry().y;
-                stepMeta.width = cell.getGeometry().width;
-                stepMeta.height = cell.getGeometry().height;
+            stepMeta.x = cell.getGeometry().x;
+            stepMeta.y = cell.getGeometry().y;
+            stepMeta.width = cell.getGeometry().width;
+            stepMeta.height = cell.getGeometry().height;
 
-                stepMeta.component = cell.getValue().getAttribute("component");
-                stepMeta.label = cell.getValue().getAttribute("label");
-                stepMeta.graphId = cell.getId();
+            stepMeta.component = cell.getValue().getAttribute("component");
+            stepMeta.label = cell.getValue().getAttribute("label");
+            stepMeta.graphId = cell.getId();
 
-                Task.add_step(this.taskId,stepMeta);
+            Task.add_step(this.taskId, stepMeta);
+        }
+        else {
+            var hopMeta = new Object();
+
+            hopMeta.graphId = cell.getId();
+            hopMeta.source = cell.source.getId();
+            hopMeta.target = cell.target.getId();
+
+            Task.add_hop(this.taskId, hopMeta);
+        }
+    }
+
+    /**
+     * Remove step or hop to the task, based on a given graph event.
+     * @param evt
+     */
+    GraphController.prototype.removeCell = function(evt) {
+        // Add event.
+        var cells = evt.properties.cells;
+
+        for (var i = 0; i < cells.length; i++) {
+            if(cells[i].value.hasAttribute("stepId")){
+                var stepId = cells[i].value.getAttribute("stepId");
+                Task.removeStep(stepId,function(reponse){});
             }
             else{
-                var hopMeta = new Object();
-
-                hopMeta.source = cell.source.getId();
-                hopMeta.target = cell.target.getId();
-
-                Task.add_hop(this.taskId,hopMeta);
+                var hopId = cells[i].value.getAttribute("hopId");
+                Task.removeHop(hopId,function(reponse){});
             }
         }
     }

@@ -155,7 +155,7 @@ public class TransGraphController extends Controller {
         if(exists_task(name)) forbidden();
 
         Task task = new Task(name);
-        taskRepository.add(task);
+        task = taskRepository.add(task);
         return ok(task_to_json(task));
     }
 
@@ -219,7 +219,7 @@ public class TransGraphController extends Controller {
         step.setComponent(component);
         Task task = taskRepository.get(taskId);
         step.setTaskSteps(task);
-        stepRepository.add(step);
+        step = stepRepository.add(step);
 
         // Build the corresponding cell.
         Cell cell = new Cell(
@@ -227,7 +227,18 @@ public class TransGraphController extends Controller {
             stepMeta.get("width").asInt(),stepMeta.get("height").asInt()
         );
         cell.setStep(step);
-        cellRepository.add(cell);
+        cell = cellRepository.add(cell);
+        return ok();
+    }
+
+    /**
+     * Delete a certain step.
+     * @param stepId Step Id.
+     * @return
+     */
+    public Result remove_step(long stepId) {
+        Step step = stepRepository.get(stepId);
+        stepRepository.delete(step);
         return ok();
     }
 
@@ -251,14 +262,26 @@ public class TransGraphController extends Controller {
         JsonNode hopMeta = request().body().as(JsonNode.class);
 
         // Build new step.
-        Hop hop = new Hop();
+        int graphId = hopMeta.get("graphId").asInt();
+        Hop hop = new Hop(graphId);
         Step source = stepRepository.getByTaskAndGraphId(taskId,hopMeta.get("source").asInt());
         hop.setSource(source);
         Step target = stepRepository.getByTaskAndGraphId(taskId,hopMeta.get("target").asInt());
         hop.setDestiny(target);
         Task task = taskRepository.get(taskId);
         hop.setTaskHops(task);
-        hopRepository.add(hop);
+        hop = hopRepository.add(hop);
+        return ok();
+    }
+
+    /**
+     * Delete a certain hop.
+     * @param hopId Hop Id.
+     * @return
+     */
+    public Result remove_hop(long hopId) {
+        Hop hop = hopRepository.get(hopId);
+        hopRepository.delete(hop);
         return ok();
     }
 

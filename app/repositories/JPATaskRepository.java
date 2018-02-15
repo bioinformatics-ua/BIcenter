@@ -30,7 +30,7 @@ public class JPATaskRepository extends JPARepository implements TaskRepository {
     }
 
     public static Task createOrUpdate(EntityManager em, Task task) {
-        em.merge(task);
+        task = em.merge(task);
         return task;
     }
 

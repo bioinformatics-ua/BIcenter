@@ -44,7 +44,7 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
         console.log(formValues);
 
         Step.applyChanges(this.stepId,formValues,function(step){
-            debugger;
+            console.log("Step",this.stepId,"has been updated!");
         });
 
         Router.navigate('/');

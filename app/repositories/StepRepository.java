@@ -11,6 +11,8 @@ public interface StepRepository {
 
     Step add(Step Step);
 
+    void delete(Step step);
+
     List<Step> list();
 
     Step getByTaskAndGraphId(long taskId, int graphId);

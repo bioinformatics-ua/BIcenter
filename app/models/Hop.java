@@ -10,6 +10,8 @@ public class Hop implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int graphId;
+
     @OneToOne(fetch= FetchType.LAZY)
     private Step source;
     @OneToOne(fetch= FetchType.LAZY)
@@ -24,6 +26,8 @@ public class Hop implements Serializable {
         this.date = new Date();
     }
 
+    public Hop(int graphId) { this.graphId = graphId; }
+
     public Long getId() {
         return id;
     }
@@ -31,6 +35,10 @@ public class Hop implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public int getGraphId() { return graphId; }
+
+    public void setGraphId(int graphId) { this.graphId = graphId; }
 
     public Step getSource() {
         return source;

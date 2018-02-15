@@ -228,11 +228,11 @@ public class StepController extends Controller {
                     stepProperty = new StepProperty(value);
                     ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
                     stepProperty.setComponentProperty(componentProperty);
-                    stepPropertyRepository.add(stepProperty);
+                    stepProperty = stepPropertyRepository.add(stepProperty);
                 }
                 else{
                     stepProperty.setValue(value);
-                    stepPropertyRepository.add(stepProperty);
+                    stepProperty = stepPropertyRepository.add(stepProperty);
                 }
             }
         );

@@ -23,7 +23,7 @@ public class JPAStepPropertyRepository extends JPARepository implements StepProp
     }
 
     public static StepProperty createOrUpdate(EntityManager em, StepProperty stepProperty) {
-        em.merge(stepProperty);
+        stepProperty = em.merge(stepProperty);
         return stepProperty;
     }
 
