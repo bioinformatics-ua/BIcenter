@@ -22,7 +22,7 @@ public class JPAHopRepository extends JPARepository implements HopRepository {
     }
 
     public static Hop createOrUpdate(EntityManager em, Hop hop) {
-        em.persist(hop);
+        em.merge(hop);
         return hop;
     }
 
