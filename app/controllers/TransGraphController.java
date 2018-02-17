@@ -111,6 +111,11 @@ public class TransGraphController extends Controller {
      */
     public Result load_task(long graphId) throws Exception {
         Task task = this.taskRepository.get(graphId);
+
+        // Open task tab.
+        task.setOpen(1);
+        task = taskRepository.add(task);
+
         if(!task.getSteps().isEmpty()) {
             Hibernate.initialize(task.getSteps());
             for (Step step : task.getSteps()) {
@@ -283,6 +288,25 @@ public class TransGraphController extends Controller {
         Hop hop = hopRepository.get(hopId);
         hopRepository.delete(hop);
         return ok();
+    }
+
+    /**
+     * Close task tab.
+     * @param taskId
+     */
+    public Result closeTab(long taskId){
+        Task task = taskRepository.get(taskId);
+        task.setOpen(0);
+        taskRepository.add(task);
+        return ok();
+    }
+
+    /**
+     * Retrieve all open tabs.
+     */
+    public Result getOpenTabs(){
+        List<String> tabs = taskRepository.getOpenTabs();
+        return ok(new Gson().toJson(tabs));
     }
 
     /**

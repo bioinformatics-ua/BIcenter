@@ -27,6 +27,8 @@ DELETE      /graph/:stepId/new/step                         controllers.TransGra
 GET         /graph/:graphId/steps                           controllers.TransGraphController.get_steps(graphId:Long)
 POST        /graph/:graphId/new/hop                         controllers.TransGraphController.add_hop(graphId:Long)
 DELETE      /graph/:hopId/new/hop                           controllers.TransGraphController.remove_hop(hopId:Long)
+POST        /graph/:graphId/close                           controllers.TransGraphController.closeTab(graphId:Long)
+GET         /graph/tabs                                     controllers.TransGraphController.getOpenTabs()
 POST        /graph/run                                      controllers.TransGraphController.run()
 GET         /graph/result                                   controllers.TransGraphController.result(execution: String)
 GET         /graph/:graphId/preview                         controllers.TransGraphController.preview_results(graphId:Integer)

@@ -15,6 +15,7 @@ public class Task implements Serializable {
     private String name;
 
     private String description;
+    private int open;
     private Date date;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskHops", cascade = CascadeType.ALL)
@@ -24,7 +25,10 @@ public class Task implements Serializable {
     private List<Step> steps;
 
     public Task(){ date = new Date(); }
-    public Task(String name) { this.name = name; }
+    public Task(String name) {
+        this.name = name;
+        this.open = 1;
+    }
 
     public Long getId() { return id; }
 
@@ -37,6 +41,10 @@ public class Task implements Serializable {
     public String getDescription() { return description; }
 
     public void setDescription(String description) { this.description = description; }
+
+    public int getOpen() { return open; }
+
+    public void setOpen(int open) { this.open = open; }
 
     public Date getDate() { return date; }
 

@@ -115,5 +115,34 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     }
 
+    Task.closeTab = function(taskId, callback){
+        jsRoutes.controllers.TransGraphController.closeTab(taskId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({}),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    }
+
+    Task.getOpenTabs = function(callback){
+        jsRoutes.controllers.TransGraphController.getOpenTabs().ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    }
+
     return Task;
 });

@@ -48,6 +48,8 @@ public class Application extends Controller {
                 routes.javascript.TransGraphController.remove_hop(),
                 routes.javascript.TransGraphController.select_task(),
                 routes.javascript.TransGraphController.load_task(),
+                routes.javascript.TransGraphController.closeTab(),
+                routes.javascript.TransGraphController.getOpenTabs(),
                 routes.javascript.TransGraphController.preview_results(),
                 routes.javascript.StepController.configure(),
                 routes.javascript.StepController.getSchema(),

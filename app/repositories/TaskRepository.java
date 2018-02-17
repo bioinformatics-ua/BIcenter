@@ -14,4 +14,6 @@ public interface TaskRepository {
     List<Task> list();
 
     Task getByName(String name);
+
+    List<String> getOpenTabs();
 }

@@ -17,56 +17,33 @@ define('GraphView', ['View', 'Task'], function (View, Task) {
 
         // Load and convert the default transformation.
         var context = this;
-        if(global_editor==null)
-        {
-            $.get("/graph/load",
-                function (transXml) {
-                    context.$elements.source.click();
-                    context.$elements.xml.val(transXml);
-                    context.$elements.source.click();
-
-                    var node = (new DOMParser()).parseFromString(transXml, "text/xml").documentElement;
-                    var nodes = node.querySelectorAll("*");
-                    var name = null;
-                    for (var i = 0; i < nodes.length; i++) {
-                        // Append the transaction node to the nodes list.
-                        if (nodes[i].tagName == "Step" && nodes[i].hasAttribute('name')) {
-                            name = nodes[i].getAttribute('name');
-                            break;
-                        }
-                    }
-
-                    var $tab =
-                        $('<li class="graphTab">').append(
-                            $('<a href="javascript:;">').append(
-                                $('<button class="close closeTab" type="button" >').text("x"),
-                                name
-                            )
-                        );
-                    context.$elements.graph_tabs.append($tab);
-
-                    // Add the loaded graph to the tab list.
-                    context.tabs.push(name);
-                    context._loadViewComponents();
-                    registerCloseEvent();
-                }
-            );
-        }
-        // Draw the current open tabs.
-        else{
-            for(var i=0; i<this.tabs.length; i++){
+        Task.getOpenTabs(function (tabs) {
+            context.tabs = JSON.parse(tabs);
+            for(var i=0; i<context.tabs.length; i++){
                 var $tab =
                     $('<li class="graphTab">').append(
                         $('<a href="javascript:;">').append(
                             $('<button class="close closeTab" type="button" >').text("x"),
-                            this.tabs[i]
+                            context.tabs[i]
                         )
                     );
-                this.$elements.graph_tabs.append($tab);
+                context.$elements.graph_tabs.append($tab);
+
+                if(i == context.tabs.length-1){
+                    Task.get_task(context.tabs[i], function(task) {
+                        context.taskId = task.id;
+                        Task.load_task(task.id, function (graph) {
+                            context.$elements.source.click();
+                            context.$elements.xml.val(graph);
+                            context.$elements.source.click();
+                        });
+                    });
+                }
             }
-        }
-        this._loadViewComponents();
-        registerCloseEvent();
+            context._loadViewComponents();
+            context.registerCloseEvent();
+            context.registerTabClick();
+        })
     };
 
     /**
@@ -81,14 +58,38 @@ define('GraphView', ['View', 'Task'], function (View, Task) {
     /**
      * Listener for task tab close button.
      */
-    function registerCloseEvent() {
+    GraphView.prototype.registerCloseEvent = function() {
+        var context = this;
         $(".closeTab").click(function () {
             //close the li closest to the close button.
             var tabContentId = $(this).parent().attr("href");
             $(this).parent().parent().remove(); //remove li of tab
             $('#myTab a:last').tab('show'); // Select first tab
-            $(tabContentId).remove(); //remove respective tab content
+            Task.closeTab(context.taskId,function () {})
+        });
+    }
 
+    /**
+     * Listener for task tab selection.
+     */
+    GraphView.prototype.registerTabClick = function() {
+        var context = this;
+        this.taskId;
+        $(".graphTab").click(function () {
+            var taskName = $(this).text().slice(1);
+            if(taskName) {
+                Task.get_task($(this).text().slice(1), function (task) {
+                    context.taskId = task.id;
+                    Task.load_task(task.id, function (graph) {
+                        context.$elements.source.click();
+                        context.$elements.xml.val(graph);
+                        context.$elements.source.click();
+                    });
+                });
+            }
+
+            $(".graphTab").removeClass("active");
+            $(this).addClass("active");
         });
     }
 

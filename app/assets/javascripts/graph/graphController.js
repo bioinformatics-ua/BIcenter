@@ -80,13 +80,13 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
      * Listener for task tab close button.
      */
     GraphController.prototype.registerCloseEvent = function() {
+        var context = this;
         $(".closeTab").click(function () {
             //close the li closest to the close button.
             var tabContentId = $(this).parent().attr("href");
             $(this).parent().parent().remove(); //remove li of tab
             $('#myTab a:last').tab('show'); // Select first tab
-            $(tabContentId).remove(); //remove respective tab content
-
+            Task.closeTab(context.taskId,function () {})
         });
     }
 
