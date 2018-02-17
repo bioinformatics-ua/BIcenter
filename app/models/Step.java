@@ -15,7 +15,7 @@ public class Step implements Serializable{
     private int graphId;
     private Date date;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<StepProperty> stepProperties;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -5,6 +5,7 @@ import models.Step;
 import play.db.jpa.JPAApi;
 
 import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import java.util.List;
 
 public class JPAStepRepository extends JPARepository implements StepRepository {
@@ -57,7 +58,16 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
 
     @Override
     public void delete(Step step) {
-        wrap(em -> delete(em,step));
+        // This is a hotfix because of the OptimisticLockException.
+        // I will try to solve this later. (by Leonardo Coelho)
+        while(true) {
+            try {
+                wrap(em -> delete(em, step));
+                break;
+            } catch (Exception e) {
+                // handle the exception
+            }
+        }
     }
 
     @Override

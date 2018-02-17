@@ -5,6 +5,7 @@ import play.db.jpa.JPAApi;
 
 
 import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import java.util.function.Function;
 
 public class JPARepository {
