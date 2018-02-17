@@ -39,22 +39,22 @@ public class Application extends Controller {
         response().setHeader(Http.HeaderNames.CONTENT_TYPE, "text/javascript");
         return ok(JavaScriptReverseRouter.create("jsRoutes",
                 routes.javascript.Application.supportedLanguages(),
-                routes.javascript.TransGraphController.new_task(),
-                routes.javascript.TransGraphController.get_task(),
-                routes.javascript.TransGraphController.add_step(),
-                routes.javascript.TransGraphController.remove_step(),
-                routes.javascript.TransGraphController.get_steps(),
-                routes.javascript.TransGraphController.add_hop(),
-                routes.javascript.TransGraphController.remove_hop(),
-                routes.javascript.TransGraphController.select_task(),
-                routes.javascript.TransGraphController.load_task(),
+                routes.javascript.TransGraphController.newTask(),
+                routes.javascript.TransGraphController.getTask(),
+                routes.javascript.TransGraphController.addStep(),
+                routes.javascript.TransGraphController.removeStep(),
+                routes.javascript.TransGraphController.getSteps(),
+                routes.javascript.TransGraphController.addHop(),
+                routes.javascript.TransGraphController.removeHop(),
+                routes.javascript.TransGraphController.selectTask(),
+                routes.javascript.TransGraphController.loadTask(),
                 routes.javascript.TransGraphController.closeTab(),
                 routes.javascript.TransGraphController.getOpenTabs(),
-                routes.javascript.TransGraphController.preview_results(),
+                routes.javascript.TransGraphController.previewResults(),
                 routes.javascript.StepController.configure(),
                 routes.javascript.StepController.getSchema(),
                 routes.javascript.StepController.getStep(),
-                routes.javascript.StepController.apply_changes()
+                routes.javascript.StepController.applyChanges()
         ));
 //        return ok(
 //                Routes.javascriptRouter("jsRoutes",

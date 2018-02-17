@@ -17,7 +17,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], fu
 
         // Add routes
         Router
-            .add(new RegExp(jsRoutes.controllers.TransGraphController.preview_results('(.*)').url.substr(1), 'i'), function (graphId) {
+            .add(new RegExp(jsRoutes.controllers.TransGraphController.previewResults('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Preview Results of Graph "+graphId);
                 var opts = { graphId: graphId }
                 self.loadController('MainModule','PreviewResultsController',opts);
@@ -31,7 +31,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], fu
                 };
                 self.loadController('MainModule', 'StepController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.TransGraphController.select_task('(.*)').url.substr(1), 'i'), function (graphId) {
+            .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Graph "+graphId+" has been selected");
                 var opts = { graphId: graphId }
                 self.loadController('MainModule','GraphController',opts);

@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controller that manages all steps of the transformation.
+ * Controller that manages all steps of the task.
  */
 public class StepController extends Controller {
     private final StepRepository stepRepository;
@@ -214,7 +214,7 @@ public class StepController extends Controller {
      * Apply changes to the given step.
      * @return
      */
-    public Result apply_changes(long stepId){
+    public Result applyChanges(long stepId){
         JsonNode formData = request().body().asJson();
 
         formData.fields().forEachRemaining(

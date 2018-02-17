@@ -75,14 +75,14 @@ public class TransGraphController extends Controller {
      * @param graphId
      * @return
      */
-    public Result select_task(int graphId) { return ok(views.html.index.render()); }
+    public Result selectTask(int graphId) { return ok(views.html.index.render()); }
 
     /**
      * Preview task Results
      * @param graphId
      * @return
      */
-    public Result preview_results(int graphId) {
+    public Result previewResults(int graphId) {
         return ok(views.html.index.render());
     }
 
@@ -92,7 +92,7 @@ public class TransGraphController extends Controller {
      * @return mxGraph file.
      * @throws Exception
      */
-    public Result load_trans(String filename) throws Exception {
+    public Result loadTrans(String filename) throws Exception {
         File file = new File("app/assets/reposity",filename);
 
         TransMeta transMeta = new TransMeta(file.getAbsolutePath());
@@ -109,7 +109,7 @@ public class TransGraphController extends Controller {
      * @param graphId Task Id.
      * @return mxGraph
      */
-    public Result load_task(long graphId) throws Exception {
+    public Result loadTask(long graphId) throws Exception {
         Task task = this.taskRepository.get(graphId);
 
         // Open task tab.
@@ -136,7 +136,7 @@ public class TransGraphController extends Controller {
      * @param name
      * @return
      */
-    public boolean exists_task(String name){
+    public boolean existsTask(String name){
         boolean exists = true;
         if(taskRepository.list().isEmpty()) exists = false;
         else{
@@ -156,12 +156,12 @@ public class TransGraphController extends Controller {
      * @param name Task name.
      * @return mxGrpoh file
      */
-    public Result new_task(String name){
-        if(exists_task(name)) forbidden();
+    public Result newTask(String name){
+        if(existsTask(name)) forbidden();
 
         Task task = new Task(name);
         task = taskRepository.add(task);
-        return ok(task_to_json(task));
+        return ok(taskToJson(task));
     }
 
     /**
@@ -169,11 +169,11 @@ public class TransGraphController extends Controller {
      * @param name Task name
      * @return Task Json object
      */
-    public Result get_task(String name) {
-        if(!exists_task(name)) return ok("not found");
+    public Result getTask(String name) {
+        if(!existsTask(name)) return ok("not found");
 
         Task task = taskRepository.getByName(name);
-        return ok(task_to_json(task));
+        return ok(taskToJson(task));
     }
 
     /**
@@ -181,7 +181,7 @@ public class TransGraphController extends Controller {
      * @param task
      * @return
      */
-    private JsonNode task_to_json(Task task){
+    private JsonNode taskToJson(Task task){
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addSerializer(Task.class, new serializers.task.TaskSerializer());
@@ -203,7 +203,7 @@ public class TransGraphController extends Controller {
      * @param taskName Task name.
      * @return mxGraph file
      */
-    public Result open_task(String taskName){
+    public Result openTask(String taskName){
         return null;
     }
 
@@ -212,7 +212,7 @@ public class TransGraphController extends Controller {
      * @param taskId Task Id.
      * @return
      */
-    public Result add_step(long taskId) {
+    public Result addStep(long taskId) {
         JsonNode stepMeta = request().body().as(JsonNode.class);
 
         // Build new step.
@@ -241,7 +241,7 @@ public class TransGraphController extends Controller {
      * @param stepId Step Id.
      * @return
      */
-    public Result remove_step(long stepId) {
+    public Result removeStep(long stepId) {
         Step step = stepRepository.get(stepId);
         stepRepository.delete(step);
         return ok();
@@ -252,10 +252,10 @@ public class TransGraphController extends Controller {
      * @param graphId Task id.
      * @return List of steps.
      */
-    public Result get_steps(long graphId) {
+    public Result getSteps(long graphId) {
         Task task = taskRepository.get(graphId);
         List<Step> steps = task.getSteps();
-        return ok(task_to_json(task));
+        return ok(taskToJson(task));
     }
 
     /**
@@ -263,7 +263,7 @@ public class TransGraphController extends Controller {
      * @param taskId Task Id.
      * @return
      */
-    public Result add_hop(long taskId) {
+    public Result addHop(long taskId) {
         JsonNode hopMeta = request().body().as(JsonNode.class);
 
         // Build new step.
@@ -284,7 +284,7 @@ public class TransGraphController extends Controller {
      * @param hopId Hop Id.
      * @return
      */
-    public Result remove_hop(long hopId) {
+    public Result removeHop(long hopId) {
         Hop hop = hopRepository.get(hopId);
         hopRepository.delete(hop);
         return ok();

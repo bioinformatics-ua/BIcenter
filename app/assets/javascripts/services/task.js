@@ -1,8 +1,8 @@
 define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     var Task = Task || {};
 
-    Task.new_task = function (name, callback) {
-        jsRoutes.controllers.TransGraphController.new_task(name).ajax({
+    Task.newTask = function (name, callback) {
+        jsRoutes.controllers.TransGraphController.newTask(name).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -15,8 +15,8 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Task.load_task = function(graphId, callback) {
-        jsRoutes.controllers.TransGraphController.load_task(graphId).ajax({
+    Task.loadTask = function(graphId, callback) {
+        jsRoutes.controllers.TransGraphController.loadTask(graphId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -29,8 +29,8 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Task.get_task = function(name, callback) {
-        jsRoutes.controllers.TransGraphController.get_task(name).ajax({
+    Task.getTask = function(name, callback) {
+        jsRoutes.controllers.TransGraphController.getTask(name).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -43,8 +43,8 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Task.add_step = function(graphId, stepMeta, callback){
-        jsRoutes.controllers.TransGraphController.add_step(graphId).ajax({
+    Task.addStep = function(graphId, stepMeta, callback){
+        jsRoutes.controllers.TransGraphController.addStep(graphId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(stepMeta),
             success: function (response) {
@@ -72,8 +72,8 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     }
 
-    Task.get_steps = function(taskId, callback){
-        jsRoutes.controllers.TransGraphController.get_steps(taskId).ajax({
+    Task.getSteps = function(taskId, callback){
+        jsRoutes.controllers.TransGraphController.getSteps(taskId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -86,8 +86,8 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     }
 
-    Task.add_hop = function(graphId, hopMeta, callback){
-        jsRoutes.controllers.TransGraphController.add_hop(graphId).ajax({
+    Task.addHop = function(graphId, hopMeta, callback){
+        jsRoutes.controllers.TransGraphController.addHop(graphId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(hopMeta),
             success: function (response) {

@@ -30,9 +30,9 @@ define('GraphView', ['View', 'Task'], function (View, Task) {
                 context.$elements.graph_tabs.append($tab);
 
                 if(i == context.tabs.length-1){
-                    Task.get_task(context.tabs[i], function(task) {
+                    Task.getTask(context.tabs[i], function(task) {
                         context.taskId = task.id;
-                        Task.load_task(task.id, function (graph) {
+                        Task.loadTask(task.id, function (graph) {
                             context.$elements.source.click();
                             context.$elements.xml.val(graph);
                             context.$elements.source.click();
@@ -78,9 +78,9 @@ define('GraphView', ['View', 'Task'], function (View, Task) {
         $(".graphTab").click(function () {
             var taskName = $(this).text().slice(1);
             if(taskName) {
-                Task.get_task($(this).text().slice(1), function (task) {
+                Task.getTask($(this).text().slice(1), function (task) {
                     context.taskId = task.id;
-                    Task.load_task(task.id, function (graph) {
+                    Task.loadTask(task.id, function (graph) {
                         context.$elements.source.click();
                         context.$elements.xml.val(graph);
                         context.$elements.source.click();

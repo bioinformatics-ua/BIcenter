@@ -29,7 +29,7 @@ define('HeaderView', ['View','Task'], function (View,Task) {
         var graphController = app.modules.MainModule.controllers.GraphController;
         var context = this;
 
-        Task.get_steps(graphController.taskId,
+        Task.getSteps(graphController.view.taskId,
             function (task) {
                 context.$elements.steps.empty();
 

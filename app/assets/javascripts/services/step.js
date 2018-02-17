@@ -30,7 +30,7 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     };
 
     Step.applyChanges = function (stepId,formData,callback) {
-        jsRoutes.controllers.StepController.apply_changes(stepId).ajax({
+        jsRoutes.controllers.StepController.applyChanges(stepId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(formData),
             success: function (response) {

@@ -29,11 +29,13 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                             event.preventDefault();
 
                             var taskName = this.value;
-                            Task.get_task(taskName, function(task){
+                            var exists = true;
+                            Task.getTask(taskName, function(task){
                                 if(task == "not found"){
-                                    Task.new_task(taskName, function (task) {
-                                        context.taskId = task.id;
-                                        Task.load_task(task.id, function (graph) {
+                                    exists = false;
+                                    Task.newTask(taskName, function (task) {
+                                        context.view.taskId = task.id;
+                                        Task.loadTask(task.id, function (graph) {
                                             context.view.$elements.source.click();
                                             context.view.$elements.xml.val(graph);
                                             context.view.$elements.source.click();
@@ -41,8 +43,8 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                                     });
                                 }
                                 else{
-                                    context.taskId = task.id;
-                                    Task.load_task(task.id, function (graph) {
+                                    context.view.taskId = task.id;
+                                    Task.loadTask(task.id, function (graph) {
                                         context.view.$elements.source.click();
                                         context.view.$elements.xml.val(graph);
                                         context.view.$elements.source.click();
@@ -53,14 +55,25 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                             var taskName = this.value;
                             this.replaceWith(taskName);
 
+                            if(exists){
+                                var state = "danger"
+                                var sticker = "icon fa fa-ban";
+                                var message = "Task '"+taskName+"' already exists!"
+                            }
+                            else{
+                                var state = "success"
+                                var sticker = "icon fa fa-success";
+                                var message = "Task '"+taskName+"' was created successfully!"
+                            }
+
                             var $alert =
                                 $('<div id="newTask" class="col-sm-3" style="position:absolute; z-index:2; right:0;">').append(
-                                    $('<div class="alert alert-success alert-dismissible">').append(
+                                    $('<div class="alert alert-'+state+' alert-dismissible">').append(
                                         $('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">').append("x"),
                                         $('<h4>').append(
-                                            $('<i class="icon fa fa-check">').append("New task")
+                                            $('<i class="'+sticker+'">').append("New task")
                                         ),
-                                        "Task '"+taskName+"' was created successfully!"
+                                        message
                                     )
                                 )
                             setTimeout(function() {
@@ -86,7 +99,7 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
             var tabContentId = $(this).parent().attr("href");
             $(this).parent().parent().remove(); //remove li of tab
             $('#myTab a:last').tab('show'); // Select first tab
-            Task.closeTab(context.taskId,function () {})
+            Task.closeTab(context.view.taskId,function () {})
         });
     }
 
@@ -95,13 +108,13 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
      */
     GraphController.prototype.registerTabClick = function() {
         var context = this;
-        this.taskId;
+        this.view.taskId;
         $(".graphTab").click(function () {
             var taskName = $(this).text().slice(1);
             if(taskName) {
-                Task.get_task($(this).text().slice(1), function (task) {
-                    context.taskId = task.id;
-                    Task.load_task(task.id, function (graph) {
+                Task.getTask($(this).text().slice(1), function (task) {
+                    context.view.taskId = task.id;
+                    Task.loadTask(task.id, function (graph) {
                         context.view.$elements.source.click();
                         context.view.$elements.xml.val(graph);
                         context.view.$elements.source.click();
@@ -229,7 +242,7 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
             stepMeta.label = cell.getValue().getAttribute("label");
             stepMeta.graphId = cell.getId();
 
-            Task.add_step(this.taskId, stepMeta);
+            Task.addStep(this.view.taskId, stepMeta);
         }
         else {
             var hopMeta = new Object();
@@ -238,7 +251,7 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
             hopMeta.source = cell.source.getId();
             hopMeta.target = cell.target.getId();
 
-            Task.add_hop(this.taskId, hopMeta);
+            Task.addHop(this.view.taskId, hopMeta);
         }
     }
 
