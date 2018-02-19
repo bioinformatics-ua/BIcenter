@@ -238,5 +238,27 @@ define('View', ['jquery', 'underscore', 'Utils', 'messages', 'templates'], funct
         };
     };
 
+    View.prototype.destroy = function () {
+        this.controller = null;
+        delete this.controller;
+
+        this.template = null;
+        delete this.template;
+
+        _.each(this.$elements, function ($el) {
+            $el.off();
+            $el.empty();
+        });
+        this.$elements = null;
+        delete this.$elements;
+
+        if (this.$container) {
+            this.$container.off();
+            this.$container.empty();
+        }
+        this.$container = null;
+        delete this.$container;
+    };
+
     return View;
 });

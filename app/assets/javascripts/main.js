@@ -13,6 +13,7 @@ requirejs.config({
         'handlebars.runtime': '../lib/handlebars/handlebars.runtime',
         'handlebarsHelpers': 'core/handlebarsHelpers',
         'editor': '../editor/editor',
+        'bootbox': 'lib/bootbox.min',
 
         // Core
         'Application': 'application/application',
@@ -26,6 +27,7 @@ requirejs.config({
         'jsRoutes': 'jsroutes',
 
         // services
+        'Execution': 'services/execution',
         'Step': 'services/step',
         'Task': 'services/task',
 
@@ -56,6 +58,9 @@ requirejs.config({
         // Edit Step Dialogs
         'StepController': 'step/stepController',
         'StepView': 'step/stepView',
+
+        'SampleModalController': 'step/sampleModalController',
+        'SampleModalView': 'step/sampleModalView',
 
         // Row Generator
         //'RowGeneratorController': 'steps/rowgenerator/rowGeneratorController',

@@ -3,6 +3,9 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.util.mxUtils;
@@ -22,6 +25,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import repositories.ComponentPropertyRepository;
+import repositories.ComponentRepository;
 import repositories.StepPropertyRepository;
 import repositories.StepRepository;
 import serializers.component.ComponentMetadataSerializer;
@@ -35,6 +39,7 @@ import utils.SearchFieldsProgress;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Controller that manages all steps of the task.
@@ -42,17 +47,20 @@ import java.util.Map;
 public class StepController extends Controller {
     private final StepRepository stepRepository;
     private final StepPropertyRepository stepPropertyRepository;
+    private final ComponentRepository componentRepository;
     private final ComponentPropertyRepository componentPropertyRepository;
 
     @Inject
-    public StepController(StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentPropertyRepository componentPropertyRepository) {
+    public StepController(StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentRepository componentRepository, ComponentPropertyRepository componentPropertyRepository) {
         this.stepRepository = stepRepository;
         this.stepPropertyRepository = stepPropertyRepository;
+        this.componentRepository = componentRepository;
         this.componentPropertyRepository = componentPropertyRepository;
     }
 
     /**
      * Edit Step page
+     *
      * @param graphId
      * @param stepId
      * @return
@@ -189,10 +197,11 @@ public class StepController extends Controller {
 
     /**
      * Return Step by Id
+     *
      * @param stepId
      * @return
      */
-    public Result getStep(long stepId){
+    public Result getStep(long stepId) {
         Step step = stepRepository.get(stepId);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -212,32 +221,101 @@ public class StepController extends Controller {
 
     /**
      * Apply changes to the given step.
+     *
      * @return
      */
-    public Result applyChanges(long stepId){
+    public Result applyChanges(long stepId) {
         JsonNode formData = request().body().asJson();
 
         formData.fields().forEachRemaining(
-            (Map.Entry node) ->
-            {
-                String value = node.getValue().toString();
-                value = value.substring(1,value.length()-1);
-                long componentPropertId = Long.parseLong(node.getKey().toString());
-                StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
-                if(stepProperty == null) {
-                    stepProperty = new StepProperty(value);
-                    ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
-                    stepProperty.setComponentProperty(componentProperty);
-                    stepProperty.setStep(stepRepository.get(stepId));
-                    stepProperty = stepPropertyRepository.add(stepProperty);
+                (Map.Entry node) ->
+                {
+                    String value = node.getValue().toString();
+                    value = value.substring(1, value.length() - 1);
+                    long componentPropertId = Long.parseLong(node.getKey().toString());
+                    StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
+                    if (stepProperty == null) {
+                        stepProperty = new StepProperty(value);
+                        ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
+                        stepProperty.setComponentProperty(componentProperty);
+                        stepProperty.setStep(stepRepository.get(stepId));
+                        stepProperty = stepPropertyRepository.add(stepProperty);
+                    } else {
+                        stepProperty.setValue(value);
+                        stepProperty = stepPropertyRepository.add(stepProperty);
+                    }
                 }
-                else{
-                    stepProperty.setValue(value);
-                    stepProperty = stepPropertyRepository.add(stepProperty);
-                }
-            }
         );
 
         return ok();
+    }
+
+    /**
+     * Return ComponentProperty Ids of table elements.
+     *
+     * @param stepId
+     * @return
+     */
+    public Result getTables(long stepId) {
+        Step step = stepRepository.get(stepId);
+        Component component = step.getComponent();
+        List<ComponentProperty> componentProperties = component.getComponentProperties()
+                .stream()
+                .filter(cp -> cp.getType().equals("table"))
+                .collect(Collectors.toList());
+
+        JSONArray jsonArray = new JSONArray();
+        for (ComponentProperty componentProperty : componentProperties) {
+            JSONObject record = new JSONObject();
+            record.put("id", componentProperty.getId());
+            List<ComponentMetadata> componentMetadatas = componentProperty.getComponentMetadatas();
+            JSONArray fields = new JSONArray();
+            for (ComponentMetadata componentMetadata : componentMetadatas) {
+                JSONObject field = new JSONObject();
+                field.put("label", componentMetadata.getName());
+                field.put("name", componentMetadata.getId().toString());
+                fields.add(field);
+            }
+            record.put("fields", fields);
+            jsonArray.add(record);
+        }
+
+        return ok(new Gson().toJson(jsonArray));
+    }
+
+    /**
+     * Get table value.
+     *
+     * @param stepId
+     * @param componentId
+     * @return
+     */
+    public Result getTableValue(long stepId, long componentId) {
+        Step step = stepRepository.get(stepId);
+        StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentId);
+
+        ObjectNode jsonObject = Json.newObject();
+        ArrayNode node = Json.newArray();
+
+
+        ObjectNode test = Json.newObject();
+        test.put("id", 1);
+        test.put("8", "basda");
+        test.put("9", "bada");
+        node.add(test);
+
+        ObjectNode test2 = Json.newObject();
+        test2.put("id", 2);
+        test2.put("8", "qwer");
+        test2.put("9", "zcv");
+        node.add(test2);
+
+        jsonObject.put("data", node);
+
+
+//        response().setHeader(Http.HeaderNames.CONTENT_TYPE, "application/json");
+//        return ok(cenas);
+
+        return ok(jsonObject);
     }
 }

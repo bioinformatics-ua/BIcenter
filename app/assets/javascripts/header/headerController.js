@@ -1,4 +1,4 @@
-define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router'], function (Controller, HeaderView, jsRoutes, Router) {
+define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router','Execution'], function (Controller, HeaderView, jsRoutes, Router,Execution) {
     var HeaderController = function (module) {
         Controller.call(this, module, new HeaderView(this));
     };
@@ -82,6 +82,52 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router'], f
      * @param method execute transformation locally, remotely or in cluster mode.
      */
     HeaderController.prototype.runTransformation = function (method) {
+
+        var exec_method = new Object();
+        exec_method.execMethod = method;
+        exec_method.remoteServer = "master1";
+
+        var details = new Object();
+
+        details.safeModeEnabled = "on"
+        details.gatheringMetrics = "on";
+        details.clearingLog = "on";
+        details.logLevel = 3;
+
+        var execution = new Object();
+        execution.executeMethod = exec_method;
+        execution.details = details;
+        var execution_configuration = JSON.stringify(execution);
+
+        var context = this;
+        var graphController = app.modules.MainModule.controllers.GraphController;
+        Execution.run(graphController.view.taskId,execution_configuration,
+            function(returnedData){
+                // Submit notification of transformation Execution.
+                data = JSON.parse(returnedData);
+                context.transName = data['transName'];
+                context.executionId = data['executionId'];
+                context.executions = context.executions.filter(function (exec) {
+                    return exec['transName'] !== data['transName'];
+                });
+                context.executions.push(data);
+                context.view.transSubmissionNotification(context.transName, context.executionId, "Running");
+
+                // Monitor transformation's execution.
+                var interval = setInterval(
+                    function () {
+                        Execution.result(context.executionId,function(data){
+                            if (JSON.parse(data)['finished'] == true) {
+                                context.view.transSubmissionNotification(context.transName, context.executionId, "Finished");
+                                clearInterval(interval);
+                            }
+                        });
+                    }, 500
+                );
+            }
+        );
+
+        /*
         var enc = new mxCodec(mxUtils.createXmlDocument());
         var node = enc.encode(global_editor.graph.getModel());
 
@@ -132,6 +178,7 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router'], f
                 );
             }, 500
         );
+        */
     }
 
     /**

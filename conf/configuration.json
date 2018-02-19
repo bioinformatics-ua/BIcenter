@@ -7,12 +7,12 @@
       "componentProperties": [
         {
           "name": "Step Name",
-          "shortName": "step_name",
+          "shortName": "stepName",
           "type": "input"
         },
         {
           "name": "Checksum Type",
-          "shortName": "type",
+          "shortName": "checkSumType",
           "type": "select",
           "componentMetadatas": [
             {
@@ -31,7 +31,7 @@
         },
         {
           "name": "Result Type",
-          "shortName": "result_type",
+          "shortName": "resultType",
           "type": "select",
           "componentMetadatas": [
             {
@@ -47,12 +47,12 @@
         },
         {
           "name": "Result Field",
-          "shortName": "result_field",
+          "shortName": "resultfieldName",
           "type": "input"
         },
         {
           "name": "Compatibility Mode.",
-          "shortName": "mode",
+          "shortName": "compatibilityMode",
           "type": "checkbox"
         },
         {
@@ -69,22 +69,22 @@
       "componentProperties": [
         {
           "name": "Step Name",
-          "shortName": "step_name",
+          "shortName": "stepName",
           "type": "input"
         },
         {
           "name": "Limit",
-          "shortName": "step_limit",
+          "shortName": "rowLimit",
           "type": "number"
         },
         {
           "name": "Never stop generating rows.",
-          "shortName": "never_ending",
+          "shortName": "neverEnding",
           "type": "checkbox"
         },
         {
           "name": "Rows",
-          "shortName": "table_body",
+          "shortName": "fields",
           "type": "table",
           "componentMetadatas": [
             {
@@ -128,22 +128,22 @@
       "componentProperties": [
         {
           "name": "Step Name",
-          "shortName": "step_name",
+          "shortName": "stepName",
           "type": "input"
         },
         {
           "name": "Value Name",
-          "shortName": "value_name",
+          "shortName": "valuename",
           "type": "input"
         },
         {
           "name": "Use a database to generate a sequence.",
-          "shortName": "database",
+          "shortName": "useDatabase",
           "type": "checkbox"
         },
         {
           "name": "Use a counter to generate the sequence.",
-          "shortName": "counter",
+          "shortName": "use_counter",
           "type": "checkbox"
         },
         {
@@ -153,12 +153,12 @@
         },
         {
           "name": "Start Value",
-          "shortName": "start_value",
+          "shortName": "start_at",
           "type": "number"
         },
         {
           "name": "Increment",
-          "shortName": "increment",
+          "shortName": "increment_by",
           "type": "number"
         },
         {

@@ -67,12 +67,13 @@
             {{/ifCond}}
             {{#ifCond type '==' 'table'}}
                 <label>{{name}}:</label>
-                <table class="table table-bordered">
-                    <tbody view-element="{{../component.id}}">
-                    {{#componentMetadatas}}
-                        <th>{{name}}</th>
-                    {{/componentMetadatas}}
-                    </tbody>
+                <table id="{{id}}" class="table table-bordered">
+                    <thead view-element="{{../component.id}}">
+                        {{#componentMetadatas}}
+                            <th>{{name}}</th>
+                        {{/componentMetadatas}}
+                        <th></th>
+                    </thead>
                 </table>
             {{/ifCond}}
         {{/component.componentProperties}}

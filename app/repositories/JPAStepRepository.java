@@ -2,6 +2,7 @@ package repositories;
 
 import com.google.inject.Inject;
 import models.Step;
+import models.StepProperty;
 import play.db.jpa.JPAApi;
 
 import javax.persistence.EntityManager;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
-import kettleExt.task.TaskEncoder;
+import diSdk.task.TaskEncoder;
 import models.*;
 import org.hibernate.Hibernate;
 import play.cache.*;

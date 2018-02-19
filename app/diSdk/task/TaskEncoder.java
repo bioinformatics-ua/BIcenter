@@ -1,4 +1,4 @@
-package kettleExt.task;
+package diSdk.task;
 
 import com.google.inject.Inject;
 import com.mxgraph.model.mxCell;
@@ -21,6 +21,7 @@ public class TaskEncoder {
      * @throws Exception
      */
     public static mxGraph encode(Task task) throws Exception {
+        // Initialize mxGraph.
         mxGraph graph = new mxGraph();
         graph.getModel().beginUpdate();
 
@@ -30,6 +31,7 @@ public class TaskEncoder {
 
             HashMap<Long, Object> cells = new HashMap<Long, Object>();
 
+            // Instantiate steps
             List<Step> steps = task.getSteps();
             for(Step step : steps){
                 Element stepValue = doc.createElement("Step");
@@ -44,6 +46,7 @@ public class TaskEncoder {
                 cells.put(step.getId(), cell);
             }
 
+            // Instantiate hops.
             List<Hop> hops = task.getHops();
             for(Hop hop : hops) {
                 Element hopValue = doc.createElement("Step");

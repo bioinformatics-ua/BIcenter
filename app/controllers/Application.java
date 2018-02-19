@@ -51,10 +51,16 @@ public class Application extends Controller {
                 routes.javascript.TransGraphController.closeTab(),
                 routes.javascript.TransGraphController.getOpenTabs(),
                 routes.javascript.TransGraphController.previewResults(),
+
                 routes.javascript.StepController.configure(),
                 routes.javascript.StepController.getSchema(),
                 routes.javascript.StepController.getStep(),
-                routes.javascript.StepController.applyChanges()
+                routes.javascript.StepController.applyChanges(),
+                routes.javascript.StepController.getTables(),
+                routes.javascript.StepController.getTableValue(),
+
+                routes.javascript.ExecutionController.run(),
+                routes.javascript.ExecutionController.result()
         ));
 //        return ok(
 //                Routes.javascriptRouter("jsRoutes",

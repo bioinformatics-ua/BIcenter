@@ -35,7 +35,7 @@ define('Modal', ['View', 'jquery', 'underscore', 'messages', 'bootbox', 'templat
             // className: 'modal-large',
             buttons: {
                 close: {
-                    label: '<i class="fa fa-times-circle"></i> ' + Messages('actions.close'),
+                    label: '<i class="fa fa-times-circle"></i> Close',
                     className: 'btn-default',
                     callback: function () {
                         self.hide();
@@ -55,7 +55,7 @@ define('Modal', ['View', 'jquery', 'underscore', 'messages', 'bootbox', 'templat
             if ($(e.currentTarget).is($(e.target))) {
                 var f;
                 if ((f = $(this).find('form'))) {
-                    f.bootstrapValidator('resetForm', true);
+                    f.bootstrapValidator && f.bootstrapValidator('resetForm', true);
                 }
             }
         });

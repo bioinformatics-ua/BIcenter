@@ -41,5 +41,9 @@ POST        /step/inputOutputFields                         controllers.StepCont
 GET         /step/:stepId/schema                            controllers.StepController.getSchema(stepId:Long)
 POST        /step/:stepId/apply                             controllers.StepController.applyChanges(stepId:Long)
 GET         /step/:stepId                                   controllers.StepController.getStep(stepId:Long)
+GET         /step/:stepId/tables                            controllers.StepController.getTables(stepId:Long)
+GET         /step/:stepId/component/:componentId/table      controllers.StepController.getTableValue(stepId:Long,componentId:Long)
 
 # Handles the executions
+POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)
+GET         /execute/result                                   controllers.ExecutionController.result(execution: String)

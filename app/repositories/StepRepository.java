@@ -2,6 +2,7 @@ package repositories;
 
 import com.google.inject.ImplementedBy;
 import models.Step;
+import models.StepProperty;
 
 import java.util.List;
 

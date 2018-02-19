@@ -22,6 +22,27 @@ define('Module', ['jquery', 'underscore', 'Utils'], function ($, _, Utils) {
         });
     };
 
+    Module.prototype.loadController = function ($controller) {
+        var self = this, v;
+
+        if ((v = $controller.attr('controller'))) {
+            self._setController($controller, v);
+        }
+    };
+
+    Module.prototype.destroy = function () {
+        _.each(this.controllers, function (controller) {
+            controller.destroy();
+        });
+
+        if (this.$container) {
+            this.$container.off();
+            this.$container.empty();
+        }
+        this.$container = null;
+        delete this.$container;
+    };
+
     Module.prototype._setController = function ($element, name) {
         var self = this;
 

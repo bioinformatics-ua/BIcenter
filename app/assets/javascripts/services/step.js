@@ -44,5 +44,19 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Step.getTables = function (stepId, callback) {
+        jsRoutes.controllers.StepController.getTables(stepId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Step service', response);
+            }
+        })
+    };
+
     return Step;
 });

@@ -9,5 +9,17 @@ define('Controller', [], function () {
         this.view.initialize($container, data);
     };
 
+    Controller.prototype.destroy = function () {
+        this.view.destroy();
+        this.view = null;
+        delete this.view;
+
+        this.data = null;
+        delete this.data;
+
+        this.module = null;
+        delete this.module;
+    };
+
     return Controller;
 });

@@ -29,7 +29,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], fu
                     graphId: graphId,
                     stepId: stepId
                 };
-                self.loadController('MainModule', 'StepController', opts);
+                self.loadControllers('MainModule', ['StepController', 'SampleModalController'], opts);
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Graph "+graphId+" has been selected");
@@ -100,6 +100,9 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], fu
             module.loadController($controller);
             $container.append($controller);
         } else {
+            // Destroy
+            module.destroy();
+
             // Inject html
             $container.empty();
             $container.html(html);
