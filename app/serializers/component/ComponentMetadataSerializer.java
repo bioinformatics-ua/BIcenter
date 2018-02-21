@@ -16,6 +16,7 @@ public class ComponentMetadataSerializer extends JsonSerializer<ComponentMetadat
         gen.writeNumberField("id", value.getId());
 
         gen.writeStringField("name", value.getName());
+        gen.writeStringField("shortName", value.getShortName());
 
         // Finish output
         gen.writeEndObject();

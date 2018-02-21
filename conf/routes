@@ -35,9 +35,11 @@ GET         /graph/:graphId/preview                         controllers.TransGra
 GET         /graph/:graphId                                 controllers.TransGraphController.selectTask(graphId:Integer)
 
 # Handles the steps.
-GET         /graph/:graphId/step/:stepId/configure          controllers.StepController.configure(graphId:Long,stepId:Long)
+GET         /step/:stepId/configure                         controllers.StepController.configure(stepId:Long)
+GET         /step/:stepId/input                             controllers.StepController.showStepInput(stepId:Long)
+GET         /step/:stepId/output                            controllers.StepController.showStepOutput(stepId:Long)
 POST        /step/inputFieldsName                           controllers.StepController.inputFieldsName()
-POST        /step/inputOutputFields                         controllers.StepController.inputOutputFields()
+GET         /step/inputOutputFields                         controllers.StepController.inputOutputFields(stepId:Long,before:Boolean)
 GET         /step/:stepId/schema                            controllers.StepController.getSchema(stepId:Long)
 POST        /step/:stepId/apply                             controllers.StepController.applyChanges(stepId:Long)
 GET         /step/:stepId                                   controllers.StepController.getStep(stepId:Long)
@@ -46,4 +48,4 @@ GET         /step/:stepId/component/:componentId/table      controllers.StepCont
 
 # Handles the executions
 POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)
-GET         /execute/result                                   controllers.ExecutionController.result(execution: String)
+GET         /execute/result                                 controllers.ExecutionController.result(execution: String)

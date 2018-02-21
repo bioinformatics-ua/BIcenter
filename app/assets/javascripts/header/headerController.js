@@ -47,21 +47,21 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router','Ex
     }
 
     /**
-     * Returns the input or the output fields of a given step.
-     * @param stepName step label.
-     * @param before if true returns step input fields, else returns step output fields.
+     * Returns the input fields of a given step.
+     * @param stepId
      */
-    HeaderController.prototype.showFieldsDialog = function (stepName, before) {
-        this.stepName = stepName;
-        this.before = before;
+    HeaderController.prototype.showStepInput = function (stepId) {
+        var configStepUrl = jsRoutes.controllers.StepController.showStepInput(stepId).url;
+        Router.navigate(configStepUrl);
+    }
 
-        var controller = 'FieldsController';
-        var containerController = this.module.controllers.ContainerController;
-        if (!containerController) {
-            console.err('Container controller not found!');
-        }
-
-        containerController.loadController(controller);
+    /**
+     * Returns the output fields of a given step.
+     * @param stepId
+     */
+    HeaderController.prototype.showStepInput = function (stepId) {
+        var configStepUrl = jsRoutes.controllers.StepController.showStepOutput(stepId).url;
+        Router.navigate(configStepUrl);
     }
 
     /**
@@ -126,59 +126,6 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router','Ex
                 );
             }
         );
-
-        /*
-        var enc = new mxCodec(mxUtils.createXmlDocument());
-        var node = enc.encode(global_editor.graph.getModel());
-
-        var exec_method = new Object();
-        exec_method.execMethod = method;
-        exec_method.remoteServer = "master1";
-
-        var details = new Object();
-
-        details.safeModeEnabled = "on"
-        details.gatheringMetrics = "on";
-        details.clearingLog = "on";
-        details.logLevel = 3;
-        details.parameters = global_editor['graph'].getDefaultParent().getAttribute('parameters');
-        details.variables = global_editor['graph'].getDefaultParent().getAttribute('variables');
-
-        var execution = new Object();
-        execution.executeMethod = exec_method;
-        execution.details = details;
-        var execution_configuration = JSON.stringify(execution);
-
-        this.transName;
-        this.executionId;
-
-        var context = this;
-        $.post('/graph/run', {graph: mxUtils.getPrettyXml(node), execution: execution_configuration},
-            function (returnedData) {
-                console.log(returnedData);
-                data = JSON.parse(returnedData);
-                context.transName = data['transName'];
-                context.executionId = data['executionId'];
-                context.executions = context.executions.filter(function (exec) {
-                    return exec['transName'] !== data['transName'];
-                });
-                context.executions.push(data);
-                context.view.transSubmissionNotification(context.transName, context.executionId, "Running");
-            });
-
-        var interval = setInterval(
-            function () {
-                $.get("/graph/result", {execution: context.executionId},
-                    function (data) {
-                        if (JSON.parse(data)['finished'] == true) {
-                            context.view.transSubmissionNotification(context.transName, context.executionId, "Finished");
-                            clearInterval(interval);
-                        }
-                    }
-                );
-            }, 500
-        );
-        */
     }
 
     /**

@@ -14,6 +14,11 @@ requirejs.config({
         'handlebarsHelpers': 'core/handlebarsHelpers',
         'editor': '../editor/editor',
         'bootbox': 'lib/bootbox.min',
+        'datatables.net': '../lib/datatables/jquery.dataTables.min',
+        'dataTables': '../lib/datatables/dataTables.bootstrap.min',
+        'pnotify': '../lib/pnotify/pnotify.custom',
+        'pnotify.nonblock': '../lib/pnotify/pnotify.nonblock',
+        'Alert': 'lib/alert',
 
         // Core
         'Application': 'application/application',
@@ -23,6 +28,7 @@ requirejs.config({
         'View': 'core/view',
         'Modal': 'core/modal',
         'Color': 'core/color',
+        'custom.jquery': 'core/custom.jquery',
         'Utils': 'core/utils',
         'jsRoutes': 'jsroutes',
 
@@ -62,17 +68,9 @@ requirejs.config({
         'SampleModalController': 'step/sampleModalController',
         'SampleModalView': 'step/sampleModalView',
 
-        // Row Generator
-        //'RowGeneratorController': 'steps/rowgenerator/rowGeneratorController',
-        //'RowGeneratorView': 'steps/rowgenerator/rowGeneratorView',
-
-        // Checksum
-        //'ChecksumController': 'steps/checksum/checksumController',
-        //'ChecksumView': 'steps/checksum/checksumView',
-
-        // Sequence
-        //'SequenceController': 'steps/sequence/sequenceController',
-        //'SequenceView': 'steps/sequence/sequenceView',
+        // Fields Step page
+        'FieldsController': 'fields/fieldsController',
+        'FieldsView': 'fields/fieldsView',
 
         // PreviewResults
         'PreviewResultsController': 'previewResults/previewResultsController',
@@ -115,14 +113,17 @@ requirejs.config({
         'adminLTE': {
             deps: ['jquery', 'bootstrap', 'jquery.slimscroll']
         },
-        'datatables': {
+        'datatables.net': {
             deps: ['jquery', 'bootstrap']
         },
-        'datatables-bootstrap': {
-            deps: ['jquery', 'bootstrap', 'datatables']
+        'dataTables': {
+            deps: ['jquery', 'bootstrap']
         },
         'templates': {
             deps: ['handlebarsHelpers']
+        },
+        'pnotify': {
+            exports: 'PNotify'
         }
     }
 });

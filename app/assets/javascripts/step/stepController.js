@@ -1,4 +1,4 @@
-define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function (Controller, StepView, Step, Router) {
+define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscore'], function (Controller, StepView, Step, Router, _) {
     var StepController = function (module) {
         Controller.call(this, module, new StepView(this));
     };
@@ -40,7 +40,15 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
     StepController.prototype.submitClick = function () {
         var shortName = this.step.component.shortName;
         var $form = this.view.$elements[shortName + '_form'];
-        var formValues = getFormData($form);
+        var formValues = $form.serializeForm();
+
+        var context = this;
+        _.each(this.view.tables, function (table) {
+            var tableId = table.id;
+            var table = context.view.$elements[tableId].DataTable();
+            formValues[tableId] = table.rows().data().toArray();
+        });
+
         console.log(formValues);
 
         Step.applyChanges(this.stepId,formValues,function(step){
@@ -50,7 +58,14 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router'], function 
         Router.navigate('/');
     };
 
-    /**
+    StepController.prototype.updateTableRow = function (tableId, rowId, formValues) {
+        var table = this.view.$elements[tableId].DataTable();
+        table.row(rowId).data(formValues);
+
+        this.view._loadViewComponents();
+    };
+
+        /**
      * Convert form data to json object.
      * @param $form
      * @returns {{}}

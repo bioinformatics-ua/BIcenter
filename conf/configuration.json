@@ -57,7 +57,7 @@
         },
         {
           "name": "Fields used on checksum",
-          "shortName": "fields",
+          "shortName": "fieldName",
           "type": "multi-select"
         }
       ]
@@ -88,34 +88,44 @@
           "type": "table",
           "componentMetadatas": [
             {
-              "name": "name"
+              "name": "name",
+              "shortName": "fieldName"
             },
             {
-              "name": "type"
+              "name": "type",
+              "shortName": "fieldType"
             },
             {
-              "name": "format"
+              "name": "format",
+              "shortName": "fieldFormat"
             },
             {
-              "name": "length"
+              "name": "length",
+              "shortName": "fieldLength"
             },
             {
-              "name": "precision"
+              "name": "precision",
+              "shortName": "fieldPrecision"
             },
             {
-              "name": "currency"
+              "name": "currency",
+              "shortName": "currency"
             },
             {
-              "name": "decimal"
+              "name": "decimal",
+              "shortName": "decimal"
             },
             {
-              "name": "grouping"
+              "name": "grouping",
+              "shortName": "group"
             },
             {
-              "name": "value"
+              "name": "value",
+              "shortName": "value"
             },
             {
-              "name": "Set empty String?"
+              "name": "Set empty String?",
+              "shortName": "setEmptyString"
             }
           ]
         }

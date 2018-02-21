@@ -58,8 +58,8 @@ define('HeaderView', ['View','Task'], function (View,Task) {
                                 $('<li>').append($('<a tabindex="-1" view-click="controller.showStepDialog('+stepId+')">').text("Edit Step")),
                                 $('<li>').append($('<a tabindex="-1">').text("Edit Step Description")),
                                 $('<li class="divider">'),
-                                $('<li>').append($('<a tabindex="-1" view-click="controller.showFieldsDialog()">').text("Show Input Fields")),
-                                $('<li>').append($('<a tabindex="-1" view-click="controller.showFieldsDialog()">').text("Show Output Fields"))
+                                $('<li>').append($('<a tabindex="-1" view-click="controller.showStepInput('+stepId+')">').text("Show Input Fields")),
+                                $('<li>').append($('<a tabindex="-1" view-click="controller.showStepOutput('+stepId+')">').text("Show Output Fields"))
                             )
                         )
                     context.$elements.steps.append($item);

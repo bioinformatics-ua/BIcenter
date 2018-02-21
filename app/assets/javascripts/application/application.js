@@ -1,4 +1,4 @@
-define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], function ($, Router, Module, jsRoutes) {
+define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'custom.jquery'], function ($, Router, Module, jsRoutes) {
     var Application = function (mainModuleName) {
         this.mainModuleName = mainModuleName || 'MainModule';
         this.modules = {};
@@ -17,16 +17,25 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE'], fu
 
         // Add routes
         Router
+            .add(new RegExp(jsRoutes.controllers.StepController.showStepInput('(.*)').url.substr(1), 'i'), function (stepId) {
+                console.log("Show Input Fields of Step "+stepId);
+                var opts = { stepId:stepId, before:true };
+                self.loadController('MainModule','FieldsController',opts);
+            })
+            .add(new RegExp(jsRoutes.controllers.StepController.showStepOutput('(.*)').url.substr(1), 'i'), function (stepId) {
+                console.log("Show Output Fields of Step "+stepId);
+                var opts = { stepId:stepId, before: false };
+                self.loadController('MainModule','FieldsController',opts);
+            })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.previewResults('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Preview Results of Graph "+graphId);
                 var opts = { graphId: graphId }
                 self.loadController('MainModule','PreviewResultsController',opts);
             })
-            .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)', '(.*)').url.substr(1), 'i'), function (graphId, stepId) {
-                console.log('Edit step',stepId,'of graph', graphId);
+            .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)').url.substr(1), 'i'), function (stepId) {
+                console.log('Edit step',stepId);
 
                 var opts = {
-                    graphId: graphId,
                     stepId: stepId
                 };
                 self.loadControllers('MainModule', ['StepController', 'SampleModalController'], opts);

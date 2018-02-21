@@ -1,4 +1,4 @@
-define('GraphController', ['Controller', 'GraphView', 'Task'], function (Controller, GraphView,Task) {
+define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function (Controller, GraphView, Task, Alert) {
     var GraphController = function (module) {
         Controller.call(this, module, new GraphView(this));
     };
@@ -12,175 +12,143 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
         // Load the mxEditor after elements rendering.
         this.createEditor('/assets/editor/diagrameditor.xml');
 
-        if(global_editor!=null){
+        if (global_editor != null) {
             this.view.$elements.source.click();
             this.view.$elements.source.click();
         }
     };
 
-    GraphController.prototype.createTask = function() {
+    /**
+     * Create new task.
+     */
+    GraphController.prototype.createTask = function () {
         var context = this;
         var $tab =
-            $('<li class="graphTab">').append(
+            $('<li class="graphTab" view-click="controller.clickTab()">').append(
                 $('<a href="javascript:;">').append(
-                    $('<button class="close closeTab" type="button" >').text("x"),
-                    $('<input style="height: 68%;">').keypress(function( event ) {
-                        if ( event.which == 13 ) {
+                    $('<button class="close" type="button" view-click="controller.closeTab()" >').text("x"),
+                    $('<input style="height: 68%;">').keypress(function (event) {
+                        if (event.which == 13) {
                             event.preventDefault();
 
                             var taskName = this.value;
-                            var exists = true;
-                            Task.getTask(taskName, function(task){
-                                if(task == "not found"){
-                                    exists = false;
+                            this.replaceWith(taskName);
+
+                            Task.getTask(taskName, function (task) {
+                                if (task == "not found") {
                                     Task.newTask(taskName, function (task) {
                                         context.view.taskId = task.id;
                                         Task.loadTask(task.id, function (graph) {
                                             context.view.$elements.source.click();
                                             context.view.$elements.xml.val(graph);
                                             context.view.$elements.source.click();
+
+                                            Alert.flash(ALERT_TYPE.SUCCESS, 'Task', 'Task \'' + taskName + '\' was created successfully!');
                                         });
                                     });
                                 }
-                                else{
+                                else {
                                     context.view.taskId = task.id;
                                     Task.loadTask(task.id, function (graph) {
                                         context.view.$elements.source.click();
                                         context.view.$elements.xml.val(graph);
                                         context.view.$elements.source.click();
+
+                                        Alert.flash(ALERT_TYPE.DANGER, 'Task', 'Task \'' + taskName + '\' already exists!');
                                     });
                                 }
-                            })
+                            });
 
-                            var taskName = this.value;
-                            this.replaceWith(taskName);
-
-                            if(exists){
-                                var state = "danger"
-                                var sticker = "icon fa fa-ban";
-                                var message = "Task '"+taskName+"' already exists!"
-                            }
-                            else{
-                                var state = "success"
-                                var sticker = "icon fa fa-success";
-                                var message = "Task '"+taskName+"' was created successfully!"
-                            }
-
-                            var $alert =
-                                $('<div id="newTask" class="col-sm-3" style="position:absolute; z-index:2; right:0;">').append(
-                                    $('<div class="alert alert-'+state+' alert-dismissible">').append(
-                                        $('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">').append("x"),
-                                        $('<h4>').append(
-                                            $('<i class="'+sticker+'">').append("New task")
-                                        ),
-                                        message
-                                    )
-                                )
-                            setTimeout(function() {
-                                $('#newTask').fadeOut('fast');
-                            }, 5000);
-                            context.view.$container.append($alert);
                         }
                     })
                 )
             );
         this.view.$elements.graph_tabs.append($tab);
-        this.registerCloseEvent();
-        this.registerTabClick();
-    }
+        this.view._loadViewComponents();
+    };
 
     /**
      * Listener for task tab close button.
      */
-    GraphController.prototype.registerCloseEvent = function() {
-        var context = this;
-        $(".closeTab").click(function () {
-            //close the li closest to the close button.
-            var tabContentId = $(this).parent().attr("href");
-            $(this).parent().parent().remove(); //remove li of tab
-            $('#myTab a:last').tab('show'); // Select first tab
-            Task.closeTab(context.view.taskId,function () {})
+    GraphController.prototype.closeTab = function (event, $element) {
+        if (event) {
+            event.preventDefault && event.preventDefault();
+            event.stopPropagation && event.stopPropagation();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+        }
+
+        Task.closeTab(this.view.taskId, function () {
+            var prevTab = $element.closest('li').prev();
+            $element.closest('li').remove();
+            prevTab.trigger('click').addClass("active");;
         });
-    }
+    };
 
     /**
      * Listener for task tab selection.
      */
-    GraphController.prototype.registerTabClick = function() {
+    GraphController.prototype.clickTab = function (event, $element) {
         var context = this;
-        this.view.taskId;
-        $(".graphTab").click(function () {
-            var taskName = $(this).text().slice(1);
-            if(taskName) {
-                Task.getTask($(this).text().slice(1), function (task) {
-                    context.view.taskId = task.id;
-                    Task.loadTask(task.id, function (graph) {
-                        context.view.$elements.source.click();
-                        context.view.$elements.xml.val(graph);
-                        context.view.$elements.source.click();
-                    });
-                });
-            }
+        var taskName = $element.text().slice(1);
 
-            $(".graphTab").removeClass("active");
-            $(this).addClass("active");
-        });
-    }
+        if (taskName) {
+            Task.getTask(taskName, function (task) {
+                context.view.taskId = task.id;
+                Task.loadTask(task.id, function (graph) {
+                    context.view.$elements.source.click();
+                    context.view.$elements.xml.val(graph);
+                    context.view.$elements.source.click();
+                });
+            });
+        }
+
+        $(".graphTab").removeClass("active");
+        $(this).addClass("active");
+    };
 
     var editor = null;
     /**
      * Constructs a new application (returns an mxEditor instance)
      */
-    GraphController.prototype.createEditor = function(config)
-    {
+    GraphController.prototype.createEditor = function (config) {
         var controller = this;
 
-        var hideSplash = function()
-        {
+        var hideSplash = function () {
             // Fades-out the splash screen
             var splash = document.getElementById('splash');
 
-            if (splash != null)
-            {
-                try
-                {
+            if (splash != null) {
+                try {
                     mxEvent.release(splash);
                     mxEffects.fadeOut(splash, 100, true);
                 }
-                catch (e)
-                {
+                catch (e) {
                     splash.parentNode.removeChild(splash);
                 }
             }
         };
 
-        try
-        {
-            if (!mxClient.isBrowserSupported())
-            {
+        try {
+            if (!mxClient.isBrowserSupported()) {
                 mxUtils.error('Browser is not supported!', 200, false);
             }
-            else
-            {
+            else {
                 mxObjectCodec.allowEval = true;
                 var node = mxUtils.load(config).getDocumentElement();
                 editor = new mxEditor(node);
 
-                editor.graph.addListener(mxEvent.CELLS_ADDED, function(sender, evt)
-                {
+                editor.graph.addListener(mxEvent.CELLS_ADDED, function (sender, evt) {
                     controller.addCell(evt);
                 });
 
-                editor.graph.addListener(mxEvent.CELLS_REMOVED, function(sender, evt)
-                {
+                editor.graph.addListener(mxEvent.CELLS_REMOVED, function (sender, evt) {
                     controller.removeCell(evt);
                 });
 
                 mxObjectCodec.allowEval = false;
 
                 // Adds active border for panning inside the container
-                editor.graph.createPanningManager = function()
-                {
+                editor.graph.createPanningManager = function () {
                     var pm = new mxPanningManager(this);
                     pm.border = 30;
 
@@ -192,8 +160,7 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
 
                 // Updates the window title after opening new files
                 var title = document.title;
-                var funct = function(sender)
-                {
+                var funct = function (sender) {
                     document.title = title + ' - ' + sender.getTitle();
                 };
 
@@ -205,14 +172,13 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
                 funct(editor);
 
                 // Displays version in statusbar
-                editor.setStatus('mxGraph '+mxClient.VERSION);
+                editor.setStatus('mxGraph ' + mxClient.VERSION);
 
                 // Shows the application
                 hideSplash();
             }
         }
-        catch (e)
-        {
+        catch (e) {
             hideSplash();
 
             // Shows an error message if the editor cannot start
@@ -226,7 +192,7 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
      * Add step or hop to the task, based on a given graph event.
      * @param evt
      */
-    GraphController.prototype.addCell = function(evt) {
+    GraphController.prototype.addCell = function (evt) {
         // Add event.
         var cell = evt.properties.cells[0];
 
@@ -259,18 +225,20 @@ define('GraphController', ['Controller', 'GraphView', 'Task'], function (Control
      * Remove step or hop to the task, based on a given graph event.
      * @param evt
      */
-    GraphController.prototype.removeCell = function(evt) {
+    GraphController.prototype.removeCell = function (evt) {
         // Add event.
         var cells = evt.properties.cells;
 
         for (var i = 0; i < cells.length; i++) {
-            if(cells[i].value.hasAttribute("stepId")){
+            if (cells[i].value.hasAttribute("stepId")) {
                 var stepId = cells[i].value.getAttribute("stepId");
-                Task.removeStep(stepId,function(reponse){});
+                Task.removeStep(stepId, function (reponse) {
+                });
             }
-            else{
+            else {
                 var hopId = cells[i].value.getAttribute("hopId");
-                Task.removeHop(hopId,function(reponse){});
+                Task.removeHop(hopId, function (reponse) {
+                });
             }
         }
     }

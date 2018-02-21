@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxGraph;
+import diSdk.task.TaskDecoder;
 import kettleExt.trans.TransDecoder;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
@@ -24,10 +25,7 @@ import org.w3c.dom.Document;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import repositories.ComponentPropertyRepository;
-import repositories.ComponentRepository;
-import repositories.StepPropertyRepository;
-import repositories.StepRepository;
+import repositories.*;
 import serializers.component.ComponentMetadataSerializer;
 import serializers.component.ComponentPropertySerializer;
 import serializers.component.ComponentSerializer;
@@ -45,13 +43,15 @@ import java.util.stream.Collectors;
  * Controller that manages all steps of the task.
  */
 public class StepController extends Controller {
+    private final TaskRepository taskRepository;
     private final StepRepository stepRepository;
     private final StepPropertyRepository stepPropertyRepository;
     private final ComponentRepository componentRepository;
     private final ComponentPropertyRepository componentPropertyRepository;
 
     @Inject
-    public StepController(StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentRepository componentRepository, ComponentPropertyRepository componentPropertyRepository) {
+    public StepController(TaskRepository taskRepository, StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentRepository componentRepository, ComponentPropertyRepository componentPropertyRepository) {
+        this.taskRepository = taskRepository;
         this.stepRepository = stepRepository;
         this.stepPropertyRepository = stepPropertyRepository;
         this.componentRepository = componentRepository;
@@ -61,11 +61,30 @@ public class StepController extends Controller {
     /**
      * Edit Step page
      *
-     * @param graphId
      * @param stepId
      * @return
      */
-    public Result configure(long graphId, long stepId) {
+    public Result configure(long stepId) {
+        return ok(views.html.index.render());
+    }
+
+    /**
+     * Step Input Fields page
+     *
+     * @param stepId
+     * @return
+     */
+    public Result showStepInput(long stepId) {
+        return ok(views.html.index.render());
+    }
+
+    /**
+     * Step Output Fields page
+     *
+     * @param stepId
+     * @return
+     */
+    public Result showStepOutput(long stepId) {
         return ok(views.html.index.render());
     }
 
@@ -111,22 +130,12 @@ public class StepController extends Controller {
      * @return Json with all desired fields details.
      * @throws Exception
      */
-    public Result inputOutputFields() throws Exception {
-        Object step_name = request().body().as(Map.class).get("stepName");
-        String stepName = (String) ((String[]) step_name)[0];
-        Object graph_xml = request().body().as(Map.class).get("graph");
-        String graphXml = (String) ((String[]) graph_xml)[0];
-        Object bef = request().body().as(Map.class).get("before");
-        boolean before = Boolean.valueOf((String) ((String[]) bef)[0]);
+    public Result inputOutputFields(long stepId, boolean before) throws Exception {
+        Step step = stepRepository.get(stepId);
+        Task task = step.getTaskSteps();
+        TransMeta transMeta = TaskDecoder.decode(task);
 
-        mxGraph graph = new mxGraph();
-        mxCodec codec = new mxCodec();
-        Document doc = mxUtils.parseXml(graphXml);
-        codec.decode(doc.getDocumentElement(), graph.getModel());
-
-        TransMeta transMeta = TransDecoder.decode(graph);
-
-        StepMeta stepMeta = getStep(transMeta, stepName);
+        StepMeta stepMeta = getStep(transMeta, step.getLabel());
         SearchFieldsProgress op = new SearchFieldsProgress(transMeta, stepMeta, before);
         op.run();
         RowMetaInterface rowMetaInterface = op.getFields();
@@ -228,23 +237,22 @@ public class StepController extends Controller {
         JsonNode formData = request().body().asJson();
 
         formData.fields().forEachRemaining(
-                (Map.Entry node) ->
-                {
-                    String value = node.getValue().toString();
-                    value = value.substring(1, value.length() - 1);
-                    long componentPropertId = Long.parseLong(node.getKey().toString());
-                    StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
-                    if (stepProperty == null) {
-                        stepProperty = new StepProperty(value);
-                        ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
-                        stepProperty.setComponentProperty(componentProperty);
-                        stepProperty.setStep(stepRepository.get(stepId));
-                        stepProperty = stepPropertyRepository.add(stepProperty);
-                    } else {
-                        stepProperty.setValue(value);
-                        stepProperty = stepPropertyRepository.add(stepProperty);
-                    }
+            (node) ->
+            {
+                String value = node.getValue() instanceof ArrayNode ? node.getValue().toString() : node.getValue().asText();
+                long componentPropertId = Long.parseLong(node.getKey().toString());
+                StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
+                if (stepProperty == null) {
+                    stepProperty = new StepProperty(value);
+                    ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
+                    stepProperty.setComponentProperty(componentProperty);
+                    stepProperty.setStep(stepRepository.get(stepId));
+                    stepPropertyRepository.add(stepProperty);
+                } else {
+                    stepProperty.setValue(value);
+                    stepPropertyRepository.add(stepProperty);
                 }
+            }
         );
 
         return ok();
@@ -293,29 +301,8 @@ public class StepController extends Controller {
     public Result getTableValue(long stepId, long componentId) {
         Step step = stepRepository.get(stepId);
         StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentId);
-
         ObjectNode jsonObject = Json.newObject();
-        ArrayNode node = Json.newArray();
-
-
-        ObjectNode test = Json.newObject();
-        test.put("id", 1);
-        test.put("8", "basda");
-        test.put("9", "bada");
-        node.add(test);
-
-        ObjectNode test2 = Json.newObject();
-        test2.put("id", 2);
-        test2.put("8", "qwer");
-        test2.put("9", "zcv");
-        node.add(test2);
-
-        jsonObject.put("data", node);
-
-
-//        response().setHeader(Http.HeaderNames.CONTENT_TYPE, "application/json");
-//        return ok(cenas);
-
+        jsonObject.put("data", Json.parse(stepProperty.getValue()));
         return ok(jsonObject);
     }
 }

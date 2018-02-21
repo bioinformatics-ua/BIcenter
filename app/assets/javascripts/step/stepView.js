@@ -1,4 +1,4 @@
-define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates'], function (View, Step, jsRoutes, _) {
+define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'dataTables'], function (View, Step, jsRoutes, _) {
     var StepView = function (controller) {
         View.call(this, controller);
     };
@@ -22,7 +22,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates'], func
         this._loadViewComponents();
 
         var context = this;
-        $.noConflict();
+        // $.noConflict();
 
         Step.getTables(step.id, function (result) {
             var tables = JSON.parse(result);
@@ -49,23 +49,23 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates'], func
                     }
                 );
 
-                $('#' + table.id).DataTable(
-                    {
-                        dom: "frtip",
-                        ajax: jsRoutes.controllers.StepController.getTableValue(step.id, table.id).url,
-                        order: [[1, 'asc']],
-                        columns: columns,
-                        'drawCallback': function (o) {
-                            context._loadViewComponents();
-                        }
-                    });
-
+                context.$elements[table.id].DataTable(
+                {
+                    dom: "frtip",
+                    ajax: jsRoutes.controllers.StepController.getTableValue(step.id, table.id).url,
+                    order: [[1, 'asc']],
+                    columns: columns,
+                    'drawCallback': function (o) {
+                        context._loadViewComponents();
+                    }
+                });
             });
         });
     };
 
     StepView.prototype.editRow = function (tableId, rowId) {
-        var table = $('#' + tableId).DataTable();
+        // var table = $('#' + tableId).DataTable();
+        var table = this.$elements[tableId].DataTable();
         var data = table.row(rowId).data();
 
         var tableData = _.findWhere(this.tables, {id: parseInt(tableId)});

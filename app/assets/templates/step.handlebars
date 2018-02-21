@@ -57,7 +57,7 @@
             {{/ifCond}}
             {{#ifCond type '==' 'multi-select'}}
                 <div class="form-group">
-                    <label for="{{../component.id}}" class="col-sm-2 control-label">{{name}}:</label>
+                    <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
                     <div class="col-sm-5">
                         <select name="{{id}}" view-element="{{id}}" multiple="" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
 
@@ -67,8 +67,8 @@
             {{/ifCond}}
             {{#ifCond type '==' 'table'}}
                 <label>{{name}}:</label>
-                <table id="{{id}}" class="table table-bordered">
-                    <thead view-element="{{../component.id}}">
+                <table view-element="{{id}}" class="table table-bordered">
+                    <thead>
                         {{#componentMetadatas}}
                             <th>{{name}}</th>
                         {{/componentMetadatas}}

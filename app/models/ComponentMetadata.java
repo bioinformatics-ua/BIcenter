@@ -11,6 +11,7 @@ public class ComponentMetadata implements Serializable {
     private Long id;
 
     private String name;
+    private String shortName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ComponentProperty componentProperty;
@@ -37,6 +38,10 @@ public class ComponentMetadata implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getShortName() { return shortName; }
+
+    public void setShortName(String shortName) { this.shortName = shortName; }
 
     public ComponentProperty getComponentProperty() {
         return componentProperty;
