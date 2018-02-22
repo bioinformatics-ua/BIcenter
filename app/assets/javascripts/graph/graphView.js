@@ -15,7 +15,7 @@ define('GraphView', ['View', 'Task'], function (View, Task) {
         var controller = app.modules.MainModule.controllers.GraphController;
         this.tabs = (controller != undefined) ? controller.view.tabs : [];
 
-        // Load and convert the default transformation.
+        // Load open tabs.
         var context = this;
         Task.getOpenTabs(function (tabs) {
             context.tabs = JSON.parse(tabs);
@@ -27,6 +27,7 @@ define('GraphView', ['View', 'Task'], function (View, Task) {
                             context.tabs[i]
                         )
                     );
+                if(i == context.tabs.length-1) $tab.addClass("active");
                 context.$elements.graph_tabs.append($tab);
 
                 if(i == context.tabs.length-1){

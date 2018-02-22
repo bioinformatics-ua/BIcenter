@@ -58,7 +58,6 @@ define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function
                                     });
                                 }
                             });
-
                         }
                     })
                 )
@@ -80,7 +79,7 @@ define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function
         Task.closeTab(this.view.taskId, function () {
             var prevTab = $element.closest('li').prev();
             $element.closest('li').remove();
-            prevTab.trigger('click').addClass("active");;
+            prevTab.trigger('click').addClass("active");
         });
     };
 

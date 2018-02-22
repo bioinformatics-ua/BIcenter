@@ -81,7 +81,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                 finalData.push(obj);
             });
 
-            var modalController = this.controller.module.controllers['SampleModalController'];
+            var modalController = this.controller.module.controllers['StepModalController'];
             modalController.view.show(tableId,rowId,finalData);
         }
     };

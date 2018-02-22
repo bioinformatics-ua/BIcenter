@@ -38,7 +38,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 var opts = {
                     stepId: stepId
                 };
-                self.loadControllers('MainModule', ['StepController', 'SampleModalController'], opts);
+                self.loadControllers('MainModule', ['StepController', 'StepModalController'], opts);
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Graph "+graphId+" has been selected");

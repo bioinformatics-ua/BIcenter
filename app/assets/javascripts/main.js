@@ -65,8 +65,8 @@ requirejs.config({
         'StepController': 'step/stepController',
         'StepView': 'step/stepView',
 
-        'SampleModalController': 'step/sampleModalController',
-        'SampleModalView': 'step/sampleModalView',
+        'StepModalController': 'step/stepModalController',
+        'StepModalView': 'step/stepModalView',
 
         // Fields Step page
         'FieldsController': 'fields/fieldsController',

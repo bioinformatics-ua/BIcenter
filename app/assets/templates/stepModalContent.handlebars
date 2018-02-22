@@ -1,0 +1,10 @@
+<form view-element="{{table}}_{{row}}" view-submit="controller.add()" class="form-horizontal">
+{{#each fields}}
+    <div class="form-group">
+        <label for="{{id}}" class="col-sm-2 control-label">{{label}}:</label>
+        <div class="col-sm-5">
+            <input class="form-control" name="{{id}}" view-element="{{id}}" value="{{value}}">
+        </div>
+    </div>
+{{/each}}
+</form>
