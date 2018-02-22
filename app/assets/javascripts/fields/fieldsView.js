@@ -57,7 +57,7 @@ define('FieldsView', ['View','Step'], function (View,Step) {
     FieldsView.prototype.loadStep = function (step,before) {
         var context = this;
         context.step = step;
-        if(before == true){
+        if(before == "true"){
             Step.showStepInput(step.id, function (fields) {
                 context.loadFields(context.step,fields);
             });

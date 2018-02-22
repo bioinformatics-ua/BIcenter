@@ -1,4 +1,4 @@
-define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router','Execution'], function (Controller, HeaderView, jsRoutes, Router,Execution) {
+define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task','Execution'], function (Controller, HeaderView, jsRoutes, Router,Task,Execution) {
     var HeaderController = function (module) {
         Controller.call(this, module, new HeaderView(this));
     };
@@ -131,12 +131,11 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router','Ex
     /**
      * Shows the preview results transformation dialog.
      */
-    HeaderController.prototype.showPreviewResults = function (transName, executionId) {
-        this.transName = transName;
-        this.executionId = executionId;
-
-        var configStepUrl = jsRoutes.controllers.TransGraphController.preview_results(1).url;
-        Router.navigate(configStepUrl);
+    HeaderController.prototype.showPreviewResults = function (taskName, executionId) {
+        Task.getTask(taskName,function(task){
+            var configStepUrl = jsRoutes.controllers.TransGraphController.previewResults(task.id).url;
+            Router.navigate(configStepUrl);
+        });
     }
 
     HeaderController.prototype.createTask = function(){
