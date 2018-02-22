@@ -59,7 +59,7 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router','Ex
      * Returns the output fields of a given step.
      * @param stepId
      */
-    HeaderController.prototype.showStepInput = function (stepId) {
+    HeaderController.prototype.showStepOutput = function (stepId) {
         var configStepUrl = jsRoutes.controllers.StepController.showStepOutput(stepId).url;
         Router.navigate(configStepUrl);
     }

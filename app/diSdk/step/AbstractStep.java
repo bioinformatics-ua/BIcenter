@@ -32,16 +32,18 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         String stepid = step.getComponent().getName();
         String stepname = step.getLabel();
 
+        // Get StepMetaInterface based on the Step Type.
         PluginRegistry registry = PluginRegistry.getInstance();
         PluginInterface sp = registry.findPluginWithId(StepPluginType.class, stepid);
         StepMetaInterface stepMetaInterface = (StepMetaInterface) registry.loadClass(sp);
 
         if (stepMetaInterface != null) {
+            // Initialize the step with the default values.
             stepMetaInterface.setDefault();
 
             List<StepProperty> stepProperties = step.getStepProperties();
 
-            // Get RowGeneratorMeta set methods.
+            // Get StepMetaInterface set methods.
             Method[] methods = stepMetaInterface.getClass().getMethods();
             methods = Arrays.stream(methods)
                     .filter(method -> method.getName().startsWith("set"))
@@ -49,7 +51,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                     .toArray(Method[]::new);
 
             for (Method method : methods) {
-                // Find StepProperty.
+                // Find StepProperty that holds the value of the current StepMetaInterface method.
                 String shortName = method.getName().substring(3);
                 Optional<StepProperty> optStepProperty = stepProperties.stream()
                         .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase(shortName))
@@ -57,6 +59,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
                 if (!optStepProperty.isPresent()) continue;
 
+                // Check if the value is an array. In this case, properly parse it.
                 String tmp = optStepProperty.get().getValue();
                 Object value = tmp;
                 if (tmp.charAt(0) == '[' && tmp.charAt(tmp.length() - 1) == ']') {
@@ -65,15 +68,19 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                             .map(v -> v.replaceAll("\"", ""))
                             .collect(Collectors.toList());
                 }
-                invokeMethod(stepMetaInterface, method, value);
 
+                // Invoke the current method with the StepProperty value.
+                invokeMethod(stepMetaInterface, method, value);
                 stepProperties.remove(optStepProperty.get());
             }
 
+            // Iterate over special Properties (Json value), such as tables.
             for (StepProperty stepProperty : stepProperties) {
+                // Get all StepProperties with ComponentMetadatas.
                 List<ComponentMetadata> componentMetadataList = stepProperty.getComponentProperty().getComponentMetadatas();
                 if (componentMetadataList == null || componentMetadataList.isEmpty()) continue;
 
+                // Parse Json value.
                 JsonNode json = Json.parse(stepProperty.getValue());
                 if (json instanceof ArrayNode) {
                     List<String> metadatasName = componentMetadataList.stream()
@@ -83,6 +90,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                     Map<String, List<String>> metadatasMap = new HashMap<>();
                     metadatasName.forEach(name -> metadatasMap.put(name, new ArrayList<>()));
 
+                    // Populate the ArrayList with the values of the ComponentMetadata.
                     json.iterator()
                             .forEachRemaining(node -> {
                                 metadatasMap.forEach((key, list) -> {
@@ -93,7 +101,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                             });
 
                     for (Method method : methods) {
-                        // Find
+                        // Find value for the current method.
                         String shortName = method.getName().substring(3);
                         Optional<ComponentMetadata> optComponentMetadata = componentMetadataList.stream()
                                 .filter(componentMetadata -> componentMetadata.getShortName().equalsIgnoreCase(shortName))
@@ -101,6 +109,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
                         if (!optComponentMetadata.isPresent()) continue;
 
+                        // Invoke the current method with the StepProperty value.
                         String key = String.valueOf(optComponentMetadata.get().getId());
                         invokeMethod(stepMetaInterface, method, metadatasMap.get(key));
                     }
@@ -138,6 +147,14 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         return null;
     }
 
+    /**
+     * Invoke a specific method.
+     * @param stepMetaInterface The object.
+     * @param method The method name.
+     * @param value The parameter value.
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     private void invokeMethod(StepMetaInterface stepMetaInterface, Method method, Object value) throws InvocationTargetException, IllegalAccessException {
         // Parse method parameters.
         Class parameterType = method.getParameterTypes()[0];

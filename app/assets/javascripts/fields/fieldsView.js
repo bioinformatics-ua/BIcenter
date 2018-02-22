@@ -19,7 +19,7 @@ define('FieldsView', ['View','Step'], function (View,Step) {
         var node = enc.encode(global_editor.graph.getModel());
         var context = this;
         $.post('/step/inputOutputFields', { stepName:headerController.stepName, graph: mxUtils.getPrettyXml(node), before:headerController.before },
-            function(returnedData){
+            function(fields){
 
                 context.$elements.fields_header.empty();
                 context.$elements.fields_header.append( "Step fields and its source: <strong>"+headerController.stepName+"</strong>" );
@@ -27,20 +27,20 @@ define('FieldsView', ['View','Step'], function (View,Step) {
                 context.$elements.fields_table_body.empty();
                 context.$elements.fields_error.empty();
 
-                if(returnedData.length == 0){
+                if(fields.length == 0){
                     context.$elements.fields_error.text(headerController.stepName+" is the first step!");
                 }
                 else {
                     var header = "<tr id='fields_table_header'>";
-                    var columns = Object.keys(returnedData[0]);
+                    var columns = Object.keys(fields[0]);
                     for (var i = 0; i < columns.length; i++) {
                         header += "<th>" + columns[i] + "</th>";
                     }
                     header += "</tr>"
                     context.$elements.fields_table_body.append(header);
 
-                    for (var i = 0; i < returnedData.length; i++) {
-                        var values = Object.values(returnedData[i]);
+                    for (var i = 0; i < fields.length; i++) {
+                        var values = Object.values(fields[i]);
                         var row = "<tr>";
                         for (var j = 0; j < values.length; j++) {
                             row += "<td>" + values[j] + "</td>";
@@ -54,18 +54,51 @@ define('FieldsView', ['View','Step'], function (View,Step) {
         */
     };
 
-    FieldsView.prototype.loadStep = function (stepId,before) {
-        if(before){
-            Step.showStepInput(stepId, function (fields) {
-                debugger;
+    FieldsView.prototype.loadStep = function (step,before) {
+        var context = this;
+        context.step = step;
+        if(before == true){
+            Step.showStepInput(step.id, function (fields) {
+                context.loadFields(context.step,fields);
             });
         }
         else{
-            Step.showStepOutput(stepId, function (fields) {
-                debugger;
+            Step.showStepOutput(step.id, function (fields) {
+                context.loadFields(context.step,fields);
             })
         }
     };
+    
+    FieldsView.prototype.loadFields = function(step,fields) {
+        this.$elements.fields_header.empty();
+        this.$elements.fields_header.append( "Step fields and its source: <strong>"+step.label+"</strong>" );
+
+        this.$elements.fields_table_body.empty();
+        this.$elements.fields_error.empty();
+
+        if(fields.length == 0){
+            this.$elements.fields_error.text(step.label+" is the first step!");
+        }
+        else {
+            var header = "<tr id='fields_table_header'>";
+            var columns = Object.keys(fields[0]);
+            for (var i = 0; i < columns.length; i++) {
+                header += "<th>" + columns[i] + "</th>";
+            }
+            header += "</tr>"
+            this.$elements.fields_table_body.append(header);
+
+            for (var i = 0; i < fields.length; i++) {
+                var values = Object.values(fields[i]);
+                var row = "<tr>";
+                for (var j = 0; j < values.length; j++) {
+                    row += "<td>" + values[j] + "</td>";
+                }
+                row += "</tr>";
+                this.$elements.fields_table_body.append(row);
+            }
+        }
+    }
 
     return FieldsView;
 });

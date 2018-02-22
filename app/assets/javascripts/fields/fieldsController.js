@@ -1,4 +1,4 @@
-define('FieldsController', ['Controller', 'FieldsView'], function (Controller, FieldsView) {
+define('FieldsController', ['Controller','FieldsView','Step','Router'], function (Controller,FieldsView,Step,Router) {
     var FieldsController = function (module) {
         Controller.call(this, module, new FieldsView(this));
     };
@@ -11,7 +11,10 @@ define('FieldsController', ['Controller', 'FieldsView'], function (Controller, F
         _super_.initialize.call(this, $container);
 
         if(this.stepId){
-            this.view.loadStep(this.stepId,this.before);
+            var context = this;
+            Step.getStep(this.stepId,function (step) {
+                context.view.loadStep(step,context.before);
+            })
         }
     };
 
@@ -19,13 +22,7 @@ define('FieldsController', ['Controller', 'FieldsView'], function (Controller, F
      * Returns to the pipeline view.
      */
     FieldsController.prototype.ok = function(){
-        var controller = 'GraphController';
-        var containerController = this.module.controllers.ContainerController;
-        if (!containerController) {
-            console.err('Container controller not found!');
-        }
-
-        containerController.loadController(controller);
+        Router.navigate('/');
     }
 
     return FieldsController;
