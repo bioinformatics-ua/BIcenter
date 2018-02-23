@@ -42,7 +42,7 @@ public class TaskEncoder {
                 stepValue.setAttribute("component", component.getName());
 
                 Cell stepCell = step.getCell();
-                Object cell = graph.insertVertex(parent, null, stepValue, stepCell.getX(), stepCell.getY(), stepCell.getWidth(), stepCell.getHeight(), "icon;image=" + SvgImageUrl.getUrl(component.getName(), SvgImageUrl.Size_Middle));
+                Object cell = graph.insertVertex(parent, null, stepValue, stepCell.getX(), stepCell.getY(), stepCell.getWidth(), stepCell.getHeight(), "icon;image=/" + SvgImageUrl.getUrl(component.getName(), SvgImageUrl.Size_Middle));
                 cells.put(step.getId(), cell);
             }
 

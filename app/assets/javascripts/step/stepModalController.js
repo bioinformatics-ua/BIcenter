@@ -35,31 +35,18 @@ define('StepModalController', ['Controller', 'StepModalView'], function (Control
         var tableId = this.view.tableId,
             rowId = this.view.rowId;
 
-        var $form = this.view.$elements[tableId + '_' + rowId];
+        var $form = null;
+        if(rowId == undefined) $form = this.view.$elements[tableId + '_'];
+        else $form = this.view.$elements[tableId + '_' + rowId];
         var formValues = $form.serializeForm();
 
         var stepController = this.module.controllers['StepController'];
         if (stepController) {
-            stepController.updateTableRow(tableId, rowId, formValues);
+            if(rowId == undefined) stepController.addTableRow(tableId, formValues);
+            else stepController.updateTableRow(tableId, rowId, formValues);
         }
 
         this.view.hide();
-    }
-
-    /**
-     * Convert form data to json object.
-     * @param $form
-     * @returns {{}}
-     */
-    function getFormData($form) {
-        var unindexed_array = $form.serializeArray();
-        var indexed_array = {};
-
-        $.map(unindexed_array, function (n, i) {
-            indexed_array[n['name']] = n['value'];
-        });
-
-        return indexed_array;
     }
 
     return StepModalController;

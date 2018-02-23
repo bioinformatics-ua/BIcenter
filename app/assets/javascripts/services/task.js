@@ -59,7 +59,7 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     }
 
     Task.removeStep = function(stepId, callback){
-        jsRoutes.controllers.TransGraphController.remove_step(stepId).ajax({
+        jsRoutes.controllers.TransGraphController.removeStep(stepId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -102,7 +102,7 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     }
 
     Task.removeHop = function(hopId, callback){
-        jsRoutes.controllers.TransGraphController.remove_hop(hopId).ajax({
+        jsRoutes.controllers.TransGraphController.removeHop(hopId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {

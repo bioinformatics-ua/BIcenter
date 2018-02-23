@@ -132,7 +132,7 @@
       ]
     },
     {
-      "name": "Sequence",
+      "name": "AddSequence",
       "description": "Add Sequence",
       "shortName": "sequence",
       "componentProperties": [
@@ -153,27 +153,27 @@
         },
         {
           "name": "Use a counter to generate the sequence.",
-          "shortName": "use_counter",
+          "shortName": "useCounter",
           "type": "checkbox"
         },
         {
           "name": "Counter Name (optional)",
-          "shortName": "counter_name",
+          "shortName": "counterName",
           "type": "input"
         },
         {
           "name": "Start Value",
-          "shortName": "start_at",
+          "shortName": "startAt",
           "type": "number"
         },
         {
           "name": "Increment",
-          "shortName": "increment_by",
+          "shortName": "incrementBy",
           "type": "number"
         },
         {
           "name": "Maximum Value",
-          "shortName": "max_value",
+          "shortName": "maxValue",
           "type": "number"
         }
       ]

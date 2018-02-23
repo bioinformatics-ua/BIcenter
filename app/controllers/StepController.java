@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.mxgraph.io.mxCodec;
@@ -302,7 +303,12 @@ public class StepController extends Controller {
         Step step = stepRepository.get(stepId);
         StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentId);
         ObjectNode jsonObject = Json.newObject();
-        jsonObject.put("data", Json.parse(stepProperty.getValue()));
+
+        JsonNode value = Json.toJson(new String[0]);
+        try { value = Json.parse(stepProperty.getValue()); }
+        catch(NullPointerException e){ }
+
+        jsonObject.put("data", value);
         return ok(jsonObject);
     }
 }

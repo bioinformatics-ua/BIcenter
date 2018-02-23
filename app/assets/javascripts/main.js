@@ -14,6 +14,7 @@ requirejs.config({
         'handlebarsHelpers': 'core/handlebarsHelpers',
         'editor': '../editor/editor',
         'bootbox': 'lib/bootbox.min',
+        'datatables.buttons': '../lib/datatables/dataTables.buttons.min',
         'datatables.net': '../lib/datatables/jquery.dataTables.min',
         'dataTables': '../lib/datatables/dataTables.bootstrap.min',
         'pnotify': '../lib/pnotify/pnotify.custom',
@@ -113,11 +114,14 @@ requirejs.config({
         'adminLTE': {
             deps: ['jquery', 'bootstrap', 'jquery.slimscroll']
         },
+        'datatables.buttons':{
+            deps: ['jquery', 'bootstrap']
+        },
         'datatables.net': {
             deps: ['jquery', 'bootstrap']
         },
         'dataTables': {
-            deps: ['jquery', 'bootstrap']
+            deps: ['jquery', 'bootstrap', 'datatables.buttons']
         },
         'templates': {
             deps: ['handlebarsHelpers']

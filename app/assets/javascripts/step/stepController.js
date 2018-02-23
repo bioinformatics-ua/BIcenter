@@ -58,6 +58,25 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
         Router.navigate('/');
     };
 
+    /**
+     * Add table row after modal submission.
+     * @param tableId
+     * @param rowId
+     * @param formValues
+     */
+    StepController.prototype.addTableRow = function (tableId, formValues) {
+        var table = this.view.$elements[tableId].DataTable();
+        table.row.add(formValues).draw( false );
+
+        this.view._loadViewComponents();
+    };
+
+    /**
+     * Update table row after modal submission.
+     * @param tableId
+     * @param rowId
+     * @param formValues
+     */
     StepController.prototype.updateTableRow = function (tableId, rowId, formValues) {
         var table = this.view.$elements[tableId].DataTable();
         table.row(rowId).data(formValues);

@@ -22,8 +22,6 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
         this._loadViewComponents();
 
         var context = this;
-        // $.noConflict();
-
         Step.getTables(step.id, function (result) {
             var tables = JSON.parse(result);
             context.tables = tables;
@@ -51,20 +49,42 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
 
                 context.$elements[table.id].DataTable(
                 {
-                    dom: "frtip",
+                    dom: "Bfrtip",
                     ajax: jsRoutes.controllers.StepController.getTableValue(step.id, table.id).url,
                     order: [[1, 'asc']],
                     columns: columns,
                     'drawCallback': function (o) {
                         context._loadViewComponents();
-                    }
+                    },
+                    buttons: [
+                        {
+                            text: 'Add',
+                            action: function ( e, dt, node, config ) {
+                                var tableData = _.findWhere(context.tables, {id: parseInt(table.id)});
+                                if (tableData) {
+
+                                    var finalData = [];
+                                    _.each(tableData.fields, function (field) {
+                                        var obj = {
+                                            id: field.name,
+                                            label: field.label,
+                                            value: ""
+                                        };
+                                        finalData.push(obj);
+                                    });
+
+                                    var modalController = context.controller.module.controllers['StepModalController'];
+                                    modalController.view.show(tableId,undefined,finalData);
+                                }
+                            }
+                        }
+                    ]
                 });
             });
         });
     };
 
     StepView.prototype.editRow = function (tableId, rowId) {
-        // var table = $('#' + tableId).DataTable();
         var table = this.$elements[tableId].DataTable();
         var data = table.row(rowId).data();
 
@@ -86,8 +106,9 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
         }
     };
 
-    StepView.prototype.deleteRow = function (table, row) {
-        console.log('Delete row', row);
+    StepView.prototype.deleteRow = function (tableId, rowId) {
+        var table = this.$elements[tableId].DataTable();
+        table.row(rowId).remove().draw();
     };
 
     return StepView;

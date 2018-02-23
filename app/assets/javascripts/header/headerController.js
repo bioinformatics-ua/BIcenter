@@ -1,4 +1,4 @@
-define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task','Execution'], function (Controller, HeaderView, jsRoutes, Router,Task,Execution) {
+define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task','Execution', 'Alert'], function (Controller, HeaderView, jsRoutes, Router,Task,Execution,Alert) {
     var HeaderController = function (module) {
         Controller.call(this, module, new HeaderView(this));
     };
@@ -18,7 +18,7 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
      * @param i id of the step within the current transformation.
      */
     HeaderController.prototype.showStepDialog = function (stepId) {
-        var configStepUrl = jsRoutes.controllers.StepController.configure(1, stepId).url;
+        var configStepUrl = jsRoutes.controllers.StepController.configure(stepId).url;
         Router.navigate(configStepUrl);
     };
 
@@ -120,6 +120,9 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
                             if (JSON.parse(data)['finished'] == true) {
                                 context.view.transSubmissionNotification(context.transName, context.executionId, "Finished");
                                 clearInterval(interval);
+
+                                // Not sure if this notification is helpful for the user...
+                                //Alert.flash(ALERT_TYPE.SUCCESS, 'Task', 'Task \'' + context.transName + '\' finished execution successfuly!');
                             }
                         });
                     }, 500
@@ -138,6 +141,9 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
         });
     }
 
+    /**
+     * Create new task.
+     */
     HeaderController.prototype.createTask = function(){
         var graphController = app.modules.MainModule.controllers.GraphController;
         graphController.createTask();

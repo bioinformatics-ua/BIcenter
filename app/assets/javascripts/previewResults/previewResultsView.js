@@ -1,4 +1,4 @@
-define('PreviewResultsView', ['View'], function (View) {
+define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Execution) {
     var PreviewResultsView = function (controller) {
         View.call(this, controller, 'previewResults');
     };
@@ -19,9 +19,8 @@ define('PreviewResultsView', ['View'], function (View) {
         this.renderGraph(this.$elements.preview_graph[0]);
 
         // Request for transformation results.
-        this.data;
         var context = this;
-        $.get("/graph/result",{execution: context.executionId},
+        Execution.result(context.executionId,
             function(data){
                 if(JSON.parse(data)['finished'] == true){
                     headerController.view.removeTransNotification(context.executionId);
@@ -44,7 +43,7 @@ define('PreviewResultsView', ['View'], function (View) {
                     $('<th>').text("Error"),
                     $('<th>').text("State"),
                     $('<th>').text("Time"),
-                    $('<th>').text("Speed (note/second)"),
+                    $('<th>').text("Speed (record/second)"),
                     $('<th>').text("Pri/in/out")
                 );
                 context.$elements.preview_steps_measures.append($tr[0]);
@@ -101,43 +100,44 @@ define('PreviewResultsView', ['View'], function (View) {
             graph.setCellsMovable(false);
             graph.setCellsResizable(false);
 
-            var enc = new mxCodec();
-            var xml = enc.encode(global_editor.graph.getModel());
-            var decoder = new mxCodec(xml);
-
-            decoder.decode(xml, graph.getModel());
-            graph.resizeContainer = false;
-
             var context = this;
-            graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt)
-            {
-                context.$elements.preview_table.hide();
-                var cell = evt.getProperty('edit').changes[0].removed[0]
-                context.$elements.preview_data.show();
-                context.$elements.preview_data_title.text(cell.value);
+            Task.getTask(this.transName, function (task) {
+                Task.loadTask(task.id, function (graphModel) {
+                    var doc = mxUtils.parseXml(graphModel);
+                    var codec = new mxCodec(doc);
+                    codec.decode(doc.documentElement, graph.getModel());
 
-                context.$elements.preview_data_table.empty();
+                    graph.resizeContainer = false;
+                    graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt)
+                    {
+                        context.$elements.preview_table.hide();
+                        var cell = evt.getProperty('edit').changes[0].removed[0]
+                        context.$elements.preview_data.show();
+                        context.$elements.preview_data_title.text(cell.value);
 
-                var columns = context.data[cell.value].columns;
-                var $tr = '<tr>';
-                for(var i=0; i<columns.length; i++)
-                    $tr += '<th>'+columns[i]['header']+'</th>';
-                $tr += '</tr>';
-                context.$elements.preview_data_table.append($tr);
+                        context.$elements.preview_data_table.empty();
+                        var columns = context.data[cell.value.getAttribute('label')].columns;
+                        var $tr = '<tr>';
+                        for(var i=0; i<columns.length; i++)
+                            $tr += '<th>'+columns[i]['header']+'</th>';
+                        $tr += '</tr>';
+                        context.$elements.preview_data_table.append($tr);
 
-                var rows = context.data[cell.value].firstRecords;
-                for(var i=0; i<rows.length; i++) {
-                    var $tr = '<tr>';
-                    for(var j=0; j<columns.length; j++) {
-                        $tr += '<td>' + rows[i][columns[j]['header']] + '</td>';
-                    }
-                    $tr += '</tr>';
-                    context.$elements.preview_data_table.append($tr);
-                }
+                        var rows = context.data[cell.value.getAttribute('label')].firstRecords;
+                        for(var i=0; i<rows.length; i++) {
+                            var $tr = '<tr>';
+                            for(var j=0; j<columns.length; j++) {
+                                $tr += '<td>' + rows[i][columns[j]['header']] + '</td>';
+                            }
+                            $tr += '</tr>';
+                            context.$elements.preview_data_table.append($tr);
+                        }
 
+                    });
+
+                    this.graph = graph;
+                });
             });
-
-            this.graph = graph;
         }
     }
 

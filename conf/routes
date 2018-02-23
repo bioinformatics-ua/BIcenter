@@ -18,6 +18,9 @@ GET         /assets/*file                                   controllers.Assets.v
 GET         /middle/:image                                  controllers.SvgController.service(image:String)
 
 # Handles the pipeline.
+GET         /graph/:graphId/select                          controllers.TransGraphController.selectTask(graphId:Long)
+GET         /graph/:graphId/preview                         controllers.TransGraphController.previewResults(graphId:Long)
+
 GET         /graph/new/:name                                controllers.TransGraphController.newTask(name:String)
 GET         /graph/:graphId/load                            controllers.TransGraphController.loadTask(graphId:Long)
 GET         /graph/:name/task                               controllers.TransGraphController.getTask(name:String)
@@ -29,15 +32,12 @@ POST        /graph/:graphId/new/hop                         controllers.TransGra
 DELETE      /graph/:hopId/new/hop                           controllers.TransGraphController.removeHop(hopId:Long)
 POST        /graph/:graphId/close                           controllers.TransGraphController.closeTab(graphId:Long)
 GET         /graph/tabs                                     controllers.TransGraphController.getOpenTabs()
-POST        /graph/run                                      controllers.TransGraphController.run()
-GET         /graph/result                                   controllers.TransGraphController.result(execution: String)
-GET         /graph/:graphId/preview                         controllers.TransGraphController.previewResults(graphId:Integer)
-GET         /graph/:graphId                                 controllers.TransGraphController.selectTask(graphId:Integer)
 
 # Handles the steps.
 GET         /step/:stepId/configure                         controllers.StepController.configure(stepId:Long)
 GET         /step/:stepId/input                             controllers.StepController.showStepInput(stepId:Long)
 GET         /step/:stepId/output                            controllers.StepController.showStepOutput(stepId:Long)
+
 POST        /step/inputFieldsName                           controllers.StepController.inputFieldsName()
 GET         /step/inputOutputFields                         controllers.StepController.inputOutputFields(stepId:Long,before:Boolean)
 GET         /step/:stepId/schema                            controllers.StepController.getSchema(stepId:Long)

@@ -14,6 +14,7 @@ public class StepProperty implements Serializable {
     @OneToOne(fetch= FetchType.LAZY)
     private ComponentProperty componentProperty;
 
+    @Lob
     private String value;
     private Date date;
 
