@@ -15,6 +15,7 @@ public class ComponentProperty implements Serializable {
     private String name;
     private String shortName;
     private String type;
+    private String source;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Component component;
@@ -28,10 +29,11 @@ public class ComponentProperty implements Serializable {
     public ComponentProperty() {
     }
 
-    public ComponentProperty(String name, String shortName, String type) {
+    public ComponentProperty(String name, String shortName, String type, String source) {
         this.name = name;
         this.shortName = shortName;
         this.type = type;
+        this.source = source;
     }
 
     public Long getId() {
@@ -82,9 +84,11 @@ public class ComponentProperty implements Serializable {
         return componentMetadatas;
     }
 
-    public void setComponentMetadatas(List<ComponentMetadata> componentMetadatas) {
-        this.componentMetadatas = componentMetadatas;
-    }
+    public void setComponentMetadatas(List<ComponentMetadata> componentMetadatas) { this.componentMetadatas = componentMetadatas; }
+
+    public String getSource() { return source; }
+
+    public void setSource(String source) { this.source = source; }
 
     public StepProperty getStepProperty(long stepId) {
         Optional<StepProperty> value = stepProperties.stream()

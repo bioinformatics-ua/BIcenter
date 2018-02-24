@@ -95,20 +95,12 @@ public class StepController extends Controller {
      * @return
      * @throws Exception
      */
-    public Result inputFieldsName() throws Exception {
-        Object step_name = request().body().as(Map.class).get("stepName");
-        String stepName = (String) ((String[]) step_name)[0];
-        Object graph_xml = request().body().as(Map.class).get("graph");
-        String graphXml = (String) ((String[]) graph_xml)[0];
+    public Result inputFieldsName(long stepId) throws Exception {
+        Step step = stepRepository.get(stepId);
+        Task task = step.getTaskSteps();
+        TransMeta transMeta = TaskDecoder.decode(task);
 
-        mxGraph graph = new mxGraph();
-        mxCodec codec = new mxCodec();
-        Document doc = mxUtils.parseXml(graphXml);
-        codec.decode(doc.getDocumentElement(), graph.getModel());
-
-        TransMeta transMeta = TransDecoder.decode(graph);
-
-        StepMeta stepMeta = getStep(transMeta, stepName);
+        StepMeta stepMeta = getStep(transMeta, step.getLabel());
         SearchFieldsProgress op = new SearchFieldsProgress(transMeta, stepMeta, true);
         op.run();
         RowMetaInterface rowMetaInterface = op.getFields();

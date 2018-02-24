@@ -41,6 +41,7 @@ public class ComponentPropertySerializer extends JsonSerializer<ComponentPropert
         gen.writeStringField("name", value.getName());
         gen.writeStringField("shortName", value.getShortName());
         gen.writeStringField("type", value.getType());
+        gen.writeStringField("source", value.getSource());
 
         gen.writeObjectField("stepProperty", mapper.valueToTree(value.getStepProperty(this.stepId)));
         gen.writeObjectField("componentMetadatas", mapper.valueToTree(value.getComponentMetadatas()));

@@ -38,7 +38,7 @@ GET         /step/:stepId/configure                         controllers.StepCont
 GET         /step/:stepId/input                             controllers.StepController.showStepInput(stepId:Long)
 GET         /step/:stepId/output                            controllers.StepController.showStepOutput(stepId:Long)
 
-POST        /step/inputFieldsName                           controllers.StepController.inputFieldsName()
+GET         /step/:stepId/inputFieldsName                   controllers.StepController.inputFieldsName(stepId:Long)
 GET         /step/inputOutputFields                         controllers.StepController.inputOutputFields(stepId:Long,before:Boolean)
 GET         /step/:stepId/schema                            controllers.StepController.getSchema(stepId:Long)
 POST        /step/:stepId/apply                             controllers.StepController.applyChanges(stepId:Long)

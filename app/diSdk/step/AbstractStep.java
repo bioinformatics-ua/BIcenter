@@ -62,7 +62,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                 // Check if the value is an array. In this case, properly parse it.
                 String tmp = optStepProperty.get().getValue();
                 Object value = tmp;
-                if (tmp.charAt(0) == '[' && tmp.charAt(tmp.length() - 1) == ']') {
+                if (tmp.length()>0 && tmp.charAt(0) == '[' && tmp.charAt(tmp.length() - 1) == ']') {
                     tmp = tmp.substring(1, tmp.length() - 1);
                     value = Arrays.asList(tmp.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")).stream()
                             .map(v -> v.replaceAll("\"", ""))
@@ -163,9 +163,9 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             parameter = value.toString().equalsIgnoreCase("Y");
         } else if (parameterType == int.class || parameterType == Integer.class) {
             parameter = Integer.parseInt(value.toString());
-        } else if (parameterType == (new String[1]).getClass()) {
+        } else if (parameterType == (new String[0]).getClass()) {
             parameter = ((List<String>) value).stream().toArray(String[]::new);
-        } else if (parameterType == (new boolean[1]).getClass()) {
+        } else if (parameterType == (new boolean[0]).getClass()) {
             boolean[] tmp = new boolean[((List<String>) value).size()];
             int idx = 0;
 

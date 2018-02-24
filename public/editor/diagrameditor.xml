@@ -20,7 +20,7 @@
 			</Connector>
 		</add>
 		<add as="RowGenerator">
-			<Step component="RowGenerator" label = "Generate Rows">
+			<Step component="RowGenerator" label="Generate Rows">
 				<mxCell style="icon;image=/middle/RowGenerator.svg" parent="1" vertex="1">
 					<mxGeometry width="40" height="40" as="geometry"/>
 				</mxCell>
@@ -32,9 +32,11 @@
 			</mxCell>
 		</add>
 		<add as="TableInput">
-			<mxCell style="icon;image=/middle/TableInput.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
+			<Step component="TableInput" label="Table Input">
+				<mxCell style="icon;image=/middle/TableInput.svg" parent="1" vertex="1">
+					<mxGeometry width="40" height="40" as="geometry"/>
+				</mxCell>
+			</Step>
 		</add>
 		<add as="InsertUpdate">
 			<mxCell style="icon;image=/middle/InsertUpdate.svg" parent="1" vertex="1">

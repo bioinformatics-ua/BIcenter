@@ -16,8 +16,8 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
 
     };
 
-    StepView.prototype.loadStep = function (step) {
-        var html = JST['step']({component: step.component});
+    StepView.prototype.loadStep = function (step,inputFields) {
+        var html = JST['step']({component: step.component, inputFields:inputFields});
         this.$container.html(html);
         this._loadViewComponents();
 

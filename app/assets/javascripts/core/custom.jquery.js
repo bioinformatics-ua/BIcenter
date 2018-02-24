@@ -6,7 +6,10 @@ require(['jquery'], function ($) {
 
             $.map(unindexed_array, function (n, i) {
                 if (indexed_array[n['name']]) {
-                    indexed_array[n['name']] = indexed_array[n['name']] + ',' + n['value'];
+                    if(!(indexed_array[n['name']] instanceof Array)){
+                        indexed_array[n['name']] = [indexed_array[n['name']]].concat(n['value']);
+                    }
+                    else indexed_array[n['name']] = indexed_array[n['name']].concat(n['value']);
                 } else {
                     indexed_array[n['name']] = n['value'];
                 }

@@ -59,9 +59,17 @@
                 <div class="form-group">
                     <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
                     <div class="col-sm-5">
+                        {{#ifCond source '==' 'inputFields'}}
                         <select name="{{id}}" view-element="{{id}}" multiple="" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-
+                            {{#../inputFields}}
+                                <option
+                                    {{#ifCond ../stepProperty.value 'contains' name}}
+                                        selected
+                                    {{/ifCond}}
+                                >{{name}}</option>
+                            {{/../inputFields}}
                         </select>
+                        {{/ifCond}}
                     </div>
                 </div>
             {{/ifCond}}
@@ -75,6 +83,17 @@
                         <th style="min-width: 10%;"></th>
                     </thead>
                 </table>
+            {{/ifCond}}
+            {{#ifCond type '==' 'connection'}}
+                <div class="form-group">
+                    <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
+                    <div class="col-sm-5 input-group">
+                        <input class="form-control" name="{{id}}" view-element="{{id}}" value="{{stepProperty.value}}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
             {{/ifCond}}
         {{/component.componentProperties}}
         </form>

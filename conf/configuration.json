@@ -58,7 +58,8 @@
         {
           "name": "Fields used on checksum",
           "shortName": "fieldName",
-          "type": "multi-select"
+          "type": "multi-select",
+          "source": "inputFields"
         }
       ]
     },
@@ -175,6 +176,33 @@
           "name": "Maximum Value",
           "shortName": "maxValue",
           "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "TableInput",
+      "description": "Table Input",
+      "shortName": "checksum",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        },
+        {
+          "name": "Connection Name",
+          "shortName": "database",
+          "type": "input"
+        },
+        {
+          "name": "Connection Type",
+          "shortName": "connectionType",
+          "type": "select"
+        },
+        {
+          "name": "Connection Method",
+          "shortName": "connectionMethod",
+          "type": "select"
         }
       ]
     }

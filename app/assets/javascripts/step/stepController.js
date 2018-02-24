@@ -16,14 +16,16 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
     };
 
     StepController.prototype.getStep = function (stepId) {
-        this.stepId = stepId;
-
-        var self = this;
-        Step.getStep(this.stepId, function (step) {
+        var context = this;
+        Step.getStep(stepId, function (step) {
             console.log(step);
-            self.step = step;
-            self.formName = step.component.shortName+"_form";
-            self.view.loadStep(step);
+            context.step = step;
+            context.formName = step.component.shortName+"_form";
+            Step.inputFieldsName(context.step.id, function(input){
+                console.log(input);
+                context.input = input;
+                context.view.loadStep(step,input);
+            })
         });
     };
 
