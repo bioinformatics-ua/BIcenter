@@ -17,6 +17,7 @@ public class StepPropertySerializer extends JsonSerializer<StepProperty> {
         gen.writeNumberField("id", value.getId());
 
         gen.writeStringField("value", value.getValue());
+        gen.writeNumberField("step", value.getStep().getId());
 
         // Finish output
         gen.writeEndObject();

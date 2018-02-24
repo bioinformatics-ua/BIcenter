@@ -220,7 +220,7 @@ public class StepController extends Controller {
         module.addSerializer(Hop.class, new HopSerializer());
         module.addSerializer(Cell.class, new CellSerializer());
         module.addSerializer(Component.class, new ComponentSerializer());
-        module.addSerializer(ComponentProperty.class, new ComponentPropertySerializer());
+        module.addSerializer(ComponentProperty.class, new ComponentPropertySerializer(stepId));
         module.addSerializer(StepProperty.class, new StepPropertySerializer());
         module.addSerializer(ComponentMetadata.class, new ComponentMetadataSerializer());
         mapper.registerModule(module);

@@ -3,6 +3,7 @@ package models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class ComponentProperty implements Serializable {
@@ -18,8 +19,8 @@ public class ComponentProperty implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Component component;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "componentProperty", cascade = CascadeType.ALL)
-    private StepProperty stepProperty;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "componentProperty", cascade = CascadeType.ALL)
+    private List<StepProperty> stepProperties;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "componentProperty", cascade = CascadeType.ALL)
     private List<ComponentMetadata> componentMetadatas;
@@ -73,9 +74,9 @@ public class ComponentProperty implements Serializable {
         this.component = component;
     }
 
-    public StepProperty getStepProperty() { return stepProperty; }
+    public List<StepProperty> getStepProperties() { return stepProperties; }
 
-    public void setStepProperty(StepProperty stepProperty) { this.stepProperty = stepProperty; }
+    public void setStepProperties(List<StepProperty> stepProperties) { this.stepProperties = stepProperties; }
 
     public List<ComponentMetadata> getComponentMetadatas() {
         return componentMetadatas;
@@ -83,5 +84,14 @@ public class ComponentProperty implements Serializable {
 
     public void setComponentMetadatas(List<ComponentMetadata> componentMetadatas) {
         this.componentMetadatas = componentMetadatas;
+    }
+
+    public StepProperty getStepProperty(long stepId) {
+        Optional<StepProperty> value = stepProperties.stream()
+                .filter(prop -> prop.getStep().getId() == stepId)
+                .findFirst();
+
+        if(value.isPresent()) return value.get();
+        else return null;
     }
 }

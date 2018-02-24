@@ -10,6 +10,14 @@ import models.*;
 import java.io.IOException;
 
 public class ComponentPropertySerializer extends JsonSerializer<ComponentProperty> {
+    private long stepId;
+
+    public ComponentPropertySerializer() { super(); }
+    public ComponentPropertySerializer(long stepId) {
+        super();
+        this.stepId = stepId;
+    }
+
     @Override
     public void serialize(ComponentProperty value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         // Setup object mapper
@@ -34,7 +42,7 @@ public class ComponentPropertySerializer extends JsonSerializer<ComponentPropert
         gen.writeStringField("shortName", value.getShortName());
         gen.writeStringField("type", value.getType());
 
-        gen.writeObjectField("stepProperty", mapper.valueToTree(value.getStepProperty()));
+        gen.writeObjectField("stepProperty", mapper.valueToTree(value.getStepProperty(this.stepId)));
         gen.writeObjectField("componentMetadatas", mapper.valueToTree(value.getComponentMetadatas()));
 
         // Finish output

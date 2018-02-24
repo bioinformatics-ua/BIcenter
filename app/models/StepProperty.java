@@ -11,7 +11,7 @@ public class StepProperty implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.LAZY)
     private ComponentProperty componentProperty;
 
     @Lob
