@@ -5,12 +5,12 @@ require(['jquery'], function ($) {
             var indexed_array = {};
 
             $.map(unindexed_array, function (n, i) {
-                if (indexed_array[n['name']]) {
-                    if(!(indexed_array[n['name']] instanceof Array)){
-                        indexed_array[n['name']] = [indexed_array[n['name']]].concat(n['value']);
-                    }
-                    else indexed_array[n['name']] = indexed_array[n['name']].concat(n['value']);
-                } else {
+                var item = app.modules.MainModule.controllers.StepController.view.$elements[n['name']];
+                if (item.is('[multiple]')) {
+                    if (!indexed_array[n['name']]) indexed_array[n['name']] = [];
+                    indexed_array[n['name']].push(n['value']);
+                }
+                else {
                     indexed_array[n['name']] = n['value'];
                 }
             });
