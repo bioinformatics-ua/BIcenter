@@ -120,9 +120,6 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
                             if (JSON.parse(data)['finished'] == true) {
                                 context.view.transSubmissionNotification(context.transName, context.executionId, "Finished");
                                 clearInterval(interval);
-
-                                // Not sure if this notification is helpful for the user...
-                                //Alert.flash(ALERT_TYPE.SUCCESS, 'Task', 'Task \'' + context.transName + '\' finished execution successfuly!');
                             }
                         });
                     }, 500

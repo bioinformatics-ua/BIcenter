@@ -17,12 +17,119 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
 
         // Render the transformation with a success icon on each step.
         this.renderGraph(this.$elements.preview_graph[0]);
+    };
 
+    /**
+     * Render a mxGraph that only allows cell selection.
+     * @param container The mxGraph div.
+     */
+    PreviewResultsView.prototype.renderGraph = function(container){
+        // Checks if the browser is supported
+        if (!mxClient.isBrowserSupported())
+        {
+            // Displays an error message if the browser is not supported.
+            mxUtils.error('Browser is not supported!', 200, false);
+        }
+        else
+        {
+            // Disables the built-in context menu
+            mxEvent.disableContextMenu(container);
+
+            // Creates the graph inside the given container
+            var graph = this.graph = new mxGraph(container);
+            var node = mxUtils.load('/assets/lib/mxgraph2/style/default-style.xml').getDocumentElement();
+            var dec = new mxCodec(node.ownerDocument);
+            dec.decode(node, graph.getStylesheet());
+
+            graph.setConnectable(false);
+            graph.setCellsEditable(false);
+            graph.setCellsDeletable(false);
+            graph.setCellsMovable(false);
+            graph.setCellsResizable(false);
+
+            var context = this;
+            Task.getTask(this.transName, function (task) {
+                Task.loadTask(task.id, function (graphModel) {
+                    var doc = mxUtils.parseXml(graphModel);
+                    var codec = new mxCodec(doc);
+                    codec.decode(doc.documentElement, graph.getModel());
+
+                    graph.resizeContainer = false;
+                    graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt)
+                    {
+                        context.$elements.preview_table.hide();
+                        var cell = evt.getProperty('edit').changes[0].removed[0]
+                        context.$elements.preview_data.show();
+                        context.$elements.preview_data_title.text(cell.value);
+
+                        context.$elements.preview_data_table.empty();
+                        var columns = context.data[cell.value].columns;
+                        var $tr = '<tr>';
+                        for(var i=0; i<columns.length; i++)
+                            $tr += '<th>'+columns[i]['header']+'</th>';
+                        $tr += '</tr>';
+                        context.$elements.preview_data_table.append($tr);
+
+                        var rows = context.data[cell.value].firstRecords;
+                        for(var i=0; i<rows.length; i++) {
+                            var $tr = '<tr>';
+                            for(var j=0; j<columns.length; j++) {
+                                $tr += '<td>' + rows[i][columns[j]['header']] + '</td>';
+                            }
+                            $tr += '</tr>';
+                            context.$elements.preview_data_table.append($tr);
+                        }
+
+                    });
+
+                    this.graph = graph;
+                    context.requestResults();
+                });
+            });
+        }
+    }
+
+    /**
+     * Draws a success/failure icon for each transformation step.
+     * @param stepStatus All step status, stating the execution output.
+     */
+    PreviewResultsView.prototype.updateStatus = function(graph,status){
+        for(var i=0; i<status.length; i++) {
+            var cells = graph.getModel().getChildCells(graph.getDefaultParent(), true, false);
+            for(var j=0; j<cells.length; j++) {
+                var cell = cells[j];
+                if(cell.getAttribute('label') == status[i].stepName) {
+                    graph.cellLabelChanged(cell,cell.getAttribute('label',''))
+                    var overlays = graph.getCellOverlays(cell) || [];
+                    for(var k=0; k<overlays.length; k++) {
+                        var overlay = overlays[k];
+
+                        if(overlay.align == mxConstants.ALIGN_RIGHT && overlay.verticalAlign == mxConstants.ALIGN_TOP
+                            && overlay.offset.x == 0 && overlay.offset.y == 0) {
+                            graph.removeCellOverlay(cell, overlay);
+                        }
+                    }
+
+                    if(status[i].stepStatus > 0) {
+                        var overlay = new mxCellOverlay(new mxImage('/assets/lib/mxgraph2/editors/images/overlays/false.png', 16, 16), status[i].logText, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
+                        graph.addCellOverlay(cell, overlay);
+                    } else {
+                        var overlay = new mxCellOverlay(new mxImage('/assets/lib/mxgraph2/editors/images/overlays/true.png', 16, 16), null, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
+                        graph.addCellOverlay(cell, overlay);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    PreviewResultsView.prototype.requestResults = function(){
         // Request for transformation results.
         var context = this;
         Execution.result(context.executionId,
             function(data){
                 if(JSON.parse(data)['finished'] == true){
+                    var headerController = app.modules.HeaderModule.controllers.HeaderController;
                     headerController.view.removeTransNotification(context.executionId);
                     context.updateStatus(context.graph,JSON.parse(data)['stepStatus']);
                 }
@@ -70,109 +177,6 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
                 }
             }
         );
-    };
-
-    /**
-     * Render a mxGraph that only allows cell selection.
-     * @param container The mxGraph div.
-     */
-    PreviewResultsView.prototype.renderGraph = function(container){
-        // Checks if the browser is supported
-        if (!mxClient.isBrowserSupported())
-        {
-            // Displays an error message if the browser is not supported.
-            mxUtils.error('Browser is not supported!', 200, false);
-        }
-        else
-        {
-            // Disables the built-in context menu
-            mxEvent.disableContextMenu(container);
-
-            // Creates the graph inside the given container
-            var graph = this.graph = new mxGraph(container);
-            var node = mxUtils.load('/assets/lib/mxgraph2/style/default-style.xml').getDocumentElement();
-            var dec = new mxCodec(node.ownerDocument);
-            dec.decode(node, graph.getStylesheet());
-
-            graph.setConnectable(false);
-            graph.setCellsEditable(false);
-            graph.setCellsDeletable(false);
-            graph.setCellsMovable(false);
-            graph.setCellsResizable(false);
-
-            var context = this;
-            Task.getTask(this.transName, function (task) {
-                Task.loadTask(task.id, function (graphModel) {
-                    var doc = mxUtils.parseXml(graphModel);
-                    var codec = new mxCodec(doc);
-                    codec.decode(doc.documentElement, graph.getModel());
-
-                    graph.resizeContainer = false;
-                    graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt)
-                    {
-                        context.$elements.preview_table.hide();
-                        var cell = evt.getProperty('edit').changes[0].removed[0]
-                        context.$elements.preview_data.show();
-                        context.$elements.preview_data_title.text(cell.value);
-
-                        context.$elements.preview_data_table.empty();
-                        var columns = context.data[cell.value.getAttribute('label')].columns;
-                        var $tr = '<tr>';
-                        for(var i=0; i<columns.length; i++)
-                            $tr += '<th>'+columns[i]['header']+'</th>';
-                        $tr += '</tr>';
-                        context.$elements.preview_data_table.append($tr);
-
-                        var rows = context.data[cell.value.getAttribute('label')].firstRecords;
-                        for(var i=0; i<rows.length; i++) {
-                            var $tr = '<tr>';
-                            for(var j=0; j<columns.length; j++) {
-                                $tr += '<td>' + rows[i][columns[j]['header']] + '</td>';
-                            }
-                            $tr += '</tr>';
-                            context.$elements.preview_data_table.append($tr);
-                        }
-
-                    });
-
-                    this.graph = graph;
-                });
-            });
-        }
-    }
-
-    /**
-     * Draws a success/failure icon for each transformation step.
-     * @param stepStatus All step status, stating the execution output.
-     */
-    PreviewResultsView.prototype.updateStatus = function(graph,status){
-        for(var i=0; i<status.length; i++) {
-            var cells = graph.getModel().getChildCells(graph.getDefaultParent(), true, false);
-            for(var j=0; j<cells.length; j++) {
-                var cell = cells[j];
-                if(cell.getAttribute('label') == status[i].stepName) {
-                    graph.cellLabelChanged(cell,cell.getAttribute('label',''))
-                    var overlays = graph.getCellOverlays(cell) || [];
-                    for(var k=0; k<overlays.length; k++) {
-                        var overlay = overlays[k];
-
-                        if(overlay.align == mxConstants.ALIGN_RIGHT && overlay.verticalAlign == mxConstants.ALIGN_TOP
-                            && overlay.offset.x == 0 && overlay.offset.y == 0) {
-                            graph.removeCellOverlay(cell, overlay);
-                        }
-                    }
-
-                    if(status[i].stepStatus > 0) {
-                        var overlay = new mxCellOverlay(new mxImage('/assets/lib/mxgraph2/editors/images/overlays/false.png', 16, 16), status[i].logText, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
-                        graph.addCellOverlay(cell, overlay);
-                    } else {
-                        var overlay = new mxCellOverlay(new mxImage('/assets/lib/mxgraph2/editors/images/overlays/true.png', 16, 16), null, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
-                        graph.addCellOverlay(cell, overlay);
-                    }
-                    break;
-                }
-            }
-        }
     }
 
     return PreviewResultsView;

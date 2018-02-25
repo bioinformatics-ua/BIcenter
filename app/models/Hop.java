@@ -67,4 +67,30 @@ public class Hop implements Serializable {
     public Task getTaskHops() { return taskHops; }
 
     public void setTaskHops(Task taskHops) { this.taskHops = taskHops; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Hop hop = (Hop) o;
+
+        if (graphId != hop.graphId) return false;
+        if (id != null ? !id.equals(hop.id) : hop.id != null) return false;
+        if (source != null ? !source.equals(hop.source) : hop.source != null) return false;
+        if (destiny != null ? !destiny.equals(hop.destiny) : hop.destiny != null) return false;
+        if (taskHops != null ? !taskHops.equals(hop.taskHops) : hop.taskHops != null) return false;
+        return date != null ? date.equals(hop.date) : hop.date == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + graphId;
+        result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + (destiny != null ? destiny.hashCode() : 0);
+        result = 31 * result + (taskHops != null ? taskHops.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
+    }
 }

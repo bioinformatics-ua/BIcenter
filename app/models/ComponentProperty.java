@@ -98,4 +98,35 @@ public class ComponentProperty implements Serializable {
         if(value.isPresent()) return value.get();
         else return null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ComponentProperty that = (ComponentProperty) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (shortName != null ? !shortName.equals(that.shortName) : that.shortName != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        if (source != null ? !source.equals(that.source) : that.source != null) return false;
+        if (component != null ? !component.equals(that.component) : that.component != null) return false;
+        if (stepProperties != null ? !stepProperties.equals(that.stepProperties) : that.stepProperties != null)
+            return false;
+        return componentMetadatas != null ? componentMetadatas.equals(that.componentMetadatas) : that.componentMetadatas == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (shortName != null ? shortName.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + (component != null ? component.hashCode() : 0);
+        result = 31 * result + (stepProperties != null ? stepProperties.hashCode() : 0);
+        result = 31 * result + (componentMetadatas != null ? componentMetadatas.hashCode() : 0);
+        return result;
+    }
 }

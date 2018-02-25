@@ -15,18 +15,10 @@
           "shortName": "checkSumType",
           "type": "select",
           "componentMetadatas": [
-            {
-              "name": "CRC 32"
-            },
-            {
-              "name": "ADLER 32"
-            },
-            {
-              "name": "MD5"
-            },
-            {
-              "name": "SHA-1"
-            }
+            {"value":"0","name":"CRC 32"},
+            {"value":"1","name":"ADLER 32"},
+            {"value":"2","name":"MD5"},
+            {"value":"3","name":"SHA-1"}
           ]
         },
         {
@@ -34,15 +26,9 @@
           "shortName": "resultType",
           "type": "select",
           "componentMetadatas": [
-            {
-              "name": "String"
-            },
-            {
-              "name": "Hexadecimal"
-            },
-            {
-              "name": "Binary"
-            }
+            {"value":"0","name":"String"},
+            {"value":"1","name":"Hexadecimal"},
+            {"value":"2","name":"Binary"}
           ]
         },
         {
@@ -197,12 +183,94 @@
         {
           "name": "Connection Type",
           "shortName": "connectionType",
-          "type": "select"
+          "type": "select",
+          "componentMetadatas":
+          [
+            {"value":"AS/400","name":"AS/400"},
+            {"value":"DERBY","name":"Apache Derby"},
+            {"value":"INTERBASE","name":"Borland Interbase"},
+            {"value":"INFINIDB","name":"Calpont InfiniDB"},
+            {"value":"EXASOL4","name":"Exasol 4"},
+            {"value":"EXTENDB","name":"ExtenDB"},
+            {"value":"FIREBIRD","name":"Firebird SQL"},
+            {"value":"GENERIC","name":"Generic database"},
+            {"value":"GREENPLUM","name":"Greenplum"},
+            {"value":"SQLBASE","name":"Gupta SQL Base"},
+            {"value":"H2","name":"H2"},
+            {"value":"HYPERSONIC","name":"Hypersonic"},
+            {"value":"DB2","name":"IBM DB2"},
+            {"value":"INFOBRIGHT","name":"Infobright"},
+            {"value":"INFORMIX","name":"Informix"},
+            {"value":"INGRES","name":"Ingres"},
+            {"value":"VECTORWISE","name":"Ingres VectorWise"},
+            {"value":"CACHE","name":"Intersystems Cache"},
+            {"value":"KINGBASEES","name":"KingbaseES"},
+            {"value":"LucidDB","name":"LucidDB"},
+            {"value":"MSACCESS","name":"MS Access"},
+            {"value":"MSSQL","name":"MS SQL Server"},
+            {"value":"MSSQLNATIVE","name":"MS SQL Server (Native)"},
+            {"value":"SAPDB","name":"MaxDB (SAP DB)"},
+            {"value":"MONETDB","name":"MonetDB"},
+            {"value":"MYSQL","name":"MySQL"},
+            {"value":"MONDRIAN","name":"Native Mondrian"},
+            {"value":"NEOVIEW","name":"Neoview"},
+            {"value":"NETEZZA","name":"Netezza"},
+            {"value":"ORACLE","name":"Oracle"},
+            {"value":"ORACLERDB","name":"Oracle RDB"},
+            {"value":"POSTGRESQL","name":"PostgreSQL"},
+            {"value":"REDSHIFT","name":"Redshift"},
+            {"value":"REMEDY-AR-SYSTEM","name":"Remedy Action Request System"},
+            {"value":"SAPR3","name":"SAP ERP System"},
+            {"value":"SQLITE","name":"SQLite"},
+            {"value":"SYBASE","name":"Sybase"},
+            {"value":"SYBASEIQ","name":"SybaseIQ"},
+            {"value":"TERADATA","name":"Teradata"},
+            {"value":"UNIVERSE","name":"UniVerse database"},
+            {"value":"VERTICA","name":"Vertica"},
+            {"value":"VERTICA5","name":"Vertica 5+"},
+            {"value":"DBASE","name":"dBase III, IV or 5"}
+          ]
         },
         {
           "name": "Connection Method",
           "shortName": "connectionMethod",
-          "type": "select"
+          "type": "select",
+          "componentMetadatas":
+          [
+            {"value":"0","name":"Native (JDBC)"},
+            {"value":"1","name":"ODBC"},
+            {"value":"4","name":"JNDI"}
+          ]
+        },
+        {
+          "name": "Host Name",
+          "shortName": "hostName",
+          "type": "input"
+        },
+        {
+          "name": "Database Name",
+          "shortName": "databaseName",
+          "type": "input"
+        },
+        {
+          "name": "Port Number",
+          "shortName": "portNumber",
+          "type": "number"
+        },
+        {
+          "name": "Username",
+          "shortName": "username",
+          "type": "input"
+        },
+        {
+          "name": "Password",
+          "shortName": "password",
+          "type": "input"
+        },
+        {
+          "name": "SQL Statement:",
+          "shortName": "sQL",
+          "type": "textarea"
         }
       ]
     }

@@ -107,4 +107,39 @@ public class Step implements Serializable{
     public void setDestiny(Hop destiny) {
         this.destiny = destiny;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Step step = (Step) o;
+
+        if (graphId != step.graphId) return false;
+        if (id != null ? !id.equals(step.id) : step.id != null) return false;
+        if (label != null ? !label.equals(step.label) : step.label != null) return false;
+        if (date != null ? !date.equals(step.date) : step.date != null) return false;
+        if (stepProperties != null ? !stepProperties.equals(step.stepProperties) : step.stepProperties != null)
+            return false;
+        if (component != null ? !component.equals(step.component) : step.component != null) return false;
+        if (taskSteps != null ? !taskSteps.equals(step.taskSteps) : step.taskSteps != null) return false;
+        if (cell != null ? !cell.equals(step.cell) : step.cell != null) return false;
+        if (source != null ? !source.equals(step.source) : step.source != null) return false;
+        return destiny != null ? destiny.equals(step.destiny) : step.destiny == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (label != null ? label.hashCode() : 0);
+        result = 31 * result + graphId;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (stepProperties != null ? stepProperties.hashCode() : 0);
+        result = 31 * result + (component != null ? component.hashCode() : 0);
+        result = 31 * result + (taskSteps != null ? taskSteps.hashCode() : 0);
+        result = 31 * result + (cell != null ? cell.hashCode() : 0);
+        result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + (destiny != null ? destiny.hashCode() : 0);
+        return result;
+    }
 }

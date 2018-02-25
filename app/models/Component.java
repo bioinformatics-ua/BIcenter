@@ -71,21 +71,39 @@ public class Component implements Serializable {
         this.componentProperties = componentProperties;
     }
 
-    /*
-    public List<Step> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
-    }
-    */
-
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Component component = (Component) o;
+
+        if (id != null ? !id.equals(component.id) : component.id != null) return false;
+        if (name != null ? !name.equals(component.name) : component.name != null) return false;
+        if (description != null ? !description.equals(component.description) : component.description != null)
+            return false;
+        if (shortName != null ? !shortName.equals(component.shortName) : component.shortName != null) return false;
+        if (componentProperties != null ? !componentProperties.equals(component.componentProperties) : component.componentProperties != null)
+            return false;
+        return date != null ? date.equals(component.date) : component.date == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (shortName != null ? shortName.hashCode() : 0);
+        result = 31 * result + (componentProperties != null ? componentProperties.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
     }
 }

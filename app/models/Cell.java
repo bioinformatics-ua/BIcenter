@@ -73,4 +73,30 @@ public class Cell implements Serializable{
     public void setStep(Step step) {
         this.step = step;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cell cell = (Cell) o;
+
+        if (x != cell.x) return false;
+        if (y != cell.y) return false;
+        if (width != cell.width) return false;
+        if (height != cell.height) return false;
+        if (id != null ? !id.equals(cell.id) : cell.id != null) return false;
+        return step != null ? step.equals(cell.step) : cell.step == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + x;
+        result = 31 * result + y;
+        result = 31 * result + width;
+        result = 31 * result + height;
+        result = 31 * result + (step != null ? step.hashCode() : 0);
+        return result;
+    }
 }

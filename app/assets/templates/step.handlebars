@@ -9,7 +9,20 @@
                 <div class="form-group">
                     <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
                     <div class="col-sm-5">
-                        <input class="form-control" name="{{id}}" view-element="{{id}}" value="{{stepProperty.value}}">
+                        {{#ifCond shortName '==' 'password'}}
+                            <input type="password" class="form-control" name="{{id}}" view-element="{{id}}" value="{{stepProperty.value}}">
+                        {{/ifCond}}
+                        {{#ifCond shortName '!=' 'password'}}
+                            <input class="form-control" name="{{id}}" view-element="{{id}}" value="{{stepProperty.value}}">
+                        {{/ifCond}}
+                    </div>
+                </div>
+            {{/ifCond}}
+            {{#ifCond type '==' 'textarea'}}
+                <div class="form-group">
+                    <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
+                    <div class="col-sm-5">
+                        <textarea class="form-control" name="{{id}}" view-element="{{id}}" rows="4" cols="50" value="{{stepProperty.value}}">{{stepProperty.value}}</textarea>
                     </div>
                 </div>
             {{/ifCond}}
@@ -44,11 +57,11 @@
                 <div class="col-sm-5">
                     <select name="{{id}}" view-element="{{id}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                         {{#componentMetadatas}}
-                            {{#ifCond ../stepProperty.value '==' @index}}
-                                <option value="{{@index}}" selected>{{name}}</option>
+                            {{#ifCond ../stepProperty.value '==' value}}
+                                <option value="{{value}}" selected>{{name}}</option>
                             {{/ifCond}}
-                            {{#ifCond ../stepProperty.value '!=' @index}}
-                                <option value="{{@index}}">{{name}}</option>
+                            {{#ifCond ../stepProperty.value '!=' value}}
+                                <option value="{{value}}">{{name}}</option>
                             {{/ifCond}}
                         {{/componentMetadatas}}
                     </select>

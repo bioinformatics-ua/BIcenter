@@ -61,4 +61,32 @@ public class Task implements Serializable {
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        if (open != task.open) return false;
+        if (id != null ? !id.equals(task.id) : task.id != null) return false;
+        if (name != null ? !name.equals(task.name) : task.name != null) return false;
+        if (description != null ? !description.equals(task.description) : task.description != null) return false;
+        if (date != null ? !date.equals(task.date) : task.date != null) return false;
+        if (hops != null ? !hops.equals(task.hops) : task.hops != null) return false;
+        return steps != null ? steps.equals(task.steps) : task.steps == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + open;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (hops != null ? hops.hashCode() : 0);
+        result = 31 * result + (steps != null ? steps.hashCode() : 0);
+        return result;
+    }
 }
