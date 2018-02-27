@@ -16,4 +16,6 @@ public interface HopRepository {
     List<Hop> list();
 
     List<Hop> getByTask(long taskId);
+
+    List<Hop> getBySource(long stepId);
 }

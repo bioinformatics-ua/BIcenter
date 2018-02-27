@@ -47,6 +47,12 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
                 .getResultList();
     }
 
+    public static List<Step> getDestinySteps(EntityManager em, long stepId) {
+        return em.createQuery("select h.destiny from Hop h where h.source.id = :stepId", Step.class)
+                .setParameter("stepId",stepId)
+                .getResultList();
+    }
+
     @Override
     public Step get(long id) {
         return wrap(em -> get(em, id));
@@ -81,4 +87,9 @@ public class JPAStepRepository extends JPARepository implements StepRepository {
 
     @Override
     public List<Step> getByTask(long taskId) { return wrap(em -> getByTask(em,taskId)); }
+
+    @Override
+    public List<Step> getDestinySteps(long stepId) {
+        return wrap(em -> getDestinySteps(em, stepId));
+    }
 }

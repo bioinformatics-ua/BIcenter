@@ -5,24 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
-import com.mxgraph.io.mxCodec;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxGraph;
 import diSdk.task.TaskDecoder;
-import kettleExt.trans.TransDecoder;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
 import models.*;
+import org.hibernate.Hibernate;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMeta;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.StepMeta;
-import org.w3c.dom.Document;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -37,7 +32,6 @@ import serializers.step.StepSerializer;
 import utils.SearchFieldsProgress;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -45,14 +39,16 @@ import java.util.stream.Collectors;
  */
 public class StepController extends Controller {
     private final TaskRepository taskRepository;
+    private final HopRepository hopRepository;
     private final StepRepository stepRepository;
     private final StepPropertyRepository stepPropertyRepository;
     private final ComponentRepository componentRepository;
     private final ComponentPropertyRepository componentPropertyRepository;
 
     @Inject
-    public StepController(TaskRepository taskRepository, StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentRepository componentRepository, ComponentPropertyRepository componentPropertyRepository) {
+    public StepController(TaskRepository taskRepository, HopRepository hopRepository, StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentRepository componentRepository, ComponentPropertyRepository componentPropertyRepository) {
         this.taskRepository = taskRepository;
+        this.hopRepository = hopRepository;
         this.stepRepository = stepRepository;
         this.stepPropertyRepository = stepPropertyRepository;
         this.componentRepository = componentRepository;
@@ -113,6 +109,26 @@ public class StepController extends Controller {
             jsonArray.add(jsonObject);
         }
 
+        return ok(Json.toJson(jsonArray));
+    }
+
+    /**
+     * Returns the labels of the output steps.
+     * @param stepId
+     * @return
+     * @throws Exception
+     */
+    public Result outputStepsName(long stepId) throws Exception {
+        List<String> stepsName = stepRepository.getDestinySteps(stepId)
+                .stream().map(s -> s.getLabel()).collect(Collectors.toList());
+
+        JSONArray jsonArray = new JSONArray();
+        stepsName.stream()
+                .forEach(name -> {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("name", name);
+                    jsonArray.add(jsonObject);
+                });
         return ok(Json.toJson(jsonArray));
     }
 

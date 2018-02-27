@@ -168,7 +168,7 @@
     {
       "name": "TableInput",
       "description": "Table Input",
-      "shortName": "checksum",
+      "shortName": "tableInput",
       "componentProperties": [
         {
           "name": "Step Name",
@@ -177,12 +177,12 @@
         },
         {
           "name": "Connection Name",
-          "shortName": "database",
+          "shortName": "name",
           "type": "input"
         },
         {
           "name": "Connection Type",
-          "shortName": "connectionType",
+          "shortName": "databaseInterface",
           "type": "select",
           "componentMetadatas":
           [
@@ -233,7 +233,7 @@
         },
         {
           "name": "Connection Method",
-          "shortName": "connectionMethod",
+          "shortName": "accessType",
           "type": "select",
           "componentMetadatas":
           [
@@ -248,14 +248,14 @@
           "type": "input"
         },
         {
-          "name": "Database Name",
-          "shortName": "databaseName",
-          "type": "input"
+          "name": "Port Number",
+          "shortName": "dBPort",
+          "type": "number"
         },
         {
-          "name": "Port Number",
-          "shortName": "portNumber",
-          "type": "number"
+          "name": "Database Name",
+          "shortName": "dBName",
+          "type": "input"
         },
         {
           "name": "Username",
@@ -268,9 +268,393 @@
           "type": "input"
         },
         {
-          "name": "SQL Statement:",
+          "name": "SQL Statement",
           "shortName": "sQL",
           "type": "textarea"
+        }
+      ]
+    },
+    {
+      "name": "TableOutput",
+      "description": "Table Output",
+      "shortName": "tableOutput",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        },
+        {
+          "name": "Connection Name",
+          "shortName": "name",
+          "type": "input"
+        },
+        {
+          "name": "Connection Type",
+          "shortName": "databaseInterface",
+          "type": "select",
+          "componentMetadatas":
+          [
+            {"value":"AS/400","name":"AS/400"},
+            {"value":"DERBY","name":"Apache Derby"},
+            {"value":"INTERBASE","name":"Borland Interbase"},
+            {"value":"INFINIDB","name":"Calpont InfiniDB"},
+            {"value":"EXASOL4","name":"Exasol 4"},
+            {"value":"EXTENDB","name":"ExtenDB"},
+            {"value":"FIREBIRD","name":"Firebird SQL"},
+            {"value":"GENERIC","name":"Generic database"},
+            {"value":"GREENPLUM","name":"Greenplum"},
+            {"value":"SQLBASE","name":"Gupta SQL Base"},
+            {"value":"H2","name":"H2"},
+            {"value":"HYPERSONIC","name":"Hypersonic"},
+            {"value":"DB2","name":"IBM DB2"},
+            {"value":"INFOBRIGHT","name":"Infobright"},
+            {"value":"INFORMIX","name":"Informix"},
+            {"value":"INGRES","name":"Ingres"},
+            {"value":"VECTORWISE","name":"Ingres VectorWise"},
+            {"value":"CACHE","name":"Intersystems Cache"},
+            {"value":"KINGBASEES","name":"KingbaseES"},
+            {"value":"LucidDB","name":"LucidDB"},
+            {"value":"MSACCESS","name":"MS Access"},
+            {"value":"MSSQL","name":"MS SQL Server"},
+            {"value":"MSSQLNATIVE","name":"MS SQL Server (Native)"},
+            {"value":"SAPDB","name":"MaxDB (SAP DB)"},
+            {"value":"MONETDB","name":"MonetDB"},
+            {"value":"MYSQL","name":"MySQL"},
+            {"value":"MONDRIAN","name":"Native Mondrian"},
+            {"value":"NEOVIEW","name":"Neoview"},
+            {"value":"NETEZZA","name":"Netezza"},
+            {"value":"ORACLE","name":"Oracle"},
+            {"value":"ORACLERDB","name":"Oracle RDB"},
+            {"value":"POSTGRESQL","name":"PostgreSQL"},
+            {"value":"REDSHIFT","name":"Redshift"},
+            {"value":"REMEDY-AR-SYSTEM","name":"Remedy Action Request System"},
+            {"value":"SAPR3","name":"SAP ERP System"},
+            {"value":"SQLITE","name":"SQLite"},
+            {"value":"SYBASE","name":"Sybase"},
+            {"value":"SYBASEIQ","name":"SybaseIQ"},
+            {"value":"TERADATA","name":"Teradata"},
+            {"value":"UNIVERSE","name":"UniVerse database"},
+            {"value":"VERTICA","name":"Vertica"},
+            {"value":"VERTICA5","name":"Vertica 5+"},
+            {"value":"DBASE","name":"dBase III, IV or 5"}
+          ]
+        },
+        {
+          "name": "Connection Method",
+          "shortName": "accessType",
+          "type": "select",
+          "componentMetadatas":
+          [
+            {"value":"0","name":"Native (JDBC)"},
+            {"value":"1","name":"ODBC"},
+            {"value":"4","name":"JNDI"}
+          ]
+        },
+        {
+          "name": "Host Name",
+          "shortName": "hostName",
+          "type": "input"
+        },
+        {
+          "name": "Port Number",
+          "shortName": "dBPort",
+          "type": "number"
+        },
+        {
+          "name": "Database Name",
+          "shortName": "dBName",
+          "type": "input"
+        },
+        {
+          "name": "Username",
+          "shortName": "username",
+          "type": "input"
+        },
+        {
+          "name": "Password",
+          "shortName": "password",
+          "type": "input"
+        },
+        {
+          "name": "Target Table",
+          "shortName": "tableName",
+          "type": "input"
+        }
+      ]
+    },
+    {
+      "name": "ExecSQL",
+      "description": "Execute SQL script",
+      "shortName": "ExecSQL",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        },
+        {
+          "name": "Connection Name",
+          "shortName": "name",
+          "type": "input"
+        },
+        {
+          "name": "Connection Type",
+          "shortName": "databaseInterface",
+          "type": "select",
+          "componentMetadatas": [
+            {
+              "value": "AS/400",
+              "name": "AS/400"
+            },
+            {
+              "value": "DERBY",
+              "name": "Apache Derby"
+            },
+            {
+              "value": "INTERBASE",
+              "name": "Borland Interbase"
+            },
+            {
+              "value": "INFINIDB",
+              "name": "Calpont InfiniDB"
+            },
+            {
+              "value": "EXASOL4",
+              "name": "Exasol 4"
+            },
+            {
+              "value": "EXTENDB",
+              "name": "ExtenDB"
+            },
+            {
+              "value": "FIREBIRD",
+              "name": "Firebird SQL"
+            },
+            {
+              "value": "GENERIC",
+              "name": "Generic database"
+            },
+            {
+              "value": "GREENPLUM",
+              "name": "Greenplum"
+            },
+            {
+              "value": "SQLBASE",
+              "name": "Gupta SQL Base"
+            },
+            {
+              "value": "H2",
+              "name": "H2"
+            },
+            {
+              "value": "HYPERSONIC",
+              "name": "Hypersonic"
+            },
+            {
+              "value": "DB2",
+              "name": "IBM DB2"
+            },
+            {
+              "value": "INFOBRIGHT",
+              "name": "Infobright"
+            },
+            {
+              "value": "INFORMIX",
+              "name": "Informix"
+            },
+            {
+              "value": "INGRES",
+              "name": "Ingres"
+            },
+            {
+              "value": "VECTORWISE",
+              "name": "Ingres VectorWise"
+            },
+            {
+              "value": "CACHE",
+              "name": "Intersystems Cache"
+            },
+            {
+              "value": "KINGBASEES",
+              "name": "KingbaseES"
+            },
+            {
+              "value": "LucidDB",
+              "name": "LucidDB"
+            },
+            {
+              "value": "MSACCESS",
+              "name": "MS Access"
+            },
+            {
+              "value": "MSSQL",
+              "name": "MS SQL Server"
+            },
+            {
+              "value": "MSSQLNATIVE",
+              "name": "MS SQL Server (Native)"
+            },
+            {
+              "value": "SAPDB",
+              "name": "MaxDB (SAP DB)"
+            },
+            {
+              "value": "MONETDB",
+              "name": "MonetDB"
+            },
+            {
+              "value": "MYSQL",
+              "name": "MySQL"
+            },
+            {
+              "value": "MONDRIAN",
+              "name": "Native Mondrian"
+            },
+            {
+              "value": "NEOVIEW",
+              "name": "Neoview"
+            },
+            {
+              "value": "NETEZZA",
+              "name": "Netezza"
+            },
+            {
+              "value": "ORACLE",
+              "name": "Oracle"
+            },
+            {
+              "value": "ORACLERDB",
+              "name": "Oracle RDB"
+            },
+            {
+              "value": "POSTGRESQL",
+              "name": "PostgreSQL"
+            },
+            {
+              "value": "REDSHIFT",
+              "name": "Redshift"
+            },
+            {
+              "value": "REMEDY-AR-SYSTEM",
+              "name": "Remedy Action Request System"
+            },
+            {
+              "value": "SAPR3",
+              "name": "SAP ERP System"
+            },
+            {
+              "value": "SQLITE",
+              "name": "SQLite"
+            },
+            {
+              "value": "SYBASE",
+              "name": "Sybase"
+            },
+            {
+              "value": "SYBASEIQ",
+              "name": "SybaseIQ"
+            },
+            {
+              "value": "TERADATA",
+              "name": "Teradata"
+            },
+            {
+              "value": "UNIVERSE",
+              "name": "UniVerse database"
+            },
+            {
+              "value": "VERTICA",
+              "name": "Vertica"
+            },
+            {
+              "value": "VERTICA5",
+              "name": "Vertica 5+"
+            },
+            {
+              "value": "DBASE",
+              "name": "dBase III, IV or 5"
+            }
+          ]
+        },
+        {
+          "name": "Connection Method",
+          "shortName": "accessType",
+          "type": "select",
+          "componentMetadatas": [
+            {
+              "value": "0",
+              "name": "Native (JDBC)"
+            },
+            {
+              "value": "1",
+              "name": "ODBC"
+            },
+            {
+              "value": "4",
+              "name": "JNDI"
+            }
+          ]
+        },
+        {
+          "name": "Host Name",
+          "shortName": "hostName",
+          "type": "input"
+        },
+        {
+          "name": "Port Number",
+          "shortName": "dBPort",
+          "type": "number"
+        },
+        {
+          "name": "Database Name",
+          "shortName": "dBName",
+          "type": "input"
+        },
+        {
+          "name": "Username",
+          "shortName": "username",
+          "type": "input"
+        },
+        {
+          "name": "Password",
+          "shortName": "password",
+          "type": "input"
+        },
+        {
+          "name": "SQL Statement",
+          "shortName": "sQL",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "name": "FilterRows",
+      "description": "Filter Rows",
+      "shortName": "filterRows",
+      "componentProperties":
+      [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        },
+        {
+          "name": "Send 'true' data to step",
+          "shortName": "stepName",
+          "type": "select",
+          "source": "outputSteps"
+        },
+        {
+          "name": "Send 'false' data to step",
+          "shortName": "stepName",
+          "type": "select",
+          "source": "outputSteps"
+        },
+        {
+          "name": "Condition",
+          "shortName": "stepName",
+          "type": "condition"
         }
       ]
     }

@@ -21,11 +21,15 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
             console.log(step);
             context.step = step;
             context.formName = step.component.shortName+"_form";
-            Step.inputFieldsName(context.step.id, function(input){
-                console.log(input);
-                context.input = input;
-                context.view.loadStep(step,input);
-            })
+            Step.inputFieldsName(context.step.id, function(inputFields){
+                console.log(inputFields);
+                context.inputFields = inputFields;
+                Step.outputStepsName(context.step.id, function(outputSteps) {
+                    console.log(outputSteps);
+                    context.outputSteps = outputSteps;
+                    context.view.loadStep(step,inputFields,outputSteps);
+                });
+            });
         });
     };
 

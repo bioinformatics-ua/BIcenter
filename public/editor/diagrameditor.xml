@@ -26,11 +26,6 @@
 				</mxCell>
 			</Step>
 		</add>
-		<add as="JsonInput">
-			<mxCell style="icon;image=/middle/JsonInput.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
-		</add>
 		<add as="TableInput">
 			<Step component="TableInput" label="Table Input">
 				<mxCell style="icon;image=/middle/TableInput.svg" parent="1" vertex="1">
@@ -38,20 +33,12 @@
 				</mxCell>
 			</Step>
 		</add>
-		<add as="InsertUpdate">
-			<mxCell style="icon;image=/middle/InsertUpdate.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
-		</add>
-		<add as="SQLFileOutput">
-			<mxCell style="icon;image=/middle/SQLFileOutput.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
-		</add>
 		<add as="TableOutput">
-			<mxCell style="icon;image=/middle/TableOutput.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
+			<Step component="TableOutput" label="Table Output">
+			    <mxCell style="icon;image=/middle/TableOutput.svg" parent="1" vertex="1">
+				    <mxGeometry width="40" height="40" as="geometry"/>
+			    </mxCell>
+			</Step>
 		</add>
 		<add as="Checksum">
 			<Step component="CheckSum" label = "Add a cecksum">
@@ -67,30 +54,19 @@
 				</mxCell>
 			</Step>
 		</add>
-		<add as="SelectValues">
-			<mxCell style="icon;image=/middle/SelectValues.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
-		</add>
-		<add as="Mail">
-			<mxCell style="icon;image=/middle/Mail.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
-		</add>
-		<add as="Dummy">
-			<mxCell style="icon;image=/middle/Dummy.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
-		</add>
-		<add as="SwitchCase">
-			<mxCell style="icon;image=/middle/SwitchCase.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
-		</add>
+        <add as="FilterRows">
+            <Step component="FilterRows" label="Filter Rows">
+                <mxCell style="icon;image=/middle/FilterRows.svg" parent="1" vertex="1">
+                    <mxGeometry width="40" height="40" as="geometry"/>
+                </mxCell>
+            </Step>
+        </add>
 		<add as="ExecSQL">
-			<mxCell style="icon;image=/middle/ExecSQL.svg" parent="1" vertex="1">
-				<mxGeometry width="40" height="40" as="geometry"/>
-			</mxCell>
+            <Step component="ExecSQL" label = "Execute SQL script">
+			    <mxCell style="icon;image=/middle/ExecSQL.svg" parent="1" vertex="1">
+				    <mxGeometry width="40" height="40" as="geometry"/>
+			    </mxCell>
+            </Step>
 		</add>
 	</Array>
 	<mxGraph as="graph" alternateEdgeStyle="verticalConnector" allowLoops="1" dropEnabled="1">
@@ -292,16 +268,10 @@
 		]]></add>
 		<br/><br/>
 		<add as="Generate Rows" template="RowGenerator" icon="/assets/images/editor/rectangle.gif"/>
-		<add as="Json Input" template="JsonInput" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Table Input" template="TableInput" icon="/assets/images/editor/rectangle.gif"/>
-		<add as="Insert/Update" template="InsertUpdate" icon="/assets/images/editor/rectangle.gif"/>
-		<add as="SQLFileOutput" template="SQLFileOutput" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Table Output" template="TableOutput" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Add Checksum" template="Checksum" icon="/assets/images/editor/rectangle.gif"/>
-		<add as="Select Values" template="SelectValues" icon="/assets/images/editor/rectangle.gif"/>
-		<add as="Mail" template="Mail" icon="/assets/images/editor/rectangle.gif"/>
-		<add as="Dummy" template="Dummy" icon="/assets/images/editor/rectangle.gif"/>
-		<add as="SwitchCase" template="SwitchCase" icon="/assets/images/editor/rectangle.gif"/>
+        <add as="Filter Rows" template="FilterRows" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Execute SQL script" template="ExecSQL" icon="/assets/images/editor/rectangle.gif"/>
 	</mxDefaultToolbar>
 </mxEditor>

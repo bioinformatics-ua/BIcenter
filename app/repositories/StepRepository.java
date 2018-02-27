@@ -19,4 +19,6 @@ public interface StepRepository {
     Step getByTaskAndGraphId(long taskId, int graphId);
 
     List<Step> getByTask(long taskId);
+
+    List<Step> getDestinySteps(long stepId);
 }

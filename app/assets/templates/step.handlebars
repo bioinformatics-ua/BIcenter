@@ -56,14 +56,22 @@
                 <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
                 <div class="col-sm-5">
                     <select name="{{id}}" view-element="{{id}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                        {{#componentMetadatas}}
-                            {{#ifCond ../stepProperty.value '==' value}}
-                                <option value="{{value}}" selected>{{name}}</option>
-                            {{/ifCond}}
-                            {{#ifCond ../stepProperty.value '!=' value}}
-                                <option value="{{value}}">{{name}}</option>
-                            {{/ifCond}}
-                        {{/componentMetadatas}}
+                        {{#ifCond source '==' 'outputSteps'}}
+                            {{#../outputSteps}}
+                                <option>{{name}}</option>
+                            {{/../outputSteps}}
+                        {{/ifCond}}
+
+                        {{#ifCond source '!=' 'outputSteps'}}
+                            {{#componentMetadatas}}
+                                {{#ifCond ../stepProperty.value '==' value}}
+                                    <option value="{{value}}" selected>{{name}}</option>
+                                {{/ifCond}}
+                                {{#ifCond ../stepProperty.value '!=' value}}
+                                    <option value="{{value}}">{{name}}</option>
+                                {{/ifCond}}
+                            {{/componentMetadatas}}
+                        {{/ifCond}}
                     </select>
                 </div>
             </div>
@@ -96,17 +104,6 @@
                         <th style="min-width: 10%;"></th>
                     </thead>
                 </table>
-            {{/ifCond}}
-            {{#ifCond type '==' 'connection'}}
-                <div class="form-group">
-                    <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
-                    <div class="col-sm-5 input-group">
-                        <input class="form-control" name="{{id}}" view-element="{{id}}" value="{{stepProperty.value}}">
-                        <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">Go!</button>
-                        </span>
-                    </div>
-                </div>
             {{/ifCond}}
         {{/component.componentProperties}}
         </form>

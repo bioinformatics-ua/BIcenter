@@ -19,7 +19,6 @@ import play.libs.Json;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public abstract class AbstractStep implements StepEncoder, StepDecoder {
@@ -54,14 +53,13 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                     .toArray(Method[]::new);
 
             for (Method method : methods) {
-                if(method.getParameterTypes()[0] == DatabaseMeta.class){
+                if (method.getParameterTypes()[0] == DatabaseMeta.class) {
                     // Build database connection.
-                    DatabaseMeta databaseMeta = buildDatabaseConnection(step,stepProperties);
+                    DatabaseMeta databaseMeta = buildDatabaseConnection(step, stepProperties);
 
                     // Invoke the current method with the StepProperty value.
                     invokeMethod(stepMetaInterface, method, databaseMeta);
-                }
-                else {
+                } else {
                     // Find StepProperty that holds the value of the current StepMetaInterface method.
                     String shortName = method.getName().substring(3);
                     Optional<StepProperty> optStepProperty = stepProperties.stream()
@@ -72,7 +70,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                     // Check if the value is an array. In this case, properly parse it.
                     String tmp = optStepProperty.get().getValue();
                     Object value = tmp;
-                    if (tmp.length()>0 && tmp.charAt(0) == '[' && tmp.charAt(tmp.length() - 1) == ']') {
+                    if (tmp.length() > 0 && tmp.charAt(0) == '[' && tmp.charAt(tmp.length() - 1) == ']') {
                         tmp = tmp.substring(1, tmp.length() - 1);
                         value = Arrays.asList(tmp.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")).stream()
                                 .map(v -> v.replaceAll("\"", ""))
@@ -160,9 +158,10 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
     /**
      * Invoke a specific method.
+     *
      * @param stepMetaInterface The object.
-     * @param method The method name.
-     * @param value The parameter value.
+     * @param method            The method name.
+     * @param value             The parameter value.
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
@@ -172,14 +171,11 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         Object parameter;
         if (parameterType == Boolean.class || parameterType == boolean.class) {
             parameter = value.toString().equalsIgnoreCase("Y");
-        }
-        else if (parameterType == int.class || parameterType == Integer.class) {
+        } else if (parameterType == int.class || parameterType == Integer.class) {
             parameter = Integer.parseInt(value.toString());
-        }
-        else if (parameterType == (new String[0]).getClass()) {
+        } else if (parameterType == (new String[0]).getClass()) {
             parameter = ((List<String>) value).stream().toArray(String[]::new);
-        }
-        else if (parameterType == (new boolean[0]).getClass()) {
+        } else if (parameterType == (new boolean[0]).getClass()) {
             boolean[] tmp = new boolean[((List<String>) value).size()];
             int idx = 0;
 
@@ -187,8 +183,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                 tmp[idx++] = val.toString().equalsIgnoreCase("Y");
             }
             parameter = tmp;
-        }
-        else if (parameterType == (new int[1]).getClass()) {
+        } else if (parameterType == (new int[1]).getClass()) {
             int[] tmp = new int[((List<String>) value).size()];
             int idx = 0;
 
@@ -196,8 +191,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                 tmp[idx++] = Integer.parseInt(val.toString());
             }
             parameter = tmp;
-        }
-        else {
+        } else {
             parameter = parameterType.cast(value);
         }
 
@@ -212,36 +206,43 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             List<ComponentProperty> componentProperties = step.getComponent().getComponentProperties();
 
             // Database Type.
-            String type = componentProperties.get(2).getStepProperty(step.getId()).getValue();
+            final ComponentProperty databaseInterface = componentProperties.stream().filter(prop -> prop.getShortName().equals("databaseInterface")).findFirst().get();
+            String type = databaseInterface.getStepProperty(step.getId()).getValue();
             databaseMeta.setDatabaseInterface(DatabaseMeta.getDatabaseInterface(type));
-            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == componentProperties.get(2).getStepProperty(step.getId()).getId()).findFirst().get());
+            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == databaseInterface.getStepProperty(step.getId()).getId()).findFirst().get());
 
             // Connection Name.
-            databaseMeta.setName(componentProperties.get(1).getStepProperty(step.getId()).getValue());
+            final ComponentProperty name = componentProperties.stream().filter(prop -> prop.getShortName().equals("name")).findFirst().get();
+            databaseMeta.setName(name.getStepProperty(step.getId()).getValue());
             databaseMeta.setDisplayName(databaseMeta.getName());
-            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == componentProperties.get(1).getStepProperty(step.getId()).getId()).findFirst().get());
+            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == name.getStepProperty(step.getId()).getId()).findFirst().get());
 
             // Access Type.
-            databaseMeta.setAccessType(Integer.parseInt(componentProperties.get(3).getStepProperty(step.getId()).getValue()));
-            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == componentProperties.get(3).getStepProperty(step.getId()).getId()).findFirst().get());
+            final ComponentProperty accessType = componentProperties.stream().filter(prop -> prop.getShortName().equals("accessType")).findFirst().get();
+            databaseMeta.setAccessType(Integer.parseInt(accessType.getStepProperty(step.getId()).getValue()));
+            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == accessType.getStepProperty(step.getId()).getId()).findFirst().get());
 
             // DB Name.
-            databaseMeta.setDBName(componentProperties.get(5).getStepProperty(step.getId()).getValue());
-            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == componentProperties.get(5).getStepProperty(step.getId()).getId()).findFirst().get());
+            final ComponentProperty dBName = componentProperties.stream().filter(prop -> prop.getShortName().equals("dBName")).findFirst().get();
+            databaseMeta.setDBName(dBName.getStepProperty(step.getId()).getValue());
+            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == dBName.getStepProperty(step.getId()).getId()).findFirst().get());
 
             // Host name & Port number.
-            databaseMeta.setHostname(componentProperties.get(4).getStepProperty(step.getId()).getValue());
-            databaseMeta.setDBPort(componentProperties.get(6).getStepProperty(step.getId()).getValue());
-            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == componentProperties.get(4).getStepProperty(step.getId()).getId()).findFirst().get());
-            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == componentProperties.get(6).getStepProperty(step.getId()).getId()).findFirst().get());
+            final ComponentProperty hostName = componentProperties.stream().filter(prop -> prop.getShortName().equals("hostName")).findFirst().get();
+            final ComponentProperty dBPort = componentProperties.stream().filter(prop -> prop.getShortName().equals("dBPort")).findFirst().get();
+            databaseMeta.setHostname(hostName.getStepProperty(step.getId()).getValue());
+            databaseMeta.setDBPort(dBPort.getStepProperty(step.getId()).getValue());
+            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == hostName.getStepProperty(step.getId()).getId()).findFirst().get());
+            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == dBPort.getStepProperty(step.getId()).getId()).findFirst().get());
 
             // DB User.
-            databaseMeta.setUsername(componentProperties.get(7).getStepProperty(step.getId()).getValue());
-            databaseMeta.setPassword(componentProperties.get(8).getStepProperty(step.getId()).getValue());
-            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == componentProperties.get(7).getStepProperty(step.getId()).getId()).findFirst().get());
-            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == componentProperties.get(8).getStepProperty(step.getId()).getId()).findFirst().get());
-        }
-        catch (Exception e){
+            final ComponentProperty username = componentProperties.stream().filter(prop -> prop.getShortName().equals("username")).findFirst().get();
+            final ComponentProperty password = componentProperties.stream().filter(prop -> prop.getShortName().equals("password")).findFirst().get();
+            databaseMeta.setUsername(username.getStepProperty(step.getId()).getValue());
+            databaseMeta.setPassword(password.getStepProperty(step.getId()).getValue());
+            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == username.getStepProperty(step.getId()).getId()).findFirst().get());
+            stepProperties.remove(stepProperties.stream().filter(stepProperty -> stepProperty.getId() == password.getStepProperty(step.getId()).getId()).findFirst().get());
+        } catch (Exception e) {
             databaseMeta.setDefault();
             return databaseMeta;
         }
