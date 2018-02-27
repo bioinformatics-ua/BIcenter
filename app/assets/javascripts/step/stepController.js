@@ -90,5 +90,18 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
         this.view._loadViewComponents();
     };
 
+    StepController.prototype.resetCondition = function(){
+        $('#builder-basic').queryBuilder('reset');
+    }
+
+    StepController.prototype.toggleSenseCondition = function(){
+        var btn = $('#senseBtn');
+        btn.toggleClass('btn-success');
+        btn.toggleClass('btn-danger');
+        var label = btn.text();
+        if(label=="Negative") btn.text("Positive").show();
+        else btn.text("Negative").show();
+    }
+
     return StepController;
 });

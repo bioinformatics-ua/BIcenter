@@ -105,6 +105,16 @@
                     </thead>
                 </table>
             {{/ifCond}}
+            {{#ifCond type '==' 'condition'}}
+                <label>{{name}}:</label>
+                <div id="builder-basic" class="query-builder form-inline">
+
+                </div>
+                <div class="btn-group">
+                    <button type="button" view-click="controller.resetCondition()" class="btn btn-default">Reset</button>
+                    <button id="senseBtn" type="button" view-click="controller.toggleSenseCondition()" class="btn btn-success">Positive</button>
+                </div>
+            {{/ifCond}}
         {{/component.componentProperties}}
         </form>
     </div>

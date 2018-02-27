@@ -20,6 +20,13 @@ requirejs.config({
         'pnotify': '../lib/pnotify/pnotify.custom',
         'pnotify.nonblock': '../lib/pnotify/pnotify.nonblock',
         'Alert': 'lib/alert',
+        'moment': 'lib/moment',
+
+        // QueryBuilder
+        'query-builder': '../lib/jQuery-QueryBuilder/js/query-builder.min',
+        //'microevent': 'microevent-mistic100/microevent.min',
+        'jquery-extendext': '../lib/jquery-extendext/jQuery.extendext.min',
+        'dot/doT': '../lib/doT/doT',
 
         // Core
         'Application': 'application/application',
@@ -114,7 +121,7 @@ requirejs.config({
         'adminLTE': {
             deps: ['jquery', 'bootstrap', 'jquery.slimscroll']
         },
-        'datatables.buttons':{
+        'datatables.buttons': {
             deps: ['jquery', 'bootstrap']
         },
         'datatables.net': {
@@ -128,7 +135,17 @@ requirejs.config({
         },
         'pnotify': {
             exports: 'PNotify'
-        }
+        },
+
+        // QueryBuilder
+        // 'jquery.extendext': {
+        //     deps: ['jquery'],
+        //     exports: 'jQuery.extendext'
+        // },
+        // 'query-builder': {
+        //     deps: ['jquery.extendext'],
+        //     exports: 'jQuery.fn.queryBuilder'
+        // }
     }
 });
 
