@@ -6,7 +6,7 @@ require(['jquery'], function ($) {
 
             $.map(unindexed_array, function (n, i) {
                 var item = app.modules.MainModule.controllers.StepController.view.$elements[n['name']];
-                if (item.is('[multiple]')) {
+                if (item!=undefined && item.is('[multiple]')) {
                     if (!indexed_array[n['name']]) indexed_array[n['name']] = [];
                     indexed_array[n['name']].push(n['value']);
                 }

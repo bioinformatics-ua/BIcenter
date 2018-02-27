@@ -21,54 +21,49 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
         this.$container.html(html);
         this._loadViewComponents();
 
-        var filters = [];
+        this.renderConditions(step,inputFields);
+        this.renderTables(step);
+    };
+
+    StepView.prototype.renderConditions = function(step, inputFields) {
+        var context = this;
+
+        this.filters = [];
         _.each(inputFields, function (input) {
-            filters.push({id:input.name,label:input.name,type:"string"});
+            context.filters.push({id:input.name,label:input.name,type:"string"});
         });
 
-        $('#builder-basic').queryBuilder({
-            plugins: ['bt-tooltip-errors'],
-            conditions: [ "-", "OR", "AND", "OR NOT", "AND NOT", "XOR" ],
-            operators: [
-                { type: '=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: '<>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: '<', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: '<=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: '>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: '>=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'REGEXP', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'IS NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'IS NOT NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'IN LIST', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'CONTAINS', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'STARTS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'ENDS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'LIKE', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                { type: 'TRUE', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] }
-            ],
-            filters: filters
+        Step.getConditions(step.id, function(conditions){
+            context.conditions = conditions;
+
+            _.each(conditions, function (condition) {
+                context.$elements[condition.id].queryBuilder({
+                    plugins: ['bt-tooltip-errors'],
+                    conditions: [ "-", "OR", "AND", "OR NOT", "AND NOT", "XOR" ],
+                    operators: [
+                        { type: '=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: '<>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: '<', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: '<=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: '>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: '>=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'REGEXP', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'IS NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'IS NOT NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'IN LIST', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'CONTAINS', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'STARTS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'ENDS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'LIKE', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                        { type: 'TRUE', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] }
+                    ],
+                    filters: context.filters
+                });
+            });
         });
+    };
 
-        // $('#btn-reset').on('click', function() {
-        //     $('#builder-basic').queryBuilder('reset');
-        // });
-        //
-        // $('#btn-set').on('click', function() {
-        //     $('#builder-basic').queryBuilder('setRules', rules_basic);
-        // });
-        //
-        // $('#btn-get').on('click', function() {
-        //     var result = $('#builder-basic').queryBuilder('getRules');
-        //
-        //     if (!$.isEmptyObject(result)) {
-        //         alert(JSON.stringify(result, null, 2));
-        //     }
-        // });
-
-
-
-
-
+    StepView.prototype.renderTables = function(step){
         var context = this;
         Step.getTables(step.id, function (result) {
             var tables = JSON.parse(result);

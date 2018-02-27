@@ -63,6 +63,7 @@ public class Application extends Controller {
                 routes.javascript.StepController.applyChanges(),
                 routes.javascript.StepController.getTables(),
                 routes.javascript.StepController.getTableValue(),
+                routes.javascript.StepController.getConditions(),
 
                 routes.javascript.ExecutionController.run(),
                 routes.javascript.ExecutionController.result()

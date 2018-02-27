@@ -49,13 +49,22 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
         var formValues = $form.serializeForm();
 
         var context = this;
-        _.each(this.view.tables, function (table) {
-            var tableId = table.id;
-            var table = context.view.$elements[tableId].DataTable();
-            formValues[tableId] = table.rows().data().toArray();
-        });
 
-        console.log(formValues);
+        // Get condition values
+        if(this.view.conditions) {
+            _.each(this.view.conditions, function (condition) {
+                formValues[condition.id] = context.view.$elements[condition.id].queryBuilder('getRules');
+            });
+        }
+
+        // Get table values
+        if(this.view.tables) {
+            _.each(this.view.tables, function (table) {
+                var tableId = table.id;
+                var table = context.view.$elements[tableId].DataTable();
+                formValues[tableId] = table.rows().data().toArray();
+            });
+        }
 
         Step.applyChanges(this.stepId,formValues,function(step){
             console.log("Step",this.stepId,"has been updated!");

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import diSdk.task.TaskDecoder;
@@ -248,19 +249,22 @@ public class StepController extends Controller {
         formData.fields().forEachRemaining(
             (node) ->
             {
-                String value = node.getValue() instanceof ArrayNode ? node.getValue().toString() : node.getValue().asText();
-                long componentPropertId = Long.parseLong(node.getKey().toString());
-                StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
-                if (stepProperty == null) {
-                    stepProperty = new StepProperty(value);
-                    ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
-                    stepProperty.setComponentProperty(componentProperty);
-                    stepProperty.setStep(stepRepository.get(stepId));
-                    stepPropertyRepository.add(stepProperty);
-                } else {
-                    stepProperty.setValue(value);
-                    stepPropertyRepository.add(stepProperty);
+                try {
+                    String value = node.getValue() instanceof TextNode ? node.getValue().asText() : node.getValue().toString();
+                    long componentPropertId = Long.parseLong(node.getKey().toString());
+                    StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
+                    if (stepProperty == null) {
+                        stepProperty = new StepProperty(value);
+                        ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
+                        stepProperty.setComponentProperty(componentProperty);
+                        stepProperty.setStep(stepRepository.get(stepId));
+                        stepPropertyRepository.add(stepProperty);
+                    } else {
+                        stepProperty.setValue(value);
+                        stepPropertyRepository.add(stepProperty);
+                    }
                 }
+                catch(Exception e){ }
             }
         );
 
@@ -318,5 +322,29 @@ public class StepController extends Controller {
 
         jsonObject.put("data", value);
         return ok(jsonObject);
+    }
+
+    /**
+     * Return ComponentProperty Ids of condition elements.
+     *
+     * @param stepId
+     * @return
+     */
+    public Result getConditions(long stepId) {
+        Step step = stepRepository.get(stepId);
+        Component component = step.getComponent();
+        List<ComponentProperty> componentProperties = component.getComponentProperties()
+                .stream()
+                .filter(cp -> cp.getType().equals("condition"))
+                .collect(Collectors.toList());
+
+        JSONArray jsonArray = new JSONArray();
+        for (ComponentProperty componentProperty : componentProperties) {
+            JSONObject record = new JSONObject();
+            record.put("id", componentProperty.getId());
+            jsonArray.add(record);
+        }
+
+        return ok(Json.toJson(jsonArray));
     }
 }

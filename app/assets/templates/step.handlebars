@@ -106,13 +106,13 @@
                 </table>
             {{/ifCond}}
             {{#ifCond type '==' 'condition'}}
-                <label>{{name}}:</label>
-                <div id="builder-basic" class="query-builder form-inline">
-
-                </div>
-                <div class="btn-group">
-                    <button type="button" view-click="controller.resetCondition()" class="btn btn-default">Reset</button>
-                    <button id="senseBtn" type="button" view-click="controller.toggleSenseCondition()" class="btn btn-success">Positive</button>
+                <div class="col-md-12 col-lg-6 col-lg-offset-1">
+                    <label for="{{id}}">{{name}}:</label>
+                    <div view-element="{{id}}" class="query-builder form-inline"/>
+                    <div class="btn-group">
+                        <button type="button" view-click="controller.resetCondition()" class="btn btn-default">Reset</button>
+                        <button id="senseBtn" type="button" view-click="controller.toggleSenseCondition()" class="btn btn-success">Positive</button>
+                    </div>
                 </div>
             {{/ifCond}}
         {{/component.componentProperties}}
