@@ -202,7 +202,12 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             parameter = tmp;
         }
         else if(parameterType == Condition.class) {
-            parameter = buildCondition(getOperator("NONE"), (ObjectNode) Json.parse((String) value));
+            try{
+                parameter = buildCondition(getOperator("NONE"), (ObjectNode) Json.parse((String) value));
+            }
+            catch (Exception e){
+                parameter = null;
+            }
         }
         else {
             parameter = parameterType.cast(value);
@@ -212,6 +217,12 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         method.invoke(stepMetaInterface, parameter);
     }
 
+    /**
+     * Initialize Boolean Condition.
+     * @param operator
+     * @param json
+     * @return
+     */
     private Condition buildCondition(int operator, ObjectNode json) {
         Condition condition = new Condition();
 
@@ -220,7 +231,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             condition.setFunction(getFunction(json.get("operator").asText()));
 
             ValueMetaAndData value = new ValueMetaAndData();
-            ValueMeta meta = new ValueMeta("aaa", ValueMetaInterface.TYPE_STRING);
+            ValueMeta meta = new ValueMeta(json.get("field").asText(), ValueMetaInterface.TYPE_STRING);
             value.setValueMeta(meta);
             value.setValueData(json.get("value").asText());
             condition.setRightExact(value);

@@ -13,7 +13,7 @@ public interface StepPropertyRepository {
 
     List<StepProperty> list();
 
-    StepProperty getByComponentProperty(long componentPropertyId);
+    List<StepProperty> getByComponentProperty(long componentPropertyId);
 
     StepProperty getByStepAndComponentProperty(long stepId, long componentPropertyId);
 }

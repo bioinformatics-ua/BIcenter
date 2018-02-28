@@ -251,17 +251,24 @@ public class StepController extends Controller {
             {
                 try {
                     String value = node.getValue() instanceof TextNode ? node.getValue().asText() : node.getValue().toString();
-                    long componentPropertId = Long.parseLong(node.getKey().toString());
-                    StepProperty stepProperty = stepPropertyRepository.getByComponentProperty(componentPropertId);
+                    long componentPropertyId = Long.parseLong(node.getKey().toString());
+                    StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId,componentPropertyId);
+
+                    ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertyId);
                     if (stepProperty == null) {
                         stepProperty = new StepProperty(value);
-                        ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertId);
                         stepProperty.setComponentProperty(componentProperty);
                         stepProperty.setStep(stepRepository.get(stepId));
                         stepPropertyRepository.add(stepProperty);
                     } else {
                         stepProperty.setValue(value);
                         stepPropertyRepository.add(stepProperty);
+                    }
+
+                    if(componentProperty.getShortName().equals("stepName")){
+                        Step step = stepRepository.get(stepId);
+                        step.setLabel(value);
+                        stepRepository.add(step);
                     }
                 }
                 catch(Exception e){ }

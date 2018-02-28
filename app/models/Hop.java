@@ -12,9 +12,9 @@ public class Hop implements Serializable {
 
     private int graphId;
 
-    @OneToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.LAZY)
     private Step source;
-    @OneToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.LAZY)
     private Step destiny;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -27,11 +27,11 @@ public class Step implements Serializable{
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL)
     private Cell cell;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "source", cascade = CascadeType.ALL)
-    private Hop source;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "source", cascade = CascadeType.ALL)
+    private List<Hop> source;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "destiny", cascade = CascadeType.ALL)
-    private Hop destiny;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "destiny", cascade = CascadeType.ALL)
+    private List<Hop> destiny;
 
     public Step() { date = new Date(); }
     public Step(String label, int graphId) {
@@ -92,21 +92,13 @@ public class Step implements Serializable{
         this.cell = cell;
     }
 
-    public Hop getSource() {
-        return source;
-    }
+    public List<Hop> getSource() { return source; }
 
-    public void setSource(Hop source) {
-        this.source = source;
-    }
+    public void setSource(List<Hop> source) { this.source = source; }
 
-    public Hop getDestiny() {
-        return destiny;
-    }
+    public List<Hop> getDestiny() { return destiny; }
 
-    public void setDestiny(Hop destiny) {
-        this.destiny = destiny;
-    }
+    public void setDestiny(List<Hop> destiny) { this.destiny = destiny; }
 
     @Override
     public boolean equals(Object o) {
