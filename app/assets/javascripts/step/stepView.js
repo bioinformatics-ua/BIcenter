@@ -25,6 +25,11 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
         this.renderTables(step);
     };
 
+    /**
+     * Initialize all QueryBuilder widgets.
+     * @param step
+     * @param inputFields
+     */
     StepView.prototype.renderConditions = function(step, inputFields) {
         var context = this;
 
@@ -39,7 +44,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
             _.each(conditions, function (condition) {
                 context.$elements[condition.id].queryBuilder({
                     plugins: ['bt-tooltip-errors'],
-                    conditions: [ "-", "OR", "AND", "OR NOT", "AND NOT", "XOR" ],
+                    conditions: [ "OR", "AND", "OR NOT", "AND NOT", "XOR" ],
                     operators: [
                         { type: '=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
                         { type: '<>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
@@ -63,6 +68,10 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
         });
     };
 
+    /**
+     * Initialize all DataTables.
+     * @param step
+     */
     StepView.prototype.renderTables = function(step){
         var context = this;
         Step.getTables(step.id, function (result) {

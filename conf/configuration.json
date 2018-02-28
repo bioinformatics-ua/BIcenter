@@ -641,19 +641,19 @@
         },
         {
           "name": "Send 'true' data to step",
-          "shortName": "stepName",
+          "shortName": "trueStepname",
           "type": "select",
           "source": "outputSteps"
         },
         {
           "name": "Send 'false' data to step",
-          "shortName": "stepName",
+          "shortName": "falseStepname",
           "type": "select",
           "source": "outputSteps"
         },
         {
           "name": "Condition",
-          "shortName": "stepName",
+          "shortName": "condition",
           "type": "condition"
         }
       ]

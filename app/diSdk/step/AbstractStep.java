@@ -2,15 +2,20 @@ package diSdk.step;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.ComponentMetadata;
 import models.ComponentProperty;
 import models.Step;
 import models.StepProperty;
+import org.pentaho.di.core.Condition;
 import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.di.core.exception.KettleDatabaseException;
 import org.pentaho.di.core.plugins.PluginInterface;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.StepPluginType;
+import org.pentaho.di.core.row.ValueMeta;
+import org.pentaho.di.core.row.ValueMetaAndData;
+import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.trans.step.StepMetaInterface;
 import org.w3c.dom.Element;
@@ -171,11 +176,14 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         Object parameter;
         if (parameterType == Boolean.class || parameterType == boolean.class) {
             parameter = value.toString().equalsIgnoreCase("Y");
-        } else if (parameterType == int.class || parameterType == Integer.class) {
+        }
+        else if (parameterType == int.class || parameterType == Integer.class) {
             parameter = Integer.parseInt(value.toString());
-        } else if (parameterType == (new String[0]).getClass()) {
+        }
+        else if (parameterType == (new String[0]).getClass()) {
             parameter = ((List<String>) value).stream().toArray(String[]::new);
-        } else if (parameterType == (new boolean[0]).getClass()) {
+        }
+        else if (parameterType == (new boolean[0]).getClass()) {
             boolean[] tmp = new boolean[((List<String>) value).size()];
             int idx = 0;
 
@@ -183,7 +191,8 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                 tmp[idx++] = val.toString().equalsIgnoreCase("Y");
             }
             parameter = tmp;
-        } else if (parameterType == (new int[1]).getClass()) {
+        }
+        else if (parameterType == (new int[1]).getClass()) {
             int[] tmp = new int[((List<String>) value).size()];
             int idx = 0;
 
@@ -191,12 +200,129 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                 tmp[idx++] = Integer.parseInt(val.toString());
             }
             parameter = tmp;
-        } else {
+        }
+        else if(parameterType == Condition.class) {
+            parameter = buildCondition(getOperator("NONE"), (ObjectNode) Json.parse((String) value));
+        }
+        else {
             parameter = parameterType.cast(value);
         }
 
         // Invoke method.
         method.invoke(stepMetaInterface, parameter);
+    }
+
+    private Condition buildCondition(int operator, ObjectNode json) {
+        Condition condition = new Condition();
+
+        if(json.get("rules") == null){
+            condition.setLeftValuename(json.get("field").asText());
+            condition.setFunction(getFunction(json.get("operator").asText()));
+
+            ValueMetaAndData value = new ValueMetaAndData();
+            ValueMeta meta = new ValueMeta("aaa", ValueMetaInterface.TYPE_STRING);
+            value.setValueMeta(meta);
+            value.setValueData(json.get("value").asText());
+            condition.setRightExact(value);
+        }
+        else{
+            ArrayNode children = (ArrayNode) json.get("rules");
+            for(int i=0; i<children.size(); i++){
+                ObjectNode child = (ObjectNode) children.get(i);
+
+                Condition subCondition;
+                if(i != children.size()-1)
+                    subCondition = buildCondition(getOperator(json.get("condition").asText()),child);
+                else
+                    subCondition = buildCondition(getOperator("NONE"),child);
+
+                condition.addCondition(subCondition);
+                condition.setCondition(i,subCondition);
+            }
+        }
+
+        if(operator != getOperator("NONE"))
+            condition.setOperator(operator);
+
+        return condition;
+    }
+
+    public int getOperator(String operator){
+        int operatorCode;
+        switch (operator){
+            case "NOT":
+                operatorCode = Condition.OPERATOR_NOT;
+                break;
+            case "OR":
+                operatorCode = Condition.OPERATOR_OR;
+                break;
+            case "OR NOT":
+                operatorCode = Condition.OPERATOR_OR_NOT;
+                break;
+            case "AND":
+                operatorCode = Condition.OPERATOR_AND;
+                break;
+            case "AND NOT":
+                operatorCode = Condition.OPERATOR_AND_NOT;
+                break;
+            case "XOR":
+                operatorCode = Condition.OPERATOR_XOR;
+                break;
+            default:
+                operatorCode = Condition.OPERATOR_NONE;
+                break;
+        }
+        return operatorCode;
+    }
+
+    public int getFunction(String function){
+        int functionCode;
+        switch (function){
+            case "=":
+                functionCode = Condition.FUNC_EQUAL;
+                break;
+            case "<>":
+                functionCode = Condition.FUNC_NOT_EQUAL;
+                break;
+            case "<":
+                functionCode = Condition.FUNC_SMALLER;
+                break;
+            case "<=":
+                functionCode = Condition.FUNC_SMALLER_EQUAL;
+                break;
+            case ">":
+                functionCode = Condition.FUNC_LARGER;
+                break;
+            case ">=":
+                functionCode = Condition.FUNC_LARGER_EQUAL;
+                break;
+            case "REGEXP":
+                functionCode = Condition.FUNC_REGEXP;
+                break;
+            case "IS NULL":
+                functionCode = Condition.FUNC_NULL;
+                break;
+            case "IS NOT NULL":
+                functionCode = Condition.FUNC_NOT_NULL;
+                break;
+            case "IN LIST":
+                functionCode = Condition.FUNC_IN_LIST;
+                break;
+            case "CONTAINS":
+                functionCode = Condition.FUNC_CONTAINS;
+                break;
+            case "STARTS WITH":
+                functionCode = Condition.FUNC_STARTS_WITH;
+                break;
+            case "ENDS WITH":
+                functionCode = Condition.FUNC_ENDS_WITH;
+                break;
+            case "LIKE":
+                functionCode = Condition.FUNC_LIKE;
+                break;
+            default: functionCode = Condition.FUNC_TRUE;
+        }
+        return functionCode;
     }
 
     private DatabaseMeta buildDatabaseConnection(Step step, List<StepProperty> stepProperties) throws KettleDatabaseException {
