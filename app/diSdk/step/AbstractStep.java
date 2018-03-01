@@ -18,6 +18,7 @@ import org.pentaho.di.core.row.ValueMetaAndData;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.trans.step.StepMetaInterface;
+import org.pentaho.di.trans.step.errorhandling.StreamInterface;
 import org.w3c.dom.Element;
 import play.libs.Json;
 
@@ -53,12 +54,29 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             // Get StepMetaInterface set methods.
             Method[] methods = stepMetaInterface.getClass().getMethods();
             methods = Arrays.stream(methods)
-                    .filter(method -> method.getName().startsWith("set"))
-                    .filter(method -> method.getParameterCount() == 1)
+                    .filter(method -> method.getName().startsWith("set") || method.getName().equals("getStepIOMeta"))
+                    .filter(method -> method.getParameterCount() == 1 || method.getName().equals("getStepIOMeta"))
                     .toArray(Method[]::new);
 
             for (Method method : methods) {
-                if (method.getParameterTypes()[0] == DatabaseMeta.class) {
+                if(method.getName().equals("getStepIOMeta")) {
+                    List<StreamInterface> targetStreams = stepMetaInterface.getStepIOMeta().getTargetStreams();
+
+                    // Find StepProperty that holds the value of the current StepMetaInterface method.
+                    Optional<StepProperty> trueStream = stepProperties.stream()
+                            .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("trueStep"))
+                            .findFirst();
+                    if (!trueStream.isPresent()) continue;
+
+                    Optional<StepProperty> falseStream = stepProperties.stream()
+                            .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("falseStep"))
+                            .findFirst();
+                    if (!trueStream.isPresent()) continue;
+
+                    targetStreams.get(0).setSubject(trueStream.get().getValue());
+                    targetStreams.get(1).setSubject(falseStream.get().getValue());
+                }
+                else if (method.getParameterTypes()[0] == DatabaseMeta.class) {
                     // Build database connection.
                     DatabaseMeta databaseMeta = buildDatabaseConnection(step, stepProperties);
 

@@ -54,6 +54,13 @@
 				</mxCell>
 			</Step>
 		</add>
+		<add as="SelectValues">
+			<Step component="SelectValues" label = "Select Values">
+				<mxCell style="icon;image=/middle/SelectValues.svg" parent="1" vertex="1">
+					<mxGeometry width="40" height="40" as="geometry"/>
+				</mxCell>
+			</Step>
+		</add>
         <add as="FilterRows">
             <Step component="FilterRows" label="Filter Rows">
                 <mxCell style="icon;image=/middle/FilterRows.svg" parent="1" vertex="1">
@@ -271,6 +278,7 @@
 		<add as="Table Input" template="TableInput" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Table Output" template="TableOutput" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Add Checksum" template="Checksum" icon="/assets/images/editor/rectangle.gif"/>
+		<add as="Select Values" template="SelectValues" icon="/assets/images/editor/rectangle.gif"/>
         <add as="Filter Rows" template="FilterRows" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Execute SQL script" template="ExecSQL" icon="/assets/images/editor/rectangle.gif"/>
 	</mxDefaultToolbar>

@@ -59,6 +59,9 @@
                         {{#ifCond source '==' 'outputSteps'}}
                             {{#../outputSteps}}
                                 {{#ifCond ../stepProperty.value '==' name}}
+                                    <option selected>{{name}}</option>
+                                {{/ifCond}}
+                                {{#ifCond ../stepProperty.value '!=' name}}
                                     <option>{{name}}</option>
                                 {{/ifCond}}
                             {{/../outputSteps}}

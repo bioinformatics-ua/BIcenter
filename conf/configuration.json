@@ -641,13 +641,13 @@
         },
         {
           "name": "Send 'true' data to step",
-          "shortName": "trueStepname",
+          "shortName": "trueStep",
           "type": "select",
           "source": "outputSteps"
         },
         {
           "name": "Send 'false' data to step",
-          "shortName": "falseStepname",
+          "shortName": "falseStep",
           "type": "select",
           "source": "outputSteps"
         },
@@ -655,6 +655,41 @@
           "name": "Condition",
           "shortName": "condition",
           "type": "condition"
+        }
+      ]
+    },
+    {
+      "name": "SelectValues",
+      "description": "Select Values",
+      "shortName": "selectValues",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        },
+        {
+          "name": "Select & Alter",
+          "shortName": "select",
+          "type": "table",
+          "componentMetadatas": [
+            {
+              "name": "Field Name",
+              "shortName": "selectName"
+            },
+            {
+              "name": "Rename To",
+              "shortName": "selectRename"
+            },
+            {
+              "name": "Length",
+              "shortName": "selectLength"
+            },
+            {
+              "name": "Precision",
+              "shortName": "selectPrecision"
+            }
+          ]
         }
       ]
     }
