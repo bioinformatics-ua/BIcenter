@@ -47,6 +47,7 @@ GET         /step/:stepId                                   controllers.StepCont
 GET         /step/:stepId/tables                            controllers.StepController.getTables(stepId:Long)
 GET         /step/:stepId/component/:componentId/table      controllers.StepController.getTableValue(stepId:Long,componentId:Long)
 GET         /step/:stepId/conditions                        controllers.StepController.getConditions(stepId:Long)
+GET         /step/:stepId/component/:componentId/condition  controllers.StepController.getConditionValue(stepId:Long,componentId:Long)
 
 # Handles the executions
 POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)

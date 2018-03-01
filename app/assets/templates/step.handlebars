@@ -58,7 +58,9 @@
                     <select name="{{id}}" view-element="{{id}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                         {{#ifCond source '==' 'outputSteps'}}
                             {{#../outputSteps}}
-                                <option>{{name}}</option>
+                                {{#ifCond ../stepProperty.value '==' name}}
+                                    <option>{{name}}</option>
+                                {{/ifCond}}
                             {{/../outputSteps}}
                         {{/ifCond}}
 

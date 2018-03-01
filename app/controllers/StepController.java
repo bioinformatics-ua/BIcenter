@@ -354,4 +354,17 @@ public class StepController extends Controller {
 
         return ok(Json.toJson(jsonArray));
     }
+
+    /**
+     * Get condition value.
+     *
+     * @param stepId
+     * @param componentId
+     * @return
+     */
+    public Result getConditionValue(long stepId, long componentId) {
+        Step step = stepRepository.get(stepId);
+        StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentId);
+        return ok(Json.parse(stepProperty.getValue()));
+    }
 }

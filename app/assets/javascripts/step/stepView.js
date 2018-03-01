@@ -32,6 +32,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
      */
     StepView.prototype.renderConditions = function(step, inputFields) {
         var context = this;
+        context.step = step;
 
         this.filters = [];
         _.each(inputFields, function (input) {
@@ -42,28 +43,33 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
             context.conditions = conditions;
 
             _.each(conditions, function (condition) {
-                context.$elements[condition.id].queryBuilder({
-                    plugins: ['bt-tooltip-errors'],
-                    conditions: [ "OR", "AND", "OR NOT", "AND NOT", "XOR" ],
-                    operators: [
-                        { type: '=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: '<>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: '<', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: '<=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: '>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: '>=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'REGEXP', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'IS NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'IS NOT NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'IN LIST', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'CONTAINS', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'STARTS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'ENDS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'LIKE', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                        { type: 'TRUE', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] }
-                    ],
-                    filters: context.filters
-                });
+                var stepId = context.step.id;
+                var componentId = condition.id;
+                Step.getConditionValue(stepId,componentId,function(rules){
+                    context.$elements[condition.id].queryBuilder({
+                        plugins: ['bt-tooltip-errors'],
+                        conditions: [ "OR", "AND", "OR NOT", "AND NOT", "XOR" ],
+                        operators: [
+                            { type: '=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: '<>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: '<', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: '<=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: '>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: '>=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'REGEXP', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'IS NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'IS NOT NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'IN LIST', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'CONTAINS', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'STARTS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'ENDS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'LIKE', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
+                            { type: 'TRUE', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] }
+                        ],
+                        filters: context.filters,
+                        rules: rules
+                    });
+                })
             });
         });
     };

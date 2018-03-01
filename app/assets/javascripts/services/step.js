@@ -72,6 +72,20 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Step.getConditionValue = function (stepId, componentId, callback) {
+        jsRoutes.controllers.StepController.getConditionValue(stepId,componentId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Step service', response);
+            }
+        })
+    };
+
     Step.showStepInput = function(stepId, callback) {
         jsRoutes.controllers.StepController.inputOutputFields(stepId,true).ajax({
             contentType: 'application/json; charset=utf-8',
