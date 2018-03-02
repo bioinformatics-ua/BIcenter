@@ -744,6 +744,11 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Dummy",
+      "description": "Dummy (do nothing)",
+      "shortName": "dummy"
     }
   ]
 }

@@ -213,8 +213,8 @@ define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function
             var hopMeta = new Object();
 
             hopMeta.graphId = cell.getId();
-            hopMeta.source = cell.source.getId();
-            hopMeta.target = cell.target.getId();
+            hopMeta.source = cell.source.value.getAttribute("stepId");
+            hopMeta.target = cell.target.value.getAttribute("stepId");
 
             Task.addHop(this.view.taskId, hopMeta);
         }

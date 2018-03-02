@@ -3,6 +3,7 @@ package services;
 import com.google.gson.Gson;
 import configuration.Configuration;
 import models.Component;
+import models.ComponentProperty;
 import org.pentaho.di.core.KettleEnvironment;
 import org.pentaho.di.core.Props;
 import org.pentaho.di.core.exception.KettleException;
@@ -77,16 +78,19 @@ public class ApplicationStart {
             .stream()
             .filter(component -> !components.contains(component.getName()))
             .peek(component -> {
-                component.getComponentProperties()
-                        .stream()
-                        .forEach(cp ->
-                        {
-                            cp.setComponent(component);
-                            if(cp.getComponentMetadatas() != null)
-                                cp.getComponentMetadatas()
-                                        .stream()
-                                        .forEach(cm -> cm.setComponentProperty(cp));
-                        });
+                List<ComponentProperty> componentProperties = component.getComponentProperties();
+                if(componentProperties != null) {
+                    component.getComponentProperties()
+                            .stream()
+                            .forEach(cp ->
+                            {
+                                cp.setComponent(component);
+                                if (cp.getComponentMetadatas() != null)
+                                    cp.getComponentMetadatas()
+                                            .stream()
+                                            .forEach(cm -> cm.setComponentProperty(cp));
+                            });
+                }
             })
             .forEach(componentRepository::add);
     }

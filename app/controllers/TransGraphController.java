@@ -267,9 +267,9 @@ public class TransGraphController extends Controller {
         // Build new step.
         int graphId = hopMeta.get("graphId").asInt();
         Hop hop = new Hop(graphId);
-        Step source = stepRepository.getByTaskAndGraphId(taskId,hopMeta.get("source").asInt());
+        Step source = stepRepository.get(hopMeta.get("source").asInt());
         hop.setSource(source);
-        Step target = stepRepository.getByTaskAndGraphId(taskId,hopMeta.get("target").asInt());
+        Step target = stepRepository.get(hopMeta.get("target").asInt());
         hop.setDestiny(target);
         Task task = taskRepository.get(taskId);
         hop.setTaskHops(task);
