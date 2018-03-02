@@ -641,13 +641,13 @@
         },
         {
           "name": "Send 'true' data to step",
-          "shortName": "trueStep",
+          "shortName": "stream0",
           "type": "select",
           "source": "outputSteps"
         },
         {
           "name": "Send 'false' data to step",
-          "shortName": "falseStep",
+          "shortName": "stream1",
           "type": "select",
           "source": "outputSteps"
         },
@@ -688,6 +688,58 @@
             {
               "name": "Precision",
               "shortName": "selectPrecision"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MergeJoin",
+      "description": "Merge Join",
+      "shortName": "mergeJoin",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        },
+        {
+          "name": "First Step",
+          "shortName": "stream0",
+          "type": "select",
+          "source": "inputSteps"
+        },
+        {
+          "name": "Second Step",
+          "shortName": "stream1",
+          "type": "select",
+          "source": "inputSteps"
+        },
+        {
+          "name": "Join Type",
+          "shortName": "joinType",
+          "type": "select",
+          "componentMetadatas": [
+            {"value":"INNER","name":"INNER"},
+            {"value":"LEFT OUTER","name":"LEFT OUTER"},
+            {"value":"RIGHT OUTER","name":"RIGHT OUTER"},
+            {"value":"FULL OUTER","name":"FULL OUTER"}
+          ]
+        },
+        {
+          "name": "Keys",
+          "shortName": "keys",
+          "type": "table",
+          "componentMetadatas": [
+            {
+              "name": "First Key",
+              "shortName": "keyFields1",
+              "source": "inputFields@stream0"
+            },
+            {
+              "name": "Second Key",
+              "shortName": "keyFields2",
+              "source": "inputFields@stream1"
             }
           ]
         }

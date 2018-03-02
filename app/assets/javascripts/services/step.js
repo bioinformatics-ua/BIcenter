@@ -114,6 +114,20 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Step.inputStepsName = function(stepId,callback) {
+        jsRoutes.controllers.StepController.inputStepsName(stepId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Step service', response);
+            }
+        })
+    };
+
     Step.inputFieldsName = function(stepId,callback) {
         jsRoutes.controllers.StepController.inputFieldsName(stepId).ajax({
             contentType: 'application/json; charset=utf-8',
@@ -130,6 +144,20 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
 
     Step.outputStepsName = function(stepId,callback) {
         jsRoutes.controllers.StepController.outputStepsName(stepId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Step service', response);
+            }
+        })
+    };
+
+    Step.getByComponentAndShortName = function(componentId, shortName, callback) {
+        jsRoutes.controllers.StepController.getByComponentAndShortName(componentId, shortName).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {

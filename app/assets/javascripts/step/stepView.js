@@ -16,12 +16,17 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
 
     };
 
-    StepView.prototype.loadStep = function (step,inputFields,outputSteps) {
-        var html = JST['step']({component: step.component, inputFields:inputFields, outputSteps:outputSteps});
+    StepView.prototype.loadStep = function (step, inputSteps, inputFields, outputSteps) {
+        var html = JST['step']({
+            component: step.component,
+            inputSteps: inputSteps,
+            inputFields: inputFields,
+            outputSteps: outputSteps
+        });
         this.$container.html(html);
         this._loadViewComponents();
 
-        this.renderConditions(step,inputFields);
+        this.renderConditions(step, inputFields);
         this.renderTables(step);
     };
 
@@ -30,41 +35,116 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
      * @param step
      * @param inputFields
      */
-    StepView.prototype.renderConditions = function(step, inputFields) {
+    StepView.prototype.renderConditions = function (step, inputFields) {
         var context = this;
         context.step = step;
 
         this.filters = [];
         _.each(inputFields, function (input) {
-            context.filters.push({id:input.name,label:input.name,type:"string"});
+            context.filters.push({id: input.name, label: input.name, type: "string"});
         });
 
-        Step.getConditions(step.id, function(conditions){
+        Step.getConditions(step.id, function (conditions) {
             context.conditions = conditions;
 
             _.each(conditions, function (condition) {
                 var stepId = context.step.id;
                 var componentId = condition.id;
-                Step.getConditionValue(stepId,componentId,function(rules){
+                Step.getConditionValue(stepId, componentId, function (rules) {
                     context.$elements[condition.id].queryBuilder({
                         plugins: ['bt-tooltip-errors'],
-                        conditions: [ "OR", "AND", "OR NOT", "AND NOT", "XOR" ],
+                        conditions: ["OR", "AND", "OR NOT", "AND NOT", "XOR"],
                         operators: [
-                            { type: '=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: '<>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: '<', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: '<=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: '>', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: '>=', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'REGEXP', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'IS NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'IS NOT NULL', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'IN LIST', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'CONTAINS', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'STARTS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'ENDS WITH', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'LIKE', nb_inputs: 1, multiple: false, apply_to: ['string','number','datetime','boolean'] },
-                            { type: 'TRUE', nb_inputs: 0, multiple: false, apply_to: ['string','number','datetime','boolean'] }
+                            {
+                                type: '=',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: '<>',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: '<',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: '<=',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: '>',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: '>=',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'REGEXP',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'IS NULL',
+                                nb_inputs: 0,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'IS NOT NULL',
+                                nb_inputs: 0,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'IN LIST',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'CONTAINS',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'STARTS WITH',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'ENDS WITH',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'LIKE',
+                                nb_inputs: 1,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            },
+                            {
+                                type: 'TRUE',
+                                nb_inputs: 0,
+                                multiple: false,
+                                apply_to: ['string', 'number', 'datetime', 'boolean']
+                            }
                         ],
                         filters: context.filters,
                         rules: rules
@@ -78,7 +158,8 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
      * Initialize all DataTables.
      * @param step
      */
-    StepView.prototype.renderTables = function(step){
+    StepView.prototype.renderTables = function (step) {
+        this.dataTables = {};
         var context = this;
         Step.getTables(step.id, function (result) {
             var tables = JSON.parse(result);
@@ -90,7 +171,21 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                 var columns = [];
                 _.each(table.fields, function (field) {
                     columns.push({data: field.name});
+
+                    if (field.source) {
+                        var tmpArr = field.source.split('@');
+                        if (tmpArr.length > 1) {
+                            var shortName = tmpArr[1];
+
+                            Step.getByComponentAndShortName(step.component.id, shortName, function (component) {
+                                console.log(component)
+                                context.$elements[component].attr('view-change', 'controller.cenas(' + tableId + ',' + field.name + ')');
+                            });
+                        }
+                    }
                 });
+
+                context._loadViewComponents();
 
                 columns.push(
                     {
@@ -105,39 +200,48 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                     }
                 );
 
-                context.$elements[table.id].DataTable(
-                {
-                    dom: "Bfrtip",
-                    ajax: jsRoutes.controllers.StepController.getTableValue(step.id, table.id).url,
-                    order: [[1, 'asc']],
-                    columns: columns,
-                    'drawCallback': function (o) {
-                        context._loadViewComponents();
-                    },
-                    buttons: [
-                        {
-                            text: 'Add',
-                            action: function ( e, dt, node, config ) {
-                                var tableData = _.findWhere(context.tables, {id: parseInt(table.id)});
-                                if (tableData) {
+                context.dataTables[table.id] = context.$elements[table.id].DataTable(
+                    {
+                        dom: "Bfrtip",
+                        ajax: jsRoutes.controllers.StepController.getTableValue(step.id, table.id).url,
+                        order: [[1, 'asc']],
+                        columns: columns,
+                        'drawCallback': function (o) {
+                            context._loadViewComponents();
+                        },
+                        buttons: [
+                            {
+                                text: 'Add',
+                                action: function (e, dt, node, config) {
+                                    var tableData = _.findWhere(context.tables, {id: parseInt(table.id)});
+                                    if (tableData) {
 
-                                    var finalData = [];
-                                    _.each(tableData.fields, function (field) {
-                                        var obj = {
-                                            id: field.name,
-                                            label: field.label,
-                                            value: ""
-                                        };
-                                        finalData.push(obj);
-                                    });
+                                        var finalData = [];
+                                        _.each(tableData.fields, function (field) {
+                                            var obj = {
+                                                id: field.name,
+                                                label: field.label,
+                                                value: "",
+                                                type: 'input'
+                                            };
 
-                                    var modalController = context.controller.module.controllers['StepModalController'];
-                                    modalController.view.show(tableId,undefined,finalData);
+                                            if (field.source && field.source.indexOf('@') > -1) {
+                                                _.extend(obj, {
+                                                    type: 'select',
+                                                    options: context.controller.data[field.name]
+                                                });
+                                            }
+
+                                            finalData.push(obj);
+                                        });
+
+                                        var modalController = context.controller.module.controllers['StepModalController'];
+                                        modalController.view.show(tableId, undefined, finalData);
+                                    }
                                 }
                             }
-                        }
-                    ]
-                });
+                        ]
+                    });
             });
         });
     };
@@ -145,6 +249,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
     StepView.prototype.editRow = function (tableId, rowId) {
         var table = this.$elements[tableId].DataTable();
         var data = table.row(rowId).data();
+        var context = this;
 
         var tableData = _.findWhere(this.tables, {id: parseInt(tableId)});
         if (tableData) {
@@ -156,11 +261,19 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                     label: field.label,
                     value: data[field.name]
                 };
+
+                if (field.source && field.source.indexOf('@') > -1) {
+                    _.extend(obj, {
+                        type: 'select',
+                        options: context.controller.data[field.name]
+                    });
+                }
+
                 finalData.push(obj);
             });
 
             var modalController = this.controller.module.controllers['StepModalController'];
-            modalController.view.show(tableId,rowId,finalData);
+            modalController.view.show(tableId, rowId, finalData);
         }
     };
 

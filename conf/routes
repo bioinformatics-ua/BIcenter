@@ -38,6 +38,7 @@ GET         /step/:stepId/configure                         controllers.StepCont
 GET         /step/:stepId/input                             controllers.StepController.showStepInput(stepId:Long)
 GET         /step/:stepId/output                            controllers.StepController.showStepOutput(stepId:Long)
 
+GET         /step/:stepId/inputStepsName                    controllers.StepController.inputStepsName(stepId:Long)
 GET         /step/:stepId/inputFieldsName                   controllers.StepController.inputFieldsName(stepId:Long)
 GET         /step/:stepId/outputStepsName                   controllers.StepController.outputStepsName(stepId:Long)
 GET         /step/inputOutputFields                         controllers.StepController.inputOutputFields(stepId:Long,before:Boolean)
@@ -48,6 +49,8 @@ GET         /step/:stepId/tables                            controllers.StepCont
 GET         /step/:stepId/component/:componentId/table      controllers.StepController.getTableValue(stepId:Long,componentId:Long)
 GET         /step/:stepId/conditions                        controllers.StepController.getConditions(stepId:Long)
 GET         /step/:stepId/component/:componentId/condition  controllers.StepController.getConditionValue(stepId:Long,componentId:Long)
+
+GET         /component/:componentId/short/:shortName        controllers.StepController.getByComponentAndShortName(componentId:Long,shortName:String)
 
 # Handles the executions
 POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)

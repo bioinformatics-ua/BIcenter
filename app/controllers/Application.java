@@ -56,6 +56,7 @@ public class Application extends Controller {
                 routes.javascript.StepController.showStepInput(),
                 routes.javascript.StepController.showStepOutput(),
                 routes.javascript.StepController.inputOutputFields(),
+                routes.javascript.StepController.inputStepsName(),
                 routes.javascript.StepController.inputFieldsName(),
                 routes.javascript.StepController.outputStepsName(),
                 routes.javascript.StepController.getSchema(),
@@ -65,6 +66,8 @@ public class Application extends Controller {
                 routes.javascript.StepController.getTableValue(),
                 routes.javascript.StepController.getConditions(),
                 routes.javascript.StepController.getConditionValue(),
+
+                routes.javascript.StepController.getByComponentAndShortName(),
 
                 routes.javascript.ExecutionController.run(),
                 routes.javascript.ExecutionController.result()

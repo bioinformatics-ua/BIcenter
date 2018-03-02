@@ -21,6 +21,7 @@ requirejs.config({
         'pnotify.nonblock': '../lib/pnotify/pnotify.nonblock',
         'Alert': 'lib/alert',
         'moment': 'lib/moment',
+        'async': 'lib/async.min',
 
         // QueryBuilder
         'query-builder': '../lib/jQuery-QueryBuilder/js/query-builder.min',

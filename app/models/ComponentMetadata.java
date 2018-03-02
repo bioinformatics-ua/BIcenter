@@ -14,6 +14,7 @@ public class ComponentMetadata implements Serializable {
 
     private String shortName;
     private String value;
+    private String source;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ComponentProperty componentProperty;
@@ -56,6 +57,10 @@ public class ComponentMetadata implements Serializable {
     public void setComponentProperty(ComponentProperty componentProperty) {
         this.componentProperty = componentProperty;
     }
+
+    public String getSource() { return source; }
+
+    public void setSource(String source) { this.source = source; }
 
     @Override
     public boolean equals(Object o) {

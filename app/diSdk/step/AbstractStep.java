@@ -61,20 +61,26 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             for (Method method : methods) {
                 if(method.getName().equals("getStepIOMeta")) {
                     List<StreamInterface> targetStreams = stepMetaInterface.getStepIOMeta().getTargetStreams();
+                    if(!targetStreams.isEmpty()) {
+                        stepProperties.forEach(stepProperty -> {
+                            String shortName = stepProperty.getComponentProperty().getShortName();
+                            if (shortName.startsWith("stream")) {
+                                int streamIdx = Integer.parseInt(shortName.replace("stream", ""));
+                                targetStreams.get(streamIdx).setSubject(stepProperty.getValue());
+                            }
+                        });
+                    }
 
-                    // Find StepProperty that holds the value of the current StepMetaInterface method.
-                    Optional<StepProperty> trueStream = stepProperties.stream()
-                            .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("trueStep"))
-                            .findFirst();
-                    if (!trueStream.isPresent()) continue;
-
-                    Optional<StepProperty> falseStream = stepProperties.stream()
-                            .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("falseStep"))
-                            .findFirst();
-                    if (!trueStream.isPresent()) continue;
-
-                    targetStreams.get(0).setSubject(trueStream.get().getValue());
-                    targetStreams.get(1).setSubject(falseStream.get().getValue());
+                    List<StreamInterface> infoStreams = stepMetaInterface.getStepIOMeta().getInfoStreams();
+                    if(!infoStreams.isEmpty()) {
+                        stepProperties.forEach(stepProperty -> {
+                            String shortName = stepProperty.getComponentProperty().getShortName();
+                            if (shortName.startsWith("stream")) {
+                                int streamIdx = Integer.parseInt(shortName.replace("stream", ""));
+                                infoStreams.get(streamIdx).setSubject(stepProperty.getValue());
+                            }
+                        });
+                    }
                 }
                 else if (method.getParameterTypes()[0] == DatabaseMeta.class) {
                     // Build database connection.

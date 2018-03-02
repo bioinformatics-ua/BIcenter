@@ -1,4 +1,4 @@
-define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscore'], function (Controller, StepView, Step, Router, _) {
+define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscore', 'async'], function (Controller, StepView, Step, Router, _, async) {
     var StepController = function (module) {
         Controller.call(this, module, new StepView(this));
     };
@@ -10,6 +10,7 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
     StepController.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
 
+        this.data = {};
         if (this.stepId) {
             this.getStep(this.stepId);
         }
@@ -17,19 +18,45 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
 
     StepController.prototype.getStep = function (stepId) {
         var context = this;
-        Step.getStep(stepId, function (step) {
-            console.log(step);
-            context.step = step;
-            context.formName = step.component.shortName+"_form";
-            Step.inputFieldsName(context.step.id, function(inputFields){
-                console.log(inputFields);
-                context.inputFields = inputFields;
-                Step.outputStepsName(context.step.id, function(outputSteps) {
-                    console.log(outputSteps);
-                    context.outputSteps = outputSteps;
-                    context.view.loadStep(step,inputFields,outputSteps);
+
+        async.parallel([
+            function (callback) {
+                Step.getStep(stepId, function (step) {
+                    context.step = step;
+                    context.formName = step.component.shortName + "_form";
+
+                    callback();
                 });
-            });
+            },
+            function (callback) {
+                Step.inputStepsName(stepId, function (inputSteps) {
+                    context.inputSteps = inputSteps;
+
+                    callback();
+                });
+            },
+            function (callback) {
+                Step.inputFieldsName(stepId, function (inputFields) {
+                    context.inputFields = inputFields;
+                    context.streamFields = _.groupBy(inputFields, 'origin');
+
+                    callback();
+                });
+            },
+            function (callback) {
+                Step.outputStepsName(stepId, function (outputSteps) {
+                    context.outputSteps = outputSteps;
+
+                    callback();
+                });
+            }
+        ], function (err) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            context.view.loadStep(context.step, context.inputSteps, context.inputFields, context.outputSteps);
         });
     };
 
@@ -38,6 +65,15 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
      */
     StepController.prototype.cancelClick = function () {
         Router.navigate('/');
+    };
+
+    StepController.prototype.cenas = function (tableId, name, $element) {
+        var table = this.view.dataTables[tableId].clear().draw();
+
+        var selectedVal = $element.val();
+        if (selectedVal) {
+            this.data[name] = this.streamFields[selectedVal];
+        }
     };
 
     /**
@@ -51,14 +87,14 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
         var context = this;
 
         // Get condition values
-        if(this.view.conditions) {
+        if (this.view.conditions) {
             _.each(this.view.conditions, function (condition) {
                 formValues[condition.id] = context.view.$elements[condition.id].queryBuilder('getRules');
             });
         }
 
         // Get table values
-        if(this.view.tables) {
+        if (this.view.tables) {
             _.each(this.view.tables, function (table) {
                 var tableId = table.id;
                 var table = context.view.$elements[tableId].DataTable();
@@ -66,8 +102,8 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
             });
         }
 
-        Step.applyChanges(this.stepId,formValues,function(step){
-            console.log("Step",this.stepId,"has been updated!");
+        Step.applyChanges(this.stepId, formValues, function (step) {
+            console.log("Step", this.stepId, "has been updated!");
         });
 
         Router.navigate('/');
@@ -81,7 +117,7 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
      */
     StepController.prototype.addTableRow = function (tableId, formValues) {
         var table = this.view.$elements[tableId].DataTable();
-        table.row.add(formValues).draw( false );
+        table.row.add(formValues).draw(false);
 
         this.view._loadViewComponents();
     };
@@ -99,16 +135,16 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
         this.view._loadViewComponents();
     };
 
-    StepController.prototype.resetCondition = function(){
+    StepController.prototype.resetCondition = function () {
         $('#builder-basic').queryBuilder('reset');
     }
 
-    StepController.prototype.toggleSenseCondition = function(){
+    StepController.prototype.toggleSenseCondition = function () {
         var btn = $('#senseBtn');
         btn.toggleClass('btn-success');
         btn.toggleClass('btn-danger');
         var label = btn.text();
-        if(label=="Negative") btn.text("Positive").show();
+        if (label == "Negative") btn.text("Positive").show();
         else btn.text("Negative").show();
     }
 

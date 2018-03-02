@@ -30,6 +30,7 @@ import serializers.hop.HopSerializer;
 import serializers.step.CellSerializer;
 import serializers.step.StepPropertySerializer;
 import serializers.step.StepSerializer;
+import serializers.step.ValueMetaInterfaceInputFields;
 import utils.SearchFieldsProgress;
 
 import java.util.List;
@@ -86,6 +87,20 @@ public class StepController extends Controller {
         return ok(views.html.index.render());
     }
 
+    public Result inputStepsName(long stepId) {
+        List<String> stepsName = stepRepository.getSourceSteps(stepId)
+                .stream().map(s -> s.getLabel()).collect(Collectors.toList());
+
+        JSONArray jsonArray = new JSONArray();
+        stepsName.stream()
+                .forEach(name -> {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("name", name);
+                    jsonArray.add(jsonObject);
+                });
+        return ok(Json.toJson(jsonArray));
+    }
+
     /**
      * Returns the input fields name of a given step.
      *
@@ -102,15 +117,13 @@ public class StepController extends Controller {
         op.run();
         RowMetaInterface rowMetaInterface = op.getFields();
 
-        JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < rowMetaInterface.size(); i++) {
-            ValueMetaInterface v = rowMetaInterface.getValueMeta(i);
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("name", v.getName());
-            jsonArray.add(jsonObject);
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(ValueMetaInterface.class, new ValueMetaInterfaceInputFields());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
 
-        return ok(Json.toJson(jsonArray));
+        return ok(Json.toJson(rowMetaInterface.getValueMetaList()));
     }
 
     /**
@@ -302,6 +315,10 @@ public class StepController extends Controller {
                 JSONObject field = new JSONObject();
                 field.put("label", componentMetadata.getName());
                 field.put("name", componentMetadata.getId().toString());
+                try{
+                    field.put("source", componentMetadata.getSource().toString());
+                }
+                catch(Exception e){ }
                 fields.add(field);
             }
             record.put("fields", fields);
@@ -371,5 +388,10 @@ public class StepController extends Controller {
         catch(NullPointerException e){
             return ok();
         }
+    }
+
+    public Result getByComponentAndShortName(long componentId, String shortName) {
+        long componentPropertyId = componentPropertyRepository.getByComponentAndShortName(componentId,shortName).getId();
+        return ok(String.valueOf(componentPropertyId));
     }
 }

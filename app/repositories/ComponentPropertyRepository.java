@@ -12,4 +12,6 @@ public interface ComponentPropertyRepository {
     ComponentProperty add(ComponentProperty componentProperty);
 
     List<ComponentProperty> list();
+
+    ComponentProperty getByComponentAndShortName(long componentId, String shortName);
 }
