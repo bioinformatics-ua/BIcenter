@@ -749,6 +749,32 @@
       "name": "Dummy",
       "description": "Dummy (do nothing)",
       "shortName": "dummy"
+    },
+    {
+      "name": "SortRows",
+      "description": "Sort Rows",
+      "shortName": "sortRows",
+      "componentProperties": [
+        {
+          "name": "Fields",
+          "shortName": "fields",
+          "type": "table",
+          "componentMetadatas": [
+            {
+              "name": "Field Name",
+              "shortName": "fieldName"
+            },
+            {
+              "name": "Ascending",
+              "shortName": "ascending"
+            },
+            {
+              "name": "Case Sensitive Compare?",
+              "shortName": "caseSensitive"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
