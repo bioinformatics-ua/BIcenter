@@ -73,10 +73,5 @@ public class Application extends Controller {
                 routes.javascript.ExecutionController.run(),
                 routes.javascript.ExecutionController.result()
         ));
-//        return ok(
-//                Routes.javascriptRouter("jsRoutes",
-//                        controllers.routes.javascript.Application.supportedLanguages()
-//                )
-//        );
     }
 }

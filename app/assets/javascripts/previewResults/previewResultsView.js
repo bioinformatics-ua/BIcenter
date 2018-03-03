@@ -62,24 +62,32 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
                         context.$elements.preview_data.show();
                         context.$elements.preview_data_title.text(cell.value);
 
-                        context.$elements.preview_data_table.empty();
+                        context.$elements.data_table.empty();
                         var columns = context.data[cell.value].columns;
-                        var $tr = '<tr>';
-                        for(var i=0; i<columns.length; i++)
-                            $tr += '<th>'+columns[i]['header']+'</th>';
-                        $tr += '</tr>';
-                        context.$elements.preview_data_table.append($tr);
+                        var $thead = $('<thead>');
+                        var $tr = $('<tr>');
+
+                        for(var i=0; i<columns.length; i++) {
+                            $tr.append(
+                                $('<th>').text(columns[i]['header'])
+                            );
+                        }
+                        $thead.append($tr);
+                        context.$elements.data_table.append($thead);
 
                         var rows = context.data[cell.value].firstRecords;
+                        var $tbody = $('<tbody>');
                         for(var i=0; i<rows.length; i++) {
-                            var $tr = '<tr>';
+                            var $tr = $('<tr>');
                             for(var j=0; j<columns.length; j++) {
-                                $tr += '<td>' + rows[i][columns[j]['header']] + '</td>';
+                                $tr.append(
+                                    $('<td>').text(rows[i][columns[j]['header']])
+                                );
                             }
-                            $tr += '</tr>';
-                            context.$elements.preview_data_table.append($tr);
+                            $tbody.append($tr);
                         }
-
+                        context.$elements.data_table.append($tbody);
+                        context.$elements.data_table.DataTable();
                     });
 
                     this.graph = graph;
@@ -137,25 +145,30 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
 
                 context.$elements.preview_log.append(JSON.parse(data)['log']);
 
-                context.$elements.preview_steps_measures.empty();
-                var $tr = $('<tr>').append(
-                    $('<th>').text("Step Name"),
-                    $('<th>').text("Number of records"),
-                    $('<th>').text("Read"),
-                    $('<th>').text("Write"),
-                    $('<th>').text("Enter"),
-                    $('<th>').text("Output"),
-                    $('<th>').text("Update"),
-                    $('<th>').text("Refuse"),
-                    $('<th>').text("Error"),
-                    $('<th>').text("State"),
-                    $('<th>').text("Time"),
-                    $('<th>').text("Speed (record/second)"),
-                    $('<th>').text("Pri/in/out")
-                );
-                context.$elements.preview_steps_measures.append($tr[0]);
+                context.$elements.steps_measures.empty();
+
+                var $thead =
+                    $('<thead>').append(
+                        $('<tr>').append(
+                            $('<th>').text("Step Name"),
+                            $('<th>').text("Number of records"),
+                            $('<th>').text("Read"),
+                            $('<th>').text("Write"),
+                            $('<th>').text("Enter"),
+                            $('<th>').text("Output"),
+                            $('<th>').text("Update"),
+                            $('<th>').text("Refuse"),
+                            $('<th>').text("Error"),
+                            $('<th>').text("State"),
+                            $('<th>').text("Time"),
+                            $('<th>').text("Speed (record/second)"),
+                            $('<th>').text("Pri/in/out")
+                        )
+                    );
+                context.$elements.steps_measures.append($thead);
 
                 var rows = JSON.parse(data)['stepMeasure'];
+                var $tbody = $('<tbody>');
                 for(var i=0; i<rows.length; i++){
                     var item = rows[i];
                     var $tr = $('<tr>').append(
@@ -173,8 +186,11 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
                         $('<td>').text(item[11]),
                         $('<td>').text(item[12])
                     );
-                    context.$elements.preview_steps_measures.append($tr[0]);
+                    $tbody.append($tr);
                 }
+                context.$elements.steps_measures.append($tbody);
+
+                context.$elements.steps_measures.DataTable();
             }
         );
     }

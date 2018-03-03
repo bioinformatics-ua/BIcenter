@@ -1,4 +1,4 @@
-define('PreviewResultsController', ['Controller', 'PreviewResultsView', 'Router'], function (Controller, PreviewResultsView, Router) {
+define('PreviewResultsController', ['Controller', 'PreviewResultsView', 'Router', 'dataTables'], function (Controller, PreviewResultsView, Router) {
     var PreviewResultsController = function (module) {
         Controller.call(this, module, new PreviewResultsView(this));
     };
