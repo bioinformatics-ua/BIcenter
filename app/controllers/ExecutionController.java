@@ -99,7 +99,6 @@ public class ExecutionController extends Controller {
             executionConfiguration.setExecutingRemotely( true );
             executionConfiguration.setExecutingClustered( false );
 
-
             executionConfiguration.setRemoteServer( transMeta.findSlaveServer( executeMethod.optString("remoteServer")) );
             executionConfiguration.setPassingExport( executeMethod.containsKey("passingExport") );
         } else if(executeMethod.optInt("execMethod") == 3) {
@@ -147,7 +146,6 @@ public class ExecutionController extends Controller {
             JSONObject var = variables.getJSONObject(i);
             String varname = var.optString("var_name");
             String value = var.optString("var_value");
-
 
             if ( !Const.isEmpty( varname ) ) {
                 map.put( varname, value );

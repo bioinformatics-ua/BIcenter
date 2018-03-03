@@ -22,10 +22,24 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Class responsible for transaction execution.  
+ * Class responsible for transaction execution.
+ *
  * @author leonardo
  */
 public class TransExecutor implements Runnable, Serializable {
+    private static Hashtable<String, TransExecutor> executors = new Hashtable<String, TransExecutor>();
+    /**
+     * Stores the output row structure of each step.
+     */
+    protected Map<StepMeta, RowMetaInterface> previewMetaMap = new HashMap<StepMeta, RowMetaInterface>();
+    /**
+     * Store the output data row of each step.
+     */
+    protected Map<StepMeta, List<Object[]>> previewDataMap = new HashMap<StepMeta, List<Object[]>>();
+    /**
+     * Store the transaction logs of each step.
+     */
+    protected Map<StepMeta, StringBuffer> previewLogMap = new HashMap<StepMeta, StringBuffer>();
     /**
      * Identify the transaction.
      */
@@ -46,50 +60,34 @@ public class TransExecutor implements Runnable, Serializable {
      * Transaction logs.
      */
     private Map<StepMeta, String> stepLogMap = new HashMap<StepMeta, String>();
-    
-    /**
-     * Stores the output row structure of each step.
-     */
-    protected Map<StepMeta, RowMetaInterface> previewMetaMap = new HashMap<StepMeta, RowMetaInterface>();
-    /**
-     * Store the output data row of each step.
-     */
-    protected Map<StepMeta, List<Object[]>> previewDataMap = new HashMap<StepMeta, List<Object[]>>();
-    /**
-     * Store the transaction logs of each step.
-     */
-    protected Map<StepMeta, StringBuffer> previewLogMap = new HashMap<StepMeta, StringBuffer>();
-    
     private String carteObjectId = null;
+    private boolean finished = false;
 
     private TransExecutor(TransExecutionConfiguration transExecutionConfiguration, TransMeta transMeta) {
-            this.executionId = UUID.randomUUID().toString().replaceAll("-", "");
-            this.executionConfiguration = transExecutionConfiguration;
-            this.transMeta = transMeta;
+        this.executionId = UUID.randomUUID().toString().replaceAll("-", "");
+        this.executionConfiguration = transExecutionConfiguration;
+        this.transMeta = transMeta;
     }
 
-    private static Hashtable<String, TransExecutor> executors = new Hashtable<String, TransExecutor>();
-    
     /**
      * Create a TransExecutor.
+     *
      * @param transExecutionConfiguration transaction execution details.
-     * @param transMeta transaction structure.
-     * @return 
+     * @param transMeta                   transaction structure.
+     * @return
      */
     public static synchronized TransExecutor initExecutor(TransExecutionConfiguration transExecutionConfiguration, TransMeta transMeta) {
-            TransExecutor transExecutor = new TransExecutor(transExecutionConfiguration, transMeta);
-            executors.put(transExecutor.getExecutionId(), transExecutor);
-            return transExecutor;
+        TransExecutor transExecutor = new TransExecutor(transExecutionConfiguration, transMeta);
+        executors.put(transExecutor.getExecutionId(), transExecutor);
+        return transExecutor;
     }
-    
+
     /**
      * Returns transaction execution id.
      */
     public String getExecutionId() {
-            return executionId;
+        return executionId;
     }
-
-    private boolean finished = false;
 
     @Override
     /**
@@ -100,184 +98,187 @@ public class TransExecutor implements Runnable, Serializable {
             if (executionConfiguration.isExecutingLocally()) {
                 // Set the variables.
                 // Set the variables.
-                transMeta.injectVariables( executionConfiguration.getVariables() );
-                
+                transMeta.injectVariables(executionConfiguration.getVariables());
+
                 // Set the named parameters.
                 Map<String, String> paramMap = executionConfiguration.getParams();
                 Set<String> keys = paramMap.keySet();
                 for (String key : keys) {
-                        transMeta.setParameterValue(key, Const.NVL(paramMap.get(key), ""));
+                    transMeta.setParameterValue(key, Const.NVL(paramMap.get(key), ""));
                 }
                 transMeta.activateParameters();
 
                 // Set the arguments.
                 Map<String, String> arguments = executionConfiguration.getArguments();
-                String[] argumentNames = arguments.keySet().toArray( new String[arguments.size()] );
-                Arrays.sort( argumentNames );
+                String[] argumentNames = arguments.keySet().toArray(new String[arguments.size()]);
+                Arrays.sort(argumentNames);
 
                 String[] args = new String[argumentNames.length];
-                for ( int i = 0; i < args.length; i++ ) {
-                  String argumentName = argumentNames[i];
-                  args[i] = arguments.get( argumentName );
+                for (int i = 0; i < args.length; i++) {
+                    String argumentName = argumentNames[i];
+                    args[i] = arguments.get(argumentName);
                 }
-                
+
                 // Transaction initialization.
                 boolean initialized = false;
-                trans = new Trans( transMeta );
+                trans = new Trans(transMeta);
                 try {
-                    trans.prepareExecution( args );
+                    trans.prepareExecution(args);
                     capturePreviewData(trans, transMeta.getSteps());
                     initialized = true;
-                } catch ( KettleException e ) {
+                } catch (KettleException e) {
                     checkErrorVisuals();
                 }
-                
+
                 // Transaction execution.
-                if ( trans.isReadyToStart() && initialized) {
+                if (trans.isReadyToStart() && initialized) {
                     trans.addTransListener(new TransAdapter() {
-                            public void transFinished(Trans trans) {
-                                    checkErrorVisuals();
-                            }
+                        public void transFinished(Trans trans) {
+                            checkErrorVisuals();
+                        }
                     });
                     trans.startThreads();
-                    while(!trans.isFinished()) Thread.sleep(500);
+                    while (!trans.isFinished()) Thread.sleep(500);
                 } else {
-                        checkErrorVisuals();
+                    checkErrorVisuals();
                 }
             } else if (executionConfiguration.isExecutingRemotely()) {
-                    // Transaction initialization.
-                    carteObjectId = Trans.sendToSlaveServer( transMeta, executionConfiguration, App.getInstance().getRepository(), App.getInstance().getMetaStore() );
-                    SlaveServer remoteSlaveServer = executionConfiguration.getRemoteServer();
-                    
-                    // Transaction execution.
-                    boolean running = true;
-                    while(running) {
-                            SlaveServerTransStatus transStatus = remoteSlaveServer.getTransStatus(transMeta.getName(), carteObjectId, 0);
-                            running = transStatus.isRunning();
+                // Transaction initialization.
+                carteObjectId = Trans.sendToSlaveServer(transMeta, executionConfiguration, App.getInstance().getRepository(), App.getInstance().getMetaStore());
+                SlaveServer remoteSlaveServer = executionConfiguration.getRemoteServer();
 
-                            Thread.sleep(500);
-                    }
+                // Transaction execution.
+                boolean running = true;
+                while (running) {
+                    SlaveServerTransStatus transStatus = remoteSlaveServer.getTransStatus(transMeta.getName(), carteObjectId, 0);
+                    running = transStatus.isRunning();
+
+                    Thread.sleep(500);
+                }
             }
 
-        } catch(Exception e) {
-                e.printStackTrace();
-                App.getInstance().getLog().logError("Execution failed！", e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            App.getInstance().getLog().logError("Execution failed！", e);
         } finally {
-                finished = true;
+            finished = true;
         }
     }
-    
+
     /**
-     * Prepare transaction reporting structures, and actually fill them. 
-     * @param trans The transaction.
+     * Prepare transaction reporting structures, and actually fill them.
+     *
+     * @param trans     The transaction.
      * @param stepMetas Steps description.
      */
     public void capturePreviewData(Trans trans, List<StepMeta> stepMetas) {
-            final StringBuffer loggingText = new StringBuffer();
+        final StringBuffer loggingText = new StringBuffer();
 
-            try {
-                    final TransMeta transMeta = trans.getTransMeta();
-                    
-                    // For each transaction's step
-                    for (final StepMeta stepMeta : stepMetas) {
-                            // To store the output row structure.
-                            final RowMetaInterface rowMeta = transMeta.getStepFields( stepMeta ).clone();
-                            previewMetaMap.put(stepMeta, rowMeta);
-                            
-                            // To store the output data (according to the row structure).
-                            final List<Object[]> rowsData = new LinkedList<Object[]>();
-                            previewDataMap.put(stepMeta, rowsData);
-                            
-                            // To store the transaction logs.
-                            previewLogMap.put(stepMeta, loggingText);
-                            
-                            // Write step row output to rowsData.
-                            StepInterface step = trans.findRunThread(stepMeta.getName());
-                            if (step != null) {
+        try {
+            final TransMeta transMeta = trans.getTransMeta();
 
-                                    step.addRowListener(new RowAdapter() {
-                                            @Override
-                                            public void rowWrittenEvent(RowMetaInterface rowMeta, Object[] row) throws KettleStepException {
-                                                    try {
-                                                            rowsData.add(rowMeta.cloneRow(row));
-                                                            if (rowsData.size() > 100) {
-                                                                    rowsData.remove(0);
-                                                            }
-                                                    } catch (Exception e) {
-                                                            throw new KettleStepException("Unable to clone row for metadata : " + rowMeta, e);
-                                                    }
-                                            }
-                                    });
+            // For each transaction's step
+            for (final StepMeta stepMeta : stepMetas) {
+                // To store the output row structure.
+                final RowMetaInterface rowMeta = transMeta.getStepFields(stepMeta).clone();
+                previewMetaMap.put(stepMeta, rowMeta);
+
+                // To store the output data (according to the row structure).
+                final List<Object[]> rowsData = new LinkedList<Object[]>();
+                previewDataMap.put(stepMeta, rowsData);
+
+                // To store the transaction logs.
+                previewLogMap.put(stepMeta, loggingText);
+
+                // Write step row output to rowsData.
+                StepInterface step = trans.findRunThread(stepMeta.getName());
+                if (step != null) {
+
+                    step.addRowListener(new RowAdapter() {
+                        @Override
+                        public void rowWrittenEvent(RowMetaInterface rowMeta, Object[] row) throws KettleStepException {
+                            try {
+                                rowsData.add(rowMeta.cloneRow(row));
+                                if (rowsData.size() > 100) {
+                                    rowsData.remove(0);
+                                }
+                            } catch (Exception e) {
+                                throw new KettleStepException("Unable to clone row for metadata : " + rowMeta, e);
                             }
+                        }
+                    });
+                }
 
-                    }
-            } catch (Exception e) {
-                    loggingText.append(Const.getStackTracker(e));
             }
-            
-            // Check when transaction is finished.
-            trans.addTransListener(new TransAdapter() {
-                    @Override
-                    public void transFinished(Trans trans) throws KettleException {
-                            if (trans.getErrors() != 0) {
-                                    for (StepMetaDataCombi combi : trans.getSteps()) {
-                                            if (combi.copy == 0) {
-                                                    StringBuffer logBuffer = KettleLogStore.getAppender().getBuffer(combi.step.getLogChannel().getLogChannelId(), false);
-                                                    previewLogMap.put(combi.stepMeta, logBuffer);
-                                            }
-                                    }
-                            }
+        } catch (Exception e) {
+            loggingText.append(Const.getStackTracker(e));
+        }
+
+        // Check when transaction is finished.
+        trans.addTransListener(new TransAdapter() {
+            @Override
+            public void transFinished(Trans trans) throws KettleException {
+                if (trans.getErrors() != 0) {
+                    for (StepMetaDataCombi combi : trans.getSteps()) {
+                        if (combi.copy == 0) {
+                            StringBuffer logBuffer = KettleLogStore.getAppender().getBuffer(combi.step.getLogChannel().getLogChannelId(), false);
+                            previewLogMap.put(combi.stepMeta, logBuffer);
+                        }
                     }
-            });
+                }
+            }
+        });
     }
-    
+
     /**
-     * When errors happen, it writes them into the logging map. 
+     * When errors happen, it writes them into the logging map.
      */
     private void checkErrorVisuals() {
-            if (trans.getErrors() > 0) {
-                    stepLogMap.clear();
+        if (trans.getErrors() > 0) {
+            stepLogMap.clear();
 
-                    for (StepMetaDataCombi combi : trans.getSteps()) {
-                            if (combi.step.getErrors() > 0) {
-                                    String channelId = combi.step.getLogChannel().getLogChannelId();
-                                    List<KettleLoggingEvent> eventList = KettleLogStore.getLogBufferFromTo(channelId, false, 0, KettleLogStore.getLastBufferLineNr());
-                                    StringBuilder logText = new StringBuilder();
-                                    for (KettleLoggingEvent event : eventList) {
-                                            Object message = event.getMessage();
-                                            if (message instanceof LogMessage) {
-                                                    LogMessage logMessage = (LogMessage) message;
-                                                    if (logMessage.isError()) {
-                                                            logText.append(logMessage.getMessage()).append(Const.CR);
-                                                    }
-                                            }
-                                    }
-                                    stepLogMap.put(combi.stepMeta, logText.toString());
+            for (StepMetaDataCombi combi : trans.getSteps()) {
+                if (combi.step.getErrors() > 0) {
+                    String channelId = combi.step.getLogChannel().getLogChannelId();
+                    List<KettleLoggingEvent> eventList = KettleLogStore.getLogBufferFromTo(channelId, false, 0, KettleLogStore.getLastBufferLineNr());
+                    StringBuilder logText = new StringBuilder();
+                    for (KettleLoggingEvent event : eventList) {
+                        Object message = event.getMessage();
+                        if (message instanceof LogMessage) {
+                            LogMessage logMessage = (LogMessage) message;
+                            if (logMessage.isError()) {
+                                logText.append(logMessage.getMessage()).append(Const.CR);
                             }
+                        }
                     }
-
-            } else {
-                    stepLogMap.clear();
+                    stepLogMap.put(combi.stepMeta, logText.toString());
+                }
             }
+
+        } else {
+            stepLogMap.clear();
+        }
     }
-    
+
     /**
      * Checks if the transaction is finished.
-     * @return 
+     *
+     * @return
      */
     public boolean isFinished() {
-            return finished;
+        return finished;
     }
-    
+
     /**
      * Returns the performance measurements of each step.
+     *
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public JSONArray getStepMeasure() throws Exception {
         JSONArray jsonArray = new JSONArray();
 
-        if(executionConfiguration.isExecutingLocally()) {
+        if (executionConfiguration.isExecutingLocally()) {
             for (int i = 0; i < trans.nrSteps(); i++) {
                 StepInterface baseStep = trans.getRunThread(i);
                 StepStatus stepStatus = new StepStatus(baseStep);
@@ -286,7 +287,7 @@ public class TransExecutor implements Runnable, Serializable {
 
                 JSONArray childArray = new JSONArray();
                 for (int f = 1; f < fields.length; f++) {
-                        childArray.add(fields[f]);
+                    childArray.add(fields[f]);
                 }
                 jsonArray.add(childArray);
             }
@@ -300,7 +301,7 @@ public class TransExecutor implements Runnable, Serializable {
 
                 JSONArray childArray = new JSONArray();
                 for (int f = 1; f < fields.length; f++) {
-                        childArray.add(fields[f]);
+                    childArray.add(fields[f]);
                 }
                 jsonArray.add(childArray);
             }
@@ -308,22 +309,23 @@ public class TransExecutor implements Runnable, Serializable {
 
         return jsonArray;
     }
-    
+
     /**
      * Returns the execution logging of the transformation.
+     *
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public String getExecutionLog() throws Exception {
 
-        if(executionConfiguration.isExecutingLocally()) {
+        if (executionConfiguration.isExecutingLocally()) {
             StringBuffer sb = new StringBuffer();
-            KettleLogLayout logLayout = new KettleLogLayout( true );
-            List<String> childIds = LoggingRegistry.getInstance().getLogChannelChildren( trans.getLogChannelId() );
-            List<KettleLoggingEvent> logLines = KettleLogStore.getLogBufferFromTo( childIds, true, -1, KettleLogStore.getLastBufferLineNr() );
-            for ( int i = 0; i < logLines.size(); i++ ) {
-                KettleLoggingEvent event = logLines.get( i );
-                String line = logLayout.format( event ).trim();
+            KettleLogLayout logLayout = new KettleLogLayout(true);
+            List<String> childIds = LoggingRegistry.getInstance().getLogChannelChildren(trans.getLogChannelId());
+            List<KettleLoggingEvent> logLines = KettleLogStore.getLogBufferFromTo(childIds, true, -1, KettleLogStore.getLastBufferLineNr());
+            for (int i = 0; i < logLines.size(); i++) {
+                KettleLoggingEvent event = logLines.get(i);
+                String line = logLayout.format(event).trim();
                 sb.append(line).append("\n");
             }
             return sb.toString();
@@ -333,21 +335,21 @@ public class TransExecutor implements Runnable, Serializable {
             return transStatus.getLoggingString();
         }
     }
-    
+
     public JSONArray getStepStatus() throws Exception {
         JSONArray jsonArray = new JSONArray();
 
         HashMap<String, Integer> stepIndex = new HashMap<String, Integer>();
-        if(executionConfiguration.isExecutingLocally()) {
+        if (executionConfiguration.isExecutingLocally()) {
             for (StepMetaDataCombi combi : trans.getSteps()) {
                 Integer index = stepIndex.get(combi.stepMeta.getName());
-                if(index == null) {
+                if (index == null) {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("stepName", combi.stepMeta.getName());
                     int errCount = (int) combi.step.getErrors();
                     jsonObject.put("stepStatus", errCount);
 
-                    if(errCount > 0) {
+                    if (errCount > 0) {
                         StringBuilder logText = new StringBuilder();
                         String channelId = combi.step.getLogChannel().getLogChannelId();
                         List<KettleLoggingEvent> eventList = KettleLogStore.getLogBufferFromTo(channelId, false, -1, KettleLogStore.getLastBufferLineNr());
@@ -360,7 +362,7 @@ public class TransExecutor implements Runnable, Serializable {
                                 }
                             }
                         }
-                        
+
                         jsonObject.put("logText", logText.toString());
                     }
 
@@ -372,23 +374,21 @@ public class TransExecutor implements Runnable, Serializable {
                     jsonObject.put("stepStatus", errCount);
                 }
             }
-        } 
-        else {
+        } else {
             SlaveServer remoteSlaveServer = executionConfiguration.getRemoteServer();
             SlaveServerTransStatus transStatus = remoteSlaveServer.getTransStatus(transMeta.getName(), carteObjectId, 0);
             List<StepStatus> stepStatusList = transStatus.getStepStatusList();
             for (int i = 0; i < stepStatusList.size(); i++) {
                 StepStatus stepStatus = stepStatusList.get(i);
                 Integer index = stepIndex.get(stepStatus.getStepname());
-                if(index == null) {
+                if (index == null) {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("stepName", stepStatus.getStepname());
                     jsonObject.put("stepStatus", stepStatus.getErrors());
 
                     stepIndex.put(stepStatus.getStepname(), jsonArray.size());
                     jsonArray.add(jsonObject);
-                } 
-                else {
+                } else {
                     JSONObject jsonObject = jsonArray.getJSONObject(index);
                     int errCount = (int) (stepStatus.getErrors() + jsonObject.optInt("stepStatus"));
                     jsonObject.put("stepStatus", errCount);
@@ -399,15 +399,16 @@ public class TransExecutor implements Runnable, Serializable {
 
         return jsonArray;
     }
-    
+
     /**
      * Returns the result of the transformation.
-     * @return 
+     *
+     * @return
      */
-    public JSONObject getPreviewData() throws Exception{
+    public JSONObject getPreviewData() throws Exception {
         JSONObject jsonObject = new JSONObject();
 
-        if(executionConfiguration.isExecutingLocally()) {
+        if (executionConfiguration.isExecutingLocally()) {
             for (StepMetaDataCombi combi : trans.getSteps()) {
                 RowMetaInterface rowMeta = previewMetaMap.get(combi.stepMeta);
 
@@ -469,8 +470,7 @@ public class TransExecutor implements Runnable, Serializable {
                     jsonObject.put(combi.stepname, stepJson);
                 }
             }
-        }
-        else{
+        } else {
             SlaveServer remoteSlaveServer = executionConfiguration.getRemoteServer();
             SlaveServerTransStatus transStatus = remoteSlaveServer.getTransStatus(transMeta.getName(), carteObjectId, 0);
             Result result = transStatus.getResult();
