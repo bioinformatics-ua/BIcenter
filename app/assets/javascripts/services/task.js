@@ -58,6 +58,21 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     }
 
+    Task.updateStep = function(stepId,coord, callback){
+        jsRoutes.controllers.TransGraphController.updateStep(stepId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(coord),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    }
+
     Task.removeStep = function(stepId, callback){
         jsRoutes.controllers.TransGraphController.removeStep(stepId).ajax({
             contentType: 'application/json; charset=utf-8',

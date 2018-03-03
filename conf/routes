@@ -26,6 +26,7 @@ GET         /graph/:graphId/load                            controllers.TransGra
 GET         /graph/:name/task                               controllers.TransGraphController.getTask(name:String)
 GET         /graph/load                                     controllers.TransGraphController.loadTrans(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")
 POST        /graph/:graphId/new/step                        controllers.TransGraphController.addStep(graphId:Long)
+POST        /graph/:stepId/update/step                      controllers.TransGraphController.updateStep(stepId:Long)
 DELETE      /graph/:stepId/new/step                         controllers.TransGraphController.removeStep(stepId:Long)
 GET         /graph/:graphId/steps                           controllers.TransGraphController.getSteps(graphId:Long)
 POST        /graph/:graphId/new/hop                         controllers.TransGraphController.addHop(graphId:Long)

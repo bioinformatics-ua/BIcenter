@@ -140,6 +140,10 @@ define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function
                     controller.addCell(evt);
                 });
 
+                editor.graph.addListener(mxEvent.CELLS_MOVED, function (sender, evt) {
+                    controller.updateCell(evt);
+                });
+
                 editor.graph.addListener(mxEvent.CELLS_REMOVED, function (sender, evt) {
                     controller.removeCell(evt);
                 });
@@ -221,11 +225,30 @@ define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function
     }
 
     /**
+     * Add step or hop to the task, based on a given graph event.
+     * @param evt
+     */
+    GraphController.prototype.updateCell = function (evt) {
+        var cells = evt.properties.cells;
+
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].value.hasAttribute("stepId")) {
+                var stepId = cells[i].value.getAttribute("stepId");
+
+                var coord = new Object();
+                coord.x = cells[i].getGeometry().x;
+                coord.y = cells[i].getGeometry().y;
+
+                Task.updateStep(stepId,coord);
+            }
+        }
+    }
+
+    /**
      * Remove step or hop to the task, based on a given graph event.
      * @param evt
      */
     GraphController.prototype.removeCell = function (evt) {
-        // Add event.
         var cells = evt.properties.cells;
 
         for (var i = 0; i < cells.length; i++) {

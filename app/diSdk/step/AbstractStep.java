@@ -156,28 +156,8 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
 
             StepMeta stepMeta = new StepMeta(stepid, stepname, stepMetaInterface);
-            /* Handle info general to all step types... */
-            /*
-            stepMeta.setDescription(cell.getAttribute("description"));
-            stepMeta.setCopiesString(cell.getAttribute("copies"));
-            String sdistri = cell.getAttribute( "distribute" );
-
-            if ( sdistri == null ) {
-                stepMeta.setDistributes(true);
-            } else {
-                stepMeta.setDistributes("Y".equalsIgnoreCase( sdistri ));
-            }
-
-            // Determine the row distribution
-            String rowDistributionCode = cell.getAttribute( "custom_distribution" );
-            stepMeta.setRowDistribution(PluginRegistry.getInstance().loadClass(RowDistributionPluginType.class, rowDistributionCode, RowDistributionInterface.class ));
-            */
-
-            // Handle GUI information: location & drawstep?
             stepMeta.setLocation(step.getCell().getX(), step.getCell().getY());
             //stepMeta.setDraw("Y".equalsIgnoreCase( cell.getAttribute( "draw" ) ));
-
-            //stepMeta.setClusterSchemaName(cell.getAttribute( "cluster_schema" ));
 
             return stepMeta;
         }

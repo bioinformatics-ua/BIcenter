@@ -42,6 +42,7 @@ public class Application extends Controller {
                 routes.javascript.TransGraphController.newTask(),
                 routes.javascript.TransGraphController.getTask(),
                 routes.javascript.TransGraphController.addStep(),
+                routes.javascript.TransGraphController.updateStep(),
                 routes.javascript.TransGraphController.removeStep(),
                 routes.javascript.TransGraphController.getSteps(),
                 routes.javascript.TransGraphController.addHop(),

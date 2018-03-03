@@ -235,6 +235,25 @@ public class TransGraphController extends Controller {
     }
 
     /**
+     * Update step coordinates.
+     * @param stepId
+     * @return
+     */
+    public Result updateStep(long stepId) {
+        Step step = stepRepository.get(stepId);
+        Cell cell = step.getCell();
+
+        JsonNode coord = request().body().as(JsonNode.class);
+        int x = coord.get("x").asInt();
+        int y = coord.get("y").asInt();
+
+        cell.setX(x);
+        cell.setY(y);
+        cellRepository.add(cell);
+        return ok();
+    }
+
+    /**
      * Delete a certain step.
      * @param stepId Step Id.
      * @return
