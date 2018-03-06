@@ -7,7 +7,6 @@ import java.util.List;
 
 @Entity
 public class Task implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +22,9 @@ public class Task implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskSteps", cascade = CascadeType.ALL)
     private List<Step> steps;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Execution> execution;
 
     public Task(){ date = new Date(); }
     public Task(String name) {
@@ -61,6 +63,10 @@ public class Task implements Serializable {
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
+
+    public List<Execution> getExecution() { return execution; }
+
+    public void setExecution(List<Execution> execution) { this.execution = execution; }
 
     @Override
     public boolean equals(Object o) {

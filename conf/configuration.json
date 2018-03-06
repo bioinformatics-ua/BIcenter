@@ -748,13 +748,25 @@
     {
       "name": "Dummy",
       "description": "Dummy (do nothing)",
-      "shortName": "dummy"
+      "shortName": "dummy",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        }
+      ]
     },
     {
       "name": "SortRows",
       "description": "Sort Rows",
       "shortName": "sortRows",
       "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        },
         {
           "name": "Fields",
           "shortName": "fields",

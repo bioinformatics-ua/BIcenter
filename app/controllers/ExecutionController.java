@@ -1,20 +1,24 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import diSdk.task.TaskDecoder;
 import diSdk.trans.TransExecutor;
 import kettleExt.App;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
 import models.*;
+import models.Execution;
 import org.hibernate.Hibernate;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.logging.LogLevel;
 import org.pentaho.di.trans.TransExecutionConfiguration;
 import org.pentaho.di.trans.TransMeta;
-import play.cache.SyncCacheApi;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import repositories.TaskRepository;
+import repositories.*;
+import serializers.performance.*;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -27,14 +31,22 @@ import java.util.Map;
  * Controller that manages task executions.
  */
 public class ExecutionController extends Controller {
-    private SyncCacheApi cache;
 
     private TaskRepository taskRepository;
+    private ExecutionRepository executionRepository;
+    private StepMetricRepository stepMetricRepository;
+    private StatusRepository statusRepository;
+    private DataRowRepository dataRowRepository;
+    private KeyValueRepository keyValueRepository;
 
     @Inject
-    public ExecutionController(SyncCacheApi cache, TaskRepository taskRepository){
-        this.cache = cache;
+    public ExecutionController(TaskRepository taskRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository){
         this.taskRepository = taskRepository;
+        this.executionRepository = executionRepository;
+        this.stepMetricRepository = stepMetricRepository;
+        this.statusRepository = statusRepository;
+        this.dataRowRepository = dataRowRepository;
+        this.keyValueRepository = keyValueRepository;
     }
 
     /**
@@ -72,11 +84,9 @@ public class ExecutionController extends Controller {
         TransExecutionConfiguration executionConfiguration = prepareExecution(transMeta,execution_configuration);
 
         // Execute Transformation.
-        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta);
+        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository);
         new Thread(transExecutor).start();
 
-        // Cache execution.
-        cache.set(transExecutor.getExecutionId(), transExecutor);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("state", "RUNNING");
         jsonObject.put("executionId", transExecutor.getExecutionId());
@@ -156,26 +166,22 @@ public class ExecutionController extends Controller {
         return executionConfiguration;
     }
 
-    public Result result(String executionId) throws Exception {
+    public Result result(long executionId) throws Exception {
         JSONObject jsonReply = new JSONObject();
 
-        TransExecutor transExecutor = cache.get(executionId);
+        // Fetch and Serialize Execution.
+        Execution execution = executionRepository.get(executionId);
 
-        jsonReply.put("finished", transExecutor.isFinished());
-        if(transExecutor.isFinished()) {
-            session().remove(executionId);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Execution.class, new ExecutionSerializer());
+        module.addSerializer(StepMetric.class, new StepMetricSerializer());
+        module.addSerializer(Status.class, new StatusSerializer());
+        module.addSerializer(DataRow.class, new DataRowSerializer());
+        module.addSerializer(KeyValue.class, new KeyValueSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
 
-            jsonReply.put("stepMeasure", transExecutor.getStepMeasure());
-            jsonReply.put("log", transExecutor.getExecutionLog());
-            jsonReply.put("stepStatus", transExecutor.getStepStatus());
-            jsonReply.put("previewData", transExecutor.getPreviewData());
-        } else {
-            jsonReply.put("stepMeasure", transExecutor.getStepMeasure());
-            jsonReply.put("log", transExecutor.getExecutionLog());
-            jsonReply.put("stepStatus", transExecutor.getStepStatus());
-            jsonReply.put("previewData", transExecutor.getPreviewData());
-        }
-
-        return ok(jsonReply.toString()).as("text/html");
+        return ok(Json.toJson(execution)).as("text/html");
     }
 }

@@ -55,4 +55,4 @@ GET         /component/:componentId/short/:shortName        controllers.StepCont
 
 # Handles the executions
 POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)
-GET         /execute/result                                 controllers.ExecutionController.result(execution: String)
+GET         /execute/result                                 controllers.ExecutionController.result(execution:Long)

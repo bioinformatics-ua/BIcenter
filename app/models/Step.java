@@ -33,6 +33,15 @@ public class Step implements Serializable{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "destiny", cascade = CascadeType.ALL)
     private List<Hop> destiny;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<StepMetric> stepMetrics;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<Status> stepStatus;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "step", cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<DataRow> dataRows;
+
     public Step() { date = new Date(); }
     public Step(String label, int graphId) {
         this.label = label; this.graphId = graphId;
@@ -99,6 +108,18 @@ public class Step implements Serializable{
     public List<Hop> getDestiny() { return destiny; }
 
     public void setDestiny(List<Hop> destiny) { this.destiny = destiny; }
+
+    public List<StepMetric> getStepMetrics() { return stepMetrics; }
+
+    public void setStepMetrics(List<StepMetric> stepMetrics) { this.stepMetrics = stepMetrics; }
+
+    public List<Status> getStepStatus() { return stepStatus; }
+
+    public void setStepStatus(List<Status> stepStatus) { this.stepStatus = stepStatus; }
+
+    public List<DataRow> getDataRows() { return dataRows; }
+
+    public void setDataRows(List<DataRow> dataRows) { this.dataRows = dataRows; }
 
     @Override
     public boolean equals(Object o) {

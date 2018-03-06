@@ -17,7 +17,7 @@ requirejs.config({
         'datatables.buttons': '../lib/datatables/dataTables.buttons.min',
         'datatables.net': '../lib/datatables/jquery.dataTables.min',
         'dataTables': '../lib/datatables/dataTables.bootstrap.min',
-        'pnotify': '../lib/pnotify/pnotify.custom',
+        'pnotify': '../lib/pnotify/pnotify',
         'pnotify.nonblock': '../lib/pnotify/pnotify.nonblock',
         'Alert': 'lib/alert',
         'moment': 'lib/moment',
@@ -133,10 +133,7 @@ requirejs.config({
         },
         'templates': {
             deps: ['handlebarsHelpers']
-        },
-        'pnotify': {
-            exports: 'PNotify'
-        },
+        }
 
         // QueryBuilder
         // 'jquery.extendext': {

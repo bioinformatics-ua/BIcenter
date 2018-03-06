@@ -1,4 +1,4 @@
-define('Alert', ['jquery', 'messages', 'pnotify', 'pnotify.nonblock'], function ($, Messages, PNotify) {
+define('Alert', ['jquery', 'messages', 'pnotify', 'pnotify.nonblock'], function ($, Messages, pnotify) {
     var Alert = Alert || {};
     window.ALERT_TYPE = Object.freeze({INFO: 0, SUCCESS: 1, WARNING: 2, DANGER: 3});
 
@@ -26,7 +26,7 @@ define('Alert', ['jquery', 'messages', 'pnotify', 'pnotify.nonblock'], function 
             message += '\nPlease contact our maintenance team at <a href="mailto:info@bmd-software.com" target="_blank" class="alert-link">info@bmd-software.com</a>.';
         }
 
-        new PNotify({
+        new pnotify({
             type: t,
             title: title,
             title_escape: true,
@@ -34,6 +34,9 @@ define('Alert', ['jquery', 'messages', 'pnotify', 'pnotify.nonblock'], function 
             text_escape: false,
             styling: "fontawesome",
             opacity: 0.93,
+            nonblock: {
+                nonblock: true
+            },
             buttons: {
                 show_on_nonblock: true
             }
@@ -64,7 +67,7 @@ define('Alert', ['jquery', 'messages', 'pnotify', 'pnotify.nonblock'], function 
             message += '\nPlease contact our maintenance team at <a href="mailto:info@bmd-software.com" target="_blank" class="alert-link">info@bmd-software.com</a>.';
         }
 
-        new PNotify({
+        new pnotify({
             type: t,
             title: title,
             title_escape: true,
@@ -72,6 +75,9 @@ define('Alert', ['jquery', 'messages', 'pnotify', 'pnotify.nonblock'], function 
             text_escape: false,
             styling: "fontawesome",
             opacity: 0.93,
+            nonblock: {
+                nonblock: true
+            },
             buttons: {
                 show_on_nonblock: true
             },
@@ -80,7 +86,7 @@ define('Alert', ['jquery', 'messages', 'pnotify', 'pnotify.nonblock'], function 
     };
 
     Alert.removeAll = function () {
-        PNotify.removeAll();
+        pnotify.removeAll();
     };
 
     return Alert;

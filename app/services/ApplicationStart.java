@@ -1,6 +1,8 @@
 package services;
 
 import com.google.gson.Gson;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import configuration.Configuration;
 import models.Component;
 import models.ComponentProperty;
@@ -11,8 +13,6 @@ import org.pentaho.di.core.logging.KettleLogStore;
 import play.inject.ApplicationLifecycle;
 import repositories.ComponentRepository;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
