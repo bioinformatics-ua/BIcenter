@@ -63,25 +63,29 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
                         context.$elements.preview_data_title.text(cell.value);
 
                         context.$elements.data_table.empty();
-                        var columns = context.data[cell.value].columns;
+
+                        var currentRows = context.data.filter(function (el) {
+                            return el.stepName == cell.value;
+                        });
+
+                        var columns = currentRows[0].keyValues.map(x => x.key);
                         var $thead = $('<thead>');
                         var $tr = $('<tr>');
 
                         for(var i=0; i<columns.length; i++) {
                             $tr.append(
-                                $('<th>').text(columns[i]['header'])
+                                $('<th>').text(columns[i])
                             );
                         }
                         $thead.append($tr);
                         context.$elements.data_table.append($thead);
 
-                        var rows = context.data[cell.value].firstRecords;
                         var $tbody = $('<tbody>');
-                        for(var i=0; i<rows.length; i++) {
+                        for(var i=0; i<currentRows.length; i++) {
                             var $tr = $('<tr>');
                             for(var j=0; j<columns.length; j++) {
                                 $tr.append(
-                                    $('<td>').text(rows[i][columns[j]['header']])
+                                    $('<td>').text(currentRows[i].keyValues[j].value)
                                 );
                             }
                             $tbody.append($tr);
@@ -141,9 +145,9 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
                     headerController.view.removeTransNotification(context.executionId);
                     context.updateStatus(context.graph,JSON.parse(data)['stepStatus']);
                 }
-                context.data = JSON.parse(data).previewData;
+                context.data = JSON.parse(data).dataRows;
 
-                context.$elements.preview_log.append(JSON.parse(data)['log']);
+                context.$elements.preview_log.append(JSON.parse(data)['logText']);
 
                 context.$elements.steps_measures.empty();
 
@@ -167,24 +171,24 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
                     );
                 context.$elements.steps_measures.append($thead);
 
-                var rows = JSON.parse(data)['stepMeasure'];
+                var rows = JSON.parse(data)['stepMetrics'];
                 var $tbody = $('<tbody>');
                 for(var i=0; i<rows.length; i++){
                     var item = rows[i];
                     var $tr = $('<tr>').append(
-                        $('<td>').text(item[0]),
-                        $('<td>').text(item[1]),
-                        $('<td>').text(item[2]),
-                        $('<td>').text(item[3]),
-                        $('<td>').text(item[4]),
-                        $('<td>').text(item[5]),
-                        $('<td>').text(item[6]),
-                        $('<td>').text(item[7]),
-                        $('<td>').text(item[8]),
-                        $('<td>').text(item[9]),
-                        $('<td>').text(item[10]),
-                        $('<td>').text(item[11]),
-                        $('<td>').text(item[12])
+                        $('<td>').text(item.stepName),
+                        $('<td>').text(item.nRecords),
+                        $('<td>').text(item.read),
+                        $('<td>').text(item.write),
+                        $('<td>').text(item.enter),
+                        $('<td>').text(item.output),
+                        $('<td>').text(item.update),
+                        $('<td>').text(item.refuse),
+                        $('<td>').text(item.error),
+                        $('<td>').text(item.state),
+                        $('<td>').text(item.time),
+                        $('<td>').text(item.speed),
+                        $('<td>').text(item.priInOut)
                     );
                     $tbody.append($tr);
                 }
