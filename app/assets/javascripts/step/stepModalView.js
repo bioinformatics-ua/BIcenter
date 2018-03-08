@@ -24,7 +24,6 @@ define('StepModalView', ['Modal'], function (Modal) {
         // Show modal
         _super_.show.call(this);
 
-        console.log({row: data});
         var html = JST['stepModalContent']({table:tableId,row:rowId,fields: data});
         this.$elements.insideContainer.html(html);
         this._loadViewComponents();

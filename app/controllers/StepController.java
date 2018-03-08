@@ -26,11 +26,9 @@ import repositories.*;
 import serializers.component.ComponentMetadataSerializer;
 import serializers.component.ComponentPropertySerializer;
 import serializers.component.ComponentSerializer;
+import serializers.component.MetadataSerializer;
 import serializers.hop.HopSerializer;
-import serializers.step.CellSerializer;
-import serializers.step.StepPropertySerializer;
-import serializers.step.StepSerializer;
-import serializers.step.ValueMetaInterfaceInputFields;
+import serializers.step.*;
 import utils.SearchFieldsProgress;
 
 import java.util.List;
@@ -245,6 +243,7 @@ public class StepController extends Controller {
         module.addSerializer(ComponentProperty.class, new ComponentPropertySerializer(stepId));
         module.addSerializer(StepProperty.class, new StepPropertySerializer());
         module.addSerializer(ComponentMetadata.class, new ComponentMetadataSerializer());
+        module.addSerializer(Metadata.class, new MetadataSerializer());
         mapper.registerModule(module);
         Json.setObjectMapper(mapper);
 
@@ -305,27 +304,13 @@ public class StepController extends Controller {
                 .filter(cp -> cp.getType().equals("table"))
                 .collect(Collectors.toList());
 
-        JSONArray jsonArray = new JSONArray();
-        for (ComponentProperty componentProperty : componentProperties) {
-            JSONObject record = new JSONObject();
-            record.put("id", componentProperty.getId());
-            List<ComponentMetadata> componentMetadatas = componentProperty.getComponentMetadatas();
-            JSONArray fields = new JSONArray();
-            for (ComponentMetadata componentMetadata : componentMetadatas) {
-                JSONObject field = new JSONObject();
-                field.put("label", componentMetadata.getName());
-                field.put("name", componentMetadata.getId().toString());
-                try{
-                    field.put("source", componentMetadata.getSource().toString());
-                }
-                catch(Exception e){ }
-                fields.add(field);
-            }
-            record.put("fields", fields);
-            jsonArray.add(record);
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(ComponentProperty.class, new TableSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
 
-        return ok(new Gson().toJson(jsonArray));
+        return ok(Json.toJson(componentProperties));
     }
 
     /**

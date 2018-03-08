@@ -55,43 +55,46 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
                     codec.decode(doc.documentElement, graph.getModel());
 
                     graph.resizeContainer = false;
-                    graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt)
-                    {
+                    graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt) {
                         context.$elements.preview_table.hide();
-                        var cell = evt.getProperty('edit').changes[0].removed[0]
-                        context.$elements.preview_data.show();
-                        context.$elements.preview_data_title.text(cell.value);
+                        var cell = evt.getProperty('edit').changes[0].removed[0];
+                        if (cell.isVertex()) {
+                            context.$elements.preview_data.show();
+                            context.$elements.preview_data_title.text(cell.value);
 
-                        context.$elements.data_table.empty();
+                            context.$elements.data_table.empty();
 
-                        var currentRows = context.data.filter(function (el) {
-                            return el.stepName == cell.value;
-                        });
+                            var currentRows = context.data.filter(function (el) {
+                                return el.stepName == cell.value;
+                            });
 
-                        var columns = currentRows[0].keyValues.map(x => x.key);
-                        var $thead = $('<thead>');
-                        var $tr = $('<tr>');
-
-                        for(var i=0; i<columns.length; i++) {
-                            $tr.append(
-                                $('<th>').text(columns[i])
-                            );
-                        }
-                        $thead.append($tr);
-                        context.$elements.data_table.append($thead);
-
-                        var $tbody = $('<tbody>');
-                        for(var i=0; i<currentRows.length; i++) {
+                            var columns = currentRows[0].keyValues.map(function (x) {
+                                return x.key
+                            });
+                            var $thead = $('<thead>');
                             var $tr = $('<tr>');
-                            for(var j=0; j<columns.length; j++) {
+
+                            for (var i = 0; i < columns.length; i++) {
                                 $tr.append(
-                                    $('<td>').text(currentRows[i].keyValues[j].value)
+                                    $('<th>').text(columns[i])
                                 );
                             }
-                            $tbody.append($tr);
+                            $thead.append($tr);
+                            context.$elements.data_table.append($thead);
+
+                            var $tbody = $('<tbody>');
+                            for (var i = 0; i < currentRows.length; i++) {
+                                var $tr = $('<tr>');
+                                for (var j = 0; j < columns.length; j++) {
+                                    $tr.append(
+                                        $('<td>').text(currentRows[i].keyValues[j].value)
+                                    );
+                                }
+                                $tbody.append($tr);
+                            }
+                            context.$elements.data_table.append($tbody);
+                            context.$elements.data_table.DataTable();
                         }
-                        context.$elements.data_table.append($tbody);
-                        context.$elements.data_table.DataTable();
                     });
 
                     this.graph = graph;

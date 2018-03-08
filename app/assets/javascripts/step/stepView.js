@@ -17,6 +17,8 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
     };
 
     StepView.prototype.loadStep = function (step, inputSteps, inputFields, outputSteps) {
+        this.inputFields = inputFields;
+
         var html = JST['step']({
             component: step.component,
             inputSteps: inputSteps,
@@ -161,8 +163,8 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
     StepView.prototype.renderTables = function (step) {
         this.dataTables = {};
         var context = this;
-        Step.getTables(step.id, function (result) {
-            var tables = JSON.parse(result);
+        Step.getTables(step.id, function (tables) {
+            // var tables = JSON.parse(result);
             context.tables = tables;
 
             _.each(tables, function (table) {
@@ -222,14 +224,29 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                                                 id: field.name,
                                                 label: field.label,
                                                 value: "",
-                                                type: 'input'
+                                                type: 'input',
+                                                source: field.source
                                             };
 
-                                            if (field.source && field.source.indexOf('@') > -1) {
-                                                _.extend(obj, {
-                                                    type: 'select',
-                                                    options: context.controller.data[field.name]
-                                                });
+                                            if (field.source) {
+                                                if (field.source == "metadata") {
+                                                    _.extend(obj, {
+                                                        type: 'select',
+                                                        options: field.metadatas
+                                                    });
+                                                }
+                                                else if (field.source.indexOf('@') > -1) {
+                                                    _.extend(obj, {
+                                                        type: 'select',
+                                                        options: context.controller.data[field.name]
+                                                    });
+                                                }
+                                                else {
+                                                    _.extend(obj, {
+                                                        type: 'select',
+                                                        options: context.inputFields
+                                                    });
+                                                }
                                             }
 
                                             finalData.push(obj);
@@ -259,14 +276,30 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                 var obj = {
                     id: field.name,
                     label: field.label,
-                    value: data[field.name]
+                    source: field.source,
+                    value: data[field.name],
+                    type: 'input'
                 };
 
-                if (field.source && field.source.indexOf('@') > -1) {
-                    _.extend(obj, {
-                        type: 'select',
-                        options: context.controller.data[field.name]
-                    });
+                if (field.source) {
+                    if (field.source == "metadata") {
+                        _.extend(obj, {
+                            type: 'select',
+                            options: field.metadatas
+                        });
+                    }
+                    else if (field.source.indexOf('@') > -1) {
+                        _.extend(obj, {
+                            type: 'select',
+                            options: context.controller.data[field.name]
+                        });
+                    }
+                    else {
+                        _.extend(obj, {
+                            type: 'select',
+                            options: context.inputFields
+                        });
+                    }
                 }
 
                 finalData.push(obj);

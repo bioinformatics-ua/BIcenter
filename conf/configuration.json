@@ -258,6 +258,11 @@
           "type": "input"
         },
         {
+          "name": "Instance Name",
+          "shortName": "sQLServerInstance",
+          "type": "input"
+        },
+        {
           "name": "Username",
           "shortName": "username",
           "type": "input"
@@ -675,7 +680,9 @@
           "componentMetadatas": [
             {
               "name": "Field Name",
-              "shortName": "selectName"
+              "shortName": "selectName",
+              "type": "select",
+              "source": "inputFields"
             },
             {
               "name": "Rename To",
@@ -774,7 +781,9 @@
           "componentMetadatas": [
             {
               "name": "Field Name",
-              "shortName": "fieldName"
+              "shortName": "fieldName",
+              "type": "select",
+              "source": "inputFields"
             },
             {
               "name": "Ascending",
@@ -783,6 +792,71 @@
             {
               "name": "Case Sensitive Compare?",
               "shortName": "caseSensitive"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "GroupBy",
+      "description": "Group By",
+      "shortName": "groupBy",
+      "componentProperties": [
+        {
+          "name": "Step Name",
+          "shortName": "stepName",
+          "type": "input"
+        },
+        {
+          "name": "The fields that make up the group",
+          "shortName": "groupField",
+          "type": "multi-select",
+          "source": "inputFields"
+        },
+        {
+          "name": "Aggregates",
+          "shortName": "aggregates",
+          "type": "table",
+          "componentMetadatas": [
+            {
+              "name": "Name",
+              "shortName": "aggregateField"
+            },
+            {
+              "name": "Subject",
+              "shortName": "subjectField",
+              "type": "select",
+              "source": "inputFields"
+            },
+            {
+              "name": "Type",
+              "shortName": "aggregateType",
+              "type": "select",
+              "source": "metadata",
+              "metadatas": [
+                {"value":"1","name":"Sum"},
+                {"value":"2","name":"Average (Mean)"},
+                {"value":"3","name":"Median"},
+                {"value":"4","name":"Percentile"},
+                {"value":"5","name":"Minimum"},
+                {"value":"6","name":"Maximum"},
+                {"value":"7","name":"Number of values (N)"},
+                {"value":"8","name":"Concatenate strings separated by , (comma)"},
+                {"value":"9","name":"First non-null value"},
+                {"value":"10","name":"Last non-null value"},
+                {"value":"11","name":"First value (including null)"},
+                {"value":"12","name":"Last value (including null)"},
+                {"value":"13","name":"Cumulative sum (all rows option only!)"},
+                {"value":"14","name":"Cumulative average (all rows option only!)"},
+                {"value":"16","name":"Standard deviation"},
+                {"value":"16","name":"Concatenate strings separated by <Value>: specify the separator in the Value column"},
+                {"value":"17","name":"Number of distinct values"},
+                {"value":"18","name":"Number of rows (without field argument)"}
+              ]
+            },
+            {
+              "name": "Value",
+              "shortName": "valueField"
             }
           ]
         }

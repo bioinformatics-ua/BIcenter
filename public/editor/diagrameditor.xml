@@ -89,6 +89,13 @@
                 </mxCell>
             </Step>
         </add>
+		<add as="GroupBy">
+			<Step component="GroupBy" label = "Group By">
+				<mxCell style="icon;image=/middle/GroupBy.svg" parent="1" vertex="1">
+					<mxGeometry width="40" height="40" as="geometry"/>
+				</mxCell>
+			</Step>
+		</add>
 		<add as="ExecSQL">
             <Step component="ExecSQL" label = "Execute SQL script">
 			    <mxCell style="icon;image=/middle/ExecSQL.svg" parent="1" vertex="1">
@@ -304,6 +311,7 @@
         <add as="Dummy (do nothing)" template="Dummy" icon="/assets/images/editor/rectangle.gif"/>
         <add as="Filter Rows" template="FilterRows" icon="/assets/images/editor/rectangle.gif"/>
         <add as="Merge Join" template="MergeJoin" icon="/assets/images/editor/rectangle.gif"/>
+		<add as="Group By" template="GroupBy" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Execute SQL script" template="ExecSQL" icon="/assets/images/editor/rectangle.gif"/>
 	</mxDefaultToolbar>
 </mxEditor>

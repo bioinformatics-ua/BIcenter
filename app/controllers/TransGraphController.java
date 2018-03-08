@@ -40,6 +40,7 @@ import repositories.*;
 import serializers.component.ComponentMetadataSerializer;
 import serializers.component.ComponentPropertySerializer;
 import serializers.component.ComponentSerializer;
+import serializers.component.MetadataSerializer;
 import serializers.hop.HopSerializer;
 import serializers.step.CellSerializer;
 import serializers.step.StepPropertySerializer;
@@ -190,6 +191,7 @@ public class TransGraphController extends Controller {
         module.addSerializer(ComponentProperty.class, new ComponentPropertySerializer());
         module.addSerializer(StepProperty.class, new StepPropertySerializer());
         module.addSerializer(ComponentMetadata.class, new ComponentMetadataSerializer());
+        module.addSerializer(Metadata.class, new MetadataSerializer());
         mapper.registerModule(module);
         Json.setObjectMapper(mapper);
 
@@ -231,7 +233,7 @@ public class TransGraphController extends Controller {
         );
         cell.setStep(step);
         cell = cellRepository.add(cell);
-        return ok();
+        return ok(String.valueOf(step.getId()));
     }
 
     /**

@@ -85,10 +85,19 @@ public class ApplicationStart {
                             .forEach(cp ->
                             {
                                 cp.setComponent(component);
-                                if (cp.getComponentMetadatas() != null)
+                                if (cp.getComponentMetadatas() != null) {
                                     cp.getComponentMetadatas()
                                             .stream()
-                                            .forEach(cm -> cm.setComponentProperty(cp));
+                                            .forEach(cm ->
+                                            {
+                                                cm.setComponentProperty(cp);
+                                                if(cm.getMetadatas() != null){
+                                                    cm.getMetadatas()
+                                                            .stream()
+                                                            .forEach(m -> m.setComponentMetadata(cm));
+                                                }
+                                            });
+                                }
                             });
                 }
             })

@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class ComponentMetadata implements Serializable {
@@ -18,6 +19,9 @@ public class ComponentMetadata implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ComponentProperty componentProperty;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "componentMetadata", cascade = CascadeType.ALL)
+    private List<Metadata> metadatas;
 
     public ComponentMetadata() {
     }
@@ -61,6 +65,14 @@ public class ComponentMetadata implements Serializable {
     public String getSource() { return source; }
 
     public void setSource(String source) { this.source = source; }
+
+    public List<Metadata> getMetadatas() {
+        return metadatas;
+    }
+
+    public void setMetadatas(List<Metadata> metadatas) {
+        this.metadatas = metadatas;
+    }
 
     @Override
     public boolean equals(Object o) {

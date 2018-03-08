@@ -37,6 +37,9 @@ public class TaskSerializer extends JsonSerializer<Task> {
         serializer = serializers.findValueSerializer(ComponentMetadata.class);
         module.addSerializer(ComponentMetadata.class, serializer);
 
+        serializer = serializers.findValueSerializer(Metadata.class);
+        module.addSerializer(Metadata.class, serializer);
+
         mapper.registerModule(module);
 
         // Start composing output

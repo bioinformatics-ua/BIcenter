@@ -211,7 +211,9 @@ define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function
             stepMeta.label = cell.getValue().getAttribute("label");
             stepMeta.graphId = cell.getId();
 
-            Task.addStep(this.view.taskId, stepMeta);
+            Task.addStep(this.view.taskId, stepMeta, function (stepId) {
+                cell.value.setAttribute("stepId",stepId);
+            });
         }
         else {
             var hopMeta = new Object();

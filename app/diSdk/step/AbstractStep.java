@@ -115,6 +115,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             // Iterate over special Properties (Json value), such as tables.
             for (StepProperty stepProperty : stepProperties) {
                 // Get all StepProperties with ComponentMetadatas.
+
                 List<ComponentMetadata> componentMetadataList = stepProperty.getComponentProperty().getComponentMetadatas();
                 if (componentMetadataList == null || componentMetadataList.isEmpty()) continue;
 
@@ -221,7 +222,10 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             int idx = 0;
 
             for (String val : (List<String>) value) {
-                tmp[idx++] = Integer.parseInt(val.toString());
+                if(!val.toString().equals(""))
+                    tmp[idx++] = Integer.parseInt(val.toString());
+                else
+                    idx++;
             }
             parameter = tmp;
         }
