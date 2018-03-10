@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
 import diSdk.task.TaskEncoder;
 import models.*;
+import models.Execution;
 import org.hibernate.Hibernate;
 import play.cache.*;
 
@@ -42,9 +43,13 @@ import serializers.component.ComponentPropertySerializer;
 import serializers.component.ComponentSerializer;
 import serializers.component.MetadataSerializer;
 import serializers.hop.HopSerializer;
+import serializers.performance.*;
 import serializers.step.CellSerializer;
 import serializers.step.StepPropertySerializer;
 import serializers.step.StepSerializer;
+import serializers.task.PerformanceTaskSerializer;
+import serializers.task.SimpleTaskSerializer;
+import serializers.task.TaskSerializer;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
@@ -84,6 +89,25 @@ public class TransGraphController extends Controller {
      * @return
      */
     public Result previewResults(long graphId) { return ok(views.html.index.render()); }
+
+    /**
+     * Renders Task History page.
+     * @param graphId
+     * @return
+     */
+    public Result history(long graphId) { return ok(views.html.index.render()); }
+
+    public Result getTasks() {
+        List<Task> tasks = taskRepository.list();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new SimpleTaskSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(tasks));
+    }
 
     /**
      * Get Method, that convert a given Pentaho (.ktr) file into a mxGraph (.xml) file, and returns it back.
@@ -183,7 +207,7 @@ public class TransGraphController extends Controller {
     private JsonNode taskToJson(Task task){
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        module.addSerializer(Task.class, new serializers.task.TaskSerializer());
+        module.addSerializer(Task.class, new TaskSerializer());
         module.addSerializer(Step.class, new StepSerializer());
         module.addSerializer(Hop.class, new HopSerializer());
         module.addSerializer(Cell.class, new CellSerializer());
@@ -326,5 +350,26 @@ public class TransGraphController extends Controller {
     public Result getOpenTabs(){
         List<String> tabs = taskRepository.getOpenTabs();
         return ok(new Gson().toJson(tabs));
+    }
+
+    /**
+     * Retrive all previous executions.
+     * @param graphId Task id.
+     * @return
+     */
+    public Result getExecutions(long graphId) {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new PerformanceTaskSerializer());
+        module.addSerializer(Execution.class, new ExecutionSerializer());
+        module.addSerializer(StepMetric.class, new StepMetricSerializer());
+        module.addSerializer(Status.class, new StatusSerializer());
+        module.addSerializer(DataRow.class, new DataRowSerializer());
+        module.addSerializer(KeyValue.class, new KeyValueSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        Task task = taskRepository.get(graphId);
+        return ok(Json.toJson(task));
     }
 }

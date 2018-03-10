@@ -20,7 +20,9 @@ GET         /middle/:image                                  controllers.SvgContr
 # Handles the pipeline.
 GET         /graph/:graphId/select                          controllers.TransGraphController.selectTask(graphId:Long)
 GET         /graph/:graphId/preview                         controllers.TransGraphController.previewResults(graphId:Long)
+GET         /graph/:graphId/history                         controllers.TransGraphController.history(graphId:Long)
 
+GET         /graph/list                                     controllers.TransGraphController.getTasks()
 GET         /graph/new/:name                                controllers.TransGraphController.newTask(name:String)
 GET         /graph/:graphId/load                            controllers.TransGraphController.loadTask(graphId:Long)
 GET         /graph/:name/task                               controllers.TransGraphController.getTask(name:String)
@@ -33,6 +35,7 @@ POST        /graph/:graphId/new/hop                         controllers.TransGra
 DELETE      /graph/:hopId/new/hop                           controllers.TransGraphController.removeHop(hopId:Long)
 POST        /graph/:graphId/close                           controllers.TransGraphController.closeTab(graphId:Long)
 GET         /graph/tabs                                     controllers.TransGraphController.getOpenTabs()
+GET         /graph/:graphId/executions                      controllers.TransGraphController.getExecutions(graphId:Long)
 
 # Handles the steps.
 GET         /step/:stepId/configure                         controllers.StepController.configure(stepId:Long)

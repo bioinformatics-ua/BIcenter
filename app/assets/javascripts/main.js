@@ -25,7 +25,6 @@ requirejs.config({
 
         // QueryBuilder
         'query-builder': '../lib/jQuery-QueryBuilder/js/query-builder.min',
-        //'microevent': 'microevent-mistic100/microevent.min',
         'jquery-extendext': '../lib/jquery-extendext/jQuery.extendext.min',
         'dot/doT': '../lib/doT/doT',
 
@@ -84,6 +83,10 @@ requirejs.config({
         // PreviewResults
         'PreviewResultsController': 'previewResults/previewResultsController',
         'PreviewResultsView': 'previewResults/previewResultsView',
+
+        // PreviewResults
+        'HistoryController': 'history/historyController',
+        'HistoryView': 'history/historyView',
 
         // Result
         'ResultController': 'result/resultController',

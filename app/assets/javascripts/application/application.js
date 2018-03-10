@@ -32,6 +32,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 var opts = { graphId: graphId }
                 self.loadController('MainModule','PreviewResultsController',opts);
             })
+            .add(new RegExp(jsRoutes.controllers.TransGraphController.history('(.*)').url.substr(1), 'i'), function (graphId) {
+                console.log("History of Graph "+graphId);
+                var opts = { graphId: graphId }
+                self.loadController('MainModule','HistoryController',opts);
+            })
             .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)').url.substr(1), 'i'), function (stepId) {
                 console.log('Edit step',stepId);
 

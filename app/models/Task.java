@@ -24,7 +24,7 @@ public class Task implements Serializable {
     private List<Step> steps;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL)
-    private List<Execution> execution;
+    private List<Execution> executions;
 
     public Task(){ date = new Date(); }
     public Task(String name) {
@@ -64,9 +64,9 @@ public class Task implements Serializable {
         this.steps = steps;
     }
 
-    public List<Execution> getExecution() { return execution; }
+    public List<Execution> getExecutions() { return executions; }
 
-    public void setExecution(List<Execution> execution) { this.execution = execution; }
+    public void setExecutions(List<Execution> executions) { this.executions = executions; }
 
     @Override
     public boolean equals(Object o) {

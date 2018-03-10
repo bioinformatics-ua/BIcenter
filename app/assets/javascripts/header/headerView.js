@@ -1,4 +1,4 @@
-define('HeaderView', ['View','Task'], function (View,Task) {
+define('HeaderView', ['View','Task','underscore'], function (View,Task,_) {
     var HeaderView = function (controller) {
         View.call(this, controller, 'header');
     };
@@ -84,6 +84,25 @@ define('HeaderView', ['View','Task'], function (View,Task) {
             this.$elements.executions.append($item);
         }
         this._loadViewComponents();
+    }
+
+    /**
+     * Retrieves all existing transformations.
+     */
+    HeaderView.prototype.getTransformations = function(){
+        var context = this;
+        this.$elements.history.empty();
+
+        // Fetch transformations.
+        Task.getTasks(function(tasks){
+            _.each(tasks, function (task) {
+                var $item = $('<li>').append(
+                    $('<a view-click="controller.showHistory('+task.id+');">').text(task.name)
+                );
+                context.$elements.history.append($item);
+            });
+            context._loadViewComponents();
+        });
     }
 
     /**

@@ -62,6 +62,7 @@
 .bg-fuchsia,
 .bg-purple,
 .bg-maroon,
+.bg-wet-asphalt,
 .bg-black,
 .bg-red-active,
 .bg-yellow-active,
@@ -77,7 +78,8 @@
 .bg-fuchsia-active,
 .bg-purple-active,
 .bg-maroon-active,
-.bg-black-active {
+.bg-black-active,
+.bg-wet-asphalt-active {
   color: #fff !important;
 }
 
@@ -150,6 +152,10 @@
   background-color: @maroon !important;
 }
 
+.bg-wet-asphalt {
+  background-color: @wet-asphalt !important;
+}
+
 //Set of Active Background Colors
 .bg-gray-active {
   color: #000;
@@ -214,6 +220,10 @@
 
 .bg-maroon-active {
   background-color: darken(@maroon , 3%) !important;
+}
+
+.bg-wet-asphalt-active {
+  background-color: darken(@wet-asphalt , 5%) !important;
 }
 
 //Disabled!
@@ -284,6 +294,10 @@
 
 .text-maroon {
   color: @maroon !important;
+}
+
+.text-wet-asphalt {
+  color: @wet-asphalt !important;
 }
 
 .link-muted {
@@ -414,6 +428,11 @@
 
 .bg-maroon-gradient {
   .gradient(@maroon; @maroon; lighten(@maroon, 10%)) !important;
+  color: #fff;
+}
+
+.bg-wet-asphalt-gradient {
+  .gradient(@wet-asphalt; @wet-asphalt; lighten(@wet-asphalt, 20%)) !important;
   color: #fff;
 }
 

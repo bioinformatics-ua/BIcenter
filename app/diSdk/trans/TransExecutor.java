@@ -188,7 +188,9 @@ public class TransExecutor implements Runnable, Serializable {
 
             // Execution has finished.
             Execution execution = executionRepository.get(executionId);
+            execution.setEndDate(new Date());
             execution.setFinished(true);
+            execution.setErrors(trans.getErrors());
             executionRepository.add(execution);
         }
     }
@@ -237,8 +239,6 @@ public class TransExecutor implements Runnable, Serializable {
                             try {
                                 if (rowNr.get() < 20) {
                                     writeDataRow(rowNr.getAndIncrement(), execution, stepJPA, rowMeta, row);
-//                                } else {
-//                                    rowMeta.cloneRow(row);
                                 }
                             } catch (Exception e) {
                                 throw new KettleStepException("Unable to clone row for metadata : " + rowMeta, e);

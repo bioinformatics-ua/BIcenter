@@ -1,6 +1,20 @@
 define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     var Task = Task || {};
 
+    Task.getTasks = function (callback) {
+        jsRoutes.controllers.TransGraphController.getTasks().ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    };
+
     Task.newTask = function (name, callback) {
         jsRoutes.controllers.TransGraphController.newTask(name).ajax({
             contentType: 'application/json; charset=utf-8',
@@ -147,6 +161,20 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
 
     Task.getOpenTabs = function(callback){
         jsRoutes.controllers.TransGraphController.getOpenTabs().ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    }
+
+    Task.getExecutions = function(taskId, callback){
+        jsRoutes.controllers.TransGraphController.getExecutions(taskId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {

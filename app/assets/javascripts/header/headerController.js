@@ -139,6 +139,14 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
     }
 
     /**
+     * Shows the preview results transformation dialog.
+     */
+    HeaderController.prototype.showHistory = function (taskId) {
+        var configStepUrl = jsRoutes.controllers.TransGraphController.history(taskId).url;
+        Router.navigate(configStepUrl);
+    }
+
+    /**
      * Create new task.
      */
     HeaderController.prototype.createTask = function(){

@@ -39,6 +39,8 @@ public class Application extends Controller {
         response().setHeader(Http.HeaderNames.CONTENT_TYPE, "text/javascript");
         return ok(JavaScriptReverseRouter.create("jsRoutes",
                 routes.javascript.Application.supportedLanguages(),
+
+                routes.javascript.TransGraphController.getTasks(),
                 routes.javascript.TransGraphController.newTask(),
                 routes.javascript.TransGraphController.getTask(),
                 routes.javascript.TransGraphController.addStep(),
@@ -52,6 +54,8 @@ public class Application extends Controller {
                 routes.javascript.TransGraphController.closeTab(),
                 routes.javascript.TransGraphController.getOpenTabs(),
                 routes.javascript.TransGraphController.previewResults(),
+                routes.javascript.TransGraphController.history(),
+                routes.javascript.TransGraphController.getExecutions(),
 
                 routes.javascript.StepController.configure(),
                 routes.javascript.StepController.showStepInput(),
