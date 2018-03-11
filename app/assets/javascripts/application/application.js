@@ -45,6 +45,39 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 };
                 self.loadControllers('MainModule', ['StepController', 'StepModalController'], opts);
             })
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.getLogs('(.*)').url.substr(1), 'i'), function (executionId) {
+                console.log('Execution',executionId,'logs');
+
+                var opts = {
+                    executionId: executionId
+                };
+                self.loadController('MainModule', 'LogsController', opts);
+            })
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.getMetrics('(.*)').url.substr(1), 'i'), function (executionId) {
+                console.log('Execution',executionId,'Steps Metrics');
+
+                var opts = {
+                    executionId: executionId
+                };
+                self.loadController('MainModule', 'StepMetricsController', opts);
+            })
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.getStepData('(.*)','(.*)').url.substr(1), 'i'), function (executionId,stepId) {
+                console.log('Execution',executionId,'Step',stepId,'Preview Step Data');
+
+                var opts = {
+                    executionId: executionId,
+                    stepId: stepId
+                };
+                self.loadController('MainModule', 'PreviewStepController', opts);
+            })
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.getData('(.*)').url.substr(1), 'i'), function (executionId) {
+                console.log('Execution',executionId,'Preview Data');
+
+                var opts = {
+                    executionId: executionId
+                };
+                self.loadController('MainModule', 'PreviewDataController', opts);
+            })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Graph "+graphId+" has been selected");
                 var opts = { graphId: graphId }

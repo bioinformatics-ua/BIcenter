@@ -413,7 +413,14 @@ public class TransExecutor implements Runnable, Serializable {
                     errCount = (int) (combi.step.getErrors() + status.getStatus());
                 }
 
-                status = new Status(errCount, logText != null ? logText.toString() : "");
+                int state;
+                if(combi.step.getStatus() != BaseStepData.StepExecutionStatus.STATUS_FINISHED){
+                    if(errCount==0) state = 2;
+                    else state = 1;
+                }
+                else state = 0;
+
+                status = new Status(state, logText != null ? logText.toString() : "");
                 Execution execution = executionRepository.get(executionId);
                 status.setExecution(execution);
 

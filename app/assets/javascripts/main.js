@@ -84,9 +84,24 @@ requirejs.config({
         'PreviewResultsController': 'previewResults/previewResultsController',
         'PreviewResultsView': 'previewResults/previewResultsView',
 
-        // PreviewResults
+        // Executions History
         'HistoryController': 'history/historyController',
         'HistoryView': 'history/historyView',
+
+        // Execution Logs
+        'LogsController': 'logs/logsController',
+        'LogsView': 'logs/logsView',
+
+        // Execution Steps Metrics
+        'StepMetricsController': 'stepMetrics/stepMetricsController',
+        'StepMetricsView': 'stepMetrics/stepMetricsView',
+
+        // Execution Preview Data
+        'PreviewDataController': 'previewData/previewDataController',
+        'PreviewDataView': 'previewData/previewDataView',
+
+        'PreviewStepController': 'previewStep/previewStepController',
+        'PreviewStepView': 'previewStep/previewStepView',
 
         // Result
         'ResultController': 'result/resultController',
@@ -137,16 +152,6 @@ requirejs.config({
         'templates': {
             deps: ['handlebarsHelpers']
         }
-
-        // QueryBuilder
-        // 'jquery.extendext': {
-        //     deps: ['jquery'],
-        //     exports: 'jQuery.extendext'
-        // },
-        // 'query-builder': {
-        //     deps: ['jquery.extendext'],
-        //     exports: 'jQuery.fn.queryBuilder'
-        // }
     }
 });
 

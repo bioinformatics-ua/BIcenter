@@ -58,4 +58,8 @@ GET         /component/:componentId/short/:shortName        controllers.StepCont
 
 # Handles the executions
 POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)
-GET         /execute/result                                 controllers.ExecutionController.result(execution:Long)
+GET         /execution/:executionId/result                  controllers.ExecutionController.result(executionId:Long)
+GET         /execution/:executionId/logs                    controllers.ExecutionController.getLogs(executionId:Long)
+GET         /execution/:executionId/metrics                 controllers.ExecutionController.getMetrics(executionId:Long)
+GET         /execution/:executionId/data                    controllers.ExecutionController.getData(executionId:Long)
+GET         /execution/:executionId/step/:stepId/data       controllers.ExecutionController.getStepData(executionId:Long,stepId:Long)

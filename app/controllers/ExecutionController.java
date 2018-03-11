@@ -19,6 +19,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import repositories.*;
 import serializers.performance.*;
+import serializers.task.PerformanceTaskSerializer;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -167,8 +168,6 @@ public class ExecutionController extends Controller {
     }
 
     public Result result(long executionId) throws Exception {
-        JSONObject jsonReply = new JSONObject();
-
         // Fetch and Serialize Execution.
         Execution execution = executionRepository.get(executionId);
 
@@ -183,5 +182,68 @@ public class ExecutionController extends Controller {
         Json.setObjectMapper(mapper);
 
         return ok(Json.toJson(execution)).as("text/html");
+    }
+
+    public Result getLogs(long executionId) {
+        Execution execution = executionRepository.get(executionId);
+        Task task = execution.getTask();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new PerformanceTaskSerializer(executionId));
+        module.addSerializer(Execution.class, new LogExecutionSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(task));
+    }
+
+    public Result getMetrics(long executionId) {
+        Execution execution = executionRepository.get(executionId);
+        Task task = execution.getTask();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new PerformanceTaskSerializer(executionId));
+        module.addSerializer(Execution.class, new StepMetricsExecutionSerializer());
+        module.addSerializer(StepMetric.class, new StepMetricSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(task));
+    }
+
+    public Result getData(long executionId) {
+        Execution execution = executionRepository.get(executionId);
+        Task task = execution.getTask();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new PerformanceTaskSerializer(executionId));
+        module.addSerializer(Execution.class, new PreviewDataExecutionSerializer());
+        module.addSerializer(Status.class, new StatusSerializer());
+        module.addSerializer(DataRow.class, new DataRowSerializer());
+        module.addSerializer(KeyValue.class, new KeyValueSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(task));
+    }
+
+    public Result getStepData(long executionId, long stepId){
+        Execution execution = executionRepository.get(executionId);
+        Task task = execution.getTask();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new PerformanceTaskSerializer(executionId));
+        module.addSerializer(Execution.class, new PreviewDataExecutionSerializer(stepId));
+        module.addSerializer(Status.class, new StatusSerializer());
+        module.addSerializer(DataRow.class, new DataRowSerializer());
+        module.addSerializer(KeyValue.class, new KeyValueSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(task));
     }
 }
