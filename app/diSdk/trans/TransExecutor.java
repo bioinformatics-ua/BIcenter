@@ -183,6 +183,7 @@ public class TransExecutor implements Runnable, Serializable {
             App.getInstance().getLog().logError("Execution failed！", e);
         } finally {
             // Stores the execution results on the database
+            this.getExecutionLog();
             this.getStepMeasure();
             this.getStepStatus();
 
@@ -267,17 +268,17 @@ public class TransExecutor implements Runnable, Serializable {
             }
         });
 
-        StringBuilder sb = new StringBuilder();
-        KettleLogStore.getAppender().addLoggingEventListener(
-                new KettleLoggingEventListener() {
-                    @Override
-                    public void eventAdded(KettleLoggingEvent event) {
-                        sb.append(event.getMessage().toString() + "\n");
-                        execution.setLog(sb.toString());
-                        executionRepository.add(execution);
-                    }
-                }
-        );
+//        StringBuilder sb = new StringBuilder();
+//        KettleLogStore.getAppender().addLoggingEventListener(
+//                new KettleLoggingEventListener() {
+//                    @Override
+//                    public void eventAdded(KettleLoggingEvent event) {
+//                        sb.append(event.getMessage().toString() + "\n");
+//                        execution.setLog(sb.toString());
+//                        executionRepository.add(execution);
+//                    }
+//                }
+//        );
 
     }
 
@@ -319,6 +320,43 @@ public class TransExecutor implements Runnable, Serializable {
      */
     public boolean isFinished() {
         return finished;
+    }
+
+    /**
+     * Returns the execution logging of the transformation.
+     *
+     * @return
+     * @throws Exception
+     */
+    public void getExecutionLog() {
+        String logText;
+
+        if (executionConfiguration.isExecutingLocally()) {
+            StringBuffer sb = new StringBuffer();
+            KettleLogLayout logLayout = new KettleLogLayout(true);
+            List<String> childIds = LoggingRegistry.getInstance().getLogChannelChildren(trans.getLogChannelId());
+            List<KettleLoggingEvent> logLines = KettleLogStore.getLogBufferFromTo(childIds, true, -1, KettleLogStore.getLastBufferLineNr());
+            for (int i = 0; i < logLines.size(); i++) {
+                KettleLoggingEvent event = logLines.get(i);
+                String line = logLayout.format(event).trim();
+                sb.append(line).append("\n");
+            }
+            logText = sb.toString();
+        } else {
+            SlaveServer remoteSlaveServer = executionConfiguration.getRemoteServer();
+            SlaveServerTransStatus transStatus = null;
+            try {
+                transStatus = remoteSlaveServer.getTransStatus(transMeta.getName(), carteObjectId, 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            logText = transStatus.getLoggingString();
+        }
+
+        // Store executions logs.
+        Execution execution = executionRepository.get(executionId);
+        execution.setLog(logText);
+        executionRepository.add(execution);
     }
 
     /**
