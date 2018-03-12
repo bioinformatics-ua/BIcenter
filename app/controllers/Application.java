@@ -76,6 +76,11 @@ public class Application extends Controller {
 
                 routes.javascript.StepController.getByComponentAndShortName(),
 
+                routes.javascript.ExecutionController.logs(),
+                routes.javascript.ExecutionController.metrics(),
+                routes.javascript.ExecutionController.previewData(),
+                routes.javascript.ExecutionController.previewStep(),
+
                 routes.javascript.ExecutionController.run(),
                 routes.javascript.ExecutionController.result(),
                 routes.javascript.ExecutionController.getTask(),

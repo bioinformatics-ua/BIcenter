@@ -59,10 +59,15 @@ GET         /step/:stepId/component/:componentId/condition  controllers.StepCont
 GET         /component/:componentId/short/:shortName        controllers.StepController.getByComponentAndShortName(componentId:Long,shortName:String)
 
 # Handles the executions
+GET         /execution/:executionId/logs                    controllers.ExecutionController.logs(executionId:Long)
+GET         /execution/:executionId/metrics                 controllers.ExecutionController.metrics(executionId:Long)
+GET         /execution/:executionId/data                    controllers.ExecutionController.previewData(executionId:Long)
+GET         /execution/:executionId/step/:stepId/data       controllers.ExecutionController.previewStep(executionId:Long,stepId:Long)
+
 POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)
 GET         /execution/:executionId/result                  controllers.ExecutionController.result(executionId:Long)
 GET         /execution/:executionId/task                    controllers.ExecutionController.getTask(executionId:Long)
-GET         /execution/:executionId/logs                    controllers.ExecutionController.getLogs(executionId:Long)
-GET         /execution/:executionId/metrics                 controllers.ExecutionController.getMetrics(executionId:Long)
-GET         /execution/:executionId/data                    controllers.ExecutionController.getData(executionId:Long)
-GET         /execution/:executionId/step/:stepId/data       controllers.ExecutionController.getStepData(executionId:Long,stepId:Long)
+GET         /execution/:executionId/logs/json               controllers.ExecutionController.getLogs(executionId:Long)
+GET         /execution/:executionId/metrics/json            controllers.ExecutionController.getMetrics(executionId:Long)
+GET         /execution/:executionId/data/json               controllers.ExecutionController.getData(executionId:Long)
+GET         /execution/:executionId/step/:stepId/data/json  controllers.ExecutionController.getStepData(executionId:Long,stepId:Long)

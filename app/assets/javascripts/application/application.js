@@ -49,7 +49,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 };
                 self.loadControllers('MainModule', ['StepController', 'StepModalController'], opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.getLogs('(.*)').url.substr(1), 'i'), function (executionId) {
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.logs('(.*)').url.substr(1), 'i'), function (executionId) {
                 console.log('Execution', executionId, 'logs');
 
                 var opts = {
@@ -59,7 +59,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 self.loadController('MainModule', 'LogsController', opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.getMetrics('(.*)').url.substr(1), 'i'), function (executionId) {
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.metrics('(.*)').url.substr(1), 'i'), function (executionId) {
                 console.log('Execution', executionId, 'Steps Metrics');
 
                 var opts = {
@@ -69,7 +69,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 self.loadController('MainModule', 'StepMetricsController', opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.getStepData('(.*)', '(.*)').url.substr(1), 'i'), function (executionId, stepId) {
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.previewStep('(.*)', '(.*)').url.substr(1), 'i'), function (executionId, stepId) {
                 console.log('Execution', executionId, 'Step', stepId, 'Preview Step Data');
 
                 var opts = {
@@ -80,7 +80,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 self.loadController('MainModule', 'PreviewStepController', opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.getData('(.*)').url.substr(1), 'i'), function (executionId) {
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.previewData('(.*)').url.substr(1), 'i'), function (executionId) {
                 console.log('Execution', executionId, 'Preview Data');
 
                 var opts = {
