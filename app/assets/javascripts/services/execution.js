@@ -30,6 +30,20 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Execution.getTask = function (execution,callback) {
+        jsRoutes.controllers.ExecutionController.getTask(execution).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Execution service', response);
+            }
+        })
+    };
+
     Execution.getLogs = function (execution,callback) {
         jsRoutes.controllers.ExecutionController.getLogs(execution).ajax({
             contentType: 'application/json; charset=utf-8',

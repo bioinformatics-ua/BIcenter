@@ -20,6 +20,7 @@ import play.mvc.Result;
 import repositories.*;
 import serializers.performance.*;
 import serializers.task.PerformanceTaskSerializer;
+import serializers.task.SimpleTaskSerializer;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -182,6 +183,20 @@ public class ExecutionController extends Controller {
         Json.setObjectMapper(mapper);
 
         return ok(Json.toJson(execution)).as("text/html");
+    }
+
+    public Result getTask(long executionId) throws Exception {
+        // Fetch and Serialize Execution.
+        Execution execution = executionRepository.get(executionId);
+        Task task = execution.getTask();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new SimpleTaskSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(task));
     }
 
     public Result getLogs(long executionId) {

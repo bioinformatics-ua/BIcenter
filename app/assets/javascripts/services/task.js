@@ -57,6 +57,20 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Task.getTaskDetails = function(taskId, callback) {
+        jsRoutes.controllers.TransGraphController.getTaskDetails(taskId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    };
+
     Task.addStep = function(graphId, stepMeta, callback){
         jsRoutes.controllers.TransGraphController.addStep(graphId).ajax({
             contentType: 'application/json; charset=utf-8',

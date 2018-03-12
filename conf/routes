@@ -22,6 +22,7 @@ GET         /graph/:graphId/select                          controllers.TransGra
 GET         /graph/:graphId/preview                         controllers.TransGraphController.previewResults(graphId:Long)
 GET         /graph/:graphId/history                         controllers.TransGraphController.history(graphId:Long)
 
+GET         /graph/:graphId/details                         controllers.TransGraphController.getTaskDetails(graphId:Long)
 GET         /graph/list                                     controllers.TransGraphController.getTasks()
 GET         /graph/new/:name                                controllers.TransGraphController.newTask(name:String)
 GET         /graph/:graphId/load                            controllers.TransGraphController.loadTask(graphId:Long)
@@ -48,6 +49,7 @@ GET         /step/:stepId/outputStepsName                   controllers.StepCont
 GET         /step/inputOutputFields                         controllers.StepController.inputOutputFields(stepId:Long,before:Boolean)
 GET         /step/:stepId/schema                            controllers.StepController.getSchema(stepId:Long)
 POST        /step/:stepId/apply                             controllers.StepController.applyChanges(stepId:Long)
+GET         /step/:stepId/name                              controllers.StepController.getStepName(stepId:Long)
 GET         /step/:stepId                                   controllers.StepController.getStep(stepId:Long)
 GET         /step/:stepId/tables                            controllers.StepController.getTables(stepId:Long)
 GET         /step/:stepId/component/:componentId/table      controllers.StepController.getTableValue(stepId:Long,componentId:Long)
@@ -59,6 +61,7 @@ GET         /component/:componentId/short/:shortName        controllers.StepCont
 # Handles the executions
 POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)
 GET         /execution/:executionId/result                  controllers.ExecutionController.result(executionId:Long)
+GET         /execution/:executionId/task                    controllers.ExecutionController.getTask(executionId:Long)
 GET         /execution/:executionId/logs                    controllers.ExecutionController.getLogs(executionId:Long)
 GET         /execution/:executionId/metrics                 controllers.ExecutionController.getMetrics(executionId:Long)
 GET         /execution/:executionId/data                    controllers.ExecutionController.getData(executionId:Long)

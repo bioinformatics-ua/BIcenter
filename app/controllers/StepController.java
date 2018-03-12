@@ -225,6 +225,11 @@ public class StepController extends Controller {
         return ok(Json.toJson(component));
     }
 
+    public Result getStepName(long stepId) {
+        Step step = stepRepository.get(stepId);
+        return ok(step.getLabel());
+    }
+
     /**
      * Return Step by Id
      *

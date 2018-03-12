@@ -84,6 +84,10 @@ requirejs.config({
         'PreviewResultsController': 'previewResults/previewResultsController',
         'PreviewResultsView': 'previewResults/previewResultsView',
 
+        // Breadcrumb
+        'BreadcrumbController': 'breadcrumb/breadcrumbController',
+        'BreadcrumbView': 'breadcrumb/breadcrumbView',
+
         // Executions History
         'HistoryController': 'history/historyController',
         'HistoryView': 'history/historyView',

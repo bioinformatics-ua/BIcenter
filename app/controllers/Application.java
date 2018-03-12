@@ -40,6 +40,7 @@ public class Application extends Controller {
         return ok(JavaScriptReverseRouter.create("jsRoutes",
                 routes.javascript.Application.supportedLanguages(),
 
+                routes.javascript.TransGraphController.getTaskDetails(),
                 routes.javascript.TransGraphController.getTasks(),
                 routes.javascript.TransGraphController.newTask(),
                 routes.javascript.TransGraphController.getTask(),
@@ -65,6 +66,7 @@ public class Application extends Controller {
                 routes.javascript.StepController.inputFieldsName(),
                 routes.javascript.StepController.outputStepsName(),
                 routes.javascript.StepController.getSchema(),
+                routes.javascript.StepController.getStepName(),
                 routes.javascript.StepController.getStep(),
                 routes.javascript.StepController.applyChanges(),
                 routes.javascript.StepController.getTables(),
@@ -76,6 +78,7 @@ public class Application extends Controller {
 
                 routes.javascript.ExecutionController.run(),
                 routes.javascript.ExecutionController.result(),
+                routes.javascript.ExecutionController.getTask(),
                 routes.javascript.ExecutionController.getLogs(),
                 routes.javascript.ExecutionController.getMetrics(),
                 routes.javascript.ExecutionController.getData(),

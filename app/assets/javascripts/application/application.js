@@ -18,27 +18,31 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
         // Add routes
         Router
             .add(new RegExp(jsRoutes.controllers.StepController.showStepInput('(.*)').url.substr(1), 'i'), function (stepId) {
-                console.log("Show Input Fields of Step "+stepId);
-                var opts = { stepId:stepId, before:true };
-                self.loadController('MainModule','FieldsController',opts);
+                console.log("Show Input Fields of Step " + stepId);
+                var opts = {stepId: stepId, before: true};
+                self.loadController('MainModule', 'FieldsController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.StepController.showStepOutput('(.*)').url.substr(1), 'i'), function (stepId) {
-                console.log("Show Output Fields of Step "+stepId);
-                var opts = { stepId:stepId, before: false };
-                self.loadController('MainModule','FieldsController',opts);
+                console.log("Show Output Fields of Step " + stepId);
+                var opts = {stepId: stepId, before: false};
+                self.loadController('MainModule', 'FieldsController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.previewResults('(.*)').url.substr(1), 'i'), function (graphId) {
-                console.log("Preview Results of Graph "+graphId);
-                var opts = { graphId: graphId }
-                self.loadController('MainModule','PreviewResultsController',opts);
+                console.log("Preview Results of Graph " + graphId);
+                var opts = {graphId: graphId}
+                self.loadController('MainModule', 'PreviewResultsController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.history('(.*)').url.substr(1), 'i'), function (graphId) {
-                console.log("History of Graph "+graphId);
-                var opts = { graphId: graphId }
-                self.loadController('MainModule','HistoryController',opts);
+                console.log("History of Graph " + graphId);
+                var opts = {
+                    graphId: graphId,
+                    section: 'history'
+                }
+                self.loadController('MainModule', 'HistoryController', opts);
+                self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)').url.substr(1), 'i'), function (stepId) {
-                console.log('Edit step',stepId);
+                console.log('Edit step', stepId);
 
                 var opts = {
                     stepId: stepId
@@ -46,42 +50,50 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 self.loadControllers('MainModule', ['StepController', 'StepModalController'], opts);
             })
             .add(new RegExp(jsRoutes.controllers.ExecutionController.getLogs('(.*)').url.substr(1), 'i'), function (executionId) {
-                console.log('Execution',executionId,'logs');
-
-                var opts = {
-                    executionId: executionId
-                };
-                self.loadController('MainModule', 'LogsController', opts);
-            })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.getMetrics('(.*)').url.substr(1), 'i'), function (executionId) {
-                console.log('Execution',executionId,'Steps Metrics');
-
-                var opts = {
-                    executionId: executionId
-                };
-                self.loadController('MainModule', 'StepMetricsController', opts);
-            })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.getStepData('(.*)','(.*)').url.substr(1), 'i'), function (executionId,stepId) {
-                console.log('Execution',executionId,'Step',stepId,'Preview Step Data');
+                console.log('Execution', executionId, 'logs');
 
                 var opts = {
                     executionId: executionId,
-                    stepId: stepId
+                    section: 'logs'
                 };
-                self.loadController('MainModule', 'PreviewStepController', opts);
+                self.loadController('MainModule', 'LogsController', opts);
+                self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.getData('(.*)').url.substr(1), 'i'), function (executionId) {
-                console.log('Execution',executionId,'Preview Data');
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.getMetrics('(.*)').url.substr(1), 'i'), function (executionId) {
+                console.log('Execution', executionId, 'Steps Metrics');
 
                 var opts = {
-                    executionId: executionId
+                    executionId: executionId,
+                    section: 'metrics'
+                };
+                self.loadController('MainModule', 'StepMetricsController', opts);
+                self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
+            })
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.getStepData('(.*)', '(.*)').url.substr(1), 'i'), function (executionId, stepId) {
+                console.log('Execution', executionId, 'Step', stepId, 'Preview Step Data');
+
+                var opts = {
+                    executionId: executionId,
+                    stepId: stepId,
+                    section: 'previewStep'
+                };
+                self.loadController('MainModule', 'PreviewStepController', opts);
+                self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
+            })
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.getData('(.*)').url.substr(1), 'i'), function (executionId) {
+                console.log('Execution', executionId, 'Preview Data');
+
+                var opts = {
+                    executionId: executionId,
+                    section: 'previewData'
                 };
                 self.loadController('MainModule', 'PreviewDataController', opts);
+                self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)').url.substr(1), 'i'), function (graphId) {
-                console.log("Graph "+graphId+" has been selected");
-                var opts = { graphId: graphId }
-                self.loadController('MainModule','GraphController',opts);
+                console.log("Graph " + graphId + " has been selected");
+                var opts = {graphId: graphId}
+                self.loadController('MainModule', 'GraphController', opts);
             })
             .add(function () {
                 console.log('homepage');

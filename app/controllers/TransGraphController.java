@@ -97,6 +97,18 @@ public class TransGraphController extends Controller {
      */
     public Result history(long graphId) { return ok(views.html.index.render()); }
 
+    public Result getTaskDetails(long graphId) {
+        Task task = taskRepository.get(graphId);
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Task.class, new SimpleTaskSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(task));
+    }
+
     public Result getTasks() {
         List<Task> tasks = taskRepository.list();
 
