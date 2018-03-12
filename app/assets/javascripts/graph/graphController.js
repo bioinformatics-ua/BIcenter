@@ -12,6 +12,15 @@ define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function
         // Load the mxEditor after elements rendering.
         this.createEditor('/assets/editor/diagrameditor.xml');
 
+        if(this.graphId){
+            var context = this;
+            Task.loadTask(this.graphId, function (graph) {
+                context.view.$elements.source.click();
+                context.view.$elements.xml.val(graph);
+                context.view.$elements.source.click();
+            });
+        }
+
         if (global_editor != null) {
             this.view.$elements.source.click();
             this.view.$elements.source.click();

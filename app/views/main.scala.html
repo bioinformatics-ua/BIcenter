@@ -39,15 +39,9 @@
 
             <script type="text/javascript" src="@routes.Assets.versioned("editor/graph.js")"></script>
             <div class="content-wrapper">
-
-            <div module="BreadcrumbModule"></div>
-
-            <section class="content">
-
-            @content
-
-            </section>
-        </div>
+                <div module="BreadcrumbModule"></div>
+                <section class="content"> @content </section>
+            </div>
 
             @footer()
         </div>

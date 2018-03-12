@@ -11,5 +11,14 @@ define('SidebarView', ['View'], function (View) {
         _super_.initialize.call(this, $container);
     };
 
+    SidebarView.prototype.loadTasks = function (tasks) {
+        var html = JST['sidebar']({
+            tasks: tasks
+        });
+        this.$container.html(html);
+        this._loadViewComponents();
+        this.$elements.components.hide();
+    };
+
     return SidebarView;
 });

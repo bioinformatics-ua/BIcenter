@@ -1,11 +1,46 @@
 <ul class="sidebar-menu" data-widget="tree">
-    <li class="header">Core Objects</li>
+    <div class="sidetoolbar">
+        <div class="sidetoolbar-group">
+            <button view-click="controller.getTasks();" class="btn btn-app btn-sidetoolbar">
+                <i class="fa fa-exchange"></i>
+                Tasks
+            </button>
+
+            <button view-click="controller.getComponents();" class="btn btn-app btn-sidetoolbar">
+                <i class="fa fa-wrench"></i>
+                Components
+            </button>
+        </div>
+    </div>
+</ul>
+
+{{#if tasks}}
+    <ul view-element="tasks" class="sidebar-menu" data-widget="tree">
+        <li class="treeview menu-open">
+            <a>
+                <i class="fa fa-folder"></i> <span>Home</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {{#tasks}}
+                    <li>
+                        <a view-click="controller.selectTask({{id}})"><i class="fa fa-file-text-o"></i> {{name}} </a>
+                    </li>
+                {{/tasks}}
+            </ul>
+        </li>
+    </ul>
+{{/if}}
+
+<ul view-element="components" class="sidebar-menu" data-widget="tree">
     <li class="treeview menu-open">
         <a>
             <i class="fa fa-folder"></i> <span>Input</span>
             <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
         </a>
         <ul class="treeview-menu">
             <li>

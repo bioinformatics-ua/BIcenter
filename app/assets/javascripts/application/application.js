@@ -92,8 +92,13 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Graph " + graphId + " has been selected");
-                var opts = {graphId: graphId}
+
+                var opts = {
+                    graphId: graphId,
+                    section: 'selectTask'
+                }
                 self.loadController('MainModule', 'GraphController', opts);
+                self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(function () {
                 console.log('homepage');
