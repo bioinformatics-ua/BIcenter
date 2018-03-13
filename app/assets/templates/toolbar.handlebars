@@ -1,0 +1,127 @@
+<div view-element="toolbar">
+    <div class="toolbar-group">
+        <div class="toolbar-title">Step</div>
+
+        <div class="toolbar-content">
+            <button view-click="controller.showStepDialog();" class="btn btn-app btn-toolbar">
+                <i class="fa fa-pencil-square-o"></i>
+                Edit
+            </button>
+
+            <button view-click="controller.showStepInput();" class="btn btn-app btn-toolbar">
+                <i class="fa fa-sign-in"></i>
+                Input
+            </button>
+
+            <button view-click="controller.showStepOutput();" class="btn btn-app btn-toolbar">
+                <i class="fa fa-sign-out"></i>
+                Output
+            </button>
+        </div>
+    </div>
+
+    <div class="btn btn-app btn-separator">
+        <div class="separator-inner"></div>
+    </div>
+
+    <div class="toolbar-group">
+        <div class="toolbar-title">Run</div>
+
+        <div class="toolbar-content">
+            <button view-click="controller.runTransformation(1);" class="btn btn-app btn-toolbar">
+                <i class="fa fa-map-marker"></i>
+                Local
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-globe"></i>
+                Remote
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-cog"></i>
+                Options
+            </button>
+        </div>
+    </div>
+
+    <div class="btn btn-app btn-separator">
+        <div class="separator-inner"></div>
+    </div>
+
+    <div class="toolbar-group">
+        <div class="toolbar-title">History</div>
+
+        <div class="toolbar-content">
+            <button view-click="controller.showHistory();" class="btn btn-app btn-toolbar">
+                <i class="fa fa-history"></i>
+                History
+            </button>
+        </div>
+    </div>
+
+    <div class="btn btn-app btn-separator">
+        <div class="separator-inner"></div>
+    </div>
+
+    <div class="toolbar-group">
+        <div class="toolbar-title">Edit</div>
+
+        <div class="toolbar-content">
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-scissors"></i>
+                Cut
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-files-o"></i>
+                Copy
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-clipboard"></i>
+                Paste
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-eraser"></i>
+                Delete
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-undo"></i>
+                Undo
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-repeat"></i>
+                Redo
+            </button>
+        </div>
+    </div>
+
+    <div class="btn btn-app btn-separator">
+        <div class="separator-inner"></div>
+    </div>
+
+    <div class="toolbar-group">
+        <div class="toolbar-title">Select</div>
+
+        <div class="toolbar-content">
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-hand-rock-o"></i>
+                All
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-hand-paper-o"></i>
+                None
+            </button>
+
+            <button class="btn btn-app btn-toolbar">
+                <i class="fa fa-long-arrow-right"></i>
+                Hops
+            </button>
+        </div>
+    </div>
+</div>

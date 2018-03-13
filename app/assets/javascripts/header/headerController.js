@@ -1,4 +1,4 @@
-define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task','Execution', 'Alert'], function (Controller, HeaderView, jsRoutes, Router,Task,Execution,Alert) {
+define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router', 'Task', 'Execution', 'Alert', 'User'], function (Controller, HeaderView, jsRoutes, Router, Task, Execution, Alert, User) {
     var HeaderController = function (module) {
         Controller.call(this, module, new HeaderView(this));
     };
@@ -8,8 +8,19 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
     var _super_ = Controller.prototype;
 
     HeaderController.prototype.initialize = function ($container) {
-        _super_.initialize.call(this, $container);
+        var self = this;
+        this.getUser(function (user) {
+            _super_.initialize.call(self, $container, user);
+            console.log(user);
+        });
+
         this.executions = [];
+    };
+
+    HeaderController.prototype.getUser = function (callback) {
+        User.getLoggedIn(function (user) {
+            callback && callback(user);
+        });
     };
 
     /**
@@ -53,7 +64,7 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
      * Shows the preview results transformation dialog.
      */
     HeaderController.prototype.showPreviewResults = function (taskName, executionId) {
-        Task.getTask(taskName,function(task){
+        Task.getTask(taskName, function (task) {
             var configStepUrl = jsRoutes.controllers.TransGraphController.previewResults(task.id).url;
             Router.navigate(configStepUrl);
         });
@@ -62,7 +73,7 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
     /**
      * Create new task.
      */
-    HeaderController.prototype.createTask = function(){
+    HeaderController.prototype.createTask = function () {
         var graphController = app.modules.MainModule.controllers.GraphController;
         graphController.createTask();
     }

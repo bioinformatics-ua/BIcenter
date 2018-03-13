@@ -7,8 +7,8 @@ define('HeaderView', ['View','Task','underscore'], function (View,Task,_) {
     HeaderView.prototype = Object.create(View.prototype);
     var _super_ = View.prototype;
 
-    HeaderView.prototype.initialize = function ($container) {
-        _super_.initialize.call(this, $container);
+    HeaderView.prototype.initialize = function ($container, data) {
+        _super_.initialize.call(this, $container, data);
         this.notification_counter = 0;
     };
 

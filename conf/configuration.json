@@ -862,5 +862,67 @@
         }
       ]
     }
+  ],
+  "operations": [
+    "Add",
+    "Update",
+    "Delete",
+    "Get",
+    "List"
+  ],
+  "categories": [
+    "Task",
+    "Server"
+  ],
+  "roles": [
+    {
+      "name": "Administrator",
+      "permissions": [
+        {
+          "category": "Task",
+          "operations": [
+            "Add",
+            "Update",
+            "Delete",
+            "Get",
+            "List"
+          ]
+        },
+        {
+          "category": "Server",
+          "operations": [
+            "Add",
+            "Update",
+            "Delete",
+            "Get",
+            "List"
+          ]
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "name": "BMD Software",
+      "email": "info@bmd-software.com",
+      "password": "BmdBIcenter",
+      "active": true,
+      "roles": [
+        "Administrator"
+      ]
+    }
+  ],
+  "authentications": [
+    {
+      "type": "LDAP",
+      "hostname": "bmd-software.com",
+      "port": 389,
+      "baseDN": "dc=bmd-software,dc=com",
+      "usernameAttributes": "uid",
+      "realnameAttributes": "cn",
+      "roles": [
+        "Administrator"
+      ]
+    }
   ]
 }

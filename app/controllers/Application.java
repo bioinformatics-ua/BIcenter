@@ -40,6 +40,12 @@ public class Application extends Controller {
         return ok(JavaScriptReverseRouter.create("jsRoutes",
                 routes.javascript.Application.supportedLanguages(),
 
+                // Login controller
+                controllers.login.routes.javascript.Login.index(),
+                controllers.login.routes.javascript.Login.login(),
+                controllers.login.routes.javascript.Login.logout(),
+                controllers.rbac.routes.javascript.Users.getLoggedInUser(),
+
                 routes.javascript.TransGraphController.getTaskDetails(),
                 routes.javascript.TransGraphController.getTasks(),
                 routes.javascript.TransGraphController.newTask(),

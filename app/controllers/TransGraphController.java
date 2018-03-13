@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
+import controllers.login.Secured;
+import controllers.rbac.annotation.CheckPermission;
 import diSdk.task.TaskEncoder;
 import models.*;
 import models.Execution;
+import models.rbac.Category;
+import models.rbac.Operation;
 import org.hibernate.Hibernate;
 import play.cache.*;
 
@@ -37,6 +41,7 @@ import org.w3c.dom.Document;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import repositories.*;
 import serializers.component.ComponentMetadataSerializer;
 import serializers.component.ComponentPropertySerializer;
@@ -81,6 +86,8 @@ public class TransGraphController extends Controller {
      * @param graphId
      * @return
      */
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = Operation.GET)
     public Result selectTask(long graphId) { return ok(views.html.index.render()); }
 
     /**

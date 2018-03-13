@@ -123,6 +123,8 @@ define('View', ['jquery', 'underscore', 'Utils', 'messages', 'templates'], funct
                     }
                 }
                 //context[name](args);
+                args.push(event);
+                args.push($element);
                 context[name].apply(context, args);
                 return false;
             });

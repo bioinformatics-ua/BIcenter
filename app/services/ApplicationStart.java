@@ -3,15 +3,24 @@ package services;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import configuration.CAuthentication;
+import configuration.CUser;
 import configuration.Configuration;
 import models.Component;
 import models.ComponentProperty;
+import models.authentication.Authentication;
+import models.rbac.User;
+import org.mindrot.jbcrypt.BCrypt;
 import org.pentaho.di.core.KettleEnvironment;
 import org.pentaho.di.core.Props;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.logging.KettleLogStore;
 import play.inject.ApplicationLifecycle;
 import repositories.ComponentRepository;
+import repositories.authentication.AuthenticationRepository;
+import repositories.user.RBACRepository;
+import services.authentication.AuthenticationService;
+import services.rbac.UserService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,23 +49,18 @@ public class ApplicationStart {
     private final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger("application");
 
     private final ComponentRepository componentRepository;
+    private final RBACRepository rbacRepository;
+    private final UserService userService;
+    private final AuthenticationRepository authenticationRepository;
+    private final AuthenticationService authenticationService;
 
     @Inject
-    public ApplicationStart(ComponentRepository componentRepository) {
+    public ApplicationStart(ComponentRepository componentRepository, RBACRepository rbacRepository, UserService userService, AuthenticationRepository authenticationRepository, AuthenticationService authenticationService) {
         this.componentRepository = componentRepository;
-
-        // Building Step Configurations.
-        buildComponents();
-
-        // Setting up Kettle environment.
-        initKettle();
-    }
-
-    /**
-     * Load components specifications into the database
-     */
-    private void buildComponents(){
-        logger.info("Building Step Configurations.");
+        this.rbacRepository = rbacRepository;
+        this.userService = userService;
+        this.authenticationRepository = authenticationRepository;
+        this.authenticationService = authenticationService;
 
         // Get configuration from JSON file
         Gson gson = new Gson();
@@ -67,6 +71,72 @@ public class ApplicationStart {
             throw new IllegalArgumentException("It was not possible to find the configurations file.");
         }
 
+        // Building Step Configurations.
+        buildComponents(configuration);
+
+        boolean initRBAC = rbacRepository.findAllRoles().size() == 0;
+        if (initRBAC) {
+            buildRBAC(configuration);
+        }
+
+        boolean initAuth = authenticationRepository.findAll().size() == 0;
+        if (initAuth) {
+            try {
+                buildAuth(configuration);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Setting up Kettle environment.
+        initKettle();
+    }
+
+    private void buildAuth(Configuration configuration) throws Exception {
+        logger.info("Building Auth.");
+
+        for (CAuthentication auth : configuration.getAuthentications()) {
+            Authentication authentication = new Authentication(
+                    Authentication.AuthenticationType.valueOf(auth.getType()),
+                    auth.getHostname(),
+                    auth.getPort(),
+                    auth.getBaseDN(),
+                    auth.getUsernameAttributes(),
+                    auth.getRealnameAttributes()
+            );
+
+            authentication.setDomain(auth.getDomain());
+            authentication.setDefaultUser(auth.getDefaultUser());
+            if (auth.getDefaultPassword() != null) {
+                authentication.setDefaultPassword(AuthenticationService.encryptPassword(auth.getHostname(), auth.getDefaultPassword()));
+            }
+
+            authentication.setActive(auth.getActive());
+
+            authenticationService.createAuthentication(authentication, auth.getRoles());
+        }
+    }
+
+    private void buildRBAC(Configuration configuration) {
+        logger.info("Building RBAC.");
+
+        // Init roles
+        rbacRepository.initializeRoles(configuration.getOperations(), configuration.getCategories(), configuration.getRoles());
+
+        for (CUser u : configuration.getUsers()) {
+            User user = new User(u.getEmail(), u.getName(), BCrypt.hashpw(u.getPassword(), BCrypt.gensalt()));
+            user.setActive(u.getActive());
+
+            userService.createUserWithRoles(user, u.getRoles());
+        }
+    }
+
+    /**
+     * Load components specifications into the database
+     */
+    private void buildComponents(Configuration configuration) {
+        logger.info("Building Step Configurations.");
+
         // Get existent configurations.
         List<String> components = componentRepository.list()
                 .stream()
@@ -75,39 +145,39 @@ public class ApplicationStart {
 
         // Load missing configurations.
         configuration.getComponents()
-            .stream()
-            .filter(component -> !components.contains(component.getName()))
-            .peek(component -> {
-                List<ComponentProperty> componentProperties = component.getComponentProperties();
-                if(componentProperties != null) {
-                    component.getComponentProperties()
-                            .stream()
-                            .forEach(cp ->
-                            {
-                                cp.setComponent(component);
-                                if (cp.getComponentMetadatas() != null) {
-                                    cp.getComponentMetadatas()
-                                            .stream()
-                                            .forEach(cm ->
-                                            {
-                                                cm.setComponentProperty(cp);
-                                                if(cm.getMetadatas() != null){
-                                                    cm.getMetadatas()
-                                                            .stream()
-                                                            .forEach(m -> m.setComponentMetadata(cm));
-                                                }
-                                            });
-                                }
-                            });
-                }
-            })
-            .forEach(componentRepository::add);
+                .stream()
+                .filter(component -> !components.contains(component.getName()))
+                .peek(component -> {
+                    List<ComponentProperty> componentProperties = component.getComponentProperties();
+                    if (componentProperties != null) {
+                        component.getComponentProperties()
+                                .stream()
+                                .forEach(cp ->
+                                {
+                                    cp.setComponent(component);
+                                    if (cp.getComponentMetadatas() != null) {
+                                        cp.getComponentMetadatas()
+                                                .stream()
+                                                .forEach(cm ->
+                                                {
+                                                    cm.setComponentProperty(cp);
+                                                    if (cm.getMetadatas() != null) {
+                                                        cm.getMetadatas()
+                                                                .stream()
+                                                                .forEach(m -> m.setComponentMetadata(cm));
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                })
+                .forEach(componentRepository::add);
     }
 
     /**
      * Setup Kettle environment.
      */
-    private void initKettle(){
+    private void initKettle() {
         logger.info("Setting up Kettle environment.");
         try {
             KettleLogStore.init(5000, 720);

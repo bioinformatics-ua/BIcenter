@@ -6,68 +6,75 @@
 ##########  Application
 ############################################################################
 # An example controller showing a sample home page
-GET         /                                               controllers.HomeController.index
-GET         /assets/javascripts/jsroutes.js                 controllers.Application.javascriptRoutes
-GET         /assets/javascripts/messages.js                 controllers.Application.jsMessages
-GET         /langs                                          controllers.Application.supportedLanguages
+GET           /                                                     controllers.HomeController.index
+GET           /assets/javascripts/jsroutes.js                       controllers.Application.javascriptRoutes
+GET           /assets/javascripts/messages.js                       controllers.Application.jsMessages
+GET           /langs                                                controllers.Application.supportedLanguages
+
+# LOGIN
+GET           /login                                                controllers.login.Login.index()
+POST          /login                                                controllers.login.Login.login()
+GET           /logout                                               controllers.login.Login.logout()
+
+GET           /user                                                 controllers.rbac.Users.getLoggedInUser()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                                   controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                                         controllers.Assets.versioned(path="/public", file: Asset)
 
 # Handles the pipeline step svg images.
-GET         /middle/:image                                  controllers.SvgController.service(image:String)
+GET           /middle/:image                                        controllers.SvgController.service(image:String)
 
 # Handles the pipeline.
-GET         /graph/:graphId/select                          controllers.TransGraphController.selectTask(graphId:Long)
-GET         /graph/:graphId/preview                         controllers.TransGraphController.previewResults(graphId:Long)
-GET         /graph/:graphId/history                         controllers.TransGraphController.history(graphId:Long)
+GET           /graph/:graphId/select                                controllers.TransGraphController.selectTask(graphId:Long)
+GET           /graph/:graphId/preview                               controllers.TransGraphController.previewResults(graphId:Long)
+GET           /graph/:graphId/history                               controllers.TransGraphController.history(graphId:Long)
 
-GET         /graph/:graphId/details                         controllers.TransGraphController.getTaskDetails(graphId:Long)
-GET         /graph/list                                     controllers.TransGraphController.getTasks()
-GET         /graph/new/:name                                controllers.TransGraphController.newTask(name:String)
-GET         /graph/:graphId/load                            controllers.TransGraphController.loadTask(graphId:Long)
-GET         /graph/:name/task                               controllers.TransGraphController.getTask(name:String)
-GET         /graph/load                                     controllers.TransGraphController.loadTrans(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")
-POST        /graph/:graphId/new/step                        controllers.TransGraphController.addStep(graphId:Long)
-POST        /graph/:stepId/update/step                      controllers.TransGraphController.updateStep(stepId:Long)
-DELETE      /graph/:stepId/new/step                         controllers.TransGraphController.removeStep(stepId:Long)
-GET         /graph/:graphId/steps                           controllers.TransGraphController.getSteps(graphId:Long)
-POST        /graph/:graphId/new/hop                         controllers.TransGraphController.addHop(graphId:Long)
-DELETE      /graph/:hopId/new/hop                           controllers.TransGraphController.removeHop(hopId:Long)
-POST        /graph/:graphId/close                           controllers.TransGraphController.closeTab(graphId:Long)
-GET         /graph/tabs                                     controllers.TransGraphController.getOpenTabs()
-GET         /graph/:graphId/executions                      controllers.TransGraphController.getExecutions(graphId:Long)
+GET           /graph/:graphId/details                               controllers.TransGraphController.getTaskDetails(graphId:Long)
+GET           /graph/list                                           controllers.TransGraphController.getTasks()
+GET           /graph/new/:name                                      controllers.TransGraphController.newTask(name:String)
+GET           /graph/:graphId/load                                  controllers.TransGraphController.loadTask(graphId:Long)
+GET           /graph/:name/task                                     controllers.TransGraphController.getTask(name:String)
+GET           /graph/load                                           controllers.TransGraphController.loadTrans(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")
+POST          /graph/:graphId/new/step                              controllers.TransGraphController.addStep(graphId:Long)
+POST          /graph/:stepId/update/step                            controllers.TransGraphController.updateStep(stepId:Long)
+DELETE        /graph/:stepId/new/step                               controllers.TransGraphController.removeStep(stepId:Long)
+GET           /graph/:graphId/steps                                 controllers.TransGraphController.getSteps(graphId:Long)
+POST          /graph/:graphId/new/hop                               controllers.TransGraphController.addHop(graphId:Long)
+DELETE        /graph/:hopId/new/hop                                 controllers.TransGraphController.removeHop(hopId:Long)
+POST          /graph/:graphId/close                                 controllers.TransGraphController.closeTab(graphId:Long)
+GET           /graph/tabs                                           controllers.TransGraphController.getOpenTabs()
+GET           /graph/:graphId/executions                            controllers.TransGraphController.getExecutions(graphId:Long)
 
 # Handles the steps.
-GET         /step/:stepId/configure                         controllers.StepController.configure(stepId:Long)
-GET         /step/:stepId/input                             controllers.StepController.showStepInput(stepId:Long)
-GET         /step/:stepId/output                            controllers.StepController.showStepOutput(stepId:Long)
+GET           /step/:stepId/configure                               controllers.StepController.configure(stepId:Long)
+GET           /step/:stepId/input                                   controllers.StepController.showStepInput(stepId:Long)
+GET           /step/:stepId/output                                  controllers.StepController.showStepOutput(stepId:Long)
 
-GET         /step/:stepId/inputStepsName                    controllers.StepController.inputStepsName(stepId:Long)
-GET         /step/:stepId/inputFieldsName                   controllers.StepController.inputFieldsName(stepId:Long)
-GET         /step/:stepId/outputStepsName                   controllers.StepController.outputStepsName(stepId:Long)
-GET         /step/inputOutputFields                         controllers.StepController.inputOutputFields(stepId:Long,before:Boolean)
-GET         /step/:stepId/schema                            controllers.StepController.getSchema(stepId:Long)
-POST        /step/:stepId/apply                             controllers.StepController.applyChanges(stepId:Long)
-GET         /step/:stepId/name                              controllers.StepController.getStepName(stepId:Long)
-GET         /step/:stepId                                   controllers.StepController.getStep(stepId:Long)
-GET         /step/:stepId/tables                            controllers.StepController.getTables(stepId:Long)
-GET         /step/:stepId/component/:componentId/table      controllers.StepController.getTableValue(stepId:Long,componentId:Long)
-GET         /step/:stepId/conditions                        controllers.StepController.getConditions(stepId:Long)
-GET         /step/:stepId/component/:componentId/condition  controllers.StepController.getConditionValue(stepId:Long,componentId:Long)
+GET           /step/:stepId/inputStepsName                          controllers.StepController.inputStepsName(stepId:Long)
+GET           /step/:stepId/inputFieldsName                         controllers.StepController.inputFieldsName(stepId:Long)
+GET           /step/:stepId/outputStepsName                         controllers.StepController.outputStepsName(stepId:Long)
+GET           /step/inputOutputFields                               controllers.StepController.inputOutputFields(stepId:Long,before:Boolean)
+GET           /step/:stepId/schema                                  controllers.StepController.getSchema(stepId:Long)
+POST          /step/:stepId/apply                                   controllers.StepController.applyChanges(stepId:Long)
+GET           /step/:stepId/name                                    controllers.StepController.getStepName(stepId:Long)
+GET           /step/:stepId                                         controllers.StepController.getStep(stepId:Long)
+GET           /step/:stepId/tables                                  controllers.StepController.getTables(stepId:Long)
+GET           /step/:stepId/component/:componentId/table            controllers.StepController.getTableValue(stepId:Long,componentId:Long)
+GET           /step/:stepId/conditions                              controllers.StepController.getConditions(stepId:Long)
+GET           /step/:stepId/component/:componentId/condition        controllers.StepController.getConditionValue(stepId:Long,componentId:Long)
 
-GET         /component/:componentId/short/:shortName        controllers.StepController.getByComponentAndShortName(componentId:Long,shortName:String)
+GET           /component/:componentId/short/:shortName              controllers.StepController.getByComponentAndShortName(componentId:Long,shortName:String)
 
 # Handles the executions
-GET         /execution/:executionId/logs                    controllers.ExecutionController.logs(executionId:Long)
-GET         /execution/:executionId/metrics                 controllers.ExecutionController.metrics(executionId:Long)
-GET         /execution/:executionId/data                    controllers.ExecutionController.previewData(executionId:Long)
-GET         /execution/:executionId/step/:stepId/data       controllers.ExecutionController.previewStep(executionId:Long,stepId:Long)
+GET           /execution/:executionId/logs                          controllers.ExecutionController.logs(executionId:Long)
+GET           /execution/:executionId/metrics                       controllers.ExecutionController.metrics(executionId:Long)
+GET           /execution/:executionId/data                          controllers.ExecutionController.previewData(executionId:Long)
+GET           /execution/:executionId/step/:stepId/data             controllers.ExecutionController.previewStep(executionId:Long,stepId:Long)
 
-POST        /execute/:taskId                                controllers.ExecutionController.run(taskId:Long)
-GET         /execution/:executionId/result                  controllers.ExecutionController.result(executionId:Long)
-GET         /execution/:executionId/task                    controllers.ExecutionController.getTask(executionId:Long)
-GET         /execution/:executionId/logs/json               controllers.ExecutionController.getLogs(executionId:Long)
-GET         /execution/:executionId/metrics/json            controllers.ExecutionController.getMetrics(executionId:Long)
-GET         /execution/:executionId/data/json               controllers.ExecutionController.getData(executionId:Long)
-GET         /execution/:executionId/step/:stepId/data/json  controllers.ExecutionController.getStepData(executionId:Long,stepId:Long)
+POST          /execute/:taskId                                      controllers.ExecutionController.run(taskId:Long)
+GET           /execution/:executionId/result                        controllers.ExecutionController.result(executionId:Long)
+GET           /execution/:executionId/task                          controllers.ExecutionController.getTask(executionId:Long)
+GET           /execution/:executionId/logs/json                     controllers.ExecutionController.getLogs(executionId:Long)
+GET           /execution/:executionId/metrics/json                  controllers.ExecutionController.getMetrics(executionId:Long)
+GET           /execution/:executionId/data/json                     controllers.ExecutionController.getData(executionId:Long)
+GET           /execution/:executionId/step/:stepId/data/json        controllers.ExecutionController.getStepData(executionId:Long,stepId:Long)

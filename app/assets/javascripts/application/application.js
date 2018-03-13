@@ -17,6 +17,10 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
 
         // Add routes
         Router
+            .add(new RegExp(jsRoutes.controllers.login.Login.index().url.substr(1), 'i'), function () {
+                console.log("LOGIN PAGE");
+                // self.loadController('MainModule', 'FieldsController', opts);
+            })
             .add(new RegExp(jsRoutes.controllers.StepController.showStepInput('(.*)').url.substr(1), 'i'), function (stepId) {
                 console.log("Show Input Fields of Step " + stepId);
                 var opts = {stepId: stepId, before: true};

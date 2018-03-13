@@ -1,0 +1,51 @@
+<ul class="timeline">
+    {{#dates}}
+        <!-- timeline time label -->
+        <li class="time-label" style="font-size:0.8em;">
+            <span class="bg-wet-asphalt">
+                {{date}}
+            </span>
+        </li>
+        <!-- /.timeline-label -->
+
+        {{#../task.executions}}
+            {{#ifCond ../date 'in' startDate}}
+                <!-- timeline item -->
+                <li>
+                    <!-- timeline icon -->
+                    {{#ifCond finished '==' true}}
+                        {{#ifCond errors '==' 0}}
+                            <i class="fa fa-check bg-green"></i>
+                        {{/ifCond}}
+                        {{#ifCond errors '>' 0}}
+                            <i class="fa fa-times bg-red"></i>
+                        {{/ifCond}}
+                    {{/ifCond}}
+                    {{#ifCond finished '==' false}}
+                        <i class="fa fa-spinner bg-yellow"></i>
+                    {{/ifCond}}
+
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{startTime}}</span>
+
+                        <h3 class="timeline-header">Execution ID: {{id}}</h3>
+
+                        <div class="timeline-body">
+                            <b>Duration:</b> {{duration}}<br/>
+                            <b>Finish DateTime:</b> {{endDate}} {{endTime}}<br/>
+                        </div>
+
+                        <div class="timeline-footer">
+                            <a view-click="controller.showLogs({{id}})" class="btn btn-sm btn-default">Execution
+                                Logs</a>
+                            <a view-click="controller.showMetrics({{id}})" class="btn btn-sm btn-default">Step
+                                Measures</a>
+                            <a view-click="controller.showData({{id}})" class="btn btn-sm btn-default">Preview Data</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- END timeline item -->
+            {{/ifCond}}
+        {{/../task.executions}}
+    {{/dates}}
+</ul>

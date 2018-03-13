@@ -1,0 +1,50 @@
+@sidetoolbar-margin: 15px;
+@sidetoolbar-group-title-height: 20px;
+@sidetoolbar-height: 50px;
+@sidetoolbar-title-border-radius: 3px;
+
+.sidetoolbar {
+  color: @toolbar-light-color;
+  background: @toolbar-light-bg;
+  border-top: 1px solid @gray-lte;
+  border-bottom: 1px solid @gray-lte;
+
+  padding: 0;
+  height: @sidetoolbar-height;
+
+  > .sidetoolbar-group {
+    display: inline-block;
+    margin: 0 0 0 0;
+    width: 100%;
+
+    > .btn-sidetoolbar {
+      background: transparent;
+      border: none;
+      color: @toolbar-light-color;
+
+      margin: 0;
+      padding: 0;
+      height: @sidetoolbar-height - 1;
+      width: 50%;
+      border-radius: 0;
+
+      &:hover {
+        background: @toolbar-light-hover-bg;
+        color: @toolbar-light-hover-color;
+        border: 1px solid transparent;
+      }
+
+      &.selected {
+        background: @sidebar-light-bg;
+
+        &:first-child {
+          border-right: 1px solid @gray-lte;
+        }
+
+        &:last-child {
+          border-left: 1px solid @gray-lte;
+        }
+      }
+    }
+  }
+}

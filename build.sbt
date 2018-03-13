@@ -53,6 +53,8 @@ libraryDependencies ++= Seq(
   "org.webjars" % "handlebars" % "4.0.5",
   // Parse JSON
   "com.google.code.gson" % "gson" % "2.8.0",
+  // Password encrypting
+  "org.mindrot" % "jbcrypt" % "0.3m",
 
   //  libraryDependencies += "org.hibernate.javax.persistence" % "hibernate-jpa-2.0-api" % "1.0.1.Final"
 
@@ -141,7 +143,7 @@ RjsKeys.webJarCdns := Map()
 
 RjsKeys.generateSourceMaps := false
 
-excludeFilter in rjs := (excludeFilter in rjs).value || GlobFilter("*.css")// || GlobFilter("*.min.js")
+excludeFilter in rjs := (excludeFilter in rjs).value || GlobFilter("*.css") // || GlobFilter("*.min.js")
 
 ////////////////////////////////////////////////////////////////////////////
 // Less settings

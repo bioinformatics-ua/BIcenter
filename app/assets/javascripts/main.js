@@ -22,6 +22,7 @@ requirejs.config({
         'Alert': 'lib/alert',
         'moment': 'lib/moment',
         'async': 'lib/async.min',
+        'jquery-cookie': 'lib/jquery.cookie.min',
 
         // QueryBuilder
         'query-builder': '../lib/jQuery-QueryBuilder/js/query-builder.min',
@@ -44,6 +45,10 @@ requirejs.config({
         'Execution': 'services/execution',
         'Step': 'services/step',
         'Task': 'services/task',
+        'User': 'services/user',
+
+        'LoginController': 'login/controllers/loginController',
+        'LoginView': 'login/views/loginView',
 
         // Header
         'HeaderController': 'header/headerController',

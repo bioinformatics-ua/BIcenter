@@ -1,0 +1,80 @@
+@toolbar-margin: 15px;
+@toolbar-group-title-height: 20px;
+@toolbar-height: 75px;
+@toolbar-title-border-radius: 3px;
+
+.toolbar {
+  color: @toolbar-light-color;
+  background: @toolbar-light-bg;
+  border-top: 1px solid @gray-lte;
+  border-bottom: 1px solid @gray-lte;
+
+  white-space:nowrap;
+  overflow-x: auto;
+  overflow-y: visible;
+
+  padding: 0;
+  margin: 20px -@box-padding 20px -@box-padding;
+  height: @toolbar-height;
+
+  .toolbar-group {
+    display: inline-block;
+    margin: 0 @toolbar-margin 0 @toolbar-margin;
+
+    > .toolbar-title {
+      text-align: center;
+      background: @toolbar-light-bg;
+
+      //margin: -@toolbar-group-title-height 0 0 0;
+      padding: 3px 6px 0 6px;
+      border-top-left-radius: @toolbar-title-border-radius;
+      border-top-right-radius: @toolbar-title-border-radius;
+      border-bottom: 1px solid @gray-lte;
+
+      text-transform: uppercase;
+      font-size: 0.8em;
+    }
+
+    > .toolbar-content {
+
+      > .btn-toolbar {
+        background: transparent;
+        border: none;
+        color: @toolbar-light-color;
+
+        margin: 0;
+        padding: 0;
+        height: @toolbar-height - 25;
+        border-radius: 0;
+
+        &:hover {
+          background: @toolbar-light-hover-bg;
+          color: @toolbar-light-hover-color;
+          border: 1px solid transparent;
+
+        }
+      }
+    }
+  }
+
+  .btn-separator {
+    max-width: 1px !important;
+    min-width: 1px !important;
+    height: @toolbar-height - 2;
+
+    padding: 8px 0;
+    border: none;
+    margin: 0 10px 0 10px;
+    background: transparent;
+
+    > .separator-inner {
+      background-color: @gray-lte;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .btn-app {
+    border-radius: 0;
+  }
+}
