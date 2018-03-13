@@ -1,4 +1,4 @@
-define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function (Controller, GraphView, Task, Alert) {
+define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Execution', 'Alert'], function (Controller, GraphView, Router, Task, Execution, Alert) {
     var GraphController = function (module) {
         Controller.call(this, module, new GraphView(this));
     };
@@ -274,6 +274,95 @@ define('GraphController', ['Controller', 'GraphView', 'Task', 'Alert'], function
                 });
             }
         }
+    }
+
+    /**
+     * Shows the step configuration dialog, of a given step type.
+     * @param stepType
+     * @param i id of the step within the current transformation.
+     */
+    GraphController.prototype.showStepDialog = function () {
+        var stepId = global_editor.graph.getSelectionCell().value.getAttribute("stepId");
+        var configStepUrl = jsRoutes.controllers.StepController.configure(stepId).url;
+        Router.navigate(configStepUrl);
+    };
+
+    /**
+     * Returns the input fields of a given step.
+     * @param stepId
+     */
+    GraphController.prototype.showStepInput = function (stepId) {
+        var stepId = global_editor.graph.getSelectionCell().value.getAttribute("stepId");
+        var configStepUrl = jsRoutes.controllers.StepController.showStepInput(stepId).url;
+        Router.navigate(configStepUrl);
+    }
+
+    /**
+     * Returns the output fields of a given step.
+     * @param stepId
+     */
+    GraphController.prototype.showStepOutput = function (stepId) {
+        var stepId = global_editor.graph.getSelectionCell().value.getAttribute("stepId");
+        var configStepUrl = jsRoutes.controllers.StepController.showStepOutput(stepId).url;
+        Router.navigate(configStepUrl);
+    }
+
+    /**
+     * Calls the API that runs the transformation.
+     * @param method execute transformation locally, remotely or in cluster mode.
+     */
+    GraphController.prototype.runTransformation = function (method) {
+
+        var exec_method = new Object();
+        exec_method.execMethod = method;
+        exec_method.remoteServer = "master1";
+
+        var details = new Object();
+
+        details.safeModeEnabled = "on"
+        details.gatheringMetrics = "on";
+        details.clearingLog = "on";
+        details.logLevel = 3;
+
+        var execution = new Object();
+        execution.executeMethod = exec_method;
+        execution.details = details;
+        var execution_configuration = JSON.stringify(execution);
+
+        var headerController = app.modules.HeaderModule.controllers.HeaderController;
+        Execution.run(this.graphId,execution_configuration,
+            function(returnedData){
+                // Submit notification of transformation Execution.
+                data = JSON.parse(returnedData);
+                headerController.transName = data['transName'];
+                headerController.executionId = data['executionId'];
+                headerController.executions = headerController.executions.filter(function (exec) {
+                    return exec['transName'] !== data['transName'];
+                });
+                headerController.executions.push(data);
+                headerController.view.transSubmissionNotification(headerController.transName, headerController.executionId, "Running");
+
+                // Monitor transformation's execution.
+                var interval = setInterval(
+                    function () {
+                        Execution.result(headerController.executionId,function(data){
+                            if (JSON.parse(data)['finished'] == true) {
+                                headerController.view.transSubmissionNotification(headerController.transName, headerController.executionId, "Finished");
+                                clearInterval(interval);
+                            }
+                        });
+                    }, 500
+                );
+            }
+        );
+    }
+
+    /**
+     * Shows the preview results transformation dialog.
+     */
+    GraphController.prototype.showHistory = function () {
+        var configStepUrl = jsRoutes.controllers.TransGraphController.history(this.graphId).url;
+        Router.navigate(configStepUrl);
     }
 
     return GraphController;

@@ -1,4 +1,4 @@
-define('GraphView', ['View', 'Task'], function (View, Task) {
+define('GraphView', ['View', 'Task', 'jquery.slimscroll'], function (View, Task) {
     var GraphView = function (controller) {
         View.call(this, controller, 'graph');
     };
@@ -10,6 +10,15 @@ define('GraphView', ['View', 'Task'], function (View, Task) {
     GraphView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
         this._loadViewComponents();
+
+        this.$elements.toolbar.slimscroll({
+            axis: 'x',
+            width: 'auto',
+            height: '80px',
+            alwaysVisible: true,
+            wrapperClass: 'toolbar'
+            // marginParent: '20px -10px 20px -10px'
+        });
     };
 
     /**

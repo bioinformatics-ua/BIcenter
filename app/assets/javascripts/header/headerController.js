@@ -13,16 +13,6 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
     };
 
     /**
-     * Shows the step configuration dialog, of a given step type.
-     * @param stepType
-     * @param i id of the step within the current transformation.
-     */
-    HeaderController.prototype.showStepDialog = function (stepId) {
-        var configStepUrl = jsRoutes.controllers.StepController.configure(stepId).url;
-        Router.navigate(configStepUrl);
-    };
-
-    /**
      * Shows the transaction settings configuration dialog, for the current transaction.
      * @param i id of the step within the current transformation.
      */
@@ -47,24 +37,6 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
     }
 
     /**
-     * Returns the input fields of a given step.
-     * @param stepId
-     */
-    HeaderController.prototype.showStepInput = function (stepId) {
-        var configStepUrl = jsRoutes.controllers.StepController.showStepInput(stepId).url;
-        Router.navigate(configStepUrl);
-    }
-
-    /**
-     * Returns the output fields of a given step.
-     * @param stepId
-     */
-    HeaderController.prototype.showStepOutput = function (stepId) {
-        var configStepUrl = jsRoutes.controllers.StepController.showStepOutput(stepId).url;
-        Router.navigate(configStepUrl);
-    }
-
-    /**
      * Shows the run settings configuration dialog.
      */
     HeaderController.prototype.showRunOptions = function () {
@@ -78,57 +50,6 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
     }
 
     /**
-     * Calls the API that runs the transformation.
-     * @param method execute transformation locally, remotely or in cluster mode.
-     */
-    HeaderController.prototype.runTransformation = function (method) {
-
-        var exec_method = new Object();
-        exec_method.execMethod = method;
-        exec_method.remoteServer = "master1";
-
-        var details = new Object();
-
-        details.safeModeEnabled = "on"
-        details.gatheringMetrics = "on";
-        details.clearingLog = "on";
-        details.logLevel = 3;
-
-        var execution = new Object();
-        execution.executeMethod = exec_method;
-        execution.details = details;
-        var execution_configuration = JSON.stringify(execution);
-
-        var context = this;
-        var graphController = app.modules.MainModule.controllers.GraphController;
-        Execution.run(graphController.view.taskId,execution_configuration,
-            function(returnedData){
-                // Submit notification of transformation Execution.
-                data = JSON.parse(returnedData);
-                context.transName = data['transName'];
-                context.executionId = data['executionId'];
-                context.executions = context.executions.filter(function (exec) {
-                    return exec['transName'] !== data['transName'];
-                });
-                context.executions.push(data);
-                context.view.transSubmissionNotification(context.transName, context.executionId, "Running");
-
-                // Monitor transformation's execution.
-                var interval = setInterval(
-                    function () {
-                        Execution.result(context.executionId,function(data){
-                            if (JSON.parse(data)['finished'] == true) {
-                                context.view.transSubmissionNotification(context.transName, context.executionId, "Finished");
-                                clearInterval(interval);
-                            }
-                        });
-                    }, 500
-                );
-            }
-        );
-    }
-
-    /**
      * Shows the preview results transformation dialog.
      */
     HeaderController.prototype.showPreviewResults = function (taskName, executionId) {
@@ -136,14 +57,6 @@ define('HeaderController', ['Controller','HeaderView','jsRoutes','Router','Task'
             var configStepUrl = jsRoutes.controllers.TransGraphController.previewResults(task.id).url;
             Router.navigate(configStepUrl);
         });
-    }
-
-    /**
-     * Shows the preview results transformation dialog.
-     */
-    HeaderController.prototype.showHistory = function (taskId) {
-        var configStepUrl = jsRoutes.controllers.TransGraphController.history(taskId).url;
-        Router.navigate(configStepUrl);
     }
 
     /**

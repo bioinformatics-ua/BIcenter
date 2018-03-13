@@ -19,8 +19,7 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Task'], fun
     };
 
     SidebarController.prototype.getComponents = function () {
-        this.view.$elements.tasks.hide();
-        this.view.$elements.components.show();
+        this.view.loadComponents();
     };
 
     SidebarController.prototype.selectTask = function (taskId) {

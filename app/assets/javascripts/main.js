@@ -6,7 +6,7 @@ requirejs.config({
         // Libs
         'requirejs': '../../requirejs/require',
         'jquery': '../lib/jquery/jquery',
-        'jquery.slimscroll': '../lib/slimscroll/jquery.slimscroll.min',
+        'jquery.slimscroll': '../lib/slimscroll/jquery.slimscroll',
         'underscore': '../lib/underscorejs/underscore-min',
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'adminLTE': '../lib/adminLTE/js/app.min',
