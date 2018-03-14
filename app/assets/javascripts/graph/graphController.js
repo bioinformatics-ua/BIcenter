@@ -283,7 +283,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      */
     GraphController.prototype.showStepDialog = function () {
         var stepId = global_editor.graph.getSelectionCell().value.getAttribute("stepId");
-        var configStepUrl = jsRoutes.controllers.StepController.configure(stepId).url;
+        var configStepUrl = jsRoutes.controllers.StepController.configure(this.graphId,stepId).url;
         Router.navigate(configStepUrl);
     };
 
@@ -293,7 +293,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      */
     GraphController.prototype.showStepInput = function (stepId) {
         var stepId = global_editor.graph.getSelectionCell().value.getAttribute("stepId");
-        var configStepUrl = jsRoutes.controllers.StepController.showStepInput(stepId).url;
+        var configStepUrl = jsRoutes.controllers.StepController.showStepInput(this.graphId,stepId).url;
         Router.navigate(configStepUrl);
     }
 
@@ -303,7 +303,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      */
     GraphController.prototype.showStepOutput = function (stepId) {
         var stepId = global_editor.graph.getSelectionCell().value.getAttribute("stepId");
-        var configStepUrl = jsRoutes.controllers.StepController.showStepOutput(stepId).url;
+        var configStepUrl = jsRoutes.controllers.StepController.showStepOutput(this.graphId,stepId).url;
         Router.navigate(configStepUrl);
     }
 

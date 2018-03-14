@@ -46,9 +46,9 @@ GET           /graph/tabs                                           controllers.
 GET           /graph/:graphId/executions                            controllers.TransGraphController.getExecutions(graphId:Long)
 
 # Handles the steps.
-GET           /step/:stepId/configure                               controllers.StepController.configure(stepId:Long)
-GET           /step/:stepId/input                                   controllers.StepController.showStepInput(stepId:Long)
-GET           /step/:stepId/output                                  controllers.StepController.showStepOutput(stepId:Long)
+GET           /graph/:graphId/step/:stepId/configure                controllers.StepController.configure(graphId:Long,stepId:Long)
+GET           /graph/:graphId/step/:stepId/input                    controllers.StepController.showStepInput(graphId:Long,stepId:Long)
+GET           /graph/:graphId/step/:stepId/output                   controllers.StepController.showStepOutput(graphId:Long,stepId:Long)
 
 GET           /step/:stepId/inputStepsName                          controllers.StepController.inputStepsName(stepId:Long)
 GET           /step/:stepId/inputFieldsName                         controllers.StepController.inputFieldsName(stepId:Long)
@@ -66,10 +66,10 @@ GET           /step/:stepId/component/:componentId/condition        controllers.
 GET           /component/:componentId/short/:shortName              controllers.StepController.getByComponentAndShortName(componentId:Long,shortName:String)
 
 # Handles the executions
-GET           /execution/:executionId/logs                          controllers.ExecutionController.logs(executionId:Long)
-GET           /execution/:executionId/metrics                       controllers.ExecutionController.metrics(executionId:Long)
-GET           /execution/:executionId/data                          controllers.ExecutionController.previewData(executionId:Long)
-GET           /execution/:executionId/step/:stepId/data             controllers.ExecutionController.previewStep(executionId:Long,stepId:Long)
+GET           /graph/:graphId/execution/:executionId/logs               controllers.ExecutionController.logs(graphId:Long,executionId:Long)
+GET           /graph/:graphId/execution/:executionId/metrics            controllers.ExecutionController.metrics(graphId:Long,executionId:Long)
+GET           /graph/:graphId/execution/:executionId/data               controllers.ExecutionController.previewData(graphId:Long,executionId:Long)
+GET           /graph/:graphId/execution/:executionId/step/:stepId/data  controllers.ExecutionController.previewStep(graphId:Long,executionId:Long,stepId:Long)
 
 POST          /execute/:taskId                                      controllers.ExecutionController.run(taskId:Long)
 GET           /execution/:executionId/result                        controllers.ExecutionController.result(executionId:Long)

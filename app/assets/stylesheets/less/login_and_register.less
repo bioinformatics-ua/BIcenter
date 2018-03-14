@@ -16,8 +16,40 @@
 
 .login-page,
 .register-page {
-  background: @gray-lte;
+  //background-image: url("http://www.jdandersonglobal.com/images/inf/8.jpg");
+  background-image: url("https://colorlib.com/etc/lf/Login_v3/images/bg-01.jpg");
+
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0.55);
+  }
 }
+
 
 .login-box,
 .register-box {

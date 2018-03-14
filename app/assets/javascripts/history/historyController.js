@@ -19,17 +19,17 @@ define('HistoryController', ['Controller', 'HistoryView','jsRoutes', 'Router', '
     };
 
     HistoryController.prototype.showLogs = function(executionId){
-        var configStepUrl = jsRoutes.controllers.ExecutionController.logs(executionId).url;
+        var configStepUrl = jsRoutes.controllers.ExecutionController.logs(this.graphId,executionId).url;
         Router.navigate(configStepUrl);
     }
 
     HistoryController.prototype.showMetrics = function(executionId){
-        var configStepUrl = jsRoutes.controllers.ExecutionController.metrics(executionId).url;
+        var configStepUrl = jsRoutes.controllers.ExecutionController.metrics(this.graphId,executionId).url;
         Router.navigate(configStepUrl);
     }
 
     HistoryController.prototype.showData = function(executionId){
-        var configStepUrl = jsRoutes.controllers.ExecutionController.previewData(executionId).url;
+        var configStepUrl = jsRoutes.controllers.ExecutionController.previewData(this.graphId,executionId).url;
         Router.navigate(configStepUrl);
     }
 

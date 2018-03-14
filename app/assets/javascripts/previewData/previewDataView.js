@@ -65,7 +65,7 @@ define('PreviewDataView', ['View', 'jsRoutes', 'Router', 'Task', 'Execution'], f
                     if (cell.isVertex()) {
                         var stepId = context.stepMap[cell.value];
                         var executionId = context.controller.executionId;
-                        var configStepUrl = jsRoutes.controllers.ExecutionController.previewStep(executionId,stepId).url;
+                        var configStepUrl = jsRoutes.controllers.ExecutionController.previewStep(context.controller.graphId,executionId,stepId).url;
                         Router.navigate(configStepUrl);
                     }
                 });

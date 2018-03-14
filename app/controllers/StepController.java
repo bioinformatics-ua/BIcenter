@@ -58,30 +58,33 @@ public class StepController extends Controller {
     /**
      * Edit Step page
      *
+     * @param graphId
      * @param stepId
      * @return
      */
-    public Result configure(long stepId) {
+    public Result configure(long graphId, long stepId) {
         return ok(views.html.index.render());
     }
 
     /**
      * Step Input Fields page
      *
+     * @param graphId
      * @param stepId
      * @return
      */
-    public Result showStepInput(long stepId) {
+    public Result showStepInput(long graphId, long stepId) {
         return ok(views.html.index.render());
     }
 
     /**
      * Step Output Fields page
      *
+     * @param graphId
      * @param stepId
      * @return
      */
-    public Result showStepOutput(long stepId) {
+    public Result showStepOutput(long graphId, long stepId) {
         return ok(views.html.index.render());
     }
 

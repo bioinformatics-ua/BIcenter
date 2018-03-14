@@ -56,28 +56,28 @@ public class ExecutionController extends Controller {
      * @param executionId
      * @return
      */
-    public Result logs(long executionId) { return ok(views.html.index.render()); }
+    public Result logs(long graphId, long executionId) { return ok(views.html.index.render()); }
 
     /**
      * Renders Steps Metrics page.
      * @param executionId
      * @return
      */
-    public Result metrics(long executionId) { return ok(views.html.index.render()); }
+    public Result metrics(long graphId, long executionId) { return ok(views.html.index.render()); }
 
     /**
      * Renders Preview Task page.
      * @param executionId
      * @return
      */
-    public Result previewData(long executionId) { return ok(views.html.index.render()); }
+    public Result previewData(long graphId, long executionId) { return ok(views.html.index.render()); }
 
     /**
      * Renders Preview Step page.
      * @param executionId
      * @return
      */
-    public Result previewStep(long executionId, long stepId) { return ok(views.html.index.render()); }
+    public Result previewStep(long graphId, long executionId, long stepId) { return ok(views.html.index.render()); }
 
     /**
      * Post Method, that given a certain task and a execution configuration (XML) specification,

@@ -13,23 +13,15 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
 
         async.series([
             function (callback) {
-                if (context.controller.executionId) {
-                    Execution.getTask(context.controller.executionId, function (task) {
-                        context.task = task;
-                        callback();
-                    });
-                } else {
-                    callback();
-                }
-            },
-            function (callback) {
-                if (context.task) callback();
-                else {
+               if(context.controller.graphId) {
                     Task.getTaskDetails(context.controller.graphId, function (task) {
                         context.task = task;
                         callback();
                     });
                 }
+                else {
+                   callback();
+               }
             },
             function (callback) {
                 if (context.controller.stepId) {
@@ -46,7 +38,7 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
 
                 breadcrumbs.push({
                     name: context.task.name,
-                    url: '/',
+                    url: jsRoutes.controllers.TransGraphController.selectTask(context.controller.graphId).url,
                     icon: 'fa fa-exchange'
                 });
 
@@ -54,7 +46,7 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
                     case 'previewData':
                         breadcrumbs.push({
                             name: 'History',
-                            url: jsRoutes.controllers.TransGraphController.history(context.task.id).url
+                            url: jsRoutes.controllers.TransGraphController.history(context.controller.graphId).url
                         });
 
                         breadcrumbs.push({
@@ -64,13 +56,13 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
 
                         breadcrumbs.push({
                             name: 'Preview data',
-                            url: jsRoutes.controllers.ExecutionController.getData(context.controller.executionId).url
+                            url: jsRoutes.controllers.ExecutionController.previewData(context.controller.executionId).url
                         });
                         break;
                     case 'previewStep':
                         breadcrumbs.push({
                             name: 'History',
-                            url: jsRoutes.controllers.TransGraphController.history(context.task.id).url
+                            url: jsRoutes.controllers.TransGraphController.history(context.controller.graphId).url
                         });
 
                         breadcrumbs.push({
@@ -80,20 +72,20 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
 
                         breadcrumbs.push({
                             name: 'Preview data',
-                            url: jsRoutes.controllers.ExecutionController.getData(context.controller.executionId).url
+                            url: jsRoutes.controllers.ExecutionController.previewData(context.controller.graphId,context.controller.executionId).url
                         });
 
                         breadcrumbs.push({
                             name: context.stepName,
                             icon: 'fa fa-circle-o',
-                            url: jsRoutes.controllers.ExecutionController.getStepData(context.controller.executionId,context.controller.stepId).url
+                            url: jsRoutes.controllers.ExecutionController.previewStep(context.controller.graphId,context.controller.executionId,context.controller.stepId).url
                         });
 
                         break;
                     case 'logs':
                         breadcrumbs.push({
                             name: 'History',
-                            url: jsRoutes.controllers.TransGraphController.history(context.task.id).url
+                            url: jsRoutes.controllers.TransGraphController.history(context.controller.graphId).url
                         });
 
                         breadcrumbs.push({
@@ -103,13 +95,13 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
 
                         breadcrumbs.push({
                             name: 'Logs',
-                            url: jsRoutes.controllers.ExecutionController.getLogs(context.controller.executionId).url
+                            url: jsRoutes.controllers.ExecutionController.logs(context.controller.graphId,context.controller.executionId).url
                         });
                         break;
                     case 'metrics':
                         breadcrumbs.push({
                             name: 'History',
-                            url: jsRoutes.controllers.TransGraphController.history(context.task.id).url
+                            url: jsRoutes.controllers.TransGraphController.history(context.controller.graphId).url
                         });
 
                         breadcrumbs.push({
@@ -119,12 +111,23 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
 
                         breadcrumbs.push({
                             name: 'Step Measures',
-                            url: jsRoutes.controllers.ExecutionController.getMetrics(context.controller.executionId).url
+                            url: jsRoutes.controllers.ExecutionController.metrics(context.controller.graphId,context.controller.executionId).url
                         });
                         break;
                     case 'history':
                         breadcrumbs.push({
                             name: 'History'
+                        });
+                        break;
+                    case 'configure':
+                        breadcrumbs.push({
+                            name: 'Edit'
+                        });
+
+                        breadcrumbs.push({
+                            name: context.stepName,
+                            icon: 'fa fa-circle-o',
+                            url: jsRoutes.controllers.StepController.configure(context.controller.graphId,context.controller.stepId).url
                         });
                         break;
                 }
