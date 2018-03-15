@@ -8,6 +8,7 @@ import configuration.CUser;
 import configuration.Configuration;
 import models.Component;
 import models.ComponentProperty;
+import models.Institution;
 import models.authentication.Authentication;
 import models.rbac.User;
 import org.mindrot.jbcrypt.BCrypt;
@@ -17,6 +18,7 @@ import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.logging.KettleLogStore;
 import play.inject.ApplicationLifecycle;
 import repositories.ComponentRepository;
+import repositories.InstitutionRepository;
 import repositories.authentication.AuthenticationRepository;
 import repositories.user.RBACRepository;
 import services.authentication.AuthenticationService;
@@ -53,14 +55,16 @@ public class ApplicationStart {
     private final UserService userService;
     private final AuthenticationRepository authenticationRepository;
     private final AuthenticationService authenticationService;
+    private final InstitutionRepository institutionRepository;
 
     @Inject
-    public ApplicationStart(ComponentRepository componentRepository, RBACRepository rbacRepository, UserService userService, AuthenticationRepository authenticationRepository, AuthenticationService authenticationService) {
+    public ApplicationStart(ComponentRepository componentRepository, RBACRepository rbacRepository, UserService userService, AuthenticationRepository authenticationRepository, AuthenticationService authenticationService, InstitutionRepository institutionRepository) {
         this.componentRepository = componentRepository;
         this.rbacRepository = rbacRepository;
         this.userService = userService;
         this.authenticationRepository = authenticationRepository;
         this.authenticationService = authenticationService;
+        this.institutionRepository = institutionRepository;
 
         // Get configuration from JSON file
         Gson gson = new Gson();
@@ -74,6 +78,7 @@ public class ApplicationStart {
         // Building Step Configurations.
         buildComponents(configuration);
 
+        // Building users
         boolean initRBAC = rbacRepository.findAllRoles().size() == 0;
         if (initRBAC) {
             buildRBAC(configuration);
@@ -88,8 +93,28 @@ public class ApplicationStart {
             }
         }
 
+        // Building Institutions.
+        boolean initInstitutions = this.institutionRepository.list().size() == 0;
+        if (initInstitutions) {
+            try {
+                buildInstitutions(configuration);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
         // Setting up Kettle environment.
         initKettle();
+    }
+
+    private void buildInstitutions(Configuration configuration) throws Exception{
+        logger.info("Building Institutions.");
+
+        for (Institution inst : configuration.getInstitutions()){
+            Institution institution = new Institution(inst.getName());
+            institutionRepository.add(institution);
+        }
     }
 
     private void buildAuth(Configuration configuration) throws Exception {

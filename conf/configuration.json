@@ -924,5 +924,13 @@
         "Administrator"
       ]
     }
+  ],
+  "institutions": [
+    {
+      "name": "INSA"
+    },
+    {
+      "name": "Briosa e Gala"
+    }
   ]
 }

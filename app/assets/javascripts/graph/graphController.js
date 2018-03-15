@@ -307,6 +307,11 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
         Router.navigate(configStepUrl);
     }
 
+    GraphController.prototype.remoteExecution = function(){
+        var modalController = this.module.controllers['ServerController'];
+        modalController.view.show();
+    }
+
     /**
      * Calls the API that runs the transformation.
      * @param method execute transformation locally, remotely or in cluster mode.

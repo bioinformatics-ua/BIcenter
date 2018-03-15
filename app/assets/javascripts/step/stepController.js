@@ -63,9 +63,9 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
     /**
      * Returns to the pipeline view.
      */
-    StepController.prototype.cancelClick = function () {
-        Router.navigate('/');
-    };
+    StepController.prototype.cancelClick = function(){
+        Router.navigatePrevious();
+    }
 
     StepController.prototype.cenas = function (tableId, name, $element) {
         var table = this.view.dataTables[tableId].clear().draw();
@@ -106,7 +106,7 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
             console.log("Step", this.stepId, "has been updated!");
         });
 
-        Router.navigate('/');
+        Router.navigatePrevious();
     };
 
     /**

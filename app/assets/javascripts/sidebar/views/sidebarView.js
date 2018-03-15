@@ -11,9 +11,9 @@ define('SidebarView', ['View'], function (View) {
         _super_.initialize.call(this, $container);
     };
 
-    SidebarView.prototype.loadTasks = function (tasks) {
+    SidebarView.prototype.loadInstitutions = function (institutions) {
         var html = JST['sidebar']({
-            tasks: tasks
+            institutions: institutions
         });
         this.$container.html(html);
         this._loadViewComponents();

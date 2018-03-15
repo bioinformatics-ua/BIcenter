@@ -46,6 +46,8 @@ public class Application extends Controller {
                 controllers.login.routes.javascript.Login.logout(),
                 controllers.rbac.routes.javascript.Users.getLoggedInUser(),
 
+                routes.javascript.InstitutionController.getInstitutions(),
+
                 routes.javascript.TransGraphController.getTaskDetails(),
                 routes.javascript.TransGraphController.getTasks(),
                 routes.javascript.TransGraphController.newTask(),

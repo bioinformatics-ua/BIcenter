@@ -22,7 +22,7 @@ define('FieldsController', ['Controller','FieldsView','Step','Router'], function
      * Returns to the pipeline view.
      */
     FieldsController.prototype.ok = function(){
-        Router.navigate('/');
+        Router.navigatePrevious();
     }
 
     return FieldsController;

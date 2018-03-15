@@ -24,6 +24,9 @@ GET           /assets/*file                                         controllers.
 # Handles the pipeline step svg images.
 GET           /middle/:image                                        controllers.SvgController.service(image:String)
 
+# Handles insititutions.
+GET           /institution/list                                     controllers.InstitutionController.getInstitutions()
+
 # Handles the pipeline.
 GET           /graph/:graphId/select                                controllers.TransGraphController.selectTask(graphId:Long)
 GET           /graph/:graphId/preview                               controllers.TransGraphController.previewResults(graphId:Long)

@@ -23,6 +23,7 @@ requirejs.config({
         'moment': 'lib/moment',
         'async': 'lib/async.min',
         'jquery-cookie': 'lib/jquery.cookie.min',
+        'md5': '../lib/md5/md5.min',
 
         // QueryBuilder
         'query-builder': '../lib/jQuery-QueryBuilder/js/query-builder.min',
@@ -40,8 +41,10 @@ requirejs.config({
         'custom.jquery': 'core/custom.jquery',
         'Utils': 'core/utils',
         'jsRoutes': 'jsroutes',
+        'jquery-ui': '../lib/jquery-ui/jquery-ui',
 
         // services
+        'Institution': 'services/institution',
         'Execution': 'services/execution',
         'Step': 'services/step',
         'Task': 'services/task',
@@ -61,6 +64,9 @@ requirejs.config({
         // Graph
         'GraphController': 'graph/graphController',
         'GraphView': 'graph/graphView',
+
+        'ServerController': 'graph/serverController',
+        'ServerView': 'graph/serverView',
 
         // Input and Ouput fields Dialog
         'FieldsController': 'steps/fields/fieldsController',

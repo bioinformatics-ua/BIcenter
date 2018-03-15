@@ -1,4 +1,4 @@
-define('GraphView', ['View', 'Task', 'jquery.slimscroll'], function (View, Task) {
+define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function (View, Task) {
     var GraphView = function (controller) {
         View.call(this, controller, 'graph');
     };
@@ -17,8 +17,9 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll'], function (View, Task)
             height: '80px',
             alwaysVisible: true,
             wrapperClass: 'toolbar'
-            // marginParent: '20px -10px 20px -10px'
         });
+
+        this.$elements.board.resizable();
     };
 
     /**

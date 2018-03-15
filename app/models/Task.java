@@ -17,6 +17,9 @@ public class Task implements Serializable {
     private int open;
     private Date date;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Institution institution;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskHops", cascade = CascadeType.ALL)
     private List<Hop> hops;
 
@@ -51,6 +54,10 @@ public class Task implements Serializable {
     public Date getDate() { return date; }
 
     public void setDate(Date date) { this.date = date; }
+
+    public Institution getInstitution() { return institution; }
+
+    public void setInstitution(Institution institution) { this.institution = institution; }
 
     public List<Hop> getHops() { return hops; }
 

@@ -1,6 +1,7 @@
 package configuration;
 
 import models.Component;
+import models.Institution;
 
 import java.util.List;
 
@@ -11,18 +12,20 @@ public class Configuration {
     private List<CRole> roles;
     private List<CUser> users;
     private List<CAuthentication> authentications;
+    private List<Institution> institutions;
 
     public Configuration() {
     }
 
     public Configuration(List<Component> components, List<String> operations, List<String> categories,
-                         List<CRole> roles, List<CUser> users, List<CAuthentication> authentications) {
+                         List<CRole> roles, List<CUser> users, List<CAuthentication> authentications, List<Institution> institutions) {
         this.components = components;
         this.operations = operations;
         this.categories = categories;
         this.roles = roles;
         this.users = users;
         this.authentications = authentications;
+        this.institutions = institutions;
     }
 
     public List<Component> getComponents() {
@@ -72,6 +75,10 @@ public class Configuration {
     public void setAuthentications(List<CAuthentication> authentications) {
         this.authentications = authentications;
     }
+
+    public List<Institution> getInstitutions() { return institutions; }
+
+    public void setInstitutions(List<Institution> institutions) { this.institutions = institutions; }
 
     @Override
     public boolean equals(Object o) {

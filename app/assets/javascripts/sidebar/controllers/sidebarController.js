@@ -1,4 +1,4 @@
-define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Task'], function (Controller, SidebarView,Router,Task) {
+define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution', 'Task'], function (Controller, SidebarView,Router,Institution,Task) {
     var SidebarController = function (module) {
         Controller.call(this, module, new SidebarView(this));
     };
@@ -13,8 +13,8 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Task'], fun
 
     SidebarController.prototype.getTasks = function () {
         var context = this;
-        Task.getTasks(function(tasks){
-            context.view.loadTasks(tasks);
+        Institution.getInstitutions(function(institutions){
+            context.view.loadInstitutions(institutions);
         });
     };
 
