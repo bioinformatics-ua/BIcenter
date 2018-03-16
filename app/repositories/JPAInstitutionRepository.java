@@ -33,6 +33,12 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
         return true;
     }
 
+    public static Institution getByName(EntityManager em, String name){
+        return em.createQuery("select p from Institution p where name=:nameparam", Institution.class)
+                .setParameter("nameparam",name)
+                .getSingleResult();
+    }
+
     @Override
     public Institution get(long id) {
         return wrap(em -> get(em, id));
@@ -50,4 +56,7 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
     public List<Institution> list() {
         return wrap(em -> list(em));
     }
+
+    @Override
+    public Institution getByName(String name) { return wrap(em -> getByName(em,name)); }
 }

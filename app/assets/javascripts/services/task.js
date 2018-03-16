@@ -15,8 +15,8 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Task.newTask = function (name, callback) {
-        jsRoutes.controllers.TransGraphController.newTask(name).ajax({
+    Task.newTask = function (institution,name, callback) {
+        jsRoutes.controllers.TransGraphController.newTask(institution,name).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {

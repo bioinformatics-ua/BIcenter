@@ -14,16 +14,8 @@ import models.rbac.Operation;
 import org.hibernate.Hibernate;
 import play.cache.*;
 
-import kettleExt.App;
-import kettleExt.TransExecutor;
-import kettleExt.trans.TransDecoder;
 import kettleExt.trans.TransEncoder;
-import kettleExt.utils.JSONArray;
-import kettleExt.utils.JSONObject;
 
-import org.pentaho.di.core.Const;
-import org.pentaho.di.core.logging.LogLevel;
-import org.pentaho.di.trans.TransExecutionConfiguration;
 import org.pentaho.di.trans.TransMeta;
 
 import com.mxgraph.io.mxCodec;
@@ -31,13 +23,8 @@ import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxGraph;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.w3c.dom.Document;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -70,15 +57,17 @@ public class TransGraphController extends Controller {
     private CellRepository cellRepository;
     private ComponentRepository componentRepository;
     private HopRepository hopRepository;
+    private InstitutionRepository institutionRepository;
 
     @Inject
-    public TransGraphController(SyncCacheApi cache, TaskRepository taskRepository, StepRepository stepRepository, CellRepository cellRepository, ComponentRepository componentRepository, HopRepository hopRepository) {
+    public TransGraphController(SyncCacheApi cache, TaskRepository taskRepository, StepRepository stepRepository, CellRepository cellRepository, ComponentRepository componentRepository, HopRepository hopRepository, InstitutionRepository institutionRepository) {
         this.cache = cache;
         this.taskRepository = taskRepository;
         this.stepRepository = stepRepository;
         this.cellRepository = cellRepository;
         this.componentRepository = componentRepository;
         this.hopRepository = hopRepository;
+        this.institutionRepository = institutionRepository;
     }
 
     /**
@@ -198,11 +187,14 @@ public class TransGraphController extends Controller {
      * @param name Task name.
      * @return mxGrpoh file
      */
-    public Result newTask(String name){
+    public Result newTask(String institution, String name){
         if(existsTask(name)) forbidden();
 
         Task task = new Task(name);
+        Institution inst = institutionRepository.getByName(institution);
+        task.setInstitution(inst);
         task = taskRepository.add(task);
+
         return ok(taskToJson(task));
     }
 

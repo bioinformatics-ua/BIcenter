@@ -15,4 +15,6 @@ public interface InstitutionRepository {
     void delete(Institution institution);
 
     List<Institution> list();
+
+    Institution getByName(String name);
 }

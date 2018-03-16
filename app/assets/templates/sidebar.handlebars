@@ -14,7 +14,7 @@
     </div>
 </ul>
 
-<ul view-element="tasks" class="sidebar-menu" data-widget="tree">
+<ul view-element="institutions" class="sidebar-menu" data-widget="tree">
 {{# institutions}}
     <li class="header">{{name}}</li>
     {{#if tasks}}
@@ -39,11 +39,11 @@
                     </li>
                     {{/tasks}}
                     <li>
-                        <form action="#" method="get" class="sidebar-form">
+                        <form view-element="{{name}}_newTask" view-submit="controller.createTask({{name}});" class="sidebar-form">
                             <div class="input-group">
-                                <input type="text" name="q" class="form-control" placeholder="Create a new task...">
+                                <input name="taskName" class="form-control" placeholder="Create a new task..."/>
                                 <span class="input-group-btn">
-                                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                    <button type="submit" class="btn btn-flat">
                                       <i class="fa fa-plus-circle"></i>
                                     </button>
                                 </span>
