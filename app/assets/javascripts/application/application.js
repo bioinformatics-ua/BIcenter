@@ -126,7 +126,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                     graphId: graphId,
                     section: 'selectTask'
                 }
-                self.loadController('MainModule', 'GraphController', opts);
+                self.loadControllers('MainModule', ['GraphController','RemoteExecutionController'], opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })

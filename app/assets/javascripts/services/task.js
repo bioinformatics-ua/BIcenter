@@ -201,5 +201,19 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     }
 
+    Task.getServers = function(taskId, callback){
+        jsRoutes.controllers.TransGraphController.getServers(taskId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    }
+
     return Task;
 });

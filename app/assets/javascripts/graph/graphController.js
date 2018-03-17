@@ -221,8 +221,11 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
     }
 
     GraphController.prototype.remoteExecution = function(){
-        var modalController = this.module.controllers['ServerController'];
-        modalController.view.show();
+        var context =this;
+        Task.getServers(this.graphId, function (servers) {
+            var modalController = context.module.controllers['RemoteExecutionController'];
+            modalController.view.show(servers);
+        })
     }
 
     /**

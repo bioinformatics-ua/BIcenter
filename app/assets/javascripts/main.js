@@ -65,6 +65,10 @@ requirejs.config({
         'GraphController': 'graph/graphController',
         'GraphView': 'graph/graphView',
 
+        // Remote Execution
+        'RemoteExecutionController': 'run/remoteExecutionController',
+        'RemoteExecutionView': 'run/remoteExecutionView',
+
         // Input and Ouput fields Dialog
         'FieldsController': 'steps/fields/fieldsController',
         'FieldsView': 'steps/fields/fieldsView',

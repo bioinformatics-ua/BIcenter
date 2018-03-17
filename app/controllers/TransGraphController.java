@@ -35,6 +35,7 @@ import serializers.component.ComponentPropertySerializer;
 import serializers.component.ComponentSerializer;
 import serializers.component.MetadataSerializer;
 import serializers.hop.HopSerializer;
+import serializers.institution.CompleteServerSerializer;
 import serializers.performance.*;
 import serializers.step.CellSerializer;
 import serializers.step.StepPropertySerializer;
@@ -382,5 +383,19 @@ public class TransGraphController extends Controller {
 
         Task task = taskRepository.get(graphId);
         return ok(Json.toJson(task));
+    }
+
+    public Result getServers(long graphId) {
+        Task task = taskRepository.get(graphId);
+        Institution institution = task.getInstitution();
+        List<Server> servers = institution.getServers();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Server.class, new CompleteServerSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(servers));
     }
 }
