@@ -12,6 +12,8 @@ public class Server implements Serializable {
     private String name;
     private String hostName;
     private int portNumber;
+    private String username;
+    private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Institution institution;
@@ -41,6 +43,18 @@ public class Server implements Serializable {
     public int getPortNumber() { return portNumber; }
 
     public void setPortNumber(int portNumber) { this.portNumber = portNumber; }
+
+    public String getUsername() { return username; }
+
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Institution getInstitution() { return institution; }
 

@@ -93,7 +93,8 @@ public class Application extends Controller {
                 routes.javascript.ExecutionController.previewData(),
                 routes.javascript.ExecutionController.previewStep(),
 
-                routes.javascript.ExecutionController.run(),
+                routes.javascript.ExecutionController.localExecution(),
+                routes.javascript.ExecutionController.remoteExecution(),
                 routes.javascript.ExecutionController.result(),
                 routes.javascript.ExecutionController.getTask(),
                 routes.javascript.ExecutionController.getLogs(),

@@ -15,7 +15,7 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
             save: {
                 label: '<i class="fa fa-check-circle"></i> Save',
                 className: 'btn-success',
-                callback: 'controller.add()'
+                callback: 'controller.updateServer()'
             }
         });
     };

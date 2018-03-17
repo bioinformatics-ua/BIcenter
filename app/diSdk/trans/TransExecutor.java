@@ -268,18 +268,6 @@ public class TransExecutor implements Runnable, Serializable {
             }
         });
 
-//        StringBuilder sb = new StringBuilder();
-//        KettleLogStore.getAppender().addLoggingEventListener(
-//                new KettleLoggingEventListener() {
-//                    @Override
-//                    public void eventAdded(KettleLoggingEvent event) {
-//                        sb.append(event.getMessage().toString() + "\n");
-//                        execution.setLog(sb.toString());
-//                        executionRepository.add(execution);
-//                    }
-//                }
-//        );
-
     }
 
     /**

@@ -78,7 +78,8 @@ GET           /graph/:graphId/execution/:executionId/metrics            controll
 GET           /graph/:graphId/execution/:executionId/data               controllers.ExecutionController.previewData(graphId:Long,executionId:Long)
 GET           /graph/:graphId/execution/:executionId/step/:stepId/data  controllers.ExecutionController.previewStep(graphId:Long,executionId:Long,stepId:Long)
 
-POST          /execute/:taskId                                      controllers.ExecutionController.run(taskId:Long)
+GET           /execute/:taskId                                      controllers.ExecutionController.localExecution(taskId:Long)
+GET           /execute/:taskId/server/:serverId                     controllers.ExecutionController.remoteExecution(taskId:Long,serverId:Long)
 GET           /execution/:executionId/result                        controllers.ExecutionController.result(executionId:Long)
 GET           /execution/:executionId/task                          controllers.ExecutionController.getTask(executionId:Long)
 GET           /execution/:executionId/logs/json                     controllers.ExecutionController.getLogs(executionId:Long)

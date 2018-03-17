@@ -1,10 +1,23 @@
 define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     var Execution = Execution || {};
 
-    Execution.run = function (taskId,execution,callback) {
-        jsRoutes.controllers.ExecutionController.run(taskId).ajax({
+    Execution.localExecution = function (taskId,callback) {
+        jsRoutes.controllers.ExecutionController.localExecution(taskId).ajax({
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(execution),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Execution service', response);
+            }
+        })
+    };
+
+    Execution.remoteExecution = function (taskId,serverId,callback) {
+        jsRoutes.controllers.ExecutionController.remoteExecution(taskId,serverId).ajax({
+            contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
                     callback(response);

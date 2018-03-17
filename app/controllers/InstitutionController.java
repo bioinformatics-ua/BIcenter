@@ -91,6 +91,9 @@ public class InstitutionController extends Controller {
         server.setName(formData.get("name").asText());
         server.setHostName(formData.get("hostName").asText());
         server.setPortNumber(formData.get("portNumber").asInt());
+        server.setHostName(formData.get("hostName").asText());
+        server.setUsername(formData.get("username").asText());
+        server.setPassword(formData.get("password").asText());
         server = serverRepository.add(server);
 
         ObjectMapper mapper = new ObjectMapper();
