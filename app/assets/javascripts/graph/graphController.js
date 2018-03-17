@@ -133,7 +133,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
             stepMeta.label = cell.getValue().getAttribute("label");
             stepMeta.graphId = cell.getId();
 
-            Task.addStep(this.view.taskId, stepMeta, function (stepId) {
+            Task.addStep(this.graphId, stepMeta, function (stepId) {
                 cell.value.setAttribute("stepId",stepId);
             });
         }
@@ -144,7 +144,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
             hopMeta.source = cell.source.value.getAttribute("stepId");
             hopMeta.target = cell.target.value.getAttribute("stepId");
 
-            Task.addHop(this.view.taskId, hopMeta);
+            Task.addHop(this.graphId, hopMeta);
         }
     }
 

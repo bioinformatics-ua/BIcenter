@@ -119,7 +119,7 @@ define('PreviewDataView', ['View', 'jsRoutes', 'Router', 'Task', 'Execution'], f
                     }
 
                     if(stat.status == 1) {
-                        var overlay = new mxCellOverlay(new mxImage('/assets/lib/mxgraph2/editors/images/overlays/false.png', 16, 16), status[i].logText, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
+                        var overlay = new mxCellOverlay(new mxImage('/assets/lib/mxgraph2/editors/images/overlays/false.png', 16, 16), stat.logText, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_TOP);
                         graph.addCellOverlay(vertex, overlay);
                     }
                     else if(stat.status == 0) {

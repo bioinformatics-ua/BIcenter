@@ -31,6 +31,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 };
 
                 self.loadController('MainModule', 'FieldsController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
             })
             .add(new RegExp(jsRoutes.controllers.StepController.showStepOutput('(.*)','(.*)').url.substr(1), 'i'), function (graphId,stepId) {
                 console.log("Show Output Fields of Step " + stepId);
@@ -42,6 +43,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 };
 
                 self.loadController('MainModule', 'FieldsController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.previewResults('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("Preview Results of Graph " + graphId);
@@ -51,6 +53,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 }
 
                 self.loadController('MainModule', 'PreviewResultsController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.history('(.*)').url.substr(1), 'i'), function (graphId) {
                 console.log("History of Graph " + graphId);
@@ -61,6 +64,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                 }
 
                 self.loadController('MainModule', 'HistoryController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)','(.*)').url.substr(1), 'i'), function (graphId,stepId) {
@@ -72,6 +76,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                     section: 'configure'
                 };
                 self.loadControllers('MainModule', ['StepController', 'StepModalController'], opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.ExecutionController.logs('(.*)','(.*)').url.substr(1), 'i'), function (graphId,executionId) {
@@ -83,6 +88,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                     section: 'logs'
                 };
                 self.loadController('MainModule', 'LogsController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.ExecutionController.metrics('(.*)','(.*)').url.substr(1), 'i'), function (graphId,executionId) {
@@ -94,6 +100,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                     section: 'metrics'
                 };
                 self.loadController('MainModule', 'StepMetricsController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.ExecutionController.previewStep('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (graphId, executionId, stepId) {
@@ -106,6 +113,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                     section: 'previewStep'
                 };
                 self.loadController('MainModule', 'PreviewStepController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.ExecutionController.previewData('(.*)','(.*)').url.substr(1), 'i'), function (graphId,executionId) {
@@ -117,6 +125,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                     section: 'previewData'
                 };
                 self.loadController('MainModule', 'PreviewDataController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)').url.substr(1), 'i'), function (graphId) {

@@ -182,6 +182,9 @@ public class TransExecutor implements Runnable, Serializable {
             e.printStackTrace();
             App.getInstance().getLog().logError("Execution failed！", e);
         } finally {
+            // Remove TransExecutor from the Monitor.
+            executors.remove(this.executionId);
+
             // Stores the execution results on the database
             this.getExecutionLog();
             this.getStepMeasure();
@@ -191,7 +194,22 @@ public class TransExecutor implements Runnable, Serializable {
             Execution execution = executionRepository.get(executionId);
             execution.setEndDate(new Date());
             execution.setFinished(true);
-            execution.setErrors(trans.getErrors());
+
+            if (executionConfiguration.isExecutingLocally()) {
+                execution.setErrors(trans.getErrors());
+            }
+            else{
+                SlaveServer remoteSlaveServer = executionConfiguration.getRemoteServer();
+                SlaveServerTransStatus transStatus = null;
+                try {
+                    transStatus = remoteSlaveServer.getTransStatus(transMeta.getName(), carteObjectId, 0);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                execution.setErrors((int) transStatus.getNrStepErrors());
+            }
+
             executionRepository.add(execution);
         }
     }
@@ -394,11 +412,12 @@ public class TransExecutor implements Runnable, Serializable {
 
                 Task task = execution.getTask();
                 List<Step> steps = task.getSteps();
-                Step step = steps.stream()
+                Optional<Step> step = steps.stream()
                         .filter(s -> s.getLabel().equals(fields[0]))
-                        .findFirst()
-                        .get();
-                stepMetric.setStep(step);
+                        .findFirst();
+
+                if(!step.isPresent()) continue;
+                stepMetric.setStep(step.get());
 
                 // Build Step Performance Metrics.
                 stepMetricRepository.add(stepMetric);
@@ -460,7 +479,6 @@ public class TransExecutor implements Runnable, Serializable {
                 statusRepository.add(status);
             }
         } else {
-            // TODO
             SlaveServer remoteSlaveServer = executionConfiguration.getRemoteServer();
             SlaveServerTransStatus transStatus = null;
             try {
@@ -472,26 +490,21 @@ public class TransExecutor implements Runnable, Serializable {
 
             for (int i = 0; i < stepStatusList.size(); i++) {
                 int errCount;
-
                 StepStatus stepStatus = stepStatusList.get(i);
-                Integer index = stepIndex.get(stepStatus.getStepname());
-                if (index == null) {
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("stepName", stepStatus.getStepname());
-                    jsonObject.put("stepStatus", stepStatus.getErrors());
-                    errCount = (int) stepStatus.getErrors();
-
-                    stepIndex.put(stepStatus.getStepname(), jsonArray.size());
-                    jsonArray.add(jsonObject);
-                } else {
-                    JSONObject jsonObject = jsonArray.getJSONObject(index);
-                    errCount = (int) (stepStatus.getErrors() + jsonObject.optInt("stepStatus"));
-                    jsonObject.put("stepStatus", errCount);
-                }
+                errCount = (int) stepStatus.getErrors();
 
                 Status status = new Status(errCount, "");
+
                 Execution execution = executionRepository.get(executionId);
                 status.setExecution(execution);
+
+                Task task = execution.getTask();
+                Step step = task.getSteps().stream()
+                        .filter(s -> s.getLabel().equals(stepStatus.getStepname()))
+                        .findFirst()
+                        .get();
+                status.setStep(step);
+
                 statusRepository.add(status);
             }
         }
