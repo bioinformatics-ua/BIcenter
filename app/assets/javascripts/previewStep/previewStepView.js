@@ -23,7 +23,6 @@ define('PreviewStepView', ['View', 'dataTables'], function (View) {
         this.$elements.table.DataTable(
         {
             dom: "frtip",
-            order: [[1, 'asc']],
             columns: _.map(task.execution[0].dataRows[0].keyValues, function(kv){ return {"title": kv.key} }),
             data: _.map(task.execution[0].dataRows, function(row){return _.map(row.keyValues, function(kv){return kv.value}) })
         })
