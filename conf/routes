@@ -26,6 +26,9 @@ GET           /middle/:image                                        controllers.
 
 # Handles insititutions.
 GET           /institution/list                                     controllers.InstitutionController.getInstitutions()
+GET           /institution/:institution/server/:server/create       controllers.InstitutionController.newServer(institution:String,server:String)
+GET           /server/:serverId                                     controllers.InstitutionController.getServer(serverId:Long)
+POST          /server/:serverId/apply                               controllers.InstitutionController.updateServer(serverId:Long)
 
 # Handles the pipeline.
 GET           /graph/:graphId/select                                controllers.TransGraphController.selectTask(graphId:Long)
@@ -34,7 +37,7 @@ GET           /graph/:graphId/history                               controllers.
 
 GET           /graph/:graphId/details                               controllers.TransGraphController.getTaskDetails(graphId:Long)
 GET           /graph/list                                           controllers.TransGraphController.getTasks()
-GET           /graph/new/:name                                      controllers.TransGraphController.newTask(institution:String,name:String)
+GET           /institution/:institution/graph/:task/create          controllers.TransGraphController.newTask(institution:String,task:String)
 GET           /graph/:graphId/load                                  controllers.TransGraphController.loadTask(graphId:Long)
 GET           /graph/:name/task                                     controllers.TransGraphController.getTask(name:String)
 GET           /graph/load                                           controllers.TransGraphController.loadTrans(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")

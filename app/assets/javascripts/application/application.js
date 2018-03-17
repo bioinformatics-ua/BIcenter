@@ -126,12 +126,14 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
                     graphId: graphId,
                     section: 'selectTask'
                 }
-                self.loadControllers('MainModule', ['GraphController', 'ServerController'], opts);
+                self.loadController('MainModule', 'GraphController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
             .add(function () {
                 console.log('homepage');
                 self.loadController('MainModule', 'GraphController');
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController']);
             });
 
         // Start listening

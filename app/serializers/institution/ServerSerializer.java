@@ -16,8 +16,12 @@ public class ServerSerializer extends JsonSerializer<Server> {
 
         gen.writeNumberField("id", value.getId());
         gen.writeStringField("name", value.getName());
-        gen.writeStringField("hostName", value.getHostName());
-        gen.writeNumberField("portNumber", value.getPortNumber());
+
+        if(value.getHostName()!= null)
+            gen.writeStringField("hostName", value.getHostName());
+
+        if(value.getPortNumber() != 0)
+            gen.writeNumberField("portNumber", value.getPortNumber());
 
         // Finish output
         gen.writeEndObject();

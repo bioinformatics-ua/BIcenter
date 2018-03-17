@@ -58,6 +58,29 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
                 Alert.flash(ALERT_TYPE.DANGER, 'Task', 'Task \'' + taskName + '\' already exists!');
             }
         });
+    };
+
+    SidebarController.prototype.createServer = function(institution, event) {
+        if (event) {
+            event.preventDefault && event.preventDefault();
+            event.stopPropagation && event.stopPropagation();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+        }
+
+        var $form = this.view.$elements[institution+'_newServer'];
+        var formValues = $form.serializeForm();
+        var serverName = formValues['serverName'];
+
+        var context = this;
+        context.institution = institution;
+        Institution.newServer(context.institution,serverName, function (server) {
+            debugger;
+        });
+    };
+
+    SidebarController.prototype.editServer = function(server){
+        var modalController = this.module.controllers['ServerController'];
+        modalController.loadServer(server);
     }
 
     return SidebarController;

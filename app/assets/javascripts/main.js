@@ -65,9 +65,6 @@ requirejs.config({
         'GraphController': 'graph/graphController',
         'GraphView': 'graph/graphView',
 
-        'ServerController': 'graph/serverController',
-        'ServerView': 'graph/serverView',
-
         // Input and Ouput fields Dialog
         'FieldsController': 'steps/fields/fieldsController',
         'FieldsView': 'steps/fields/fieldsView',
@@ -124,7 +121,11 @@ requirejs.config({
 
         // Sidebar
         'SidebarController': 'sidebar/controllers/sidebarController',
-        'SidebarView': 'sidebar/views/sidebarView'
+        'SidebarView': 'sidebar/views/sidebarView',
+
+        // Server Settings Page
+        'ServerController': 'sidebar/controllers/serverController',
+        'ServerView': 'sidebar/views/serverView',
     },
     shim: {
         'messages': {

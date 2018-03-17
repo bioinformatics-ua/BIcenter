@@ -17,6 +17,9 @@ public class Server implements Serializable {
     private Institution institution;
 
     public Server() { };
+    public Server(String name){
+        this.name = name;
+    }
     public Server(String name, String hostName, int portNumber) {
         this.name = name;
         this.hostName = hostName;
