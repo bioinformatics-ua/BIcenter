@@ -58,5 +58,48 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Institution.newDataSource = function (institution,name, callback) {
+        jsRoutes.controllers.InstitutionController.newDataSource(institution,name).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Institution service', response);
+            }
+        })
+    };
+
+    Institution.getDataSource = function (dataSourceId, callback) {
+        jsRoutes.controllers.InstitutionController.getDataSource(dataSourceId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Institution service', response);
+            }
+        })
+    };
+
+    Institution.updateDataSource = function (dataSourceId, formValues, callback) {
+        jsRoutes.controllers.InstitutionController.updateDataSource(dataSourceId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(formValues),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Institution service', response);
+            }
+        })
+    };
+
     return Institution;
 });

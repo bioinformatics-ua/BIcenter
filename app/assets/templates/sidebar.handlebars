@@ -52,6 +52,7 @@
                     </li>
                 </ul>
             </li>
+
             <li class="treeview menu-open">
                 <a>
                     <i class="fa fa-folder"></i> <span>Servers</span>
@@ -75,6 +76,40 @@
                         <form view-element="{{name}}_newServer" view-submit="controller.createServer({{name}});" class="sidebar-form">
                             <div class="input-group">
                                 <input name="serverName" class="form-control" placeholder="Add a server...">
+                                <span class="input-group-btn">
+                                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                      <i class="fa fa-plus-circle"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview menu-open">
+                <a>
+                    <i class="fa fa-folder"></i> <span>Data Sources</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{#dataSources}}
+                        <li>
+                            <a>
+                                <i class="fa fa-database"></i>
+                                <span>{{connectionName}}</span>
+                                <span class="pull-rigth-container">
+                                <button view-click="controller.editDataSource({{id}})" type="button" class="btn btn-xs pull-right"><i class="fa fa-pencil fa-fw"></i></button>
+                            </span>
+                            </a>
+                        </li>
+                    {{/dataSources}}
+                    <li>
+                        <form view-element="{{name}}_newDataSource" view-submit="controller.createDataSource({{name}});" class="sidebar-form">
+                            <div class="input-group">
+                                <input name="dataSourceName" class="form-control" placeholder="Add a Data Source...">
                                 <span class="input-group-btn">
                                     <button type="submit" name="search" id="search-btn" class="btn btn-flat">
                                       <i class="fa fa-plus-circle"></i>

@@ -1,0 +1,93 @@
+<form view-element="{{dataSource.id}}" view-submit="controller.updateDataSource()" class="form-horizontal">
+    <div class="form-group">
+        <label for="institution" class="col-sm-4 control-label">Institution:</label>
+        <div class="col-sm-5">
+            <select name="institution" view-element="institution" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                {{#institutions}}
+                    {{#ifCond ../dataSource.institution '==' name}}
+                        <option value="{{id}}" selected>{{name}}</option>
+                    {{/ifCond}}
+                    {{#ifCond ../dataSource.institution '!=' name}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/ifCond}}
+                {{/institutions}}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="connectionName" class="col-sm-4 control-label">Connection Name:</label>
+        <div class="col-sm-5">
+            <input class="form-control" name="connectionName" view-element="connectionName" value="{{dataSource.connectionName}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="databaseInterface" class="col-sm-4 control-label">Connection Type:</label>
+        <div class="col-sm-5">
+            <select name="databaseInterface" view-element="databaseInterface" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <option></option>
+                {{#connectionTypes}}
+                    {{#ifCond ../dataSource.databaseInterface '==' value}}
+                        <option value="{{value}}" selected>{{name}}</option>
+                    {{/ifCond}}
+                    {{#ifCond ../dataSource.databaseInterface '!=' value}}
+                        <option value="{{value}}">{{name}}</option>
+                    {{/ifCond}}
+                {{/connectionTypes}}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="accessType" class="col-sm-4 control-label">Connection Method:</label>
+        <div class="col-sm-5">
+            <select name="accessType" view-element="accessType" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <option></option>
+                {{#accessTypes}}
+                    {{#ifCond ../dataSource.accessType '==' value}}
+                        <option value="{{value}}" selected>{{name}}</option>
+                    {{/ifCond}}
+                    {{#ifCond ../dataSource.accessType '!=' value}}
+                        <option value="{{value}}">{{name}}</option>
+                    {{/ifCond}}
+                {{/accessTypes}}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="hostName" class="col-sm-4 control-label">Host Name:</label>
+        <div class="col-sm-5">
+            <input class="form-control" name="hostName" view-element="hostName" value="{{dataSource.hostname}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="portNumber" class="col-sm-4 control-label">Port Number:</label>
+        <div class="col-sm-5">
+            <input type="number" class="form-control" name="portNumber" view-element="portNumber" value="{{dataSource.portNumber}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="dBName" class="col-sm-4 control-label">Database Name:</label>
+        <div class="col-sm-5">
+            <input class="form-control" name="dBName" view-element="dBName" value="{{dataSource.databaseName}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="username" class="col-sm-4 control-label">Username:</label>
+        <div class="col-sm-5">
+            <input class="form-control" name="username" view-element="username" value="{{dataSource.username}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password" class="col-sm-4 control-label">Password:</label>
+        <div class="col-sm-5">
+            <input type="password" class="form-control" name="password" view-element="password" value="{{dataSource.password}}">
+        </div>
+    </div>
+</form>

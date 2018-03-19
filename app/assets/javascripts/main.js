@@ -130,6 +130,10 @@ requirejs.config({
         // Server Settings Page
         'ServerController': 'sidebar/controllers/serverController',
         'ServerView': 'sidebar/views/serverView',
+
+        // Data Source Page
+        'DataSourceController': 'sidebar/controllers/dataSourceController',
+        'DataSourceView': 'sidebar/views/dataSourceView',
     },
     shim: {
         'messages': {

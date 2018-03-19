@@ -9,6 +9,7 @@ define('SidebarView', ['View'], function (View) {
 
     SidebarView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
+        this.$elements.componentsBtn.addClass('selected');
     };
 
     SidebarView.prototype.loadInstitutions = function (institutions) {
@@ -24,7 +25,7 @@ define('SidebarView', ['View'], function (View) {
     };
 
     SidebarView.prototype.loadComponents = function () {
-        this.$elements.tasks.hide();
+        this.$elements.institutions.hide();
         this.$elements.components.show();
 
         this.$elements.tasksBtn.removeClass('selected');

@@ -25,10 +25,13 @@ GET           /assets/*file                                         controllers.
 GET           /middle/:image                                        controllers.SvgController.service(image:String)
 
 # Handles insititutions.
-GET           /institution/list                                     controllers.InstitutionController.getInstitutions()
-GET           /institution/:institution/server/:server/create       controllers.InstitutionController.newServer(institution:String,server:String)
-GET           /server/:serverId                                     controllers.InstitutionController.getServer(serverId:Long)
-POST          /server/:serverId/apply                               controllers.InstitutionController.updateServer(serverId:Long)
+GET           /institution/list                                         controllers.InstitutionController.getInstitutions()
+GET           /institution/:institution/server/:server/create           controllers.InstitutionController.newServer(institution:String,server:String)
+GET           /institution/:institution/dataSource/:dataSource/create   controllers.InstitutionController.newDataSource(institution:String,dataSource:String)
+GET           /server/:serverId                                         controllers.InstitutionController.getServer(serverId:Long)
+GET           /dataSource/:dataSourceId                                 controllers.InstitutionController.getDataSource(dataSourceId:Long)
+POST          /server/:serverId/apply                                   controllers.InstitutionController.updateServer(serverId:Long)
+POST          /dataSource/:dataSourceId/apply                           controllers.InstitutionController.updateDataSource(dataSourceId:Long)
 
 # Handles the pipeline.
 GET           /graph/:graphId/select                                controllers.TransGraphController.selectTask(graphId:Long)

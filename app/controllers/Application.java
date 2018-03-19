@@ -50,6 +50,9 @@ public class Application extends Controller {
                 routes.javascript.InstitutionController.newServer(),
                 routes.javascript.InstitutionController.getServer(),
                 routes.javascript.InstitutionController.updateServer(),
+                routes.javascript.InstitutionController.newDataSource(),
+                routes.javascript.InstitutionController.getDataSource(),
+                routes.javascript.InstitutionController.updateDataSource(),
 
                 routes.javascript.TransGraphController.getTaskDetails(),
                 routes.javascript.TransGraphController.getTasks(),

@@ -83,5 +83,28 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
         modalController.loadServer(server);
     }
 
+    SidebarController.prototype.createDataSource = function(institution, event) {
+        if (event) {
+            event.preventDefault && event.preventDefault();
+            event.stopPropagation && event.stopPropagation();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+        }
+
+        var $form = this.view.$elements[institution+'_newDataSource'];
+        var formValues = $form.serializeForm();
+        var dataSourceName = formValues['dataSourceName'];
+
+        var context = this;
+        context.institution = institution;
+        Institution.newDataSource(context.institution,dataSourceName, function (dataSource) {
+            debugger;
+        });
+    };
+
+    SidebarController.prototype.editDataSource = function(dataSource) {
+        var modalController = this.module.controllers['DataSourceController'];
+        modalController.loadDataSource(dataSource);
+    };
+
     return SidebarController;
 });

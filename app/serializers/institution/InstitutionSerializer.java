@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import models.DataSource;
 import models.Institution;
 import models.Server;
 import models.Task;
@@ -25,6 +26,9 @@ public class InstitutionSerializer extends JsonSerializer<Institution> {
         serializer = serializers.findValueSerializer(Server.class);
         module.addSerializer(Server.class, serializer);
 
+        serializer = serializers.findValueSerializer(DataSource.class);
+        module.addSerializer(DataSource.class, serializer);
+
         mapper.registerModule(module);
 
         // Start composing output
@@ -36,6 +40,7 @@ public class InstitutionSerializer extends JsonSerializer<Institution> {
 
         gen.writeObjectField("tasks", mapper.valueToTree(value.getTasks()));
         gen.writeObjectField("servers", mapper.valueToTree(value.getServers()));
+        gen.writeObjectField("dataSources", mapper.valueToTree(value.getDataSources()));
 
         // Finish output
         gen.writeEndObject();
