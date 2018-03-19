@@ -16,14 +16,15 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
 
     };
 
-    StepView.prototype.loadStep = function (step, inputSteps, inputFields, outputSteps) {
+    StepView.prototype.loadStep = function (step, inputSteps, inputFields, outputSteps, dataSources) {
         this.inputFields = inputFields;
 
         var html = JST['step']({
             component: step.component,
             inputSteps: inputSteps,
             inputFields: inputFields,
-            outputSteps: outputSteps
+            outputSteps: outputSteps,
+            dataSources: dataSources
         });
         this.$container.html(html);
         this._loadViewComponents();
@@ -228,7 +229,13 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                                             };
 
                                             if (field.source) {
-                                                if (field.source == "metadata") {
+                                                if (field.source == "dataSources") {
+                                                    _.extend(obj, {
+                                                        type: 'select',
+                                                        options: context.controller.dataSources
+                                                    });
+                                                }
+                                                else if (field.source == "metadata") {
                                                     _.extend(obj, {
                                                         type: 'select',
                                                         options: field.metadatas
@@ -281,7 +288,13 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                 };
 
                 if (field.source) {
-                    if (field.source == "metadata") {
+                    if (field.source == "dataSources") {
+                        _.extend(obj, {
+                            type: 'select',
+                            options: context.controller.dataSources
+                        });
+                    }
+                    else if (field.source == "metadata") {
                         _.extend(obj, {
                             type: 'select',
                             options: field.metadatas

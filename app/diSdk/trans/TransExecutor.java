@@ -413,7 +413,7 @@ public class TransExecutor implements Runnable, Serializable {
                 Task task = execution.getTask();
                 List<Step> steps = task.getSteps();
                 Optional<Step> step = steps.stream()
-                        .filter(s -> s.getLabel().equals(fields[0]))
+                        .filter(s -> s.getLabel().equals(fields[1]))
                         .findFirst();
 
                 if(!step.isPresent()) continue;

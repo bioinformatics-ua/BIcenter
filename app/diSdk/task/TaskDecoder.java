@@ -2,9 +2,10 @@ package diSdk.task;
 
 import diSdk.PluginFactory;
 import diSdk.step.StepDecoder;
-import models.Hop;
-import models.Step;
-import models.Task;
+import models.*;
+import org.pentaho.di.core.database.DatabaseMeta;
+import org.pentaho.di.core.exception.KettleDatabaseException;
+import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.trans.TransHopMeta;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.StepMeta;
@@ -31,6 +32,9 @@ public class TaskDecoder {
         transMeta.setName(task.getName());
         transMeta.setDescription(task.getDescription());
 
+        // Instantiate all Data Sources
+        initDataSources(task,transMeta);
+
         // Instantiate all steps.
         initSteps(task,transMeta);
 
@@ -40,11 +44,59 @@ public class TaskDecoder {
         return transMeta;
     }
 
+    private static void initDataSources(Task task, TransMeta transMeta) throws Exception{
+        Institution institution = task.getInstitution();
+        List<DataSource> dataSources = institution.getDataSources();
+
+        dataSources.forEach(
+            dataSource -> {
+                try {
+                    DatabaseMeta databaseMeta = buildDatabaseConnection(dataSource);
+                    transMeta.addOrReplaceDatabase(databaseMeta);
+                } catch (KettleDatabaseException e) {
+                    e.printStackTrace();
+                }
+            }
+        );
+    }
+
+    private static DatabaseMeta buildDatabaseConnection(DataSource dataSource) throws KettleDatabaseException {
+        DatabaseMeta databaseMeta = new DatabaseMeta();
+        databaseMeta.setDefault();
+        try {
+            // Database Type.
+            String type = dataSource.getDatabaseInterface();
+            databaseMeta.setDatabaseInterface(DatabaseMeta.getDatabaseInterface(type));
+
+            // Connection Name.
+            databaseMeta.setName(dataSource.getConnectionName());
+            databaseMeta.setDisplayName(dataSource.getConnectionName());
+
+            // Access Type.
+            databaseMeta.setAccessType(dataSource.getAccessType());
+
+            // DB Name.
+            databaseMeta.setDBName(dataSource.getDatabaseName());
+
+            // Host name & Port number.
+            databaseMeta.setHostname(dataSource.getHostname());
+            databaseMeta.setDBPort(String.valueOf(dataSource.getPortNumber()));
+
+            // DB User.
+            databaseMeta.setUsername(dataSource.getUsername());
+            databaseMeta.setPassword(dataSource.getPassword());
+        } catch (Exception e) {
+            databaseMeta.setDefault();
+            return databaseMeta;
+        }
+        return databaseMeta;
+    }
+
     private static void initSteps(Task task, TransMeta transMeta) throws Exception {
         List<Step> steps = task.getSteps();
         for(Step step : steps){
             StepDecoder stepDecoder = (StepDecoder) PluginFactory.getBean(step.getComponent().getName());
-            StepMeta stepMeta = stepDecoder.decodeStep(step);
+            StepMeta stepMeta = stepDecoder.decodeStep(step,transMeta.getDatabases());
             stepMeta.setParentTransMeta( transMeta );
             if (stepMeta.isMissing()) {
                 transMeta.addMissingTrans((MissingTrans) stepMeta.getStepMetaInterface());

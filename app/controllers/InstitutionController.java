@@ -172,4 +172,17 @@ public class InstitutionController extends Controller {
 
         return ok(Json.toJson(dataSource));
     }
+
+    public Result getDataSources(long institutionId) {
+        Institution institution = institutionRepository.get(institutionId);
+        List<DataSource> dataSources = institution.getDataSources();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(DataSource.class, new ConnectionSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(dataSources));
+    }
 }

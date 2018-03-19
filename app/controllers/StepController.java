@@ -387,4 +387,10 @@ public class StepController extends Controller {
         long componentPropertyId = componentPropertyRepository.getByComponentAndShortName(componentId,shortName).getId();
         return ok(String.valueOf(componentPropertyId));
     }
+
+    public Result getInstitution(long stepId) {
+        Step step = stepRepository.get(stepId);
+        Long institutionId = step.getTaskSteps().getInstitution().getId();
+        return ok(String.valueOf(institutionId));
+    }
 }

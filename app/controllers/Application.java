@@ -53,6 +53,7 @@ public class Application extends Controller {
                 routes.javascript.InstitutionController.newDataSource(),
                 routes.javascript.InstitutionController.getDataSource(),
                 routes.javascript.InstitutionController.updateDataSource(),
+                routes.javascript.InstitutionController.getDataSources(),
 
                 routes.javascript.TransGraphController.getTaskDetails(),
                 routes.javascript.TransGraphController.getTasks(),
@@ -88,6 +89,7 @@ public class Application extends Controller {
                 routes.javascript.StepController.getTableValue(),
                 routes.javascript.StepController.getConditions(),
                 routes.javascript.StepController.getConditionValue(),
+                routes.javascript.StepController.getInstitution(),
 
                 routes.javascript.StepController.getByComponentAndShortName(),
 

@@ -32,6 +32,7 @@ GET           /server/:serverId                                         controll
 GET           /dataSource/:dataSourceId                                 controllers.InstitutionController.getDataSource(dataSourceId:Long)
 POST          /server/:serverId/apply                                   controllers.InstitutionController.updateServer(serverId:Long)
 POST          /dataSource/:dataSourceId/apply                           controllers.InstitutionController.updateDataSource(dataSourceId:Long)
+GET           /institution/:institutionId/dataSources                   controllers.InstitutionController.getDataSources(institutionId:Long)
 
 # Handles the pipeline.
 GET           /graph/:graphId/select                                controllers.TransGraphController.selectTask(graphId:Long)
@@ -72,6 +73,7 @@ GET           /step/:stepId/tables                                  controllers.
 GET           /step/:stepId/component/:componentId/table            controllers.StepController.getTableValue(stepId:Long,componentId:Long)
 GET           /step/:stepId/conditions                              controllers.StepController.getConditions(stepId:Long)
 GET           /step/:stepId/component/:componentId/condition        controllers.StepController.getConditionValue(stepId:Long,componentId:Long)
+GET           /step/:stepId/institution                             controllers.StepController.getInstitution(stepId:Long)
 
 GET           /component/:componentId/short/:shortName              controllers.StepController.getByComponentAndShortName(componentId:Long,shortName:String)
 

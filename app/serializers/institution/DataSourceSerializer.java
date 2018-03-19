@@ -20,12 +20,14 @@ public class DataSourceSerializer extends JsonSerializer<DataSource> {
         if(value.getDatabaseInterface() != null)
             gen.writeStringField("databaseInterface", value.getDatabaseInterface());
 
-        gen.writeNumberField("accessType", value.getAccessType());
+        if(value.getDatabaseInterface() != null)
+            gen.writeNumberField("accessType", value.getAccessType());
 
         if(value.getHostname() != null)
             gen.writeStringField("hostname", value.getHostname());
 
-        gen.writeNumberField("portNumber", value.getPortNumber());
+        if(value.getHostname() != null)
+            gen.writeNumberField("portNumber", value.getPortNumber());
 
         if(value.getDatabaseName() != null)
             gen.writeStringField("databaseName", value.getDatabaseName());

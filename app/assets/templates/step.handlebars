@@ -56,6 +56,18 @@
                 <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
                 <div class="col-sm-5">
                     <select name="{{id}}" view-element="{{id}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        {{#ifCond source '==' 'dataSources'}}
+                            <option></option>
+                            {{#../dataSources}}
+                                {{#ifCond ../stepProperty.value '==' connectionName}}
+                                    <option value="{{connectionName}}" selected>{{connectionName}}</option>
+                                {{/ifCond}}
+                                {{#ifCond ../stepProperty.value '!=' connectionName}}
+                                    <option value="{{connectionName}}">{{connectionName}}</option>
+                                {{/ifCond}}
+                            {{/../dataSources}}
+                        {{/ifCond}}
+
                         {{#ifCond source '==' 'inputSteps'}}
                             <option></option>
                             {{#../inputSteps}}

@@ -1,4 +1,4 @@
-define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscore', 'async'], function (Controller, StepView, Step, Router, _, async) {
+define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Router', 'underscore', 'async'], function (Controller, StepView, Institution, Step, Router, _, async) {
     var StepController = function (module) {
         Controller.call(this, module, new StepView(this));
     };
@@ -49,6 +49,14 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
 
                     callback();
                 });
+            },
+            function (callback) {
+                Step.getInstitution(stepId, function(institutionId) {
+                    Institution.getDataSources(institutionId, function (dataSources) {
+                        context.dataSources = dataSources;
+                        callback();
+                    });
+                });
             }
         ], function (err) {
             if (err) {
@@ -56,7 +64,7 @@ define('StepController', ['Controller', 'StepView', 'Step', 'Router', 'underscor
                 return;
             }
 
-            context.view.loadStep(context.step, context.inputSteps, context.inputFields, context.outputSteps);
+            context.view.loadStep(context.step, context.inputSteps, context.inputFields, context.outputSteps, context.dataSources);
         });
     };
 
