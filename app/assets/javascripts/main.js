@@ -49,6 +49,7 @@ requirejs.config({
         'Step': 'services/step',
         'Task': 'services/task',
         'User': 'services/user',
+        'Svg': 'services/svg',
 
         'LoginController': 'login/controllers/loginController',
         'LoginView': 'login/views/loginView',

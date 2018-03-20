@@ -47,7 +47,7 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
                     var configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(task.id).url;
                     Router.navigate(configStepUrl);
 
-                    Alert.flash(ALERT_TYPE.SUCCESS, 'Task', 'Task \'' + taskName + '\' was created successfully!');
+                    Alert.flash(ALERT_TYPE.SUCCESS, 'Task', 'Task \'' + taskName + '\' was successfully created!');
                 });
             }
             else {
@@ -69,12 +69,17 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
 
         var $form = this.view.$elements[institution+'_newServer'];
         var formValues = $form.serializeForm();
-        var serverName = formValues['serverName'];
+        this.serverName = formValues['serverName'];
 
         var context = this;
         context.institution = institution;
-        Institution.newServer(context.institution,serverName, function (server) {
-            debugger;
+        Institution.newServer(context.institution,this.serverName, function (server) {
+            if(server == "not found"){
+                Alert.flash(ALERT_TYPE.DANGER, 'Server', 'Server \'' + context.serverName + '\' already exists!');
+            }
+            else{
+                Alert.flash(ALERT_TYPE.SUCCESS, 'Server', 'Server \'' + context.serverName + '\' was successfully created!');
+            }
         });
     };
 
@@ -92,12 +97,17 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
 
         var $form = this.view.$elements[institution+'_newDataSource'];
         var formValues = $form.serializeForm();
-        var dataSourceName = formValues['dataSourceName'];
+        this.dataSourceName = formValues['dataSourceName'];
 
         var context = this;
         context.institution = institution;
-        Institution.newDataSource(context.institution,dataSourceName, function (dataSource) {
-            debugger;
+        Institution.newDataSource(context.institution,this.dataSourceName, function (dataSource) {
+            if(dataSource == "not found"){
+                Alert.flash(ALERT_TYPE.DANGER, 'Data Source', 'Data Source \'' + context.dataSourceName + '\' already exists!');
+            }
+            else{
+                Alert.flash(ALERT_TYPE.SUCCESS, 'Data Source', 'Data Source \'' + context.dataSourceName + '\' was successfully created!');
+            }
         });
     };
 

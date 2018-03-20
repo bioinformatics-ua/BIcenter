@@ -26,7 +26,7 @@ define('RemoteExecutionController', ['Controller', 'RemoteExecutionView', 'Route
 
         var serverId = this.view.$elements.server.val();
         Execution.remoteExecution(graphId,serverId, function(returnedData){
-           debugger;
+
         });
     };
 

@@ -62,6 +62,8 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
         Institution.updateServer(this.server.id, formValues, function (server) {
             console.log("Server", server.id, "has been updated!");
         });
+
+        this.view.hide();
     };
 
     /**

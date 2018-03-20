@@ -4,16 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.Inject;
-import models.DataSource;
-import models.Institution;
-import models.Server;
-import models.Task;
+import models.*;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import repositories.ComponentRepository;
 import repositories.DataSourceRepository;
 import repositories.InstitutionRepository;
 import repositories.ServerRepository;
+import serializers.component.SimpleComponentSerializer;
 import serializers.institution.*;
 import serializers.task.SimpleTaskSerializer;
 
@@ -24,12 +23,14 @@ public class InstitutionController extends Controller {
     private final InstitutionRepository institutionRepository;
     private final ServerRepository serverRepository;
     private final DataSourceRepository dataSourceRepository;
+    private final ComponentRepository componentRepository;
 
     @Inject
-    public InstitutionController(InstitutionRepository institutionRepository, ServerRepository serverRepository, DataSourceRepository dataSourceRepository) {
+    public InstitutionController(InstitutionRepository institutionRepository, ServerRepository serverRepository, DataSourceRepository dataSourceRepository, ComponentRepository componentRepository) {
         this.institutionRepository = institutionRepository;
         this.serverRepository = serverRepository;
         this.dataSourceRepository = dataSourceRepository;
+        this.componentRepository = componentRepository;
     }
 
     public Result getInstitutions(){
@@ -48,7 +49,8 @@ public class InstitutionController extends Controller {
     }
 
     public Result newServer(String instName, String serverName){
-        if(existsServer(serverName)) forbidden();
+        if(existsServer(serverName))
+            return ok("not found");
 
         Server server = new Server(serverName);
         Institution institution = institutionRepository.getByName(instName);
@@ -109,7 +111,8 @@ public class InstitutionController extends Controller {
     }
 
     public Result newDataSource(String instName, String dataSourceName){
-        if(existsDataSource(dataSourceName)) forbidden();
+        if(existsDataSource(dataSourceName))
+            return ok("not found");
 
         DataSource dataSource = new DataSource(dataSourceName);
         Institution institution = institutionRepository.getByName(instName);

@@ -46,6 +46,9 @@ public class Application extends Controller {
                 controllers.login.routes.javascript.Login.logout(),
                 controllers.rbac.routes.javascript.Users.getLoggedInUser(),
 
+                routes.javascript.SvgController.getMiddleImage(),
+                routes.javascript.SvgController.getSmallImage(),
+
                 routes.javascript.InstitutionController.getInstitutions(),
                 routes.javascript.InstitutionController.newServer(),
                 routes.javascript.InstitutionController.getServer(),

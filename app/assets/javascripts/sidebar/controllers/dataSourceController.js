@@ -62,6 +62,8 @@ define('DataSourceController', ['Controller', 'DataSourceView', 'async', 'Router
         Institution.updateDataSource(this.dataSource.id, formValues, function (dataSource) {
             console.log("DataSource", dataSource.id, "has been updated!");
         });
+
+        this.view.hide();
     };
 
     /**

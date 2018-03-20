@@ -21,13 +21,21 @@ import play.mvc.Result;
  * Controller that manages all SVGs.
  */
 public class SvgController extends Controller {
+    public Result getMiddleImage(String image) throws IOException {
+        return service(image);
+    }
+
+    public Result getSmallImage(String image) throws IOException {
+        return service(image);
+    }
+
     /**
      * Given a certain stepName, it returns the correspondent PNG image.
      * @param image stepName.svg.
      * @return PNG file.
      * @throws IOException
      */
-    public Result service(String image) throws IOException {
+    private Result service(String image) throws IOException {
         String url = request().path();
         String stepId = SvgImageUrl.getStepId(url);
 
@@ -42,7 +50,7 @@ public class SvgController extends Controller {
         } catch(Exception e) {
             return notFound();
         }
-        return ok(outputfile).as("image/png");
+        return ok().sendFile(outputfile);
     }
 
 }

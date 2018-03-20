@@ -28,18 +28,18 @@ public class SvgImageUrl {
     }
 
     public static int getHeight(String size) {
-        if(Size_Small.equals(size)) return 16;
+        if(Size_Small.equals(size)) return 20;
         return 40;
     }
 
     public static int getWidth(String size) {
-        if(Size_Small.equals(size)) return 16;
+        if(Size_Small.equals(size)) return 20;
         return 40;
     }
 
     public static BufferedImage createImage(String size) {
         if(Size_Small.equals(size)) {
-            return new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+            return new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB);
         };
         return new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
     }

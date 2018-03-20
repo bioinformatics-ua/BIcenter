@@ -1,4 +1,4 @@
-define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'custom.jquery'], function ($, Router, Module, jsRoutes) {
+define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institution', 'adminLTE', 'custom.jquery'], function ($, Router, Module, jsRoutes, Svg, Institution) {
     var Application = function (mainModuleName) {
         this.mainModuleName = mainModuleName || 'MainModule';
         this.modules = {};
@@ -19,7 +19,6 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'adminLTE', 'cu
         Router
             .add(new RegExp(jsRoutes.controllers.login.Login.index().url.substr(1), 'i'), function () {
                 console.log("LOGIN PAGE");
-                // self.loadController('MainModule', 'FieldsController', opts);
             })
             .add(new RegExp(jsRoutes.controllers.StepController.showStepInput('(.*)','(.*)').url.substr(1), 'i'), function (graphId,stepId) {
                 console.log("Show Input Fields of Step " + stepId);
