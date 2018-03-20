@@ -1,12 +1,12 @@
 package configuration;
 
-import models.Component;
+import models.ComponentCategory;
 import models.Institution;
 
 import java.util.List;
 
 public class Configuration {
-    private List<Component> components;
+    private List<ComponentCategory> componentCategories;
     private List<String> operations;
     private List<String> categories;
     private List<CRole> roles;
@@ -17,9 +17,9 @@ public class Configuration {
     public Configuration() {
     }
 
-    public Configuration(List<Component> components, List<String> operations, List<String> categories,
+    public Configuration(List<ComponentCategory> componentCategories, List<String> operations, List<String> categories,
                          List<CRole> roles, List<CUser> users, List<CAuthentication> authentications, List<Institution> institutions) {
-        this.components = components;
+        this.componentCategories = componentCategories;
         this.operations = operations;
         this.categories = categories;
         this.roles = roles;
@@ -28,12 +28,12 @@ public class Configuration {
         this.institutions = institutions;
     }
 
-    public List<Component> getComponents() {
-        return components;
+    public List<ComponentCategory> getComponentCategories() {
+        return componentCategories;
     }
 
-    public void setComponents(List<Component> components) {
-        this.components = components;
+    public void setComponentCategories(List<ComponentCategory> componentCategories) {
+        this.componentCategories = componentCategories;
     }
 
     public List<String> getOperations() {
@@ -80,18 +80,4 @@ public class Configuration {
 
     public void setInstitutions(List<Institution> institutions) { this.institutions = institutions; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Configuration that = (Configuration) o;
-
-        return components != null ? components.equals(that.components) : that.components == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return components != null ? components.hashCode() : 0;
-    }
 }

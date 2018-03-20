@@ -24,7 +24,7 @@ function onInit(editor)
 
     // Defines an icon for creating new connections in the connection handler.
     // This will automatically disable the highlighting of the source vertex.
-    mxConnectionHandler.prototype.connectImage = new mxImage('assets/images/editor/connector.gif', 16, 16);
+    mxConnectionHandler.prototype.connectImage = new mxImage('/assets/images/editor/connector.gif', 16, 16);
 
     // Enables connections in the graph and disables
     // reset of zoom and translate on root change

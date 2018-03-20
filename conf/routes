@@ -35,6 +35,8 @@ POST          /server/:serverId/apply                                   controll
 POST          /dataSource/:dataSourceId/apply                           controllers.InstitutionController.updateDataSource(dataSourceId:Long)
 GET           /institution/:institutionId/dataSources                   controllers.InstitutionController.getDataSources(institutionId:Long)
 
+GET           /components/list                                      controllers.InstitutionController.getComponents()
+
 # Handles the pipeline.
 GET           /graph/:graphId/select                                controllers.TransGraphController.selectTask(graphId:Long)
 GET           /graph/:graphId/preview                               controllers.TransGraphController.previewResults(graphId:Long)

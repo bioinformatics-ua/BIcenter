@@ -9,22 +9,6 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
 
     GraphController.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
-        // Load the mxEditor after elements rendering.
-        this.createEditor('/assets/editor/diagrameditor.xml');
-
-        if(this.graphId){
-            var context = this;
-            Task.loadTask(this.graphId, function (graph) {
-                context.view.$elements.source.click();
-                context.view.$elements.xml.val(graph);
-                context.view.$elements.source.click();
-            });
-        }
-
-        if (global_editor != null) {
-            this.view.$elements.source.click();
-            this.view.$elements.source.click();
-        }
     };
 
     var editor = null;

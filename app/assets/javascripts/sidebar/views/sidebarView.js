@@ -1,4 +1,4 @@
-define('SidebarView', ['View'], function (View) {
+define('SidebarView', ['View', 'jquery-ui', 'templates'], function (View) {
     var SidebarView = function (controller) {
         View.call(this, controller, 'sidebar');
     };
@@ -24,7 +24,31 @@ define('SidebarView', ['View'], function (View) {
         this.$elements.tasksBtn.addClass('selected');
     };
 
-    SidebarView.prototype.loadComponents = function () {
+    SidebarView.prototype.loadComponents = function (components) {
+        var html = JST['sidebar-components']({categories: components});
+        this.$elements.components.html(html);
+        this._loadViewComponents();
+
+        this.$elements.components
+            .find('ul')
+            .find('li')
+            .draggable({
+                cursorAt: {left: 5, top: 5},
+                helper: function () {
+                    var $el = $(this);
+                    var data = {
+                        shortName: $el.data('shortname'),
+                        name: $el.data('name')
+                    };
+                    return JST['draggable-component-helper'](data);
+                },
+                stack: '.content-wrapper',
+                revert: 'invalid',
+                zIndex: 1000000,
+                appendTo: 'body',
+                scope: 'components'
+            });
+
         this.$elements.institutions.hide();
         this.$elements.components.show();
 

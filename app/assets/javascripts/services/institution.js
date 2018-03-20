@@ -115,5 +115,19 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Institution.getComponents = function (callback) {
+        jsRoutes.controllers.InstitutionController.getComponents().ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Institution service', response);
+            }
+        })
+    };
+
     return Institution;
 });

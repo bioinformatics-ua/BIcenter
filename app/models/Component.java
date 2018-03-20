@@ -19,6 +19,9 @@ public class Component implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "component", cascade = CascadeType.ALL)
     private List<ComponentProperty> componentProperties;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ComponentCategory componentCategory;
+
     //@OneToMany(fetch = FetchType.LAZY, mappedBy = "component", cascade = CascadeType.ALL)
     //private List<Step> steps;
 
@@ -77,6 +80,14 @@ public class Component implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public ComponentCategory getComponentCategory() {
+        return componentCategory;
+    }
+
+    public void setComponentCategory(ComponentCategory componentCategory) {
+        this.componentCategory = componentCategory;
     }
 
     @Override

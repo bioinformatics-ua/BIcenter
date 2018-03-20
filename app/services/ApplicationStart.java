@@ -7,6 +7,7 @@ import configuration.CAuthentication;
 import configuration.CUser;
 import configuration.Configuration;
 import models.Component;
+import models.ComponentCategory;
 import models.ComponentProperty;
 import models.Institution;
 import models.authentication.Authentication;
@@ -17,6 +18,7 @@ import org.pentaho.di.core.Props;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.logging.KettleLogStore;
 import play.inject.ApplicationLifecycle;
+import repositories.ComponentCategoryRepository;
 import repositories.ComponentRepository;
 import repositories.InstitutionRepository;
 import repositories.authentication.AuthenticationRepository;
@@ -50,6 +52,7 @@ public class ApplicationStart {
 
     private final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger("application");
 
+    private final ComponentCategoryRepository componentCategoryRepository;
     private final ComponentRepository componentRepository;
     private final RBACRepository rbacRepository;
     private final UserService userService;
@@ -58,7 +61,8 @@ public class ApplicationStart {
     private final InstitutionRepository institutionRepository;
 
     @Inject
-    public ApplicationStart(ComponentRepository componentRepository, RBACRepository rbacRepository, UserService userService, AuthenticationRepository authenticationRepository, AuthenticationService authenticationService, InstitutionRepository institutionRepository) {
+    public ApplicationStart(ComponentCategoryRepository componentCategoryRepository, ComponentRepository componentRepository, RBACRepository rbacRepository, UserService userService, AuthenticationRepository authenticationRepository, AuthenticationService authenticationService, InstitutionRepository institutionRepository) {
+        this.componentCategoryRepository = componentCategoryRepository;
         this.componentRepository = componentRepository;
         this.rbacRepository = rbacRepository;
         this.userService = userService;
@@ -169,34 +173,41 @@ public class ApplicationStart {
                 .collect(Collectors.toList());
 
         // Load missing configurations.
-        configuration.getComponents()
+        configuration.getComponentCategories()
                 .stream()
-                .filter(component -> !components.contains(component.getName()))
-                .peek(component -> {
-                    List<ComponentProperty> componentProperties = component.getComponentProperties();
-                    if (componentProperties != null) {
-                        component.getComponentProperties()
-                                .stream()
-                                .forEach(cp ->
-                                {
-                                    cp.setComponent(component);
-                                    if (cp.getComponentMetadatas() != null) {
-                                        cp.getComponentMetadatas()
-                                                .stream()
-                                                .forEach(cm ->
-                                                {
-                                                    cm.setComponentProperty(cp);
-                                                    if (cm.getMetadatas() != null) {
-                                                        cm.getMetadatas()
-                                                                .stream()
-                                                                .forEach(m -> m.setComponentMetadata(cm));
-                                                    }
-                                                });
-                                    }
-                                });
-                    }
-                })
-                .forEach(componentRepository::add);
+                .forEach(componentCategory -> {
+                    ComponentCategory JPAcomponentCategory = componentCategoryRepository.get(componentCategory.getName());
+                    componentCategory.getComponents()
+                            .stream()
+                            .filter(component -> !components.contains(component.getName()))
+                            .peek(component -> {
+                                component.setComponentCategory(JPAcomponentCategory);
+                                List<ComponentProperty> componentProperties = component.getComponentProperties();
+                                if (componentProperties != null) {
+                                    component.getComponentProperties()
+                                            .stream()
+                                            .forEach(cp ->
+                                            {
+                                                cp.setComponent(component);
+                                                if (cp.getComponentMetadatas() != null) {
+                                                    cp.getComponentMetadatas()
+                                                            .stream()
+                                                            .forEach(cm ->
+                                                            {
+                                                                cm.setComponentProperty(cp);
+                                                                if (cm.getMetadatas() != null) {
+                                                                    cm.getMetadatas()
+                                                                            .stream()
+                                                                            .forEach(m -> m.setComponentMetadata(cm));
+                                                                }
+                                                            });
+                                                }
+                                            });
+                                }
+                            })
+                            .forEach(componentRepository::add);
+                });
+
     }
 
     /**

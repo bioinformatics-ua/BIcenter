@@ -5,13 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.Inject;
 import models.*;
+import models.rbac.Category;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import repositories.ComponentRepository;
-import repositories.DataSourceRepository;
-import repositories.InstitutionRepository;
-import repositories.ServerRepository;
+import repositories.*;
 import serializers.component.SimpleComponentSerializer;
 import serializers.institution.*;
 import serializers.task.SimpleTaskSerializer;
@@ -24,13 +22,15 @@ public class InstitutionController extends Controller {
     private final ServerRepository serverRepository;
     private final DataSourceRepository dataSourceRepository;
     private final ComponentRepository componentRepository;
+    private final ComponentCategoryRepository componentCategoryRepository;
 
     @Inject
-    public InstitutionController(InstitutionRepository institutionRepository, ServerRepository serverRepository, DataSourceRepository dataSourceRepository, ComponentRepository componentRepository) {
+    public InstitutionController(InstitutionRepository institutionRepository, ServerRepository serverRepository, DataSourceRepository dataSourceRepository, ComponentRepository componentRepository, ComponentCategoryRepository componentCategoryRepository) {
         this.institutionRepository = institutionRepository;
         this.serverRepository = serverRepository;
         this.dataSourceRepository = dataSourceRepository;
         this.componentRepository = componentRepository;
+        this.componentCategoryRepository = componentCategoryRepository;
     }
 
     public Result getInstitutions(){
@@ -187,5 +187,17 @@ public class InstitutionController extends Controller {
         Json.setObjectMapper(mapper);
 
         return ok(Json.toJson(dataSources));
+    }
+
+    public Result getComponents() {
+        List<ComponentCategory> componentCategories = componentCategoryRepository.list();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Component.class, new SimpleComponentSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(componentCategories));
     }
 }

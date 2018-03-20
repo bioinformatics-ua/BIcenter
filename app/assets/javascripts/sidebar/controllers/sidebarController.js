@@ -9,6 +9,7 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
 
     SidebarController.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
+        this.getComponents();
     };
 
     SidebarController.prototype.getTasks = function () {
@@ -19,7 +20,10 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
     };
 
     SidebarController.prototype.getComponents = function () {
-        this.view.loadComponents();
+        var context = this;
+        Institution.getComponents(function(components){
+            context.view.loadComponents(components);
+        });
     };
 
     SidebarController.prototype.selectTask = function (taskId) {

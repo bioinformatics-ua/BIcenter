@@ -9,7 +9,42 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
 
     GraphView.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
-        this._loadViewComponents();
+        var context = this;
+
+        // Load the mxEditor after elements rendering.
+        this.editor = this.controller.createEditor('/assets/editor/diagrameditor.xml');
+
+        // TODO: Remove this gambiarra
+        if (this.controller.graphId) {
+            Task.loadTask(this.controller.graphId, function (graph) {
+                context.$elements.source.click();
+                context.$elements.xml.val(graph);
+                context.$elements.source.click();
+            });
+        }
+
+        if (global_editor != null) {
+            this.$elements.source.click();
+            this.$elements.source.click();
+        }
+        // TODO: Until here.
+
+        this.$elements.graph.droppable({
+            scope: 'components',
+            drop: function (event, ui) {
+                var component = ui.helper.find('#graphComponent').children().first().get(0);
+                var shortName = component.getAttribute('component');
+
+                var offset = context.$elements.graph.offset();
+                var top = ui.position.top - offset.top;
+                var left = ui.position.left - offset.left;
+
+                var graph = context.editor.graph;
+                graph.getModel().beginUpdate();
+                graph.insertVertex(graph.getDefaultParent(), null, component, left, top, 40, 40, 'icon;image=/middle/' + shortName + '.svg');
+                graph.getModel().endUpdate();
+            }
+        });
 
         this.$elements.toolbar.slimscroll({
             axis: 'x',
@@ -25,10 +60,10 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
     /**
      * Returns back to the pipeline, after XML import.
      */
-    GraphView.prototype.loadXml = function(){
+    GraphView.prototype.loadXml = function () {
         this.$elements.source.click();
         this.$elements.board.css({'height': '70vh'});
-        this.$elements.xmlBtn.css("display","none");
+        this.$elements.xmlBtn.css("display", "none");
     }
 
     return GraphView;

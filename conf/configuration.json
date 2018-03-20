@@ -1,463 +1,498 @@
 {
-  "components": [
+  "componentCategories": [
     {
-      "name": "CheckSum",
-      "description": "Add a Checksum",
-      "shortName": "checksum",
-      "componentProperties": [
+      "name": "Input",
+      "components": [
         {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "Checksum Type",
-          "shortName": "checkSumType",
-          "type": "select",
-          "componentMetadatas": [
-            {"value":"0","name":"CRC 32"},
-            {"value":"1","name":"ADLER 32"},
-            {"value":"2","name":"MD5"},
-            {"value":"3","name":"SHA-1"}
+          "name": "RowGenerator",
+          "description": "Generate Rows",
+          "shortName": "rowgen",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "Limit",
+              "shortName": "rowLimit",
+              "type": "number"
+            },
+            {
+              "name": "Never stop generating rows.",
+              "shortName": "neverEnding",
+              "type": "checkbox"
+            },
+            {
+              "name": "Rows",
+              "shortName": "fields",
+              "type": "table",
+              "componentMetadatas": [
+                {
+                  "name": "name",
+                  "shortName": "fieldName"
+                },
+                {
+                  "name": "type",
+                  "shortName": "fieldType"
+                },
+                {
+                  "name": "format",
+                  "shortName": "fieldFormat"
+                },
+                {
+                  "name": "length",
+                  "shortName": "fieldLength"
+                },
+                {
+                  "name": "precision",
+                  "shortName": "fieldPrecision"
+                },
+                {
+                  "name": "currency",
+                  "shortName": "currency"
+                },
+                {
+                  "name": "decimal",
+                  "shortName": "decimal"
+                },
+                {
+                  "name": "grouping",
+                  "shortName": "group"
+                },
+                {
+                  "name": "value",
+                  "shortName": "value"
+                },
+                {
+                  "name": "Set empty String?",
+                  "shortName": "setEmptyString"
+                }
+              ]
+            }
           ]
         },
         {
-          "name": "Result Type",
-          "shortName": "resultType",
-          "type": "select",
-          "componentMetadatas": [
-            {"value":"0","name":"String"},
-            {"value":"1","name":"Hexadecimal"},
-            {"value":"2","name":"Binary"}
-          ]
-        },
-        {
-          "name": "Result Field",
-          "shortName": "resultfieldName",
-          "type": "input"
-        },
-        {
-          "name": "Compatibility Mode.",
-          "shortName": "compatibilityMode",
-          "type": "checkbox"
-        },
-        {
-          "name": "Fields used on checksum",
-          "shortName": "fieldName",
-          "type": "multi-select",
-          "source": "inputFields"
-        }
-      ]
-    },
-    {
-      "name": "RowGenerator",
-      "description": "Generate Rows",
-      "shortName": "rowgen",
-      "componentProperties": [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "Limit",
-          "shortName": "rowLimit",
-          "type": "number"
-        },
-        {
-          "name": "Never stop generating rows.",
-          "shortName": "neverEnding",
-          "type": "checkbox"
-        },
-        {
-          "name": "Rows",
-          "shortName": "fields",
-          "type": "table",
-          "componentMetadatas": [
+          "name": "TableInput",
+          "description": "Table Input",
+          "shortName": "tableInput",
+          "componentProperties": [
             {
-              "name": "name",
-              "shortName": "fieldName"
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
             },
             {
-              "name": "type",
-              "shortName": "fieldType"
+              "name": "Connection Name",
+              "shortName": "databaseMeta",
+              "type": "select",
+              "source": "dataSources"
             },
             {
-              "name": "format",
-              "shortName": "fieldFormat"
-            },
-            {
-              "name": "length",
-              "shortName": "fieldLength"
-            },
-            {
-              "name": "precision",
-              "shortName": "fieldPrecision"
-            },
-            {
-              "name": "currency",
-              "shortName": "currency"
-            },
-            {
-              "name": "decimal",
-              "shortName": "decimal"
-            },
-            {
-              "name": "grouping",
-              "shortName": "group"
-            },
-            {
-              "name": "value",
-              "shortName": "value"
-            },
-            {
-              "name": "Set empty String?",
-              "shortName": "setEmptyString"
+              "name": "SQL Statement",
+              "shortName": "sQL",
+              "type": "textarea"
             }
           ]
         }
       ]
     },
     {
-      "name": "AddSequence",
-      "description": "Add Sequence",
-      "shortName": "sequence",
-      "componentProperties": [
+      "name": "Output",
+      "components": [
         {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "Value Name",
-          "shortName": "valuename",
-          "type": "input"
-        },
-        {
-          "name": "Use a database to generate a sequence.",
-          "shortName": "useDatabase",
-          "type": "checkbox"
-        },
-        {
-          "name": "Use a counter to generate the sequence.",
-          "shortName": "useCounter",
-          "type": "checkbox"
-        },
-        {
-          "name": "Counter Name (optional)",
-          "shortName": "counterName",
-          "type": "input"
-        },
-        {
-          "name": "Start Value",
-          "shortName": "startAt",
-          "type": "number"
-        },
-        {
-          "name": "Increment",
-          "shortName": "incrementBy",
-          "type": "number"
-        },
-        {
-          "name": "Maximum Value",
-          "shortName": "maxValue",
-          "type": "number"
-        }
-      ]
-    },
-    {
-      "name": "TableInput",
-      "description": "Table Input",
-      "shortName": "tableInput",
-      "componentProperties": [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "Connection Name",
-          "shortName": "databaseMeta",
-          "type": "select",
-          "source": "dataSources"
-        },
-        {
-          "name": "SQL Statement",
-          "shortName": "sQL",
-          "type": "textarea"
-        }
-      ]
-    },
-    {
-      "name": "TableOutput",
-      "description": "Table Output",
-      "shortName": "tableOutput",
-      "componentProperties": [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "Connection Name",
-          "shortName": "databaseMeta",
-          "type": "select",
-          "source": "dataSources"
-        },
-        {
-          "name": "Target Table",
-          "shortName": "tableName",
-          "type": "input"
-        }
-      ]
-    },
-    {
-      "name": "ExecSQL",
-      "description": "Execute SQL script",
-      "shortName": "ExecSQL",
-      "componentProperties": [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "Connection Name",
-          "shortName": "databaseMeta",
-          "type": "select",
-          "source": "dataSources"
-        },
-        {
-          "name": "SQL Statement",
-          "shortName": "sQL",
-          "type": "textarea"
-        }
-      ]
-    },
-    {
-      "name": "FilterRows",
-      "description": "Filter Rows",
-      "shortName": "filterRows",
-      "componentProperties":
-      [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "Send 'true' data to step",
-          "shortName": "stream0",
-          "type": "select",
-          "source": "outputSteps"
-        },
-        {
-          "name": "Send 'false' data to step",
-          "shortName": "stream1",
-          "type": "select",
-          "source": "outputSteps"
-        },
-        {
-          "name": "Condition",
-          "shortName": "condition",
-          "type": "condition"
-        }
-      ]
-    },
-    {
-      "name": "SelectValues",
-      "description": "Select Values",
-      "shortName": "selectValues",
-      "componentProperties": [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "Select & Alter",
-          "shortName": "select",
-          "type": "table",
-          "componentMetadatas": [
+          "name": "TableOutput",
+          "description": "Table Output",
+          "shortName": "tableOutput",
+          "componentProperties": [
             {
-              "name": "Field Name",
-              "shortName": "selectName",
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "Connection Name",
+              "shortName": "databaseMeta",
               "type": "select",
-              "source": "inputFields"
+              "source": "dataSources"
             },
             {
-              "name": "Rename To",
-              "shortName": "selectRename"
-            },
-            {
-              "name": "Length",
-              "shortName": "selectLength"
-            },
-            {
-              "name": "Precision",
-              "shortName": "selectPrecision"
+              "name": "Target Table",
+              "shortName": "tableName",
+              "type": "input"
             }
           ]
         }
       ]
     },
     {
-      "name": "MergeJoin",
-      "description": "Merge Join",
-      "shortName": "mergeJoin",
-      "componentProperties": [
+      "name": "Transform",
+      "components": [
         {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "First Step",
-          "shortName": "stream0",
-          "type": "select",
-          "source": "inputSteps"
-        },
-        {
-          "name": "Second Step",
-          "shortName": "stream1",
-          "type": "select",
-          "source": "inputSteps"
-        },
-        {
-          "name": "Join Type",
-          "shortName": "joinType",
-          "type": "select",
-          "componentMetadatas": [
-            {"value":"INNER","name":"INNER"},
-            {"value":"LEFT OUTER","name":"LEFT OUTER"},
-            {"value":"RIGHT OUTER","name":"RIGHT OUTER"},
-            {"value":"FULL OUTER","name":"FULL OUTER"}
-          ]
-        },
-        {
-          "name": "Keys",
-          "shortName": "keys",
-          "type": "table",
-          "componentMetadatas": [
+          "name": "AddSequence",
+          "description": "Add Sequence",
+          "shortName": "sequence",
+          "componentProperties": [
             {
-              "name": "First Key",
-              "shortName": "keyFields1",
-              "source": "inputFields@stream0"
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
             },
             {
-              "name": "Second Key",
-              "shortName": "keyFields2",
-              "source": "inputFields@stream1"
+              "name": "Value Name",
+              "shortName": "valuename",
+              "type": "input"
+            },
+            {
+              "name": "Use a database to generate a sequence.",
+              "shortName": "useDatabase",
+              "type": "checkbox"
+            },
+            {
+              "name": "Use a counter to generate the sequence.",
+              "shortName": "useCounter",
+              "type": "checkbox"
+            },
+            {
+              "name": "Counter Name (optional)",
+              "shortName": "counterName",
+              "type": "input"
+            },
+            {
+              "name": "Start Value",
+              "shortName": "startAt",
+              "type": "number"
+            },
+            {
+              "name": "Increment",
+              "shortName": "incrementBy",
+              "type": "number"
+            },
+            {
+              "name": "Maximum Value",
+              "shortName": "maxValue",
+              "type": "number"
             }
           ]
-        }
-      ]
-    },
-    {
-      "name": "Dummy",
-      "description": "Dummy (do nothing)",
-      "shortName": "dummy",
-      "componentProperties": [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        }
-      ]
-    },
-    {
-      "name": "SortRows",
-      "description": "Sort Rows",
-      "shortName": "sortRows",
-      "componentProperties": [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
         },
         {
-          "name": "Fields",
-          "shortName": "fields",
-          "type": "table",
-          "componentMetadatas": [
+          "name": "CheckSum",
+          "description": "Add a Checksum",
+          "shortName": "checksum",
+          "componentProperties": [
             {
-              "name": "Field Name",
-              "shortName": "fieldName",
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "Checksum Type",
+              "shortName": "checkSumType",
               "type": "select",
-              "source": "inputFields"
-            },
-            {
-              "name": "Ascending",
-              "shortName": "ascending"
-            },
-            {
-              "name": "Case Sensitive Compare?",
-              "shortName": "caseSensitive"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "GroupBy",
-      "description": "Group By",
-      "shortName": "groupBy",
-      "componentProperties": [
-        {
-          "name": "Step Name",
-          "shortName": "stepName",
-          "type": "input"
-        },
-        {
-          "name": "The fields that make up the group",
-          "shortName": "groupField",
-          "type": "multi-select",
-          "source": "inputFields"
-        },
-        {
-          "name": "Aggregates",
-          "shortName": "aggregates",
-          "type": "table",
-          "componentMetadatas": [
-            {
-              "name": "Name",
-              "shortName": "aggregateField"
-            },
-            {
-              "name": "Subject",
-              "shortName": "subjectField",
-              "type": "select",
-              "source": "inputFields"
-            },
-            {
-              "name": "Type",
-              "shortName": "aggregateType",
-              "type": "select",
-              "source": "metadata",
-              "metadatas": [
-                {"value":"1","name":"Sum"},
-                {"value":"2","name":"Average (Mean)"},
-                {"value":"3","name":"Median"},
-                {"value":"4","name":"Percentile"},
-                {"value":"5","name":"Minimum"},
-                {"value":"6","name":"Maximum"},
-                {"value":"7","name":"Number of values (N)"},
-                {"value":"8","name":"Concatenate strings separated by , (comma)"},
-                {"value":"9","name":"First non-null value"},
-                {"value":"10","name":"Last non-null value"},
-                {"value":"11","name":"First value (including null)"},
-                {"value":"12","name":"Last value (including null)"},
-                {"value":"13","name":"Cumulative sum (all rows option only!)"},
-                {"value":"14","name":"Cumulative average (all rows option only!)"},
-                {"value":"16","name":"Standard deviation"},
-                {"value":"16","name":"Concatenate strings separated by <Value>: specify the separator in the Value column"},
-                {"value":"17","name":"Number of distinct values"},
-                {"value":"18","name":"Number of rows (without field argument)"}
+              "componentMetadatas": [
+                {"value":"0","name":"CRC 32"},
+                {"value":"1","name":"ADLER 32"},
+                {"value":"2","name":"MD5"},
+                {"value":"3","name":"SHA-1"}
               ]
             },
             {
-              "name": "Value",
-              "shortName": "valueField"
+              "name": "Result Type",
+              "shortName": "resultType",
+              "type": "select",
+              "componentMetadatas": [
+                {"value":"0","name":"String"},
+                {"value":"1","name":"Hexadecimal"},
+                {"value":"2","name":"Binary"}
+              ]
+            },
+            {
+              "name": "Result Field",
+              "shortName": "resultfieldName",
+              "type": "input"
+            },
+            {
+              "name": "Compatibility Mode.",
+              "shortName": "compatibilityMode",
+              "type": "checkbox"
+            },
+            {
+              "name": "Fields used on checksum",
+              "shortName": "fieldName",
+              "type": "multi-select",
+              "source": "inputFields"
+            }
+          ]
+        },
+        {
+          "name": "SelectValues",
+          "description": "Select Values",
+          "shortName": "selectValues",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "Select & Alter",
+              "shortName": "select",
+              "type": "table",
+              "componentMetadatas": [
+                {
+                  "name": "Field Name",
+                  "shortName": "selectName",
+                  "type": "select",
+                  "source": "inputFields"
+                },
+                {
+                  "name": "Rename To",
+                  "shortName": "selectRename"
+                },
+                {
+                  "name": "Length",
+                  "shortName": "selectLength"
+                },
+                {
+                  "name": "Precision",
+                  "shortName": "selectPrecision"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SortRows",
+          "description": "Sort Rows",
+          "shortName": "sortRows",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "Fields",
+              "shortName": "fields",
+              "type": "table",
+              "componentMetadatas": [
+                {
+                  "name": "Field Name",
+                  "shortName": "fieldName",
+                  "type": "select",
+                  "source": "inputFields"
+                },
+                {
+                  "name": "Ascending",
+                  "shortName": "ascending"
+                },
+                {
+                  "name": "Case Sensitive Compare?",
+                  "shortName": "caseSensitive"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Flow",
+      "components": [
+        {
+          "name": "FilterRows",
+          "description": "Filter Rows",
+          "shortName": "filterRows",
+          "componentProperties":
+          [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "Send 'true' data to step",
+              "shortName": "stream0",
+              "type": "select",
+              "source": "outputSteps"
+            },
+            {
+              "name": "Send 'false' data to step",
+              "shortName": "stream1",
+              "type": "select",
+              "source": "outputSteps"
+            },
+            {
+              "name": "Condition",
+              "shortName": "condition",
+              "type": "condition"
+            }
+          ]
+        },
+        {
+          "name": "Dummy",
+          "description": "Dummy (do nothing)",
+          "shortName": "dummy",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Joins",
+      "components": [
+        {
+          "name": "MergeJoin",
+          "description": "Merge Join",
+          "shortName": "mergeJoin",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "First Step",
+              "shortName": "stream0",
+              "type": "select",
+              "source": "inputSteps"
+            },
+            {
+              "name": "Second Step",
+              "shortName": "stream1",
+              "type": "select",
+              "source": "inputSteps"
+            },
+            {
+              "name": "Join Type",
+              "shortName": "joinType",
+              "type": "select",
+              "componentMetadatas": [
+                {"value":"INNER","name":"INNER"},
+                {"value":"LEFT OUTER","name":"LEFT OUTER"},
+                {"value":"RIGHT OUTER","name":"RIGHT OUTER"},
+                {"value":"FULL OUTER","name":"FULL OUTER"}
+              ]
+            },
+            {
+              "name": "Keys",
+              "shortName": "keys",
+              "type": "table",
+              "componentMetadatas": [
+                {
+                  "name": "First Key",
+                  "shortName": "keyFields1",
+                  "source": "inputFields@stream0"
+                },
+                {
+                  "name": "Second Key",
+                  "shortName": "keyFields2",
+                  "source": "inputFields@stream1"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Statistics",
+      "components": [
+        {
+          "name": "GroupBy",
+          "description": "Group By",
+          "shortName": "groupBy",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "The fields that make up the group",
+              "shortName": "groupField",
+              "type": "multi-select",
+              "source": "inputFields"
+            },
+            {
+              "name": "Aggregates",
+              "shortName": "aggregates",
+              "type": "table",
+              "componentMetadatas": [
+                {
+                  "name": "Name",
+                  "shortName": "aggregateField"
+                },
+                {
+                  "name": "Subject",
+                  "shortName": "subjectField",
+                  "type": "select",
+                  "source": "inputFields"
+                },
+                {
+                  "name": "Type",
+                  "shortName": "aggregateType",
+                  "type": "select",
+                  "source": "metadata",
+                  "metadatas": [
+                    {"value":"1","name":"Sum"},
+                    {"value":"2","name":"Average (Mean)"},
+                    {"value":"3","name":"Median"},
+                    {"value":"4","name":"Percentile"},
+                    {"value":"5","name":"Minimum"},
+                    {"value":"6","name":"Maximum"},
+                    {"value":"7","name":"Number of values (N)"},
+                    {"value":"8","name":"Concatenate strings separated by , (comma)"},
+                    {"value":"9","name":"First non-null value"},
+                    {"value":"10","name":"Last non-null value"},
+                    {"value":"11","name":"First value (including null)"},
+                    {"value":"12","name":"Last value (including null)"},
+                    {"value":"13","name":"Cumulative sum (all rows option only!)"},
+                    {"value":"14","name":"Cumulative average (all rows option only!)"},
+                    {"value":"16","name":"Standard deviation"},
+                    {"value":"16","name":"Concatenate strings separated by <Value>: specify the separator in the Value column"},
+                    {"value":"17","name":"Number of distinct values"},
+                    {"value":"18","name":"Number of rows (without field argument)"}
+                  ]
+                },
+                {
+                  "name": "Value",
+                  "shortName": "valueField"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Scripting",
+      "components": [
+        {
+          "name": "ExecSQL",
+          "description": "Execute SQL script",
+          "shortName": "ExecSQL",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "Connection Name",
+              "shortName": "databaseMeta",
+              "type": "select",
+              "source": "dataSources"
+            },
+            {
+              "name": "SQL Statement",
+              "shortName": "sQL",
+              "type": "textarea"
             }
           ]
         }

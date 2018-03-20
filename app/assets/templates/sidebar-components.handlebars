@@ -1,0 +1,19 @@
+{{#categories}}
+<li class="treeview menu-open">
+    <a>
+        <i class="fa fa-folder"></i> <span>{{name}}</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        {{#components}}
+        <li data-shortname="{{name}}" data-name="{{description}}">
+            <a>
+                <img src="/small/{{name}}.svg"> {{description}}
+            </a>
+        </li>
+        {{/components}}
+    </ul>
+</li>
+{{/categories}}

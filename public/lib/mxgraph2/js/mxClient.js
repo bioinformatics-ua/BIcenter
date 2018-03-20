@@ -52,7 +52,7 @@ var mxClient = {
 "undefined" != typeof mxImageBasePath && 0 < mxImageBasePath.length ? ("/" == mxImageBasePath.substring(mxImageBasePath.length - 1) && (mxImageBasePath = mxImageBasePath.substring(0, mxImageBasePath.length - 1)), mxClient.imageBasePath = mxImageBasePath) : mxClient.imageBasePath = mxClient.basePath + "/images";
 mxClient.language = "undefined" != typeof mxLanguage && null != mxLanguage ? mxLanguage : mxClient.IS_IE ? navigator.userLanguage : navigator.language;
 mxClient.defaultLanguage = "undefined" != typeof mxDefaultLanguage && null != mxDefaultLanguage ? mxDefaultLanguage : "en";
-mxLoadStylesheets && mxClient.link("stylesheet", "assets/lib/mxgraph2/css/common.css");
+mxLoadStylesheets && mxClient.link("stylesheet", "/assets/lib/mxgraph2/css/common.css");
 "undefined" != typeof mxLanguages && null != mxLanguages && (mxClient.languages = mxLanguages);
 if (mxClient.IS_VML)
     if (mxClient.IS_SVG) mxClient.IS_VML = !1;

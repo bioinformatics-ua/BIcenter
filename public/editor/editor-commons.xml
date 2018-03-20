@@ -2,28 +2,8 @@
     <ui>
         <resource basename="resources/app"/>
     </ui>
-    <!--<mxDefaultPopupMenu as="popupHandler">
 
-        <add as="Edit step." icon="assets/images/editor/delete.gif" if="cell"/>
-        <add as="Edit step description." icon="assets/images/editor/delete.gif" if="cell"/>
-        <separator if="cell"/>
-        <add as="Copy step." action="copy" icon="assets/images/editor/delete.gif" if="cell"/>
-        <add as="Delete step." action="delete" icon="assets/images/editor/delete.gif" if="cell"/>
-        <add as="Hide step." icon="assets/images/editor/delete.gif" if="cell"/>
-        <separator if="cell"/>
-        <add as="Show input fields." icon="assets/images/editor/delete.gif" if="cell"/>
-        <add as="Show output fields." icon="assets/images/editor/delete.gif" if="cell"/>
-        <separator if="cell"/>
-
-        <add as="Create New Node." icon="assets/images/editor/delete.gif" if="nocell"/>
-        <separator if="nocell"/>
-        <add as="Check the graphics file." action="graphics" icon="assets/images/editor/delete.gif" if="nocell"/>
-        <add as="Check the engine file." action="engine" icon="assets/images/editor/delete.gif" if="nocell"/>
-        <separator if="nocell"/>
-        <add as="Change settings." action="settings" icon="assets/images/editor/delete.gif" if="nocell"/>
-
-    </mxDefaultPopupMenu>-->
-    <include name="assets/editor/keyhandler-commons.xml"/>
+    <include name="/assets/editor/keyhandler-commons.xml"/>
     <Array as="actions">
         <add as="open"><![CDATA[
                 function (editor)
