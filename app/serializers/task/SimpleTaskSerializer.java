@@ -17,6 +17,8 @@ public class SimpleTaskSerializer extends JsonSerializer<Task> {
         gen.writeNumberField("id", value.getId());
         gen.writeStringField("name", value.getName());
 
+        gen.writeStringField("institution", value.getInstitution().getName());
+
         // Finish output
         gen.writeEndObject();
     }

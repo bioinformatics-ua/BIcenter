@@ -11,8 +11,10 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         _super_.initialize.call(this, $container);
 
         this.data = {};
-        if (this.stepId) {
-            this.getStep(this.stepId);
+        if(this.graphId){
+            Task.getExecutions(this.graphId, function(task){
+                context.view.loadTask(task);
+            });
         }
     };
 

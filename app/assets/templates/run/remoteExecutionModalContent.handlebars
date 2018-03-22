@@ -1,12 +1,55 @@
 <form view-element="remoteExecution" view-submit="controller.remoteExecution()" class="form-horizontal">
     <div class="form-group">
         <label for="server" class="col-sm-3 control-label">Server Name:</label>
-        <div class="col-sm-5">
+        <div class="col-sm-8">
             <select name="server" view-element="server" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                 <option></option>
                 {{#servers}}
                     <option value="{{id}}">{{name}}</option>
                 {{/servers}}
+            </select>
+        </div>
+    </div>
+
+    <!-- iCheck -->
+    <div class="form-group">
+        <div class="col-sm-offset-7 col-sm-5">
+            <div class="checkbox">
+                <label>
+                    <input view-element="schedule" type="checkbox" name="iCheck">
+                    Schedule Execution.
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" view-element="startDateTime_form" style="display:none;">
+        <label for="startDateTime" class="col-sm-3 control-label">Time:</label>
+        <div class="col-md-9">
+            <div view-element="startDateTime" name="startDateTime"></div>
+        </div>
+    </div>
+
+    <!-- iCheck -->
+    <div class="form-group" view-element="periodic_form" style="display:none;">
+        <div class="col-sm-offset-7 col-sm-5">
+            <div class="checkbox">
+                <label>
+                    <input view-element="periodic" type="checkbox" name="iCheck">
+                    Periodic Execution.
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" view-element="intervals_form" style="display:none;">
+        <label for="intervals" class="col-sm-3 control-label">Interval:</label>
+        <div class="col-md-8">
+            <select name="intervals" view-element="intervals" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
+                <option>Yearly</option>
             </select>
         </div>
     </div>

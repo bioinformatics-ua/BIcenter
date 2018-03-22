@@ -94,6 +94,13 @@ public class TransGraphController extends Controller {
      */
     public Result history(long graphId) { return ok(views.html.index.render()); }
 
+    /**
+     * Execution Scheduler page.
+     * @param graphId
+     * @return
+     */
+    public Result schedule(long graphId) { return ok(views.html.index.render()); }
+
     public Result getTaskDetails(long graphId) {
         Task task = taskRepository.get(graphId);
 

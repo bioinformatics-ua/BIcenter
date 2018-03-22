@@ -24,6 +24,8 @@ requirejs.config({
         'async': 'lib/async.min',
         'jquery-cookie': 'lib/jquery.cookie.min',
         'md5': '../lib/md5/md5.min',
+        'boostrap-datetimepicker': '../lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min',
+        'iCheck': '../lib/iCheck/icheck.min',
 
         // QueryBuilder
         'query-builder': '../lib/jQuery-QueryBuilder/js/query-builder.min',
@@ -176,6 +178,9 @@ requirejs.config({
         },
         'templates': {
             deps: ['handlebarsHelpers']
+        },
+        'boostrap-datetimepicker': {
+            deps: ['bootstrap']
         }
     }
 });

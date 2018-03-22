@@ -209,7 +209,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
         Task.getServers(this.graphId, function (servers) {
             var modalController = context.module.controllers['RemoteExecutionController'];
             modalController.view.show(servers);
-        })
+        });
     }
 
     /**

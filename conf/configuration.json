@@ -129,7 +129,7 @@
       "name": "Transform",
       "components": [
         {
-          "name": "AddSequence",
+          "name": "Sequence",
           "description": "Add Sequence",
           "shortName": "sequence",
           "componentProperties": [
