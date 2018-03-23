@@ -62,11 +62,10 @@ public class ExecutionJob implements Job {
             ILatch latch = (ILatch) jobDetail.getJobDataMap().get("latch");
             latch.countDown();
         }
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
         // Execute Transformation.
-//        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository, keyValueRepository);
-//        new Thread(transExecutor).start();
+        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository, keyValueRepository);
+        new Thread(transExecutor).start();
     }
 
     private void initializeTask(Task task){
