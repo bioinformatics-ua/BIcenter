@@ -15,9 +15,10 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.remoteExecution = function (taskId,serverId,callback) {
+    Execution.remoteExecution = function (taskId,serverId,details,callback) {
         jsRoutes.controllers.ExecutionController.remoteExecution(taskId,serverId).ajax({
             contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(details),
             success: function (response) {
                 if (callback) {
                     callback(response);

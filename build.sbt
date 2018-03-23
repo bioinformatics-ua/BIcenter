@@ -55,6 +55,8 @@ libraryDependencies ++= Seq(
   "com.google.code.gson" % "gson" % "2.8.0",
   // Password encrypting
   "org.mindrot" % "jbcrypt" % "0.3m",
+  // Quartz
+  "org.quartz-scheduler" % "quartz" % "2.3.0",
 
   //  libraryDependencies += "org.hibernate.javax.persistence" % "hibernate-jpa-2.0-api" % "1.0.1.Final"
 

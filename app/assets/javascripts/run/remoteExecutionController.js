@@ -24,8 +24,12 @@ define('RemoteExecutionController', ['Controller', 'RemoteExecutionView', 'Route
         var graphController = this.module.controllers['GraphController'];
         var graphId = graphController.graphId;
 
+        var $form = this.view.$elements.remoteExecution;
+        var formValues = $form.serializeForm();
+        formValues["dateTime"] = this.view.$elements.startDateTime.data('date');
+
         var serverId = this.view.$elements.server.val();
-        Execution.remoteExecution(graphId,serverId, function(returnedData){
+        Execution.remoteExecution(graphId,serverId,formValues, function(returnedData){
 
         });
     };
