@@ -33,20 +33,19 @@ public class ExecutionScheduler implements ILatch {
 
         JobDetail jobDetail = jobBuilder
                 .usingJobData(data)
-                .withIdentity("myJob", "group1")
                 .build();
 
         Trigger trigger = null;
         if(!schedule && !periodic){
             trigger = TriggerBuilder.newTrigger()
-                    .withIdentity("myTrigger", "group1")
+                    .withIdentity(String.valueOf(taskId))
                     .startNow()
                     .build();
         }
         else{
             if(!periodic){
                 trigger = TriggerBuilder.newTrigger()
-                        .withIdentity("myTrigger", "group1")
+                        .withIdentity(String.valueOf(taskId))
                         .startAt(DateBuilder.dateOf(hour,minutes,0,dayOfMonth,month,year))
                         .build();
             }
@@ -54,7 +53,7 @@ public class ExecutionScheduler implements ILatch {
                 switch(interval){
                     case "Daily":
                         trigger = TriggerBuilder.newTrigger()
-                                .withIdentity("myTrigger", "group1")
+                                .withIdentity(String.valueOf(taskId))
                                 .startAt(DateBuilder.dateOf(hour, minutes, 0, dayOfMonth, month, year))
                                 .withSchedule(CronScheduleBuilder.cronSchedule("0 "+minutes+" "+hour+" * * ?"))
                                 .build();
@@ -68,7 +67,7 @@ public class ExecutionScheduler implements ILatch {
                         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
                         trigger = TriggerBuilder.newTrigger()
-                                .withIdentity("myTrigger", "group1")
+                                .withIdentity(String.valueOf(taskId))
                                 .startAt(date)
                                 .withSchedule(CronScheduleBuilder.cronSchedule("0 "+minutes+" "+hour+" ? * "+dayOfWeek))
                                 .build();
@@ -76,7 +75,7 @@ public class ExecutionScheduler implements ILatch {
 
                     case "Yearly":
                         trigger = TriggerBuilder.newTrigger()
-                                .withIdentity("myTrigger", "group1")
+                                .withIdentity(String.valueOf(taskId))
                                 .startAt(DateBuilder.dateOf(hour, minutes, 0, dayOfMonth, month, year))
                                 .withSchedule(CronScheduleBuilder.cronSchedule(minutes+" "+hour+" "+dayOfMonth+" "+month+" *"))
                                 .build();
