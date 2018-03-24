@@ -11,12 +11,12 @@ public class ExecutionScheduler implements ILatch {
     private int repeatCount = 3;
     private CountDownLatch latch = new CountDownLatch(repeatCount + 1);
 
-    public void fireJob(boolean schedule, int hour,int minutes, int dayOfMonth, int month, int year, boolean periodic, String interval, long taskId, long serverId, TaskRepository taskRepository, ServerRepository serverRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository) throws SchedulerException, InterruptedException {
+    public void fireJob(long scheduleId, boolean schedule, int hour,int minutes, int dayOfMonth, int month, int year, boolean periodic, String interval, long taskId, long serverId, TaskRepository taskRepository, ServerRepository serverRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository) throws SchedulerException, InterruptedException {
         SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
         Scheduler scheduler = schedFact.getScheduler();
         scheduler.start();
 
-        // define the job and tie it to our HelloJob class
+        // Define the job and tie it to our ExecutionJob class
         JobBuilder jobBuilder = JobBuilder.newJob(ExecutionJob.class);
         JobDataMap data = new JobDataMap();
         data.put("latch", this);
@@ -38,14 +38,14 @@ public class ExecutionScheduler implements ILatch {
         Trigger trigger = null;
         if(!schedule && !periodic){
             trigger = TriggerBuilder.newTrigger()
-                    .withIdentity(String.valueOf(taskId))
+                    .withIdentity(String.valueOf(scheduleId),String.valueOf(taskId))
                     .startNow()
                     .build();
         }
         else{
             if(!periodic){
                 trigger = TriggerBuilder.newTrigger()
-                        .withIdentity(String.valueOf(taskId))
+                        .withIdentity(String.valueOf(scheduleId),String.valueOf(taskId))
                         .startAt(DateBuilder.dateOf(hour,minutes,0,dayOfMonth,month,year))
                         .build();
             }
@@ -53,7 +53,7 @@ public class ExecutionScheduler implements ILatch {
                 switch(interval){
                     case "Daily":
                         trigger = TriggerBuilder.newTrigger()
-                                .withIdentity(String.valueOf(taskId))
+                                .withIdentity(String.valueOf(scheduleId),String.valueOf(taskId))
                                 .startAt(DateBuilder.dateOf(hour, minutes, 0, dayOfMonth, month, year))
                                 .withSchedule(CronScheduleBuilder.cronSchedule("0 "+minutes+" "+hour+" * * ?"))
                                 .build();
@@ -67,7 +67,7 @@ public class ExecutionScheduler implements ILatch {
                         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
                         trigger = TriggerBuilder.newTrigger()
-                                .withIdentity(String.valueOf(taskId))
+                                .withIdentity(String.valueOf(scheduleId),String.valueOf(taskId))
                                 .startAt(date)
                                 .withSchedule(CronScheduleBuilder.cronSchedule("0 "+minutes+" "+hour+" ? * "+dayOfWeek))
                                 .build();
@@ -75,7 +75,7 @@ public class ExecutionScheduler implements ILatch {
 
                     case "Yearly":
                         trigger = TriggerBuilder.newTrigger()
-                                .withIdentity(String.valueOf(taskId))
+                                .withIdentity(String.valueOf(scheduleId),String.valueOf(taskId))
                                 .startAt(DateBuilder.dateOf(hour, minutes, 0, dayOfMonth, month, year))
                                 .withSchedule(CronScheduleBuilder.cronSchedule(minutes+" "+hour+" "+dayOfMonth+" "+month+" *"))
                                 .build();

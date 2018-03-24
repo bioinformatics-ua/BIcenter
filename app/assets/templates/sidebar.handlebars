@@ -17,13 +17,22 @@
 <ul view-element="institutions" class="sidebar-menu" data-widget="tree">
 {{# institutions}}
 
-    <li class="treeview">
+    <li class="treeview menu-open">
         <a href="#">
             <i class="fa fa-folder"></i>  {{name}}
             <i class="fa fa-angle-left pull-right"></i>
         </a>
 
-        <ul view-element="tasks" class="treeview-menu" data-widget="tree">
+        <ul class="treeview-menu" data-widget="tree">
+            <!-- Execution Scheduler -->
+            <li>
+                <a view-click="controller.showSchedule({{id}})">
+                    <i class="fa fa-calendar"></i>
+                    <span>Execution Scheduler</span>
+                </a>
+            </li>
+
+            <!-- Tasks -->
             <li class="treeview menu-open">
                 <a>
                     <i class="fa fa-folder"></i> <span>Tasks</span>
@@ -57,7 +66,7 @@
                     </li>
                 </ul>
             </li>
-
+            <!-- Servers -->
             <li class="treeview menu-open">
                 <a>
                     <i class="fa fa-folder"></i> <span>Servers</span>
@@ -91,7 +100,7 @@
                     </li>
                 </ul>
             </li>
-
+            <!-- Data Sources -->
             <li class="treeview menu-open">
                 <a>
                     <i class="fa fa-folder"></i> <span>Data Sources</span>

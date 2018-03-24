@@ -1,46 +1,33 @@
 package controllers;
 
-import java.util.Calendar;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import diSdk.task.TaskDecoder;
 import diSdk.trans.TransExecutor;
-import kettleExt.App;
-import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
 import models.*;
 import models.Execution;
-import org.hibernate.Hibernate;
-import org.pentaho.di.cluster.SlaveServer;
-import org.pentaho.di.core.Const;
-import org.pentaho.di.core.logging.LogLevel;
 import org.pentaho.di.trans.TransExecutionConfiguration;
 import org.pentaho.di.trans.TransMeta;
-import org.quartz.*;
+import org.quartz.DateBuilder;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import repositories.*;
-import scheduler.ExecutionJob;
 import scheduler.ExecutionScheduler;
 import serializers.performance.*;
 import serializers.task.PerformanceTaskSerializer;
 import serializers.task.SimpleTaskSerializer;
 
 import javax.inject.Inject;
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Controller that manages task executions.
  */
 public class ExecutionController extends Controller {
-
+    private InstitutionRepository institutionRepository;
     private TaskRepository taskRepository;
     private ExecutionRepository executionRepository;
     private StepMetricRepository stepMetricRepository;
@@ -48,9 +35,11 @@ public class ExecutionController extends Controller {
     private DataRowRepository dataRowRepository;
     private KeyValueRepository keyValueRepository;
     private ServerRepository serverRepository;
+    private ScheduleRepository scheduleRepository;
 
     @Inject
-    public ExecutionController(TaskRepository taskRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository, ServerRepository serverRepository){
+    public ExecutionController(InstitutionRepository institutionRepository, TaskRepository taskRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository, ServerRepository serverRepository, ScheduleRepository scheduleRepository){
+        this.institutionRepository = institutionRepository;
         this.taskRepository = taskRepository;
         this.executionRepository = executionRepository;
         this.stepMetricRepository = stepMetricRepository;
@@ -58,6 +47,7 @@ public class ExecutionController extends Controller {
         this.dataRowRepository = dataRowRepository;
         this.keyValueRepository = keyValueRepository;
         this.serverRepository = serverRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     /**
@@ -92,9 +82,14 @@ public class ExecutionController extends Controller {
         JsonNode details = request().body().as(JsonNode.class);
         boolean schedule = details.get("schedule").asText().equals("on") ? true: false;
 
+        Schedule scheduleObj = null;
+
         int hour,minutes,dayOfMonth,month,year;
         hour = minutes = dayOfMonth = month = year = 0;
         if(schedule) {
+            // Initialize Schedule.
+            scheduleObj = new Schedule();
+
             String[] dateTime = details.get("dateTime").asText().split(" ");
             String date = dateTime[0];
             String time = dateTime[1] + " " + dateTime[2];
@@ -111,16 +106,31 @@ public class ExecutionController extends Controller {
             // Start Time
             hour = Integer.parseInt(time.split(":")[0]);
             minutes = Integer.parseInt(time.split(":")[1]);
+
+            scheduleObj.setStart(DateBuilder.dateOf(hour,minutes,0,dayOfMonth,month,year));
         }
 
         boolean periodic = details.get("periodic").asText().equals("on") ? true: false;
         String interval = "";
         if(periodic) {
             interval = details.get("intervals").asText();
+            scheduleObj.setInterval(interval);
         }
 
+        // Store the execution schedule in the database.
+        if(scheduleObj != null) {
+            Task task = taskRepository.get(taskId);
+            scheduleObj.setTask(task);
+            Server server = serverRepository.get(serverId);
+            scheduleObj.setServer(server);
+            Institution institution = institutionRepository.get(task.getInstitution().getId());
+            scheduleObj.setInstitution(institution);
+            scheduleObj = scheduleRepository.add(scheduleObj);
+        }
+
+        // Fire the job within the scheduler.
         ExecutionScheduler executionScheduler = new ExecutionScheduler();
-        executionScheduler.fireJob(schedule,hour,minutes,dayOfMonth,month,year,periodic,interval,taskId,serverId,taskRepository, serverRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository);
+        executionScheduler.fireJob(scheduleObj.getId(),schedule,hour,minutes,dayOfMonth,month,year,periodic,interval,taskId,serverId,taskRepository, serverRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository);
 
         return ok();
     }

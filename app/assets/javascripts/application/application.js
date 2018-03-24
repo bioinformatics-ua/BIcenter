@@ -138,6 +138,15 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
+            .add(new RegExp(jsRoutes.controllers.InstitutionController.scheduler('(.*)').url.substr(1), 'i'), function (institutionId) {
+                console.log("Institution " + institutionId + " Scheduler");
+
+                var opts = {
+                    institutionId: institutionId
+                }
+                self.loadControllers('MainModule', ['SchedulerController'], opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
+            })
             .add(function () {
                 console.log('homepage');
                 self.loadController('MainModule', 'GraphController');

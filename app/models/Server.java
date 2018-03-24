@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Server implements Serializable {
@@ -17,6 +18,9 @@ public class Server implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Institution institution;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "server", cascade = CascadeType.ALL)
+    private List<Schedule> schedules;
 
     public Server() { };
     public Server(String name){
@@ -59,4 +63,12 @@ public class Server implements Serializable {
     public Institution getInstitution() { return institution; }
 
     public void setInstitution(Institution institution) { this.institution = institution; }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
+    }
 }

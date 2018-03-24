@@ -33,6 +33,16 @@ public class InstitutionController extends Controller {
         this.componentCategoryRepository = componentCategoryRepository;
     }
 
+    /**
+     * Execution Scheduler page
+     *
+     * @param institutionId
+     * @return
+     */
+    public Result scheduler(long institutionId) {
+        return ok(views.html.index.render());
+    }
+
     public Result getInstitutions(){
         List<Institution> institutions = institutionRepository.list();
 
@@ -199,5 +209,18 @@ public class InstitutionController extends Controller {
         Json.setObjectMapper(mapper);
 
         return ok(Json.toJson(componentCategories));
+    }
+
+    public Result getSchedules(long institutionId){
+        Institution institution = institutionRepository.get(institutionId);
+        List<Schedule> schedules = institution.getSchedules();
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(Schedule.class, new CompleteScheduleSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(schedules));
     }
 }

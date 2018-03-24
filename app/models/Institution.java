@@ -21,6 +21,9 @@ public class Institution implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "institution", cascade = CascadeType.ALL)
     private List<DataSource> dataSources;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "institution", cascade = CascadeType.ALL)
+    private List<Schedule> schedules;
+
     public Institution() { }
     public Institution(String name) {
         this.name = name;
@@ -64,5 +67,13 @@ public class Institution implements Serializable {
 
     public void setDataSources(List<DataSource> dataSources) {
         this.dataSources = dataSources;
+    }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }

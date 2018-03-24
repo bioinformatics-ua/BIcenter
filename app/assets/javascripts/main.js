@@ -137,6 +137,10 @@ requirejs.config({
         // Data Source Page
         'DataSourceController': 'sidebar/controllers/dataSourceController',
         'DataSourceView': 'sidebar/views/dataSourceView',
+
+        // Execution Scheduler Page
+        'SchedulerController': 'sidebar/controllers/scheduleController',
+        'SchedulerView': 'sidebar/views/scheduleView',
     },
     shim: {
         'messages': {

@@ -84,6 +84,7 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
             else{
                 Alert.flash(ALERT_TYPE.SUCCESS, 'Server', 'Server \'' + context.serverName + '\' was successfully created!');
             }
+            context.getTasks();
         });
     };
 
@@ -112,12 +113,18 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
             else{
                 Alert.flash(ALERT_TYPE.SUCCESS, 'Data Source', 'Data Source \'' + context.dataSourceName + '\' was successfully created!');
             }
+            context.getTasks();
         });
     };
 
     SidebarController.prototype.editDataSource = function(dataSource) {
         var modalController = this.module.controllers['DataSourceController'];
         modalController.loadDataSource(dataSource);
+    };
+
+    SidebarController.prototype.showSchedule = function(institution) {
+        var configStepUrl = jsRoutes.controllers.InstitutionController.scheduler(institution).url;
+        Router.navigate(configStepUrl);
     };
 
     return SidebarController;

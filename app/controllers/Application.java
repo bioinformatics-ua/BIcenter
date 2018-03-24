@@ -49,6 +49,7 @@ public class Application extends Controller {
                 routes.javascript.SvgController.getMiddleImage(),
                 routes.javascript.SvgController.getSmallImage(),
 
+                routes.javascript.InstitutionController.scheduler(),
                 routes.javascript.InstitutionController.getInstitutions(),
                 routes.javascript.InstitutionController.newServer(),
                 routes.javascript.InstitutionController.getServer(),
@@ -58,6 +59,7 @@ public class Application extends Controller {
                 routes.javascript.InstitutionController.updateDataSource(),
                 routes.javascript.InstitutionController.getDataSources(),
                 routes.javascript.InstitutionController.getComponents(),
+                routes.javascript.InstitutionController.getSchedules(),
 
                 routes.javascript.TransGraphController.getTaskDetails(),
                 routes.javascript.TransGraphController.getTasks(),

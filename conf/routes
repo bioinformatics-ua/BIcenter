@@ -26,6 +26,8 @@ GET           /middle/:image                                        controllers.
 GET           /small/:image                                         controllers.SvgController.getSmallImage(image:String)
 
 # Handles insititutions.
+GET           /institution/:institutionId/scheduler                      controllers.InstitutionController.scheduler(institutionId:Long)
+
 GET           /institution/list                                         controllers.InstitutionController.getInstitutions()
 GET           /institution/:institution/server/:server/create           controllers.InstitutionController.newServer(institution:String,server:String)
 GET           /institution/:institution/dataSource/:dataSource/create   controllers.InstitutionController.newDataSource(institution:String,dataSource:String)
@@ -34,6 +36,7 @@ GET           /dataSource/:dataSourceId                                 controll
 POST          /server/:serverId/apply                                   controllers.InstitutionController.updateServer(serverId:Long)
 POST          /dataSource/:dataSourceId/apply                           controllers.InstitutionController.updateDataSource(dataSourceId:Long)
 GET           /institution/:institutionId/dataSources                   controllers.InstitutionController.getDataSources(institutionId:Long)
+GET           /institution/:institutionId/schedules                     controllers.InstitutionController.getSchedules(institutionId:Long)
 
 GET           /components/list                                      controllers.InstitutionController.getComponents()
 
