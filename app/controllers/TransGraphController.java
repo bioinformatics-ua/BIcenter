@@ -377,6 +377,8 @@ public class TransGraphController extends Controller {
      * @return
      */
     public Result getExecutions(long graphId) {
+        Task task = taskRepository.get(graphId);
+
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addSerializer(Task.class, new PerformanceTaskSerializer());
@@ -388,7 +390,6 @@ public class TransGraphController extends Controller {
         mapper.registerModule(module);
         Json.setObjectMapper(mapper);
 
-        Task task = taskRepository.get(graphId);
         return ok(Json.toJson(task));
     }
 

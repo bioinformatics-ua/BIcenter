@@ -18,9 +18,6 @@ define('LogsView', ['View'], function (View) {
         });
         this.$container.html(html);
         this._loadViewComponents();
-
-        // Render the transformation with a success or failure icon on each step.
-        this.renderGraph(task.id, this.$elements.preview_graph[0]);
     };
 
     return LogsView;
