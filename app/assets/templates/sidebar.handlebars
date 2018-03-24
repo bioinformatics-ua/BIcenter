@@ -16,8 +16,14 @@
 
 <ul view-element="institutions" class="sidebar-menu" data-widget="tree">
 {{# institutions}}
-    <li class="header">{{name}}</li>
-        <ul view-element="tasks" class="sidebar-menu" data-widget="tree">
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-folder"></i>  {{name}}
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
+
+        <ul view-element="tasks" class="treeview-menu" data-widget="tree">
             <li class="treeview menu-open">
                 <a>
                     <i class="fa fa-folder"></i> <span>Tasks</span>
@@ -120,6 +126,7 @@
                 </ul>
             </li>
         </ul>
+    </li>
 {{/institutions}}
 </ul>
 
