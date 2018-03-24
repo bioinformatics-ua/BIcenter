@@ -17,8 +17,8 @@
 <ul view-element="institutions" class="sidebar-menu" data-widget="tree">
 {{# institutions}}
 
-    <li class="treeview menu-open">
-        <a href="#">
+    <li class="treeview menu" onclick="if(event.target.getAttribute('name') == 'institution'){ this.classList.toggle('menu-open');this.classList.toggle('menu'); }">
+        <a name="institution" href="#">
             <i class="fa fa-folder"></i>  {{name}}
             <i class="fa fa-angle-left pull-right"></i>
         </a>
@@ -33,8 +33,8 @@
             </li>
 
             <!-- Tasks -->
-            <li class="treeview menu-open">
-                <a>
+            <li class="treeview menu" onclick="this.classList.toggle('menu-open');this.classList.toggle('menu');">
+                <a name="tasks">
                     <i class="fa fa-folder"></i> <span>Tasks</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -67,8 +67,8 @@
                 </ul>
             </li>
             <!-- Servers -->
-            <li class="treeview menu-open">
-                <a>
+            <li class="treeview menu" onclick="this.classList.toggle('menu-open');this.classList.toggle('menu');">
+                <a name="servers">
                     <i class="fa fa-folder"></i> <span>Servers</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -101,8 +101,8 @@
                 </ul>
             </li>
             <!-- Data Sources -->
-            <li class="treeview menu-open">
-                <a>
+            <li class="treeview menu" onclick="this.classList.toggle('menu-open');this.classList.toggle('menu');">
+                <a name="sources">
                     <i class="fa fa-folder"></i> <span>Data Sources</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>

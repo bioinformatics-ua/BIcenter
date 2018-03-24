@@ -981,3 +981,123 @@ Caused by: org.hibernate.HibernateException: More than one row with the given id
     filters.ExampleFilter
 
 2018-03-24 21:33:06,109 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-293 - Application started (Dev)
+2018-03-24 21:48:26,160 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-348 - Shutting down connection pool.
+2018-03-24 21:48:26,720 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-348 - Creating Pool for datasource 'default'
+2018-03-24 21:48:26,824 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-348 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 21:48:26,825 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-348 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 21:48:29,599 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-348 - Building Step Configurations.
+2018-03-24 21:48:29,644 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-348 - Setting up Kettle environment.
+2018-03-24 21:48:29,648 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-348 - The Properties systems settings are already initialised!
+2018-03-24 21:48:29,939 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-348 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 21:48:29,940 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-348 - Application started (Dev)
+2018-03-24 21:50:58,277 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-544 - Shutting down connection pool.
+2018-03-24 21:50:58,694 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-544 - Creating Pool for datasource 'default'
+2018-03-24 21:50:58,728 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-544 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 21:50:58,730 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-544 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 21:51:00,434 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-544 - Building Step Configurations.
+2018-03-24 21:51:00,519 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-544 - Setting up Kettle environment.
+2018-03-24 21:51:00,521 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-544 - The Properties systems settings are already initialised!
+2018-03-24 21:51:00,774 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-544 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 21:51:00,777 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-544 - Application started (Dev)
+2018-03-24 21:52:00,475 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-548 - Shutting down connection pool.
+2018-03-24 21:52:00,693 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-548 - Creating Pool for datasource 'default'
+2018-03-24 21:52:00,720 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-548 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 21:52:00,724 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-548 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 21:52:02,103 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-548 - Building Step Configurations.
+2018-03-24 21:52:02,166 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-548 - Setting up Kettle environment.
+2018-03-24 21:52:02,168 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-548 - The Properties systems settings are already initialised!
+2018-03-24 21:52:02,399 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-548 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 21:52:02,400 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-548 - Application started (Dev)
+2018-03-24 21:56:44,148 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-492 - Shutting down connection pool.
+2018-03-24 21:56:44,313 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-492 - Creating Pool for datasource 'default'
+2018-03-24 21:56:44,357 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-492 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 21:56:44,357 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-492 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 21:56:45,630 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-492 - Building Step Configurations.
+2018-03-24 21:56:45,690 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-492 - Setting up Kettle environment.
+2018-03-24 21:56:45,693 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-492 - The Properties systems settings are already initialised!
+2018-03-24 21:56:46,173 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-492 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 21:56:46,174 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-492 - Application started (Dev)
+2018-03-24 21:57:19,379 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-586 - Shutting down connection pool.
+2018-03-24 21:57:20,531 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-586 - Creating Pool for datasource 'default'
+2018-03-24 21:57:20,551 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-586 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 21:57:20,551 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-586 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 21:57:21,271 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-586 - Building Step Configurations.
+2018-03-24 21:57:21,294 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-586 - Setting up Kettle environment.
+2018-03-24 21:57:21,295 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-586 - The Properties systems settings are already initialised!
+2018-03-24 21:57:21,463 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-586 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 21:57:21,464 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-586 - Application started (Dev)
+2018-03-24 21:58:41,023 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-584 - Shutting down connection pool.
+2018-03-24 21:58:41,235 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-584 - Creating Pool for datasource 'default'
+2018-03-24 21:58:41,277 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-584 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 21:58:41,277 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-584 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 21:58:42,431 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-584 - Building Step Configurations.
+2018-03-24 21:58:42,474 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-584 - Setting up Kettle environment.
+2018-03-24 21:58:42,475 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-584 - The Properties systems settings are already initialised!
+2018-03-24 21:58:42,768 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-584 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 21:58:42,769 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-584 - Application started (Dev)
+2018-03-24 22:00:06,086 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-730 - Shutting down connection pool.
+2018-03-24 22:00:06,309 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-730 - Creating Pool for datasource 'default'
+2018-03-24 22:00:06,330 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-730 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 22:00:06,340 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-730 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 22:00:07,281 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-730 - Building Step Configurations.
+2018-03-24 22:00:07,324 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-730 - Setting up Kettle environment.
+2018-03-24 22:00:07,327 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-730 - The Properties systems settings are already initialised!
+2018-03-24 22:00:07,523 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-730 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 22:00:07,524 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-730 - Application started (Dev)
+2018-03-24 22:04:01,931 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-292 - Shutting down connection pool.
+2018-03-24 22:04:02,075 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-292 - Creating Pool for datasource 'default'
+2018-03-24 22:04:02,127 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-292 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 22:04:02,127 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-292 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 22:04:03,097 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-292 - Building Step Configurations.
+2018-03-24 22:04:03,129 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-292 - Setting up Kettle environment.
+2018-03-24 22:04:03,131 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-292 - The Properties systems settings are already initialised!
+2018-03-24 22:04:03,448 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-292 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 22:04:03,449 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-292 - Application started (Dev)
+2018-03-24 22:05:31,039 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-807 - Shutting down connection pool.
+2018-03-24 22:05:31,150 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-807 - Creating Pool for datasource 'default'
+2018-03-24 22:05:31,184 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-807 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 22:05:31,197 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-807 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 22:05:31,992 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-807 - Building Step Configurations.
+2018-03-24 22:05:32,024 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-807 - Setting up Kettle environment.
+2018-03-24 22:05:32,026 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-807 - The Properties systems settings are already initialised!
+2018-03-24 22:05:32,456 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-807 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 22:05:32,456 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-807 - Application started (Dev)
+2018-03-24 22:05:42,957 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-846 - Shutting down connection pool.
+2018-03-24 22:05:43,090 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-846 - Creating Pool for datasource 'default'
+2018-03-24 22:05:43,117 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-846 - datasource [default] bound to JNDI as DefaultDS
+2018-03-24 22:05:43,119 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-846 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-03-24 22:05:44,549 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-846 - Building Step Configurations.
+2018-03-24 22:05:44,600 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-846 - Setting up Kettle environment.
+2018-03-24 22:05:44,606 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-846 - The Properties systems settings are already initialised!
+2018-03-24 22:05:44,824 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-846 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-03-24 22:05:44,824 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-846 - Application started (Dev)
