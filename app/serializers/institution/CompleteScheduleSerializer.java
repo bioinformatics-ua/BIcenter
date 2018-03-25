@@ -17,6 +17,7 @@ public class CompleteScheduleSerializer  extends JsonSerializer<Schedule> {
         gen.writeNumberField("id", value.getId());
 
         gen.writeStringField("institution", value.getInstitution().getName());
+        gen.writeNumberField("taskId", value.getTask().getId());
         gen.writeStringField("task", value.getTask().getName());
         gen.writeStringField("server", value.getServer().getName());
 

@@ -33,7 +33,7 @@
             </li>
 
             <!-- Tasks -->
-            <li class="treeview menu" onclick="this.classList.toggle('menu-open');this.classList.toggle('menu');">
+            <li class="treeview menu" onclick="if(event.target.getAttribute('name') == 'tasks'){this.classList.toggle('menu-open');this.classList.toggle('menu');}">
                 <a name="tasks">
                     <i class="fa fa-folder"></i> <span>Tasks</span>
                     <span class="pull-right-container">
@@ -67,7 +67,7 @@
                 </ul>
             </li>
             <!-- Servers -->
-            <li class="treeview menu" onclick="this.classList.toggle('menu-open');this.classList.toggle('menu');">
+            <li class="treeview menu" onclick="if(event.target.getAttribute('name') == 'servers'){this.classList.toggle('menu-open');this.classList.toggle('menu');}">
                 <a name="servers">
                     <i class="fa fa-folder"></i> <span>Servers</span>
                     <span class="pull-right-container">
@@ -101,7 +101,7 @@
                 </ul>
             </li>
             <!-- Data Sources -->
-            <li class="treeview menu" onclick="this.classList.toggle('menu-open');this.classList.toggle('menu');">
+            <li class="treeview menu" onclick="if(event.target.getAttribute('name') == 'sources'){this.classList.toggle('menu-open');this.classList.toggle('menu');}">
                 <a name="sources">
                     <i class="fa fa-folder"></i> <span>Data Sources</span>
                     <span class="pull-right-container">

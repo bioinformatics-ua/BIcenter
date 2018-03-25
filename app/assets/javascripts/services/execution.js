@@ -114,5 +114,19 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Execution.deleteSchedule = function (task,schedule,callback) {
+        jsRoutes.controllers.ExecutionController.deleteSchedule(task,schedule).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Execution service', response);
+            }
+        })
+    };
+
     return Execution;
 });

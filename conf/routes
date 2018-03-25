@@ -97,3 +97,5 @@ GET           /execution/:executionId/logs/json                     controllers.
 GET           /execution/:executionId/metrics/json                  controllers.ExecutionController.getMetrics(executionId:Long)
 GET           /execution/:executionId/data/json                     controllers.ExecutionController.getData(executionId:Long)
 GET           /execution/:executionId/step/:stepId/data/json        controllers.ExecutionController.getStepData(executionId:Long,stepId:Long)
+
+DELETE        /graph/:graphId/schedule/:scheduleId                  controllers.ExecutionController.deleteSchedule(graphId:Long,scheduleId:Long)

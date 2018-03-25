@@ -14,7 +14,7 @@ public class Schedule implements Serializable {
     private Date start;
     private String period;
 
-    @OneToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.LAZY)
     private Task task;
 
     @ManyToOne(fetch = FetchType.LAZY)

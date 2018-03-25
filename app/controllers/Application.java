@@ -111,7 +111,8 @@ public class Application extends Controller {
                 routes.javascript.ExecutionController.getLogs(),
                 routes.javascript.ExecutionController.getMetrics(),
                 routes.javascript.ExecutionController.getData(),
-                routes.javascript.ExecutionController.getStepData()
+                routes.javascript.ExecutionController.getStepData(),
+                routes.javascript.ExecutionController.deleteSchedule()
         ));
     }
 }

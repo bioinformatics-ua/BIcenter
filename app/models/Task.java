@@ -29,8 +29,8 @@ public class Task implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL)
     private List<Execution> executions;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL)
-    private Schedule schedule;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Schedule> schedule;
 
     public Task(){ date = new Date(); }
     public Task(String name) {
@@ -78,11 +78,11 @@ public class Task implements Serializable {
 
     public void setExecutions(List<Execution> executions) { this.executions = executions; }
 
-    public Schedule getSchedule() {
+    public List<Schedule> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(Schedule schedule) {
+    public void setSchedule(List<Schedule> schedule) {
         this.schedule = schedule;
     }
 

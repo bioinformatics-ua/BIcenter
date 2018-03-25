@@ -9,7 +9,13 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
 
     SidebarController.prototype.initialize = function ($container) {
         _super_.initialize.call(this, $container);
-        this.getComponents();
+
+        if(this.tab && this.tab=="resources"){
+            this.getTasks();
+        }
+        else{
+            this.getComponents();
+        }
     };
 
     SidebarController.prototype.getTasks = function () {

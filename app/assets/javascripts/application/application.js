@@ -26,7 +26,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 var opts = {
                     graphId: graphId,
                     stepId: stepId,
-                    before: true
+                    before: true,
+                    tab: "resources"
                 };
 
                 self.loadController('MainModule', 'FieldsController', opts);
@@ -38,7 +39,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 var opts = {
                     graphId: graphId,
                     stepId: stepId,
-                    before: false
+                    before: false,
+                    tab: "resources"
                 };
 
                 self.loadController('MainModule', 'FieldsController', opts);
@@ -59,7 +61,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 
                 var opts = {
                     graphId: graphId,
-                    section: 'history'
+                    section: 'history',
+                    tab: "resources"
                 }
 
                 self.loadController('MainModule', 'HistoryController', opts);
@@ -72,7 +75,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 var opts = {
                     graphId: graphId,
                     stepId: stepId,
-                    section: 'configure'
+                    section: 'configure',
+                    tab: "resources"
                 };
                 self.loadControllers('MainModule', ['StepController', 'StepModalController'], opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
@@ -84,7 +88,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 var opts = {
                     graphId: graphId,
                     executionId: executionId,
-                    section: 'logs'
+                    section: 'logs',
+                    tab: "resources"
                 };
                 self.loadController('MainModule', 'LogsController', opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
@@ -96,7 +101,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 var opts = {
                     graphId: graphId,
                     executionId: executionId,
-                    section: 'metrics'
+                    section: 'metrics',
+                    tab: "resources"
                 };
                 self.loadController('MainModule', 'StepMetricsController', opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
@@ -109,7 +115,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                     graphId: graphId,
                     executionId: executionId,
                     stepId: stepId,
-                    section: 'previewStep'
+                    section: 'previewStep',
+                    tab: "resources"
                 };
                 self.loadController('MainModule', 'PreviewStepController', opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
@@ -121,7 +128,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 var opts = {
                     graphId: graphId,
                     executionId: executionId,
-                    section: 'previewData'
+                    section: 'previewData',
+                    tab: "resources"
                 };
                 self.loadController('MainModule', 'PreviewDataController', opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
@@ -132,7 +140,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 
                 var opts = {
                     graphId: graphId,
-                    section: 'selectTask'
+                    section: 'selectTask',
+                    tab: "components"
                 }
                 self.loadControllers('MainModule', ['GraphController','RemoteExecutionController'], opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
@@ -142,13 +151,19 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 console.log("Institution " + institutionId + " Scheduler");
 
                 var opts = {
-                    institutionId: institutionId
+                    institutionId: institutionId,
+                    tab: "resources"
                 }
                 self.loadControllers('MainModule', ['SchedulerController'], opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
             })
             .add(function () {
                 console.log('homepage');
+
+                var opts = {
+                    tab: "resources"
+                }
+
                 self.loadController('MainModule', 'GraphController');
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController']);
             });

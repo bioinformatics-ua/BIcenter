@@ -10,7 +10,7 @@ import models.*;
 import models.Execution;
 import org.pentaho.di.trans.TransExecutionConfiguration;
 import org.pentaho.di.trans.TransMeta;
-import org.quartz.DateBuilder;
+import org.quartz.*;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -251,5 +251,20 @@ public class ExecutionController extends Controller {
         Json.setObjectMapper(mapper);
 
         return ok(Json.toJson(task));
+    }
+
+    public Result deleteSchedule(long taskId, long scheduleId) throws SchedulerException {
+        // Delete Schedule in the JPA.
+        Schedule schedule = scheduleRepository.get(scheduleId);
+        scheduleRepository.delete(schedule);
+
+        SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
+        Scheduler scheduler = schedFact.getScheduler();
+
+        // Remove Execution Trigger.
+        TriggerKey triggerKey = TriggerKey.triggerKey(String.valueOf(scheduleId), String.valueOf(taskId));
+        boolean unscheduled = scheduler.unscheduleJob(triggerKey);
+
+        return ok(String.valueOf(unscheduled));
     }
 }

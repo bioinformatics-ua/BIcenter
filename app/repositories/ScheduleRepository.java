@@ -12,4 +12,6 @@ public interface ScheduleRepository {
     Schedule add(Schedule schedule);
 
     List<Schedule> list();
+
+    void delete(Schedule schedule);
 }

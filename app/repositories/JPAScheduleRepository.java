@@ -24,6 +24,12 @@ public class JPAScheduleRepository extends JPARepository implements ScheduleRepo
         return schedule;
     }
 
+    public static boolean delete(EntityManager em, Schedule schedule){
+        schedule =  em.find(Schedule.class, schedule.getId());
+        em.remove(schedule);
+        return true;
+    }
+
     @Override
     public Schedule get(long id) {
         return wrap(em -> get(em, id));
@@ -37,5 +43,19 @@ public class JPAScheduleRepository extends JPARepository implements ScheduleRepo
     @Override
     public List<Schedule> list() {
         return wrap(em -> list(em));
+    }
+
+    @Override
+    public void delete(Schedule schedule) {
+        // This is a hotfix because of the OptimisticLockException.
+        // I will try to solve this later. (by Leonardo Coelho)
+        while(true) {
+            try {
+                wrap(em -> delete(em, schedule));
+                break;
+            } catch (Exception e) {
+                // handle the exception
+            }
+        }
     }
 }

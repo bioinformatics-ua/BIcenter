@@ -1,4 +1,4 @@
-define('SchedulerController', ['Controller', 'SchedulerView', 'Router', 'Institution'], function (Controller, SchedulerView, Router, Institution) {
+define('SchedulerController', ['Controller', 'SchedulerView', 'Router', 'Institution', 'Execution'], function (Controller, SchedulerView, Router, Institution, Execution) {
     var SchedulerController = function (module) {
         Controller.call(this, module, new SchedulerView(this));
     };
@@ -16,6 +16,15 @@ define('SchedulerController', ['Controller', 'SchedulerView', 'Router', 'Institu
                 context.view.show(schedules);
             });
         }
+    };
+
+    SchedulerController.prototype.deleteSchedule = function(taskId,scheduleId,rowId){
+        var table = this.view.$elements.table.DataTable();
+        table.row(rowId).remove().draw();
+
+        Execution.deleteSchedule(taskId,scheduleId, function(unscheduled){
+
+        });
     };
 
     /**
