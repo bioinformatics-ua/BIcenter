@@ -28,6 +28,7 @@ GET           /small/:image                                         controllers.
 # Handles insititutions.
 GET           /institution/:institutionId/scheduler                      controllers.InstitutionController.scheduler(institutionId:Long)
 
+GET           /institution/:institutionId/name                          controllers.InstitutionController.getInstitutionName(institutionId:Long)
 GET           /institution/list                                         controllers.InstitutionController.getInstitutions()
 GET           /institution/:institution/server/:server/create           controllers.InstitutionController.newServer(institution:String,server:String)
 GET           /institution/:institution/dataSource/:dataSource/create   controllers.InstitutionController.newDataSource(institution:String,dataSource:String)

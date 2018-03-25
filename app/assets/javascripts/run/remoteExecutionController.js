@@ -32,6 +32,8 @@ define('RemoteExecutionController', ['Controller', 'RemoteExecutionView', 'Route
         Execution.remoteExecution(graphId,serverId,formValues, function(returnedData){
 
         });
+
+        this.view.hide();
     };
 
     /**

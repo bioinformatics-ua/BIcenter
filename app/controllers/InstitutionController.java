@@ -43,6 +43,11 @@ public class InstitutionController extends Controller {
         return ok(views.html.index.render());
     }
 
+    public Result getInstitutionName(long institutionId){
+        Institution institution = institutionRepository.get(institutionId);
+        return ok(institution.getName());
+    }
+
     public Result getInstitutions(){
         List<Institution> institutions = institutionRepository.list();
 
@@ -128,6 +133,12 @@ public class InstitutionController extends Controller {
         Institution institution = institutionRepository.getByName(instName);
         dataSource.setInstitution(institution);
         dataSource = dataSourceRepository.add(dataSource);
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(DataSource.class, new CompleteDataSourceSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
 
         return ok(Json.toJson(dataSource));
     }

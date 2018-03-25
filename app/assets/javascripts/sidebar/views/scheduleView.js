@@ -11,10 +11,10 @@ define('SchedulerView', ['View','dataTables'], function (View) {
         _super_.initialize.call(this, $container);
     };
 
-    SchedulerView.prototype.show = function(schedules) {
+    SchedulerView.prototype.show = function(institution, schedules) {
         var columns = ["Task","Server","Start","Type"];
         var html = JST['scheduler']({
-            institution: schedules[0].institution,
+            institution: institution,
             columns: columns,
             data: schedules
         });

@@ -110,11 +110,20 @@ public class ExecutionController extends Controller {
             scheduleObj.setStart(DateBuilder.dateOf(hour,minutes,0,dayOfMonth,month,year));
         }
 
-        boolean periodic = details.get("periodic").asText().equals("on") ? true: false;
-        String interval = "";
-        if(periodic) {
-            interval = details.get("intervals").asText();
-            scheduleObj.setInterval(interval);
+        boolean periodic;
+        String interval;
+        try {
+            periodic = details.get("periodic").asText().equals("on") ? true : false;
+            interval = "";
+            if (periodic) {
+                interval = details.get("intervals").asText();
+                scheduleObj.setInterval(interval);
+            }
+        }
+        catch (NullPointerException e){
+            periodic = false;
+            interval = "Once";
+            scheduleObj.setInterval("Once");
         }
 
         // Store the execution schedule in the database.

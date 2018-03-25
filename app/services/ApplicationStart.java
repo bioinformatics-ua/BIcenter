@@ -107,6 +107,8 @@ public class ApplicationStart {
             }
         }
 
+        // Build Execution Schedulers.
+
 
         // Setting up Kettle environment.
         initKettle();
@@ -226,5 +228,12 @@ public class ApplicationStart {
         } catch (KettleException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Build Quartz Schedules based on the JPA Schedules.
+     */
+    private void buildSchedulers(){
+        // TODO
     }
 }

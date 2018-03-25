@@ -8,8 +8,7 @@ import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 public class ExecutionScheduler implements ILatch {
-    private int repeatCount = 3;
-    private CountDownLatch latch = new CountDownLatch(repeatCount + 1);
+    private CountDownLatch latch = new CountDownLatch(1);
 
     public void fireJob(long scheduleId, boolean schedule, int hour,int minutes, int dayOfMonth, int month, int year, boolean periodic, String interval, long taskId, long serverId, TaskRepository taskRepository, ServerRepository serverRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository) throws SchedulerException, InterruptedException {
         SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();

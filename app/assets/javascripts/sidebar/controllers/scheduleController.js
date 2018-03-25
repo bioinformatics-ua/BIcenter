@@ -1,4 +1,4 @@
-define('SchedulerController', ['Controller', 'SchedulerView', 'Router', 'Institution', 'Execution'], function (Controller, SchedulerView, Router, Institution, Execution) {
+define('SchedulerController', ['Controller', 'async', 'SchedulerView', 'Router', 'Institution', 'Execution'], function (Controller, async, SchedulerView, Router, Institution, Execution) {
     var SchedulerController = function (module) {
         Controller.call(this, module, new SchedulerView(this));
     };
@@ -11,11 +11,34 @@ define('SchedulerController', ['Controller', 'SchedulerView', 'Router', 'Institu
         _super_.initialize.call(this, $container);
 
         var context = this;
-        if(this.institutionId){
-            Institution.getSchedules(this.institutionId, function(schedules) {
-                context.view.show(schedules);
-            });
-        }
+        async.parallel(
+            [
+                function (callback) {
+                    if(context.institutionId) {
+                        Institution.getInstitutionName(context.institutionId, function(name) {
+                            context.institutionName = name;
+                            callback();
+                        });
+                    }
+                },
+                function (callback) {
+                    if(context.institutionId) {
+                        Institution.getSchedules(context.institutionId, function(schedules) {
+                            context.schedules = schedules;
+                            callback();
+                        });
+                    }
+                }
+            ],
+            function (err) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                context.view.show(context.institutionName,context.schedules);
+            }
+        );
     };
 
     SchedulerController.prototype.deleteSchedule = function(taskId,scheduleId,rowId){

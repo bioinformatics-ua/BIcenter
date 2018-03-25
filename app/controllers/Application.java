@@ -49,6 +49,7 @@ public class Application extends Controller {
                 routes.javascript.SvgController.getMiddleImage(),
                 routes.javascript.SvgController.getSmallImage(),
 
+                routes.javascript.InstitutionController.getInstitutionName(),
                 routes.javascript.InstitutionController.scheduler(),
                 routes.javascript.InstitutionController.getInstitutions(),
                 routes.javascript.InstitutionController.newServer(),
