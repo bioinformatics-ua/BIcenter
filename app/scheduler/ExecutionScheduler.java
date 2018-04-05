@@ -1,5 +1,6 @@
 package scheduler;
 
+import models.Schedule;
 import org.quartz.*;
 import repositories.*;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
 public class ExecutionScheduler implements ILatch {
     private CountDownLatch latch = new CountDownLatch(1);
 
-    public void fireJob(long scheduleId, boolean schedule, int hour,int minutes, int dayOfMonth, int month, int year, boolean periodic, String interval, long taskId, long serverId, TaskRepository taskRepository, ServerRepository serverRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository) throws SchedulerException, InterruptedException {
+    public void fireJob(long scheduleId, boolean schedule, int hour,int minutes, int dayOfMonth, int month, int year, boolean periodic, String interval, long taskId, long serverId, ScheduleRepository scheduleRepository, TaskRepository taskRepository, ServerRepository serverRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository) throws SchedulerException, InterruptedException {
         SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
         Scheduler scheduler = schedFact.getScheduler();
         scheduler.start();
@@ -85,7 +86,13 @@ public class ExecutionScheduler implements ILatch {
 
         // Tell quartz to schedule the job using our trigger
         scheduler.scheduleJob(jobDetail, trigger);
+
+        // Wait for execution.
         latch.await();
+
+        // Delete Schedule after execution.
+        Schedule scheduleObj = scheduleRepository.get(scheduleId);
+        scheduleRepository.delete(scheduleObj);
         System.out.println("All triggers executed. Shutdown scheduler");
         scheduler.shutdown();
     }

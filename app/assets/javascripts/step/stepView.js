@@ -55,7 +55,6 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                 var componentId = condition.id;
                 Step.getConditionValue(stepId, componentId, function (rules) {
                     context.$elements[condition.id].queryBuilder({
-                        plugins: ['bt-tooltip-errors'],
                         conditions: ["OR", "AND", "OR NOT", "AND NOT", "XOR"],
                         operators: [
                             {

@@ -112,9 +112,8 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
 
         Step.applyChanges(this.stepId, formValues, function (step) {
             console.log("Step", this.stepId, "has been updated!");
+            Router.navigatePrevious();
         });
-
-        Router.navigatePrevious();
     };
 
     /**

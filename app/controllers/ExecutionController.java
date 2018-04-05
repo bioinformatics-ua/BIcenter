@@ -139,7 +139,7 @@ public class ExecutionController extends Controller {
 
         // Fire the job within the scheduler.
         ExecutionScheduler executionScheduler = new ExecutionScheduler();
-        executionScheduler.fireJob(scheduleObj.getId(),schedule,hour,minutes,dayOfMonth,month,year,periodic,interval,taskId,serverId,taskRepository, serverRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository);
+        executionScheduler.fireJob(scheduleObj.getId(),schedule,hour,minutes,dayOfMonth,month,year,periodic,interval,taskId,serverId,scheduleRepository,taskRepository, serverRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository);
 
         return ok();
     }

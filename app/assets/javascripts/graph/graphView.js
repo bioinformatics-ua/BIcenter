@@ -14,20 +14,14 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
         // Load the mxEditor after elements rendering.
         this.editor = this.controller.createEditor('/assets/editor/diagrameditor.xml');
 
-        // TODO: Remove this gambiarra
+        // Update editor with the loaded graphModel.
         if (this.controller.graphId) {
-            Task.loadTask(this.controller.graphId, function (graph) {
-                context.$elements.source.click();
-                context.$elements.xml.val(graph);
-                context.$elements.source.click();
+            Task.loadTask(this.controller.graphId, function (graphModel) {
+                var doc = mxUtils.parseXml(graphModel);
+                var codec = new mxCodec(doc);
+                codec.decode(doc.documentElement, context.editor.graph.getModel());
             });
         }
-
-        if (global_editor != null) {
-            this.$elements.source.click();
-            this.$elements.source.click();
-        }
-        // TODO: Until here.
 
         this.$elements.graph.droppable({
             scope: 'components',
