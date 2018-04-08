@@ -58,12 +58,12 @@ define('FieldsView', ['View','Step'], function (View,Step) {
         var context = this;
         context.step = step;
         if(before == "true"){
-            Step.showStepInput(step.id, function (fields) {
+            Step.showStepInput(this.controller.institutionId, step.id, function (fields) {
                 context.loadFields(context.step,fields);
             });
         }
         else{
-            Step.showStepOutput(step.id, function (fields) {
+            Step.showStepOutput(this.controller.institutionId, step.id, function (fields) {
                 context.loadFields(context.step,fields);
             })
         }

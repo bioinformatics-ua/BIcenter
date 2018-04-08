@@ -65,7 +65,7 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router', 'T
      */
     HeaderController.prototype.showPreviewResults = function (taskName, executionId) {
         Task.getTask(taskName, function (task) {
-            var configStepUrl = jsRoutes.controllers.TransGraphController.previewResults(task.id).url;
+            var configStepUrl = jsRoutes.controllers.TransGraphController.previewResults(task.institution,task.id).url;
             Router.navigate(configStepUrl);
         });
     }

@@ -1,5 +1,7 @@
 package models;
 
+import models.rbac.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -23,6 +25,9 @@ public class Institution implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "institution", cascade = CascadeType.ALL)
     private List<Schedule> schedules;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "institutions", cascade = CascadeType.ALL)
+    private List<User> users;
 
     public Institution() { }
     public Institution(String name) {
@@ -75,5 +80,13 @@ public class Institution implements Serializable {
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

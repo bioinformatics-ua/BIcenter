@@ -8,10 +8,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
+import controllers.login.Secured;
+import controllers.rbac.annotation.CheckPermission;
 import diSdk.task.TaskDecoder;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
 import models.*;
+import models.rbac.Category;
+import models.rbac.Operation;
 import org.hibernate.Hibernate;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.row.RowMetaInterface;
@@ -22,6 +26,7 @@ import org.pentaho.di.trans.step.StepMeta;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import repositories.*;
 import serializers.component.ComponentMetadataSerializer;
 import serializers.component.ComponentPropertySerializer;
@@ -62,7 +67,9 @@ public class StepController extends Controller {
      * @param stepId
      * @return
      */
-    public Result configure(long graphId, long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result configure(long institutionId, long graphId, long stepId) {
         return ok(views.html.index.render());
     }
 
@@ -73,7 +80,9 @@ public class StepController extends Controller {
      * @param stepId
      * @return
      */
-    public Result showStepInput(long graphId, long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result showStepInput(long institutionId, long graphId, long stepId) {
         return ok(views.html.index.render());
     }
 
@@ -84,11 +93,15 @@ public class StepController extends Controller {
      * @param stepId
      * @return
      */
-    public Result showStepOutput(long graphId, long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result showStepOutput(long institutionId, long graphId, long stepId) {
         return ok(views.html.index.render());
     }
 
-    public Result inputStepsName(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result inputStepsName(long institutionId, long stepId) {
         List<String> stepsName = stepRepository.getSourceSteps(stepId)
                 .stream().map(s -> s.getLabel()).collect(Collectors.toList());
 
@@ -108,7 +121,9 @@ public class StepController extends Controller {
      * @return
      * @throws Exception
      */
-    public Result inputFieldsName(long stepId) throws Exception {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result inputFieldsName(long institutionId, long stepId) throws Exception {
         Step step = stepRepository.get(stepId);
         Task task = step.getTaskSteps();
         TransMeta transMeta = TaskDecoder.decode(task);
@@ -133,7 +148,9 @@ public class StepController extends Controller {
      * @return
      * @throws Exception
      */
-    public Result outputStepsName(long stepId) throws Exception {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result outputStepsName(long institutionId, long stepId) throws Exception {
         List<String> stepsName = stepRepository.getDestinySteps(stepId)
                 .stream().map(s -> s.getLabel()).collect(Collectors.toList());
 
@@ -154,7 +171,9 @@ public class StepController extends Controller {
      * @return Json with all desired fields details.
      * @throws Exception
      */
-    public Result inputOutputFields(long stepId, boolean before) throws Exception {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result inputOutputFields(long institutionId, long stepId, boolean before) throws Exception {
         Step step = stepRepository.get(stepId);
         Task task = step.getTaskSteps();
         TransMeta transMeta = TaskDecoder.decode(task);
@@ -209,7 +228,9 @@ public class StepController extends Controller {
      * @param stepId Step Id
      * @return Step Schema
      */
-    public Result getSchema(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getSchema(long institutionId, long stepId) {
         Step step = stepRepository.get(stepId);
         Component component = step.getComponent();
 
@@ -228,7 +249,9 @@ public class StepController extends Controller {
         return ok(Json.toJson(component));
     }
 
-    public Result getStepName(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getStepName(long institutionId, long stepId) {
         Step step = stepRepository.get(stepId);
         return ok(step.getLabel());
     }
@@ -239,7 +262,9 @@ public class StepController extends Controller {
      * @param stepId
      * @return
      */
-    public Result getStep(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getStep(long institutionId, long stepId) {
         Step step = stepRepository.get(stepId);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -263,7 +288,9 @@ public class StepController extends Controller {
      *
      * @return
      */
-    public Result applyChanges(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result applyChanges(long institutionId, long stepId) {
         JsonNode formData = request().body().asJson();
 
         formData.fields().forEachRemaining(
@@ -304,7 +331,9 @@ public class StepController extends Controller {
      * @param stepId
      * @return
      */
-    public Result getTables(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getTables(long institutionId, long stepId) {
         Step step = stepRepository.get(stepId);
         Component component = step.getComponent();
         List<ComponentProperty> componentProperties = component.getComponentProperties()
@@ -328,7 +357,9 @@ public class StepController extends Controller {
      * @param componentId
      * @return
      */
-    public Result getTableValue(long stepId, long componentId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getTableValue(long institutionId, long stepId, long componentId) {
         Step step = stepRepository.get(stepId);
         StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentId);
         ObjectNode jsonObject = Json.newObject();
@@ -347,7 +378,8 @@ public class StepController extends Controller {
      * @param stepId
      * @return
      */
-    public Result getConditions(long stepId) {
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getConditions(long institutionId, long stepId) {
         Step step = stepRepository.get(stepId);
         Component component = step.getComponent();
         List<ComponentProperty> componentProperties = component.getComponentProperties()
@@ -372,7 +404,9 @@ public class StepController extends Controller {
      * @param componentId
      * @return
      */
-    public Result getConditionValue(long stepId, long componentId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getConditionValue(long institutionId, long stepId, long componentId) {
         try{
             Step step = stepRepository.get(stepId);
             StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentId);
@@ -383,14 +417,43 @@ public class StepController extends Controller {
         }
     }
 
-    public Result getByComponentAndShortName(long componentId, String shortName) {
+    /**
+     * Return ComponentProperty Ids of multi-select elements.
+     *
+     * @param stepId
+     * @return
+     */
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getMultiSelects(long institutionId, long stepId) {
+        Step step = stepRepository.get(stepId);
+        Component component = step.getComponent();
+        List<ComponentProperty> componentProperties = component.getComponentProperties()
+                .stream()
+                .filter(cp -> cp.getType().equals("multi-select"))
+                .collect(Collectors.toList());
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(ComponentProperty.class, new TableSerializer());
+        mapper.registerModule(module);
+        Json.setObjectMapper(mapper);
+
+        return ok(Json.toJson(componentProperties));
+    }
+
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getByComponentAndShortName(long institutionId, long componentId, String shortName) {
         long componentPropertyId = componentPropertyRepository.getByComponentAndShortName(componentId,shortName).getId();
         return ok(String.valueOf(componentPropertyId));
     }
 
-    public Result getInstitution(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getInstitution(long institutionId, long stepId) {
         Step step = stepRepository.get(stepId);
-        Long institutionId = step.getTaskSteps().getInstitution().getId();
-        return ok(String.valueOf(institutionId));
+        Long institution = step.getTaskSteps().getInstitution().getId();
+        return ok(String.valueOf(institution));
     }
 }

@@ -78,30 +78,29 @@ public class TransGraphController extends Controller {
      */
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = Operation.GET)
-    public Result selectTask(long graphId) { return ok(views.html.index.render()); }
-
-    /**
-     * Preview task Results
-     * @param graphId
-     * @return
-     */
-    public Result previewResults(long graphId) { return ok(views.html.index.render()); }
+    public Result selectTask(long institutionId, long graphId) { return ok(views.html.index.render()); }
 
     /**
      * Renders Task History page.
      * @param graphId
      * @return
      */
-    public Result history(long graphId) { return ok(views.html.index.render()); }
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = Operation.GET)
+    public Result history(long institutionId, long graphId) { return ok(views.html.index.render()); }
 
     /**
      * Execution Scheduler page.
      * @param graphId
      * @return
      */
-    public Result schedule(long graphId) { return ok(views.html.index.render()); }
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = Operation.GET)
+    public Result schedule(long institutionId, long graphId) { return ok(views.html.index.render()); }
 
-    public Result getTaskDetails(long graphId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getTaskDetails(long institutionId, long graphId) {
         Task task = taskRepository.get(graphId);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -113,42 +112,26 @@ public class TransGraphController extends Controller {
         return ok(Json.toJson(task));
     }
 
-    public Result getTasks() {
-        List<Task> tasks = taskRepository.list();
-
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(Task.class, new SimpleTaskSerializer());
-        mapper.registerModule(module);
-        Json.setObjectMapper(mapper);
-
-        return ok(Json.toJson(tasks));
-    }
-
-    /**
-     * Get Method, that convert a given Pentaho (.ktr) file into a mxGraph (.xml) file, and returns it back.
-     * @param filename Pentaho file.
-     * @return mxGraph file.
-     * @throws Exception
-     */
-    public Result loadTrans(String filename) throws Exception {
-        File file = new File("app/assets/reposity",filename);
-
-        TransMeta transMeta = new TransMeta(file.getAbsolutePath());
-
-        mxCodec codec = new mxCodec();
-        mxGraph graph = TransEncoder.encode(transMeta);
-        String graphXml = mxUtils.getPrettyXml(codec.encode(graph.getModel()));
-
-        return ok(graphXml).as("text/html");
-    }
+//    public Result getTasks() {
+//        List<Task> tasks = taskRepository.list();
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        SimpleModule module = new SimpleModule();
+//        module.addSerializer(Task.class, new SimpleTaskSerializer());
+//        mapper.registerModule(module);
+//        Json.setObjectMapper(mapper);
+//
+//        return ok(Json.toJson(tasks));
+//    }
 
     /**
      * Converts Task to mxGraph
      * @param graphId Task Id.
      * @return mxGraph
      */
-    public Result loadTask(long graphId) throws Exception {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result loadTask(long institutionId, long graphId) throws Exception {
         Task task = this.taskRepository.get(graphId);
 
         // Open task tab.
@@ -195,11 +178,13 @@ public class TransGraphController extends Controller {
      * @param name Task name.
      * @return mxGrpoh file
      */
-    public Result newTask(String institution, String name){
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.ADD})
+    public Result newTask(long institutionId, String name){
         if(existsTask(name)) forbidden();
 
         Task task = new Task(name);
-        Institution inst = institutionRepository.getByName(institution);
+        Institution inst = institutionRepository.get(institutionId);
         task.setInstitution(inst);
         task = taskRepository.add(task);
 
@@ -211,7 +196,9 @@ public class TransGraphController extends Controller {
      * @param name Task name
      * @return Task Json object
      */
-    public Result getTask(String name) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getTask(long institutionId, String name) {
         if(!existsTask(name)) return ok("not found");
 
         Task task = taskRepository.getByName(name);
@@ -242,20 +229,13 @@ public class TransGraphController extends Controller {
     }
 
     /**
-     * Get Method, that search for the task and converts it to a mxGraph.
-     * @param taskName Task name.
-     * @return mxGraph file
-     */
-    public Result openTask(String taskName){
-        return null;
-    }
-
-    /**
      * Store a certain step, within the given task.
      * @param taskId Task Id.
      * @return
      */
-    public Result addStep(long taskId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result addStep(long institutionId, long taskId) {
         JsonNode stepMeta = request().body().as(JsonNode.class);
 
         // Build new step.
@@ -284,7 +264,9 @@ public class TransGraphController extends Controller {
      * @param stepId
      * @return
      */
-    public Result updateStep(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result updateStep(long institutionId, long stepId) {
         Step step = stepRepository.get(stepId);
         Cell cell = step.getCell();
 
@@ -303,29 +285,33 @@ public class TransGraphController extends Controller {
      * @param stepId Step Id.
      * @return
      */
-    public Result removeStep(long stepId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result removeStep(long institutionId, long stepId) {
         Step step = stepRepository.get(stepId);
         stepRepository.delete(step);
         return ok();
     }
 
-    /**
-     * Get all task steps.
-     * @param graphId Task id.
-     * @return List of steps.
-     */
-    public Result getSteps(long graphId) {
-        Task task = taskRepository.get(graphId);
-        List<Step> steps = task.getSteps();
-        return ok(taskToJson(task));
-    }
+//    /**
+//     * Get all task steps.
+//     * @param graphId Task id.
+//     * @return List of steps.
+//     */
+//    public Result getSteps(long graphId) {
+//        Task task = taskRepository.get(graphId);
+//        List<Step> steps = task.getSteps();
+//        return ok(taskToJson(task));
+//    }
 
     /**
      * Store a certain hop, within the given task.
      * @param taskId Task Id.
      * @return
      */
-    public Result addHop(long taskId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result addHop(long institutionId, long taskId) {
         JsonNode hopMeta = request().body().as(JsonNode.class);
 
         // Build new step.
@@ -346,29 +332,12 @@ public class TransGraphController extends Controller {
      * @param hopId Hop Id.
      * @return
      */
-    public Result removeHop(long hopId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result removeHop(long institutionId, long hopId) {
         Hop hop = hopRepository.get(hopId);
         hopRepository.delete(hop);
         return ok();
-    }
-
-    /**
-     * Close task tab.
-     * @param taskId
-     */
-    public Result closeTab(long taskId){
-        Task task = taskRepository.get(taskId);
-        task.setOpen(0);
-        taskRepository.add(task);
-        return ok();
-    }
-
-    /**
-     * Retrieve all open tabs.
-     */
-    public Result getOpenTabs(){
-        List<String> tabs = taskRepository.getOpenTabs();
-        return ok(new Gson().toJson(tabs));
     }
 
     /**
@@ -376,7 +345,9 @@ public class TransGraphController extends Controller {
      * @param graphId Task id.
      * @return
      */
-    public Result getExecutions(long graphId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getExecutions(long institutionId, long graphId) {
         Task task = taskRepository.get(graphId);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -393,7 +364,15 @@ public class TransGraphController extends Controller {
         return ok(Json.toJson(task));
     }
 
-    public Result getServers(long graphId) {
+    /**
+     * Get all available Servers for the given Task.
+     * @param institutionId
+     * @param graphId
+     * @return
+     */
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.SERVER, needs = {Operation.GET})
+    public Result getServers(long institutionId, long graphId) {
         Task task = taskRepository.get(graphId);
         Institution institution = task.getInstitution();
         List<Server> servers = institution.getServers();

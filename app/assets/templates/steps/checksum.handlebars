@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="checkSumType" class="col-sm-2 control-label">Checksum Type</label>
                 <div class="col-sm-5">
-                    <select name="checkSumType" view-element="checksum_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    <select name="checkSumType" view-element="checksum_type" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                         <option value="0">CRC 32</option>
                         <option value="1">ADLER 32</option>
                         <option value="2">MD5</option>
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="resultfieldName" class="col-sm-2 control-label">Checksum Type</label>
                 <div class="col-sm-5">
-                    <select view-element="checksum_result_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" disabled>
+                    <select view-element="checksum_result_type" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true" disabled>
                         <option value="0">String</option>
                         <option value="1">Hexadecimal</option>
                         <option value="2">Binary</option>
@@ -57,7 +57,7 @@
             <div class="form-group">
                 <label for="checksum_fields" class="col-sm-2 control-label">Fields used on checksum</label>
                 <div class="col-sm-5">
-                    <select id="checksum_fields" view-element="checksum_fields" multiple="" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    <select id="checksum_fields" view-element="checksum_fields" multiple="" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
 
                     </select>
                 </div>
@@ -67,7 +67,7 @@
     <!-- /.box-body -->
     <div class="box-footer">
         <button view-click="controller.cancelClick()" type="submit" class="btn btn-default">Cancel</button>
-        <button view-click="controller.submitClick()" type="submit" class="btn bg-navy margin pull-right">Submit</button>
+        <button view-click="controller.submitClick()" type="submit" class="btn bg-wet-asphalt margin pull-right">Submit</button>
     </div>
     <!-- /.box-footer -->
 </div>

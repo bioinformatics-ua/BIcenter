@@ -25,6 +25,7 @@ requirejs.config({
         'jquery-cookie': 'lib/jquery.cookie.min',
         'md5': '../lib/md5/md5.min',
         'boostrap-datetimepicker': '../lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min',
+        'select2': '../lib/select2/select2.full.min',
         'iCheck': '../lib/iCheck/icheck.min',
 
         // QueryBuilder

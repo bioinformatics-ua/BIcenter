@@ -20,12 +20,14 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
         });
     };
 
-    ServerController.prototype.loadServer = function(serverId){
+    ServerController.prototype.loadServer = function(institutionId,serverId){
+        this.institutionId = institutionId;
+
         var context = this;
         async.parallel(
             [
                 function (callback) {
-                    Institution.getServer(serverId, function(server){
+                    Institution.getServer(institutionId,serverId, function(server){
                         context.server = server;
                         callback();
                     });
@@ -59,7 +61,7 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
         var formValues = $form.serializeForm();
 
         var context = this;
-        Institution.updateServer(this.server.id, formValues, function (server) {
+        Institution.updateServer(this.institutionId, this.server.id, formValues, function (server) {
             console.log("Server", server.id, "has been updated!");
         });
 

@@ -45,7 +45,7 @@ define('SchedulerController', ['Controller', 'async', 'SchedulerView', 'Router',
         var table = this.view.$elements.table.DataTable();
         table.row(rowId).remove().draw();
 
-        Execution.deleteSchedule(taskId,scheduleId, function(unscheduled){
+        Execution.deleteSchedule(this.institutionId,taskId,scheduleId, function(unscheduled){
 
         });
     };

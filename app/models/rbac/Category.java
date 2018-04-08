@@ -14,6 +14,10 @@ public class Category implements Serializable {
     public static final String TASK = "Task";
     @Transient
     public static final String SERVER = "Server";
+    @Transient
+    public static final String DATA_SOURCE = "DataSource";
+    @Transient
+    public static final String INSTITUTION = "Institution";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

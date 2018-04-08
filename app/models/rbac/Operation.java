@@ -20,6 +20,8 @@ public class Operation implements Serializable {
     public static final String GET = "Get";
     @Transient
     public static final String LIST = "List";
+    @Transient
+    public static final String RUN = "Run";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

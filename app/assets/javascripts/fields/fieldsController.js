@@ -12,7 +12,7 @@ define('FieldsController', ['Controller','FieldsView','Step','Router'], function
 
         if(this.stepId){
             var context = this;
-            Step.getStep(this.stepId,function (step) {
+            Step.getStep(this.institutionId,this.stepId,function (step) {
                 context.view.loadStep(step,context.before);
             })
         }

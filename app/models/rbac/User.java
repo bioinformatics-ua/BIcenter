@@ -1,5 +1,7 @@
 package models.rbac;
 
+import models.Institution;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +26,9 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Role> roles;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Institution> institutions;
 
     public User() {
         this.created = new Date();
@@ -107,6 +112,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Institution> getInstitutions() {
+        return institutions;
+    }
+
+    public void setInstitutions(List<Institution> institutions) {
+        this.institutions = institutions;
     }
 
     public enum UserType {

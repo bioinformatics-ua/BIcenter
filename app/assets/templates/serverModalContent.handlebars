@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="institution" class="col-sm-3 control-label">Institution:</label>
         <div class="col-sm-5">
-            <select name="institution" view-element="institution" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+            <select name="institution" view-element="institution" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                 {{#institutions}}
                     {{#ifCond ../server.institution '==' name}}
                         <option value="{{id}}" selected>{{name}}</option>

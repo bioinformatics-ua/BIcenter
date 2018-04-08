@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="institution" class="col-sm-4 control-label">Institution:</label>
         <div class="col-sm-5">
-            <select name="institution" view-element="institution" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+            <select name="institution" view-element="institution" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                 {{#institutions}}
                     {{#ifCond ../dataSource.institution '==' name}}
                         <option value="{{id}}" selected>{{name}}</option>
@@ -25,7 +25,7 @@
     <div class="form-group">
         <label for="databaseInterface" class="col-sm-4 control-label">Connection Type:</label>
         <div class="col-sm-5">
-            <select name="databaseInterface" view-element="databaseInterface" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+            <select name="databaseInterface" view-element="databaseInterface" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                 <option></option>
                 {{#connectionTypes}}
                     {{#ifCond ../dataSource.databaseInterface '==' value}}
@@ -42,7 +42,7 @@
     <div class="form-group">
         <label for="accessType" class="col-sm-4 control-label">Connection Method:</label>
         <div class="col-sm-5">
-            <select name="accessType" view-element="accessType" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+            <select name="accessType" view-element="accessType" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                 <option></option>
                 {{#accessTypes}}
                     {{#ifCond ../dataSource.accessType '==' value}}

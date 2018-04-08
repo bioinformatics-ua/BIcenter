@@ -12,7 +12,7 @@ define('PreviewStepController', ['Controller', 'PreviewStepView', 'Router', 'Exe
 
         var context = this;
         if(this.executionId && this.stepId){
-            Execution.getStepData(this.executionId, this.stepId, function(task){
+            Execution.getStepData(this.institutionId,this.executionId, this.stepId, function(task){
                 context.view.loadTask(context.executionId,task);
             });
         }

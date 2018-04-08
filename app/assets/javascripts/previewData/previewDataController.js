@@ -12,7 +12,7 @@ define('PreviewDataController', ['Controller', 'PreviewDataView', 'Router', 'Exe
 
         var context = this;
         if(this.executionId){
-            Execution.getData(this.executionId, function(task){
+            Execution.getData(this.institutionId,this.executionId, function(task){
                 context.view.loadTask(context.executionId,task);
             });
         }

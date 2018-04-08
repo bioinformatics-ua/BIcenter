@@ -1,4 +1,4 @@
-define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'dataTables', 'query-builder'], function (View, Step, jsRoutes, _) {
+define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'dataTables', 'query-builder', 'select2'], function (View, Step, jsRoutes, _) {
     var StepView = function (controller) {
         View.call(this, controller);
     };
@@ -31,6 +31,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
 
         this.renderConditions(step, inputFields);
         this.renderTables(step);
+        this.renderMultiSelects(step);
     };
 
     /**
@@ -47,13 +48,13 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
             context.filters.push({id: input.name, label: input.name, type: "string"});
         });
 
-        Step.getConditions(step.id, function (conditions) {
+        Step.getConditions(this.controller.institutionId, step.id, function (conditions) {
             context.conditions = conditions;
 
             _.each(conditions, function (condition) {
                 var stepId = context.step.id;
                 var componentId = condition.id;
-                Step.getConditionValue(stepId, componentId, function (rules) {
+                Step.getConditionValue(context.controller.institutionId, stepId, componentId, function (rules) {
                     context.$elements[condition.id].queryBuilder({
                         conditions: ["OR", "AND", "OR NOT", "AND NOT", "XOR"],
                         operators: [
@@ -163,7 +164,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
     StepView.prototype.renderTables = function (step) {
         this.dataTables = {};
         var context = this;
-        Step.getTables(step.id, function (tables) {
+        Step.getTables(this.controller.institutionId, step.id, function (tables) {
             // var tables = JSON.parse(result);
             context.tables = tables;
 
@@ -179,7 +180,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                         if (tmpArr.length > 1) {
                             var shortName = tmpArr[1];
 
-                            Step.getByComponentAndShortName(step.component.id, shortName, function (component) {
+                            Step.getByComponentAndShortName(context.institutionId, step.component.id, shortName, function (component) {
                                 context.$elements[component].attr('view-change', 'controller.cenas(' + tableId + ',' + field.name + ')');
                             });
                         }
@@ -264,6 +265,24 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                             }
                         ]
                     });
+            });
+        });
+    };
+
+    /**
+     * Initialize all Multi-Selects.
+     * @param step
+     */
+    StepView.prototype.renderMultiSelects = function (step) {
+        var context = this;
+        Step.getMultiSelects(this.controller.institutionId, step.id, function (selects) {
+            _.each(selects, function (select) {
+                var selectId = select.id;
+                context.$elements[selectId].select2({
+                    placeholder: '',
+                    multiple: true,
+                    closeOnSelect: false
+                });
             });
         });
     };

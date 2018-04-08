@@ -29,7 +29,7 @@ define('RemoteExecutionController', ['Controller', 'RemoteExecutionView', 'Route
         formValues["dateTime"] = this.view.$elements.startDateTime.data('date');
 
         var serverId = this.view.$elements.server.val();
-        Execution.remoteExecution(graphId,serverId,formValues, function(returnedData){
+        Execution.remoteExecution(graphController.institutionId,graphId,serverId,formValues, function(returnedData){
 
         });
 

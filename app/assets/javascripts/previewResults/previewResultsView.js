@@ -49,7 +49,7 @@ define('PreviewResultsView', ['View','Task','Execution'], function (View,Task,Ex
 
             var context = this;
             Task.getTask(this.transName, function (task) {
-                Task.loadTask(task.id, function (graphModel) {
+                Task.loadTask(context.controller.institutionId, task.id, function (graphModel) {
                     var doc = mxUtils.parseXml(graphModel);
                     var codec = new mxCodec(doc);
                     codec.decode(doc.documentElement, graph.getModel());

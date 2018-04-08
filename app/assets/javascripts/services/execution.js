@@ -1,8 +1,8 @@
 define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     var Execution = Execution || {};
 
-    Execution.localExecution = function (taskId,callback) {
-        jsRoutes.controllers.ExecutionController.localExecution(taskId).ajax({
+    Execution.localExecution = function (intitutionId,taskId,callback) {
+        jsRoutes.controllers.ExecutionController.localExecution(intitutionId,taskId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -15,8 +15,8 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.remoteExecution = function (taskId,serverId,details,callback) {
-        jsRoutes.controllers.ExecutionController.remoteExecution(taskId,serverId).ajax({
+    Execution.remoteExecution = function (intitutionId,taskId,serverId,details,callback) {
+        jsRoutes.controllers.ExecutionController.remoteExecution(intitutionId,taskId,serverId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(details),
             success: function (response) {
@@ -30,8 +30,8 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.result = function (execution,callback) {
-        jsRoutes.controllers.ExecutionController.result(execution).ajax({
+    Execution.result = function (intitutionId,execution,callback) {
+        jsRoutes.controllers.ExecutionController.result(intitutionId,execution).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -44,8 +44,8 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.getTask = function (execution,callback) {
-        jsRoutes.controllers.ExecutionController.getTask(execution).ajax({
+    Execution.getTask = function (intitutionId,execution,callback) {
+        jsRoutes.controllers.ExecutionController.getTask(intitutionId,execution).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -58,8 +58,8 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.getLogs = function (execution,callback) {
-        jsRoutes.controllers.ExecutionController.getLogs(execution).ajax({
+    Execution.getLogs = function (intitutionId,execution,callback) {
+        jsRoutes.controllers.ExecutionController.getLogs(intitutionId,execution).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -72,8 +72,8 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.getMetrics = function (execution,callback) {
-        jsRoutes.controllers.ExecutionController.getMetrics(execution).ajax({
+    Execution.getMetrics = function (intitutionId,execution,callback) {
+        jsRoutes.controllers.ExecutionController.getMetrics(intitutionId,execution).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -86,8 +86,8 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.getData = function (execution,callback) {
-        jsRoutes.controllers.ExecutionController.getData(execution).ajax({
+    Execution.getData = function (intitutionId,execution,callback) {
+        jsRoutes.controllers.ExecutionController.getData(intitutionId,execution).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -100,8 +100,8 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.getStepData = function (execution,step,callback) {
-        jsRoutes.controllers.ExecutionController.getStepData(execution,step).ajax({
+    Execution.getStepData = function (intitutionId,execution,step,callback) {
+        jsRoutes.controllers.ExecutionController.getStepData(intitutionId,execution,step).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -114,8 +114,8 @@ define('Execution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Execution.deleteSchedule = function (task,schedule,callback) {
-        jsRoutes.controllers.ExecutionController.deleteSchedule(task,schedule).ajax({
+    Execution.deleteSchedule = function (intitutionId,task,schedule,callback) {
+        jsRoutes.controllers.ExecutionController.deleteSchedule(intitutionId,task,schedule).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {

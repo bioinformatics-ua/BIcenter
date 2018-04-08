@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="server" class="col-sm-3 control-label">Server Name:</label>
         <div class="col-sm-8">
-            <select name="server" view-element="server" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+            <select name="server" view-element="server" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                 <option></option>
                 {{#servers}}
                     <option value="{{id}}">{{name}}</option>
@@ -45,7 +45,7 @@
     <div class="form-group" view-element="intervals_form" style="display:none;">
         <label for="intervals" class="col-sm-3 control-label">Interval:</label>
         <div class="col-md-8">
-            <select name="intervals" view-element="intervals" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+            <select name="intervals" view-element="intervals" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                 <option>Daily</option>
                 <option>Weekly</option>
                 <option>Monthly</option>

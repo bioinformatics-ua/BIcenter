@@ -20,12 +20,14 @@ define('DataSourceController', ['Controller', 'DataSourceView', 'async', 'Router
         });
     };
 
-    DataSourceController.prototype.loadDataSource = function(dataSourceId){
+    DataSourceController.prototype.loadDataSource = function(institutionId,dataSourceId){
+        this.institutionId = institutionId;
         var context = this;
+
         async.parallel(
             [
                 function (callback) {
-                    Institution.getDataSource(dataSourceId, function(dataSource){
+                    Institution.getDataSource(institutionId,dataSourceId, function(dataSource){
                         context.dataSource = dataSource;
                         callback();
                     });
@@ -59,7 +61,7 @@ define('DataSourceController', ['Controller', 'DataSourceView', 'async', 'Router
         var formValues = $form.serializeForm();
 
         var context = this;
-        Institution.updateDataSource(this.dataSource.id, formValues, function (dataSource) {
+        Institution.updateDataSource(this.institutionId,this.dataSource.id, formValues, function (dataSource) {
             console.log("DataSource", dataSource.id, "has been updated!");
         });
 

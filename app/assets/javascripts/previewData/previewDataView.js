@@ -53,7 +53,7 @@ define('PreviewDataView', ['View', 'jsRoutes', 'Router', 'Task', 'Execution'], f
             graph.setCellsResizable(false);
 
             var context = this;
-            Task.loadTask(taskId, function (graphModel) {
+            Task.loadTask(this.controller.institutionId, taskId, function (graphModel) {
                 var doc = mxUtils.parseXml(graphModel);
                 var codec = new mxCodec(doc);
                 codec.decode(doc.documentElement, graph.getModel());
@@ -65,7 +65,7 @@ define('PreviewDataView', ['View', 'jsRoutes', 'Router', 'Task', 'Execution'], f
                     if (cell.isVertex()) {
                         var stepId = context.stepMap[cell.value];
                         var executionId = context.controller.executionId;
-                        var configStepUrl = jsRoutes.controllers.ExecutionController.previewStep(context.controller.graphId,executionId,stepId).url;
+                        var configStepUrl = jsRoutes.controllers.ExecutionController.previewStep(context.controller.institutionId,context.controller.graphId,executionId,stepId).url;
                         Router.navigate(configStepUrl);
                     }
                 });
@@ -77,7 +77,7 @@ define('PreviewDataView', ['View', 'jsRoutes', 'Router', 'Task', 'Execution'], f
     PreviewDataView.prototype.requestResults = function() {
         // Request for transformation results.
         var context = this;
-        Execution.result(context.controller.executionId,
+        Execution.result(context.controller.institutionId,context.controller.executionId,
             function (data) {
                 if (JSON.parse(data)['finished'] == true) {
                     var headerController = app.modules.HeaderModule.controllers.HeaderController;

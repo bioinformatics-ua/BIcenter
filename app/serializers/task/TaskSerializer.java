@@ -49,6 +49,7 @@ public class TaskSerializer extends JsonSerializer<Task> {
 
         gen.writeStringField("name", value.getName());
         gen.writeStringField("description", value.getDescription());
+        gen.writeNumberField("institution", value.getInstitution().getId());
 
         gen.writeObjectField("steps", mapper.valueToTree(value.getSteps()));
 

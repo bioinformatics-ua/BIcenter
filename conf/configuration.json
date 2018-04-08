@@ -504,11 +504,13 @@
     "Update",
     "Delete",
     "Get",
-    "List"
+    "Run"
   ],
   "categories": [
     "Task",
-    "Server"
+    "Server",
+    "DataSource",
+    "Institution"
   ],
   "roles": [
     {
@@ -521,7 +523,7 @@
             "Update",
             "Delete",
             "Get",
-            "List"
+            "RUN"
           ]
         },
         {
@@ -530,8 +532,25 @@
             "Add",
             "Update",
             "Delete",
-            "Get",
-            "List"
+            "Get"
+          ]
+        },
+        {
+          "category": "DataSource",
+          "operations": [
+            "Add",
+            "Update",
+            "Delete",
+            "Get"
+          ]
+        },
+        {
+          "category": "Institution",
+          "operations": [
+            "Add",
+            "Update",
+            "Delete",
+            "Get"
           ]
         }
       ]

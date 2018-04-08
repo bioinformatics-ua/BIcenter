@@ -12,7 +12,7 @@ define('StepMetricsController', ['Controller', 'StepMetricsView', 'Router', 'Exe
 
         var context = this;
         if(this.executionId){
-            Execution.getMetrics(this.executionId, function(task){
+            Execution.getMetrics(this.institutionId,this.executionId, function(task){
                 context.view.loadTask(context.executionId,task);
             });
         }

@@ -14,7 +14,7 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
         async.series([
             function (callback) {
                if(context.controller.graphId) {
-                    Task.getTaskDetails(context.controller.graphId, function (task) {
+                    Task.getTaskDetails(context.controller.institutionId, context.controller.graphId, function (task) {
                         context.task = task;
                         callback();
                     });
@@ -25,7 +25,7 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
             },
             function (callback) {
                 if (context.controller.stepId) {
-                    Step.getStepName(context.controller.stepId, function (stepName) {
+                    Step.getStepName(context.controller.institutionId, context.controller.stepId, function (stepName) {
                         context.stepName = stepName;
                         callback();
                     });

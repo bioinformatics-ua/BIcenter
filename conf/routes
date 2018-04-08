@@ -6,97 +6,94 @@
 ##########  Application
 ############################################################################
 # An example controller showing a sample home page
-GET           /                                                     controllers.HomeController.index
-GET           /assets/javascripts/jsroutes.js                       controllers.Application.javascriptRoutes
-GET           /assets/javascripts/messages.js                       controllers.Application.jsMessages
-GET           /langs                                                controllers.Application.supportedLanguages
+GET           /                                                                                          controllers.HomeController.index
+GET           /assets/javascripts/jsroutes.js                                                            controllers.Application.javascriptRoutes
+GET           /assets/javascripts/messages.js                                                            controllers.Application.jsMessages
+GET           /langs                                                                                     controllers.Application.supportedLanguages
 
 # LOGIN
-GET           /login                                                controllers.login.Login.index()
-POST          /login                                                controllers.login.Login.login()
-GET           /logout                                               controllers.login.Login.logout()
+GET           /login                                                                                     controllers.login.Login.index()
+POST          /login                                                                                     controllers.login.Login.login()
+GET           /logout                                                                                    controllers.login.Login.logout()
 
-GET           /user                                                 controllers.rbac.Users.getLoggedInUser()
+GET           /user                                                                                      controllers.rbac.Users.getLoggedInUser()
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                                         controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                                                                              controllers.Assets.versioned(path="/public", file: Asset)
 
 # Handles the pipeline step svg images.
-GET           /middle/:image                                        controllers.SvgController.getMiddleImage(image:String)
-GET           /small/:image                                         controllers.SvgController.getSmallImage(image:String)
+GET           /middle/:image                                                                             controllers.SvgController.getMiddleImage(image:String)
+GET           /small/:image                                                                              controllers.SvgController.getSmallImage(image:String)
 
 # Handles insititutions.
-GET           /institution/:institutionId/scheduler                      controllers.InstitutionController.scheduler(institutionId:Long)
+GET           /institution/:institutionId/scheduler                                                      controllers.InstitutionController.scheduler(institutionId:Long)
 
-GET           /institution/:institutionId/name                          controllers.InstitutionController.getInstitutionName(institutionId:Long)
-GET           /institution/list                                         controllers.InstitutionController.getInstitutions()
-GET           /institution/:institution/server/:server/create           controllers.InstitutionController.newServer(institution:String,server:String)
-GET           /institution/:institution/dataSource/:dataSource/create   controllers.InstitutionController.newDataSource(institution:String,dataSource:String)
-GET           /server/:serverId                                         controllers.InstitutionController.getServer(serverId:Long)
-GET           /dataSource/:dataSourceId                                 controllers.InstitutionController.getDataSource(dataSourceId:Long)
-POST          /server/:serverId/apply                                   controllers.InstitutionController.updateServer(serverId:Long)
-POST          /dataSource/:dataSourceId/apply                           controllers.InstitutionController.updateDataSource(dataSourceId:Long)
-GET           /institution/:institutionId/dataSources                   controllers.InstitutionController.getDataSources(institutionId:Long)
-GET           /institution/:institutionId/schedules                     controllers.InstitutionController.getSchedules(institutionId:Long)
+GET           /institution/:institutionId/name                                                           controllers.InstitutionController.getInstitutionName(institutionId:Long)
+GET           /institution/list                                                                          controllers.InstitutionController.getInstitutions()
+GET           /institution/:institution/server/:server/create                                            controllers.InstitutionController.newServer(institution:Long,server:String)
+GET           /institution/:institution/dataSource/:dataSource/create                                    controllers.InstitutionController.newDataSource(institution:Long,dataSource:String)
+GET           /institution/:institutionId/server/:serverId                                               controllers.InstitutionController.getServer(institutionId:Long,serverId:Long)
+GET           /institution/:institutionId/dataSource/:dataSourceId                                       controllers.InstitutionController.getDataSource(institutionId:Long,dataSourceId:Long)
+POST          /institution/:institutionId/server/:serverId/apply                                         controllers.InstitutionController.updateServer(institutionId:Long,serverId:Long)
+POST          /institution/:institutionId/dataSource/:dataSourceId/apply                                 controllers.InstitutionController.updateDataSource(institutionId:Long,dataSourceId:Long)
+GET           /institution/:institutionId/dataSources                                                    controllers.InstitutionController.getDataSources(institutionId:Long)
+GET           /institution/:institutionId/schedules                                                      controllers.InstitutionController.getSchedules(institutionId:Long)
 
-GET           /components/list                                      controllers.InstitutionController.getComponents()
+GET           /components/list                                                                           controllers.InstitutionController.getComponents()
 
 # Handles the pipeline.
-GET           /graph/:graphId/select                                controllers.TransGraphController.selectTask(graphId:Long)
-GET           /graph/:graphId/preview                               controllers.TransGraphController.previewResults(graphId:Long)
-GET           /graph/:graphId/history                               controllers.TransGraphController.history(graphId:Long)
+GET           /institution/:institutionId/graph/:graphId/select                                          controllers.TransGraphController.selectTask(institutionId:Long,graphId:Long)
+GET           /institution/:institutionId/graph/:graphId/history                                         controllers.TransGraphController.history(institutionId:Long,graphId:Long)
 
-GET           /graph/:graphId/details                               controllers.TransGraphController.getTaskDetails(graphId:Long)
-GET           /graph/list                                           controllers.TransGraphController.getTasks()
-GET           /institution/:institution/graph/:task/create          controllers.TransGraphController.newTask(institution:String,task:String)
-GET           /graph/:graphId/load                                  controllers.TransGraphController.loadTask(graphId:Long)
-GET           /graph/:name/task                                     controllers.TransGraphController.getTask(name:String)
-GET           /graph/load                                           controllers.TransGraphController.loadTrans(filename: String ?= "/transformations/Add a sequence - Basic example.ktr")
-POST          /graph/:graphId/new/step                              controllers.TransGraphController.addStep(graphId:Long)
-POST          /graph/:stepId/update/step                            controllers.TransGraphController.updateStep(stepId:Long)
-DELETE        /graph/:stepId/new/step                               controllers.TransGraphController.removeStep(stepId:Long)
-GET           /graph/:graphId/steps                                 controllers.TransGraphController.getSteps(graphId:Long)
-POST          /graph/:graphId/new/hop                               controllers.TransGraphController.addHop(graphId:Long)
-DELETE        /graph/:hopId/new/hop                                 controllers.TransGraphController.removeHop(hopId:Long)
-POST          /graph/:graphId/close                                 controllers.TransGraphController.closeTab(graphId:Long)
-GET           /graph/tabs                                           controllers.TransGraphController.getOpenTabs()
-GET           /graph/:graphId/executions                            controllers.TransGraphController.getExecutions(graphId:Long)
-GET           /graph/:graphId/servers                               controllers.TransGraphController.getServers(graphId:Long)
+GET           /institution/:institutionId/graph/:graphId/details                                         controllers.TransGraphController.getTaskDetails(institutionId:Long,graphId:Long)
+#GET           /graph/list                                                      controllers.TransGraphController.getTasks()
+GET           /institution/:institutionId/graph/:task/create                                             controllers.TransGraphController.newTask(institutionId:Long,task:String)
+GET           /institution/:institutionId/graph/:graphId/load                                            controllers.TransGraphController.loadTask(institutionId:Long,graphId:Long)
+GET           /institution/:institutionId/graph/:name/task                                               controllers.TransGraphController.getTask(institutionId:Long,name:String)
+POST          /institution/:institutionId/graph/:graphId/new/step                                        controllers.TransGraphController.addStep(institutionId:Long,graphId:Long)
+POST          /institution/:institutionId/graph/:stepId/update/step                                      controllers.TransGraphController.updateStep(institutionId:Long,stepId:Long)
+DELETE        /institution/:institutionId/graph/:stepId/new/step                                         controllers.TransGraphController.removeStep(institutionId:Long,stepId:Long)
+#GET           /institution/:institution/graph/:graphId/steps                    controllers.TransGraphController.getSteps(institution:Long,graphId:Long)
+POST          /institution/:institutionId/graph/:graphId/new/hop                                         controllers.TransGraphController.addHop(institutionId:Long,graphId:Long)
+DELETE        /institution/:institutionId/graph/:hopId/new/hop                                           controllers.TransGraphController.removeHop(institutionId:Long,hopId:Long)
+GET           /institution/:institutionId/graph/:graphId/executions                                      controllers.TransGraphController.getExecutions(institutionId:Long,graphId:Long)
+GET           /institution/:institutionId/graph/:graphId/servers                                         controllers.TransGraphController.getServers(institutionId:Long,graphId:Long)
 
 # Handles the steps.
-GET           /graph/:graphId/step/:stepId/configure                controllers.StepController.configure(graphId:Long,stepId:Long)
-GET           /graph/:graphId/step/:stepId/input                    controllers.StepController.showStepInput(graphId:Long,stepId:Long)
-GET           /graph/:graphId/step/:stepId/output                   controllers.StepController.showStepOutput(graphId:Long,stepId:Long)
+GET           /institution/:institutionId/graph/:graphId/step/:stepId/configure                          controllers.StepController.configure(institutionId:Long,graphId:Long,stepId:Long)
+GET           /institution/:institutionId/graph/:graphId/step/:stepId/input                              controllers.StepController.showStepInput(institutionId:Long,graphId:Long,stepId:Long)
+GET           /institution/:institutionId/graph/:graphId/step/:stepId/output                             controllers.StepController.showStepOutput(institutionId:Long,graphId:Long,stepId:Long)
 
-GET           /step/:stepId/inputStepsName                          controllers.StepController.inputStepsName(stepId:Long)
-GET           /step/:stepId/inputFieldsName                         controllers.StepController.inputFieldsName(stepId:Long)
-GET           /step/:stepId/outputStepsName                         controllers.StepController.outputStepsName(stepId:Long)
-GET           /step/inputOutputFields                               controllers.StepController.inputOutputFields(stepId:Long,before:Boolean)
-GET           /step/:stepId/schema                                  controllers.StepController.getSchema(stepId:Long)
-POST          /step/:stepId/apply                                   controllers.StepController.applyChanges(stepId:Long)
-GET           /step/:stepId/name                                    controllers.StepController.getStepName(stepId:Long)
-GET           /step/:stepId                                         controllers.StepController.getStep(stepId:Long)
-GET           /step/:stepId/tables                                  controllers.StepController.getTables(stepId:Long)
-GET           /step/:stepId/component/:componentId/table            controllers.StepController.getTableValue(stepId:Long,componentId:Long)
-GET           /step/:stepId/conditions                              controllers.StepController.getConditions(stepId:Long)
-GET           /step/:stepId/component/:componentId/condition        controllers.StepController.getConditionValue(stepId:Long,componentId:Long)
-GET           /step/:stepId/institution                             controllers.StepController.getInstitution(stepId:Long)
+GET           /institution/:institutionId/step/:stepId/inputStepsName                                    controllers.StepController.inputStepsName(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/:stepId/inputFieldsName                                   controllers.StepController.inputFieldsName(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/:stepId/outputStepsName                                   controllers.StepController.outputStepsName(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/inputOutputFields                                         controllers.StepController.inputOutputFields(institutionId:Long,stepId:Long,before:Boolean)
+GET           /institution/:institutionId/step/:stepId/schema                                            controllers.StepController.getSchema(institutionId:Long,stepId:Long)
+POST          /institution/:institutionId/step/:stepId/apply                                             controllers.StepController.applyChanges(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/:stepId/name                                              controllers.StepController.getStepName(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/:stepId                                                   controllers.StepController.getStep(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/:stepId/tables                                            controllers.StepController.getTables(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/:stepId/component/:componentId/table                      controllers.StepController.getTableValue(institutionId:Long,stepId:Long,componentId:Long)
+GET           /institution/:institutionId/step/:stepId/conditions                                        controllers.StepController.getConditions(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/:stepId/component/:componentId/condition                  controllers.StepController.getConditionValue(institutionId:Long,stepId:Long,componentId:Long)
+GET           /institution/:institutionId/step/:stepId/multiSelects                                      controllers.StepController.getMultiSelects(institutionId:Long,stepId:Long)
+GET           /institution/:institutionId/step/:stepId/institution                                       controllers.StepController.getInstitution(institutionId:Long,stepId:Long)
 
-GET           /component/:componentId/short/:shortName              controllers.StepController.getByComponentAndShortName(componentId:Long,shortName:String)
+GET           /institution/:institutionId/component/:componentId/short/:shortName                        controllers.StepController.getByComponentAndShortName(institutionId:Long,componentId:Long,shortName:String)
 
 # Handles the executions
-GET           /graph/:graphId/execution/:executionId/logs               controllers.ExecutionController.logs(graphId:Long,executionId:Long)
-GET           /graph/:graphId/execution/:executionId/metrics            controllers.ExecutionController.metrics(graphId:Long,executionId:Long)
-GET           /graph/:graphId/execution/:executionId/data               controllers.ExecutionController.previewData(graphId:Long,executionId:Long)
-GET           /graph/:graphId/execution/:executionId/step/:stepId/data  controllers.ExecutionController.previewStep(graphId:Long,executionId:Long,stepId:Long)
+GET           /institution/:institutionId/graph/:graphId/execution/:executionId/logs                     controllers.ExecutionController.logs(institutionId:Long,graphId:Long,executionId:Long)
+GET           /institution/:institutionId/graph/:graphId/execution/:executionId/metrics                  controllers.ExecutionController.metrics(institutionId:Long,graphId:Long,executionId:Long)
+GET           /institution/:institutionId/graph/:graphId/execution/:executionId/data                     controllers.ExecutionController.previewData(institutionId:Long,graphId:Long,executionId:Long)
+GET           /institution/:institutionId/graph/:graphId/execution/:executionId/step/:stepId/data        controllers.ExecutionController.previewStep(institutionId:Long,graphId:Long,executionId:Long,stepId:Long)
 
-GET           /execute/:taskId                                      controllers.ExecutionController.localExecution(taskId:Long)
-POST          /execute/:taskId/server/:serverId                     controllers.ExecutionController.remoteExecution(taskId:Long,serverId:Long)
-GET           /execution/:executionId/result                        controllers.ExecutionController.result(executionId:Long)
-GET           /execution/:executionId/task                          controllers.ExecutionController.getTask(executionId:Long)
-GET           /execution/:executionId/logs/json                     controllers.ExecutionController.getLogs(executionId:Long)
-GET           /execution/:executionId/metrics/json                  controllers.ExecutionController.getMetrics(executionId:Long)
-GET           /execution/:executionId/data/json                     controllers.ExecutionController.getData(executionId:Long)
-GET           /execution/:executionId/step/:stepId/data/json        controllers.ExecutionController.getStepData(executionId:Long,stepId:Long)
+GET           /institution/:institutionId/execute/:taskId                                                controllers.ExecutionController.localExecution(institutionId:Long,taskId:Long)
+POST          /institution/:institutionId/execute/:taskId/server/:serverId                               controllers.ExecutionController.remoteExecution(institutionId:Long,taskId:Long,serverId:Long)
+GET           /institution/:institutionId/execution/:executionId/result                                  controllers.ExecutionController.result(institutionId:Long,executionId:Long)
+GET           /institution/:institutionId/execution/:executionId/task                                    controllers.ExecutionController.getTask(institutionId:Long,executionId:Long)
+GET           /institution/:institutionId/execution/:executionId/logs/json                               controllers.ExecutionController.getLogs(institutionId:Long,executionId:Long)
+GET           /institution/:institutionId/execution/:executionId/metrics/json                            controllers.ExecutionController.getMetrics(institutionId:Long,executionId:Long)
+GET           /institution/:institutionId/execution/:executionId/data/json                               controllers.ExecutionController.getData(institutionId:Long,executionId:Long)
+GET           /institution/:institutionId/execution/:executionId/step/:stepId/data/json                  controllers.ExecutionController.getStepData(institutionId:Long,executionId:Long,stepId:Long)
 
-DELETE        /graph/:graphId/schedule/:scheduleId                  controllers.ExecutionController.deleteSchedule(graphId:Long,scheduleId:Long)
+DELETE        /institution/:institutionId/graph/:graphId/schedule/:scheduleId                            controllers.ExecutionController.deleteSchedule(institutionId:Long,graphId:Long,scheduleId:Long)

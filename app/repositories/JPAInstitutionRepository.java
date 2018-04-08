@@ -1,17 +1,23 @@
 package repositories;
 
 import com.google.inject.Inject;
-import models.Hop;
 import models.Institution;
 import play.db.jpa.JPAApi;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class JPAInstitutionRepository extends JPARepository implements InstitutionRepository {
     @Inject
     public JPAInstitutionRepository(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
         super(jpaApi, executionContext);
+    }
+
+    public static List<Institution> list(EntityManager em, String email) {
+        return em.createQuery("SELECT i FROM Institution i JOIN i.users u WHERE u.email LIKE :userEmail", Institution.class)
+                .setParameter("userEmail", email)
+                .getResultList();
     }
 
     public static List<Institution> list(EntityManager em) {
@@ -27,16 +33,32 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
         return institution;
     }
 
-    public static boolean delete(EntityManager em, Institution institution){
-        institution =  em.find(Institution.class, institution.getId());
+    public static boolean delete(EntityManager em, Institution institution) {
+        institution = em.find(Institution.class, institution.getId());
         em.remove(institution);
         return true;
     }
 
-    public static Institution getByName(EntityManager em, String name){
+    public static Institution getByName(EntityManager em, String name) {
         return em.createQuery("select p from Institution p where name=:nameparam", Institution.class)
-                .setParameter("nameparam",name)
+                .setParameter("nameparam", name)
                 .getSingleResult();
+    }
+
+    public static boolean hasUser(EntityManager em, long institutionId, String userEmail) {
+        try {
+            return em
+                    .createQuery("SELECT i FROM Institution i " +
+                            "JOIN i.users u " +
+                            "WHERE i.id = :institutionId and " +
+                            "u.email LIKE :userEmail")
+                    .setParameter("institutionId", institutionId)
+                    .setParameter("userEmail", userEmail)
+                    .getResultList()
+                    .size() > 0;
+        } catch (NoResultException e) {
+            return false;
+        }
     }
 
     @Override
@@ -50,7 +72,14 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
     }
 
     @Override
-    public void delete(Institution institution) { wrap(em -> delete(em,institution)); }
+    public void delete(Institution institution) {
+        wrap(em -> delete(em, institution));
+    }
+
+    @Override
+    public List<Institution> list(String email) {
+        return wrap(em -> list(em, email));
+    }
 
     @Override
     public List<Institution> list() {
@@ -58,5 +87,12 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
     }
 
     @Override
-    public Institution getByName(String name) { return wrap(em -> getByName(em,name)); }
+    public Institution getByName(String name) {
+        return wrap(em -> getByName(em, name));
+    }
+
+    @Override
+    public boolean hasUser(long institutionId, String userEmail) {
+        return wrap(em -> hasUser(em, institutionId, userEmail));
+    }
 }

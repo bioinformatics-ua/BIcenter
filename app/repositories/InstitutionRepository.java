@@ -14,7 +14,11 @@ public interface InstitutionRepository {
 
     void delete(Institution institution);
 
+    List<Institution> list(String email);
+
     List<Institution> list();
 
     Institution getByName(String name);
+
+    boolean hasUser(long institutionId, String userEmail);
 }

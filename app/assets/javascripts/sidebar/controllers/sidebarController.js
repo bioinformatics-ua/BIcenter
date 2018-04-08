@@ -32,8 +32,8 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
         });
     };
 
-    SidebarController.prototype.selectTask = function (taskId) {
-        var configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(taskId).url;
+    SidebarController.prototype.selectTask = function (institutionId,taskId) {
+        var configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(institutionId,taskId).url;
         Router.navigate(configStepUrl);
     };
 
@@ -50,11 +50,11 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
 
         var context = this;
         context.institution = institution;
-        Task.getTask(taskName, function (task) {
+        Task.getTask(institution, taskName, function (task) {
             if (task == "not found") {
                 Task.newTask(context.institution,taskName, function (task) {
                     // Open new task.
-                    var configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(task.id).url;
+                    var configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(context.institution,task.id).url;
                     Router.navigate(configStepUrl);
 
                     Alert.flash(ALERT_TYPE.SUCCESS, 'Task', 'Task \'' + taskName + '\' was successfully created!');
@@ -62,7 +62,7 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
             }
             else {
                 // Open already existent task.
-                var configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(task.id).url;
+                var configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(context.institution,task.id).url;
                 Router.navigate(configStepUrl);
 
                 Alert.flash(ALERT_TYPE.DANGER, 'Task', 'Task \'' + taskName + '\' already exists!');
@@ -94,9 +94,9 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
         });
     };
 
-    SidebarController.prototype.editServer = function(server){
+    SidebarController.prototype.editServer = function(institution, server){
         var modalController = this.module.controllers['ServerController'];
-        modalController.loadServer(server);
+        modalController.loadServer(institution,server);
     }
 
     SidebarController.prototype.createDataSource = function(institution, event) {
@@ -123,9 +123,9 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
         });
     };
 
-    SidebarController.prototype.editDataSource = function(dataSource) {
+    SidebarController.prototype.editDataSource = function(institutionId,dataSource) {
         var modalController = this.module.controllers['DataSourceController'];
-        modalController.loadDataSource(dataSource);
+        modalController.loadDataSource(institutionId,dataSource);
     };
 
     SidebarController.prototype.showSchedule = function(institution) {

@@ -20,10 +20,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
             .add(new RegExp(jsRoutes.controllers.login.Login.index().url.substr(1), 'i'), function () {
                 console.log("LOGIN PAGE");
             })
-            .add(new RegExp(jsRoutes.controllers.StepController.showStepInput('(.*)','(.*)').url.substr(1), 'i'), function (graphId,stepId) {
+            .add(new RegExp(jsRoutes.controllers.StepController.showStepInput('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (institutionId,graphId,stepId) {
                 console.log("Show Input Fields of Step " + stepId);
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     stepId: stepId,
                     before: true,
@@ -33,10 +34,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadController('MainModule', 'FieldsController', opts);
                 
             })
-            .add(new RegExp(jsRoutes.controllers.StepController.showStepOutput('(.*)','(.*)').url.substr(1), 'i'), function (graphId,stepId) {
+            .add(new RegExp(jsRoutes.controllers.StepController.showStepOutput('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (institutionId,graphId,stepId) {
                 console.log("Show Output Fields of Step " + stepId);
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     stepId: stepId,
                     before: false,
@@ -46,20 +48,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadController('MainModule', 'FieldsController', opts);
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
             })
-            .add(new RegExp(jsRoutes.controllers.TransGraphController.previewResults('(.*)').url.substr(1), 'i'), function (graphId) {
-                console.log("Preview Results of Graph " + graphId);
-
-                var opts = {
-                    graphId: graphId
-                }
-
-                self.loadController('MainModule', 'PreviewResultsController', opts);
-                self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
-            })
-            .add(new RegExp(jsRoutes.controllers.TransGraphController.history('(.*)').url.substr(1), 'i'), function (graphId) {
+            .add(new RegExp(jsRoutes.controllers.TransGraphController.history('(.*)','(.*)').url.substr(1), 'i'), function (institutionId,graphId) {
                 console.log("History of Graph " + graphId);
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     section: 'history',
                     tab: "resources"
@@ -69,10 +62,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)','(.*)').url.substr(1), 'i'), function (graphId,stepId) {
+            .add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (institutionId,graphId,stepId) {
                 console.log('Edit step', stepId);
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     stepId: stepId,
                     section: 'configure',
@@ -82,10 +76,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.logs('(.*)','(.*)').url.substr(1), 'i'), function (graphId,executionId) {
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.logs('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (institutionId, graphId,executionId) {
                 console.log('Execution', executionId, 'logs');
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     executionId: executionId,
                     section: 'logs',
@@ -95,10 +90,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.metrics('(.*)','(.*)').url.substr(1), 'i'), function (graphId,executionId) {
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.metrics('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (institutionId,graphId,executionId) {
                 console.log('Execution', executionId, 'Steps Metrics');
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     executionId: executionId,
                     section: 'metrics',
@@ -108,10 +104,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.previewStep('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (graphId, executionId, stepId) {
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.previewStep('(.*)','(.*)','(.*)','(.*)').url.substr(1), 'i'), function (institutionId, graphId, executionId, stepId) {
                 console.log('Execution', executionId, 'Step', stepId, 'Preview Step Data');
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     executionId: executionId,
                     stepId: stepId,
@@ -122,10 +119,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.ExecutionController.previewData('(.*)','(.*)').url.substr(1), 'i'), function (graphId,executionId) {
+            .add(new RegExp(jsRoutes.controllers.ExecutionController.previewData('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (institutionId,graphId,executionId) {
                 console.log('Execution', executionId, 'Preview Data');
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     executionId: executionId,
                     section: 'previewData',
@@ -135,10 +133,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 self.loadControllers('SidebarModule', ['SidebarController', 'ServerController', 'DataSourceController'], opts);
                 self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
             })
-            .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)').url.substr(1), 'i'), function (graphId) {
+            .add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)','(.*)').url.substr(1), 'i'), function (institutionId,graphId) {
                 console.log("Graph " + graphId + " has been selected");
 
                 var opts = {
+                    institutionId: institutionId,
                     graphId: graphId,
                     section: 'selectTask',
                     tab: "components"

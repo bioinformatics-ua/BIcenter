@@ -21,7 +21,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
 
         async.parallel([
             function (callback) {
-                Step.getStep(stepId, function (step) {
+                Step.getStep(context.institutionId, stepId, function (step) {
                     context.step = step;
                     context.formName = step.component.shortName + "_form";
 
@@ -29,14 +29,14 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
                 });
             },
             function (callback) {
-                Step.inputStepsName(stepId, function (inputSteps) {
+                Step.inputStepsName(context.institutionId, stepId, function (inputSteps) {
                     context.inputSteps = inputSteps;
 
                     callback();
                 });
             },
             function (callback) {
-                Step.inputFieldsName(stepId, function (inputFields) {
+                Step.inputFieldsName(context.institutionId, stepId, function (inputFields) {
                     context.inputFields = inputFields;
                     context.streamFields = _.groupBy(inputFields, 'origin');
 
@@ -44,14 +44,14 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
                 });
             },
             function (callback) {
-                Step.outputStepsName(stepId, function (outputSteps) {
+                Step.outputStepsName(context.institutionId, stepId, function (outputSteps) {
                     context.outputSteps = outputSteps;
 
                     callback();
                 });
             },
             function (callback) {
-                Step.getInstitution(stepId, function(institutionId) {
+                Step.getInstitution(context.institutionId, stepId, function(institutionId) {
                     Institution.getDataSources(institutionId, function (dataSources) {
                         context.dataSources = dataSources;
                         callback();
@@ -110,7 +110,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
             });
         }
 
-        Step.applyChanges(this.stepId, formValues, function (step) {
+        Step.applyChanges(this.institutionId, this.stepId, formValues, function (step) {
             console.log("Step", this.stepId, "has been updated!");
             Router.navigatePrevious();
         });

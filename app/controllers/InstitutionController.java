@@ -4,11 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.inject.Inject;
+import controllers.login.Secured;
+import controllers.rbac.annotation.CheckPermission;
 import models.*;
 import models.rbac.Category;
+import models.rbac.Operation;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import repositories.*;
 import serializers.component.SimpleComponentSerializer;
 import serializers.institution.*;
@@ -43,13 +47,16 @@ public class InstitutionController extends Controller {
         return ok(views.html.index.render());
     }
 
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.INSTITUTION, needs = {Operation.GET})
     public Result getInstitutionName(long institutionId){
         Institution institution = institutionRepository.get(institutionId);
         return ok(institution.getName());
     }
 
     public Result getInstitutions(){
-        List<Institution> institutions = institutionRepository.list();
+        String email = session().get("userEmail");
+        List<Institution> institutions = institutionRepository.list(email);
 
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
@@ -63,12 +70,14 @@ public class InstitutionController extends Controller {
         return ok(Json.toJson(institutions));
     }
 
-    public Result newServer(String instName, String serverName){
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.SERVER, needs = {Operation.ADD})
+    public Result newServer(long institutionId, String serverName){
         if(existsServer(serverName))
             return ok("not found");
 
         Server server = new Server(serverName);
-        Institution institution = institutionRepository.getByName(instName);
+        Institution institution = institutionRepository.get(institutionId);
         server.setInstitution(institution);
         server = serverRepository.add(server);
 
@@ -90,7 +99,9 @@ public class InstitutionController extends Controller {
         return false;
     }
 
-    public Result getServer(long serverId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.SERVER, needs = {Operation.GET})
+    public Result getServer(long institutionId, long serverId) {
         Server server = serverRepository.get(serverId);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -102,7 +113,9 @@ public class InstitutionController extends Controller {
         return ok(Json.toJson(server));
     }
 
-    public Result updateServer(long serverId){
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.SERVER, needs = {Operation.UPDATE})
+    public Result updateServer(long institutionId, long serverId){
         JsonNode formData = request().body().asJson();
 
         Server server = serverRepository.get(serverId);
@@ -125,12 +138,14 @@ public class InstitutionController extends Controller {
         return ok(Json.toJson(server));
     }
 
-    public Result newDataSource(String instName, String dataSourceName){
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.DATA_SOURCE, needs = {Operation.ADD})
+    public Result newDataSource(long institutionId, String dataSourceName){
         if(existsDataSource(dataSourceName))
             return ok("not found");
 
         DataSource dataSource = new DataSource(dataSourceName);
-        Institution institution = institutionRepository.getByName(instName);
+        Institution institution = institutionRepository.get(institutionId);
         dataSource.setInstitution(institution);
         dataSource = dataSourceRepository.add(dataSource);
 
@@ -158,7 +173,9 @@ public class InstitutionController extends Controller {
         return false;
     }
 
-    public Result getDataSource(long dataSourceId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.DATA_SOURCE, needs = {Operation.GET})
+    public Result getDataSource(long institutionId, long dataSourceId) {
         DataSource dataSource = dataSourceRepository.get(dataSourceId);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -170,7 +187,9 @@ public class InstitutionController extends Controller {
         return ok(Json.toJson(dataSource));
     }
 
-    public Result updateDataSource(long dataSourceId){
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.DATA_SOURCE, needs = {Operation.UPDATE})
+    public Result updateDataSource(long institutionId, long dataSourceId){
         JsonNode formData = request().body().asJson();
 
         DataSource dataSource = dataSourceRepository.get(dataSourceId);
@@ -197,6 +216,8 @@ public class InstitutionController extends Controller {
         return ok(Json.toJson(dataSource));
     }
 
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.DATA_SOURCE, needs = {Operation.GET})
     public Result getDataSources(long institutionId) {
         Institution institution = institutionRepository.get(institutionId);
         List<DataSource> dataSources = institution.getDataSources();
@@ -222,6 +243,8 @@ public class InstitutionController extends Controller {
         return ok(Json.toJson(componentCategories));
     }
 
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.INSTITUTION, needs = {Operation.GET})
     public Result getSchedules(long institutionId){
         Institution institution = institutionRepository.get(institutionId);
         List<Schedule> schedules = institution.getSchedules();

@@ -12,7 +12,7 @@ define('LogsController', ['Controller', 'LogsView', 'Router', 'Execution'], func
 
         var context = this;
         if(this.executionId){
-            Execution.getLogs(this.executionId, function(task){
+            Execution.getLogs(this.institutionId,this.executionId, function(task){
                 context.view.loadTask(context.executionId,task);
             });
         }

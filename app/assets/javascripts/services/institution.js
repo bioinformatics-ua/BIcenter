@@ -43,8 +43,8 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Institution.getServer = function (serverId, callback) {
-        jsRoutes.controllers.InstitutionController.getServer(serverId).ajax({
+    Institution.getServer = function (institutionId, serverId, callback) {
+        jsRoutes.controllers.InstitutionController.getServer(institutionId, serverId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -57,8 +57,8 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Institution.updateServer = function (serverId, formValues, callback) {
-        jsRoutes.controllers.InstitutionController.updateServer(serverId).ajax({
+    Institution.updateServer = function (institutionId, serverId, formValues, callback) {
+        jsRoutes.controllers.InstitutionController.updateServer(institutionId, serverId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(formValues),
             success: function (response) {
@@ -86,8 +86,8 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Institution.getDataSource = function (dataSourceId, callback) {
-        jsRoutes.controllers.InstitutionController.getDataSource(dataSourceId).ajax({
+    Institution.getDataSource = function (institutionId, dataSourceId, callback) {
+        jsRoutes.controllers.InstitutionController.getDataSource(institutionId, dataSourceId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -100,8 +100,8 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Institution.updateDataSource = function (dataSourceId, formValues, callback) {
-        jsRoutes.controllers.InstitutionController.updateDataSource(dataSourceId).ajax({
+    Institution.updateDataSource = function (institutionId, dataSourceId, formValues, callback) {
+        jsRoutes.controllers.InstitutionController.updateDataSource(institutionId, dataSourceId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(formValues),
             success: function (response) {

@@ -16,7 +16,7 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
 
         // Update editor with the loaded graphModel.
         if (this.controller.graphId) {
-            Task.loadTask(this.controller.graphId, function (graphModel) {
+            Task.loadTask(this.controller.institutionId, this.controller.graphId, function (graphModel) {
                 var doc = mxUtils.parseXml(graphModel);
                 var codec = new mxCodec(doc);
                 codec.decode(doc.documentElement, context.editor.graph.getModel());

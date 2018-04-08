@@ -117,7 +117,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
             stepMeta.label = cell.getValue().getAttribute("label");
             stepMeta.graphId = cell.getId();
 
-            Task.addStep(this.graphId, stepMeta, function (stepId) {
+            Task.addStep(this.institutionId,this.graphId, stepMeta, function (stepId) {
                 cell.value.setAttribute("stepId",stepId);
             });
         }
@@ -128,7 +128,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
             hopMeta.source = cell.source.value.getAttribute("stepId");
             hopMeta.target = cell.target.value.getAttribute("stepId");
 
-            Task.addHop(this.graphId, hopMeta);
+            Task.addHop(this.institutionId,this.graphId, hopMeta);
         }
     }
 
@@ -147,7 +147,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
                 coord.x = cells[i].getGeometry().x;
                 coord.y = cells[i].getGeometry().y;
 
-                Task.updateStep(stepId,coord);
+                Task.updateStep(this.institutionId,stepId,coord);
             }
         }
     }
@@ -162,12 +162,12 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
         for (var i = 0; i < cells.length; i++) {
             if (cells[i].value.hasAttribute("stepId")) {
                 var stepId = cells[i].value.getAttribute("stepId");
-                Task.removeStep(stepId, function (reponse) {
+                Task.removeStep(this.institutionId,stepId, function (reponse) {
                 });
             }
             else {
                 var hopId = cells[i].value.getAttribute("hopId");
-                Task.removeHop(hopId, function (reponse) {
+                Task.removeHop(this.institutionId,hopId, function (reponse) {
                 });
             }
         }
@@ -180,7 +180,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      */
     GraphController.prototype.showStepDialog = function () {
         var stepId = this.view.editor.graph.getSelectionCell().value.getAttribute("stepId");
-        var configStepUrl = jsRoutes.controllers.StepController.configure(this.graphId,stepId).url;
+        var configStepUrl = jsRoutes.controllers.StepController.configure(this.institutionId,this.graphId,stepId).url;
         Router.navigate(configStepUrl);
     };
 
@@ -190,7 +190,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      */
     GraphController.prototype.showStepInput = function (stepId) {
         var stepId = this.view.editor.graph.getSelectionCell().value.getAttribute("stepId");
-        var configStepUrl = jsRoutes.controllers.StepController.showStepInput(this.graphId,stepId).url;
+        var configStepUrl = jsRoutes.controllers.StepController.showStepInput(this.institutionId,this.graphId,stepId).url;
         Router.navigate(configStepUrl);
     }
 
@@ -200,13 +200,13 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      */
     GraphController.prototype.showStepOutput = function (stepId) {
         var stepId = this.view.editor.graph.getSelectionCell().value.getAttribute("stepId");
-        var configStepUrl = jsRoutes.controllers.StepController.showStepOutput(this.graphId,stepId).url;
+        var configStepUrl = jsRoutes.controllers.StepController.showStepOutput(this.institutionId,this.graphId,stepId).url;
         Router.navigate(configStepUrl);
     }
 
     GraphController.prototype.remoteExecution = function(){
         var context =this;
-        Task.getServers(this.graphId, function (servers) {
+        Task.getServers(this.institutionId,this.graphId, function (servers) {
             var modalController = context.module.controllers['RemoteExecutionController'];
             modalController.view.show(servers);
         });
@@ -218,7 +218,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      */
     GraphController.prototype.localExecution = function () {
         var headerController = app.modules.HeaderModule.controllers.HeaderController;
-        Execution.localExecution(this.graphId,
+        Execution.localExecution(this.institutionId, this.graphId,
             function(returnedData){
                 // Submit notification of transformation Execution.
                 data = JSON.parse(returnedData);
@@ -249,7 +249,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      * Shows the preview results transformation dialog.
      */
     GraphController.prototype.showHistory = function () {
-        var configStepUrl = jsRoutes.controllers.TransGraphController.history(this.graphId).url;
+        var configStepUrl = jsRoutes.controllers.TransGraphController.history(this.institutionId,this.graphId).url;
         Router.navigate(configStepUrl);
     }
 

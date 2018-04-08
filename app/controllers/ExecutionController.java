@@ -3,17 +3,22 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import controllers.login.Secured;
+import controllers.rbac.annotation.CheckPermission;
 import diSdk.task.TaskDecoder;
 import diSdk.trans.TransExecutor;
 import kettleExt.utils.JSONObject;
 import models.*;
 import models.Execution;
+import models.rbac.Category;
+import models.rbac.Operation;
 import org.pentaho.di.trans.TransExecutionConfiguration;
 import org.pentaho.di.trans.TransMeta;
 import org.quartz.*;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import repositories.*;
 import scheduler.ExecutionScheduler;
 import serializers.performance.*;
@@ -55,30 +60,40 @@ public class ExecutionController extends Controller {
      * @param executionId
      * @return
      */
-    public Result logs(long graphId, long executionId) { return ok(views.html.index.render()); }
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result logs(long institutionId, long graphId, long executionId) { return ok(views.html.index.render()); }
 
     /**
      * Renders Steps Metrics page.
      * @param executionId
      * @return
      */
-    public Result metrics(long graphId, long executionId) { return ok(views.html.index.render()); }
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result metrics(long institutionId, long graphId, long executionId) { return ok(views.html.index.render()); }
 
     /**
      * Renders Preview Task page.
      * @param executionId
      * @return
      */
-    public Result previewData(long graphId, long executionId) { return ok(views.html.index.render()); }
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result previewData(long institutionId, long graphId, long executionId) { return ok(views.html.index.render()); }
 
     /**
      * Renders Preview Step page.
      * @param executionId
      * @return
      */
-    public Result previewStep(long graphId, long executionId, long stepId) { return ok(views.html.index.render()); }
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result previewStep(long institutionId, long graphId, long executionId, long stepId) { return ok(views.html.index.render()); }
 
-    public Result remoteExecution(long taskId, long serverId) throws Exception {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.RUN})
+    public Result remoteExecution(long institutionId, long taskId, long serverId) throws Exception {
         JsonNode details = request().body().as(JsonNode.class);
         boolean schedule = details.get("schedule").asText().equals("on") ? true: false;
 
@@ -144,7 +159,9 @@ public class ExecutionController extends Controller {
         return ok();
     }
 
-    public Result localExecution(long taskId) throws Exception {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.RUN})
+    public Result localExecution(long institutionId, long taskId) throws Exception {
         // Prepare Transformation based on the JPA Task.
         Task task = taskRepository.get(taskId);
         //initializeTask(task);
@@ -168,7 +185,9 @@ public class ExecutionController extends Controller {
         return ok(jsonObject.toString()).as("text/html");
     }
 
-    public Result result(long executionId) throws Exception {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result result(long institutionId, long executionId) throws Exception {
         // Fetch and Serialize Execution.
         Execution execution = executionRepository.get(executionId);
 
@@ -185,7 +204,9 @@ public class ExecutionController extends Controller {
         return ok(Json.toJson(execution)).as("text/html");
     }
 
-    public Result getTask(long executionId) throws Exception {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getTask(long institutionId, long executionId) throws Exception {
         // Fetch and Serialize Execution.
         Execution execution = executionRepository.get(executionId);
         Task task = execution.getTask();
@@ -199,7 +220,9 @@ public class ExecutionController extends Controller {
         return ok(Json.toJson(task));
     }
 
-    public Result getLogs(long executionId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getLogs(long institutionId, long executionId) {
         Execution execution = executionRepository.get(executionId);
         Task task = execution.getTask();
 
@@ -213,7 +236,9 @@ public class ExecutionController extends Controller {
         return ok(Json.toJson(task));
     }
 
-    public Result getMetrics(long executionId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getMetrics(long institutionId, long executionId) {
         Execution execution = executionRepository.get(executionId);
         Task task = execution.getTask();
 
@@ -228,7 +253,9 @@ public class ExecutionController extends Controller {
         return ok(Json.toJson(task));
     }
 
-    public Result getData(long executionId) {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getData(long institutionId, long executionId) {
         Execution execution = executionRepository.get(executionId);
         Task task = execution.getTask();
 
@@ -245,7 +272,9 @@ public class ExecutionController extends Controller {
         return ok(Json.toJson(task));
     }
 
-    public Result getStepData(long executionId, long stepId){
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getStepData(long institutionId, long executionId, long stepId){
         Execution execution = executionRepository.get(executionId);
         Task task = execution.getTask();
 
@@ -262,7 +291,9 @@ public class ExecutionController extends Controller {
         return ok(Json.toJson(task));
     }
 
-    public Result deleteSchedule(long taskId, long scheduleId) throws SchedulerException {
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result deleteSchedule(long institutionId, long taskId, long scheduleId) throws SchedulerException {
         // Delete Schedule in the JPA.
         Schedule schedule = scheduleRepository.get(scheduleId);
         scheduleRepository.delete(schedule);
