@@ -2861,3 +2861,15 @@ Caused by: java.lang.StackOverflowError: null
     filters.ExampleFilter
 
 2018-04-09 15:38:22,881 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-310 - Application started (Dev)
+2018-04-09 15:44:04,385 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-589 - Shutting down connection pool.
+2018-04-09 15:44:05,597 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-589 - Creating Pool for datasource 'default'
+2018-04-09 15:44:05,987 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-589 - datasource [default] bound to JNDI as DefaultDS
+2018-04-09 15:44:05,987 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-589 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-09 15:44:10,540 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-589 - Building Step Configurations.
+2018-04-09 15:44:10,680 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-589 - Setting up Kettle environment.
+2018-04-09 15:44:10,681 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-589 - The Properties systems settings are already initialised!
+2018-04-09 15:44:11,118 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-589 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-09 15:44:11,118 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-589 - Application started (Dev)
