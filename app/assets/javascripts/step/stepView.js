@@ -164,6 +164,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
     StepView.prototype.renderTables = function (step) {
         this.dataTables = {};
         var context = this;
+
         Step.getTables(this.controller.institutionId, step.id, function (tables) {
             // var tables = JSON.parse(result);
             context.tables = tables;
@@ -180,7 +181,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                         if (tmpArr.length > 1) {
                             var shortName = tmpArr[1];
 
-                            Step.getByComponentAndShortName(context.institutionId, step.component.id, shortName, function (component) {
+                            Step.getByComponentAndShortName(context.controller.institutionId, step.component.id, shortName, function (component) {
                                 context.$elements[component].attr('view-change', 'controller.cenas(' + tableId + ',' + field.name + ')');
                             });
                         }
@@ -205,7 +206,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                 context.dataTables[table.id] = context.$elements[table.id].DataTable(
                     {
                         dom: "Bfrtip",
-                        ajax: jsRoutes.controllers.StepController.getTableValue(step.id, table.id).url,
+                        ajax: jsRoutes.controllers.StepController.getTableValue(context.controller.institutionId, step.id, table.id).url,
                         order: [[1, 'asc']],
                         columns: columns,
                         'drawCallback': function (o) {
