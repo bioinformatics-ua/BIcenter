@@ -16,6 +16,11 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
                 label: '<i class="fa fa-check-circle"></i> Save',
                 className: 'btn-success',
                 callback: 'controller.updateServer()'
+            },
+            delete: {
+                label: '<i class="fa fa-times-circle"></i> Delete',
+                className: 'btn-danger pull-left',
+                callback: 'controller.deleteServer()'
             }
         });
     };
@@ -67,6 +72,21 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
 
         this.view.hide();
     };
+
+    ServerController.prototype.deleteServer = function(event) {
+        if (event) {
+            event.preventDefault && event.preventDefault();
+            event.stopPropagation && event.stopPropagation();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+        }
+
+        var context = this;
+        Institution.deleteServer(this.institutionId, this.server.id, function(){
+            context.view.hide();
+            var sidebarController = context.module.controllers['SidebarController'];
+            sidebarController.getTasks();
+        });
+    }
 
     /**
      * Returns to the pipeline view.

@@ -25,6 +25,12 @@ public class JPAServerRepository extends JPARepository implements ServerReposito
         return server;
     }
 
+    public static boolean delete(EntityManager em, long id) {
+        Server server = em.find(Server.class, id);
+        em.remove(server);
+        return true;
+    }
+
     public static Server getByName(EntityManager em, String name){
         return em.createQuery("select p from Server p where name=:nameparam", Server.class)
                 .setParameter("nameparam",name)
@@ -40,6 +46,9 @@ public class JPAServerRepository extends JPARepository implements ServerReposito
     public Server add(Server server) {
         return wrap(em -> createOrUpdate(em, server));
     }
+
+    @Override
+    public void delete(long id) { wrap(em -> delete(em, id)); }
 
     @Override
     public List<Server> list() {

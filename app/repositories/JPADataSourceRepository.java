@@ -26,6 +26,12 @@ public class JPADataSourceRepository extends JPARepository implements DataSource
         return dataSource;
     }
 
+    public static boolean delete(EntityManager em, long id) {
+        DataSource dataSource = em.find(DataSource.class, id);
+        em.remove(dataSource);
+        return true;
+    }
+
     public static DataSource getByName(EntityManager em, String name){
         return em.createQuery("select p from DataSource p where connectionName=:nameparam", DataSource.class)
                 .setParameter("nameparam",name)
@@ -49,4 +55,9 @@ public class JPADataSourceRepository extends JPARepository implements DataSource
 
     @Override
     public DataSource getByName(String name) { return wrap(em -> getByName(em,name)); }
+
+    @Override
+    public void delete(long id) {
+        wrap(em -> delete(em, id));
+    }
 }

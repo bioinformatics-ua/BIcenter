@@ -14,4 +14,6 @@ public interface DataSourceRepository {
     List<DataSource> list();
 
     DataSource getByName(String name);
+
+    void delete(long id);
 }

@@ -16,6 +16,11 @@ define('DataSourceController', ['Controller', 'DataSourceView', 'async', 'Router
                 label: '<i class="fa fa-check-circle"></i> Save',
                 className: 'btn-success',
                 callback: 'controller.updateDataSource()'
+            },
+            delete: {
+                label: '<i class="fa fa-times-circle"></i> Delete',
+                className: 'btn-danger pull-left',
+                callback: 'controller.deleteDataSource()'
             }
         });
     };
@@ -67,6 +72,21 @@ define('DataSourceController', ['Controller', 'DataSourceView', 'async', 'Router
 
         this.view.hide();
     };
+
+    DataSourceController.prototype.deleteDataSource = function(event) {
+        if (event) {
+            event.preventDefault && event.preventDefault();
+            event.stopPropagation && event.stopPropagation();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+        }
+
+        var context = this;
+        Institution.deleteDataSource(this.institutionId, this.dataSource.id, function(){
+            context.view.hide();
+            var sidebarController = context.module.controllers['SidebarController'];
+            sidebarController.getTasks();
+        });
+    }
 
     /**
      * Returns to the pipeline view.

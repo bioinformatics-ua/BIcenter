@@ -11,6 +11,8 @@ public interface ServerRepository {
 
     Server add(Server server);
 
+    void delete(long id);
+
     List<Server> list();
 
     Server getByName(String name);

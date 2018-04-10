@@ -37,6 +37,20 @@ public class InstitutionController extends Controller {
         this.componentCategoryRepository = componentCategoryRepository;
     }
 
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.DATA_SOURCE, needs = {Operation.DELETE})
+    public Result deleteDataSource(long institution, long dataSource) {
+        this.dataSourceRepository.delete(dataSource);
+        return ok();
+    }
+
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.SERVER, needs = {Operation.DELETE})
+    public Result deleteServer(long institution, long serverId) {
+        this.serverRepository.delete(serverId);
+        return ok();
+    }
+
     /**
      * Execution Scheduler page
      *

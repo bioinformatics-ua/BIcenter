@@ -359,3 +359,248 @@ play.sbt.PlayExceptions$CompilationException: Compilation error[method initExecu
     filters.ExampleFilter
 
 2018-04-10 11:32:01,620 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-128 - Application started (Dev)
+2018-04-10 11:43:02,612 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-182 - Shutting down connection pool.
+2018-04-10 11:43:03,977 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-182 - Creating Pool for datasource 'default'
+2018-04-10 11:43:05,628 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-182 - datasource [default] bound to JNDI as DefaultDS
+2018-04-10 11:43:05,628 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-182 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-10 11:43:09,366 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-182 - Building Step Configurations.
+2018-04-10 11:43:09,478 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-182 - Setting up Kettle environment.
+2018-04-10 11:43:09,479 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-182 - The Properties systems settings are already initialised!
+2018-04-10 11:43:09,842 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-182 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-10 11:43:09,842 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-182 - Application started (Dev)
+2018-04-10 12:01:11,089 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-332 - 
+
+! @77h7odjal - Internal server error, for (GET) [/institution/1/graph/1/select] ->
+ 
+play.sbt.routes.RoutesCompilationException: Compilation error[Missing parameter in call definition: server]
+	at play.sbt.routes.RoutesCompiler$$anonfun$9.apply(RoutesCompiler.scala:161)
+	at play.sbt.routes.RoutesCompiler$$anonfun$9.apply(RoutesCompiler.scala:159)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at play.sbt.routes.RoutesCompiler$.compileRoutes(RoutesCompiler.scala:159)
+	at play.sbt.routes.RoutesCompiler$$anonfun$4.apply(RoutesCompiler.scala:137)
+	at play.sbt.routes.RoutesCompiler$$anonfun$4.apply(RoutesCompiler.scala:129)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:40)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2018-04-10 12:01:11,474 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-329 - 
+
+! @77h7odl93 - Internal server error, for (GET) [/assets/images/editor/connector.gif] ->
+ 
+play.sbt.routes.RoutesCompilationException: Compilation error[Missing parameter in call definition: server]
+	at play.sbt.routes.RoutesCompiler$$anonfun$9.apply(RoutesCompiler.scala:161)
+	at play.sbt.routes.RoutesCompiler$$anonfun$9.apply(RoutesCompiler.scala:159)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+	at scala.collection.immutable.List.foreach(List.scala:318)
+	at scala.collection.TraversableLike$class.map(TraversableLike.scala:244)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:105)
+	at play.sbt.routes.RoutesCompiler$.compileRoutes(RoutesCompiler.scala:159)
+	at play.sbt.routes.RoutesCompiler$$anonfun$4.apply(RoutesCompiler.scala:137)
+	at play.sbt.routes.RoutesCompiler$$anonfun$4.apply(RoutesCompiler.scala:129)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:40)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:228)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:237)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:228)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2018-04-10 12:03:53,415 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-331 - Shutting down connection pool.
+2018-04-10 12:03:54,346 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-331 - Creating Pool for datasource 'default'
+2018-04-10 12:03:55,431 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-331 - datasource [default] bound to JNDI as DefaultDS
+2018-04-10 12:03:55,432 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-331 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-10 12:03:58,123 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-331 - Building Step Configurations.
+2018-04-10 12:03:58,231 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-331 - Setting up Kettle environment.
+2018-04-10 12:03:58,233 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-331 - The Properties systems settings are already initialised!
+2018-04-10 12:03:58,461 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-331 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-10 12:03:58,462 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-331 - Application started (Dev)
+2018-04-10 12:09:00,665 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-338 - Shutting down connection pool.
+2018-04-10 12:09:01,946 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-338 - Creating Pool for datasource 'default'
+2018-04-10 12:09:03,391 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-338 - datasource [default] bound to JNDI as DefaultDS
+2018-04-10 12:09:03,393 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-338 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-10 12:09:11,742 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-338 - Building Step Configurations.
+2018-04-10 12:09:11,824 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-338 - Setting up Kettle environment.
+2018-04-10 12:09:11,825 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-338 - The Properties systems settings are already initialised!
+2018-04-10 12:09:12,119 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-338 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-10 12:09:12,120 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-338 - Application started (Dev)
+2018-04-10 12:11:34,265 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-359 - Shutting down connection pool.
+2018-04-10 12:11:35,779 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-359 - Creating Pool for datasource 'default'
+2018-04-10 12:11:36,434 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-359 - datasource [default] bound to JNDI as DefaultDS
+2018-04-10 12:11:36,434 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-359 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-10 12:11:39,542 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-359 - Building Step Configurations.
+2018-04-10 12:11:39,592 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-359 - Setting up Kettle environment.
+2018-04-10 12:11:39,592 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-359 - The Properties systems settings are already initialised!
+2018-04-10 12:11:39,821 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-359 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-10 12:11:39,823 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-359 - Application started (Dev)
+2018-04-10 12:11:40,443 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-337 - 
+
+! @77h7pnfll - Internal server error, for (GET) [/institution/1/server/2] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[CompletionException: java.lang.NullPointerException: Null content]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:255)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:182)
+	at play.core.server.AkkaHttpServer$$anonfun$$nestedInanonfun$executeHandler$1$1.applyOrElse(AkkaHttpServer.scala:251)
+	at play.core.server.AkkaHttpServer$$anonfun$$nestedInanonfun$executeHandler$1$1.applyOrElse(AkkaHttpServer.scala:250)
+	at scala.concurrent.Future.$anonfun$recoverWith$1(Future.scala:412)
+	at scala.concurrent.impl.Promise.$anonfun$transformWith$1(Promise.scala:37)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:60)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:68)
+	at scala.concurrent.impl.Promise$DefaultPromise.dispatchOrAddCallback(Promise.scala:312)
+	at scala.concurrent.impl.Promise$DefaultPromise.onComplete(Promise.scala:303)
+	at scala.concurrent.impl.Promise.transformWith(Promise.scala:36)
+	at scala.concurrent.impl.Promise.transformWith$(Promise.scala:34)
+	at scala.concurrent.impl.Promise$DefaultPromise.transformWith(Promise.scala:183)
+	at scala.concurrent.Future.recoverWith(Future.scala:411)
+	at scala.concurrent.Future.recoverWith$(Future.scala:410)
+	at scala.concurrent.impl.Promise$DefaultPromise.recoverWith(Promise.scala:183)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$recoverWith$3(Accumulator.scala:194)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:52)
+	at play.api.libs.streams.StrictAccumulator.run(Accumulator.scala:207)
+	at play.core.server.AkkaHttpServer.executeAction(AkkaHttpServer.scala:297)
+	at play.core.server.AkkaHttpServer.executeHandler(AkkaHttpServer.scala:254)
+	at play.core.server.AkkaHttpServer.handleRequest(AkkaHttpServer.scala:200)
+	at play.core.server.AkkaHttpServer.$anonfun$createServerBinding$3(AkkaHttpServer.scala:106)
+	at akka.stream.impl.fusing.MapAsync$$anon$23.onPush(Ops.scala:1172)
+	at akka.stream.impl.fusing.GraphInterpreter.processPush(GraphInterpreter.scala:499)
+	at akka.stream.impl.fusing.GraphInterpreter.processEvent(GraphInterpreter.scala:462)
+	at akka.stream.impl.fusing.GraphInterpreter.execute(GraphInterpreter.scala:368)
+	at akka.stream.impl.fusing.GraphInterpreterShell.runBatch(ActorGraphInterpreter.scala:571)
+	at akka.stream.impl.fusing.GraphInterpreterShell$AsyncInput.execute(ActorGraphInterpreter.scala:457)
+	at akka.stream.impl.fusing.GraphInterpreterShell.processEvent(ActorGraphInterpreter.scala:546)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.akka$stream$impl$fusing$ActorGraphInterpreter$$processEvent(ActorGraphInterpreter.scala:725)
+	at akka.stream.impl.fusing.ActorGraphInterpreter$$anonfun$receive$1.applyOrElse(ActorGraphInterpreter.scala:740)
+	at akka.actor.Actor.aroundReceive(Actor.scala:514)
+	at akka.actor.Actor.aroundReceive$(Actor.scala:512)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.aroundReceive(ActorGraphInterpreter.scala:650)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:527)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:496)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at akka.dispatch.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.CompletionException: java.lang.NullPointerException: Null content
+	at java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:292)
+	at java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:308)
+	at java.util.concurrent.CompletableFuture.uniApply(CompletableFuture.java:593)
+	at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:577)
+	at java.util.concurrent.CompletableFuture.uniApplyStage(CompletableFuture.java:617)
+	at java.util.concurrent.CompletableFuture.thenApplyAsync(CompletableFuture.java:1993)
+	at java.util.concurrent.CompletableFuture.thenApplyAsync(CompletableFuture.java:110)
+	at play.libs.streams.Accumulator$StrictAccumulator.lambda$map$3(Accumulator.java:362)
+	at java.util.function.Function.lambda$andThen$1(Function.java:88)
+	at java.util.function.Function.lambda$andThen$1(Function.java:88)
+	at play.libs.streams.Accumulator$StrictAccumulator$1.apply(Accumulator.java:403)
+	at play.libs.streams.Accumulator$StrictAccumulator$1.apply(Accumulator.java:400)
+	... 27 common frames omitted
+Caused by: java.lang.NullPointerException: Null content
+	at play.mvc.Results.status(Results.java:141)
+	at play.mvc.Results.status(Results.java:107)
+	at play.mvc.Results.ok(Results.java:308)
+	at controllers.InstitutionController.getServer(InstitutionController.java:120)
+	at router.Routes$$anonfun$routes$1.$anonfun$applyOrElse$36(Routes.scala:1485)
+	at play.core.routing.HandlerInvokerFactory$$anon$3.resultCall(HandlerInvoker.scala:134)
+	at play.core.routing.HandlerInvokerFactory$$anon$3.resultCall(HandlerInvoker.scala:133)
+	at play.core.routing.HandlerInvokerFactory$JavaActionInvokerFactory$$anon$8$$anon$2$$anon$1.invocation(HandlerInvoker.scala:108)
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:76)
+	at play.http.DefaultActionCreator$1.call(DefaultActionCreator.java:31)
+	at controllers.rbac.annotation.CheckPermissionAction.call(CheckPermissionAction.java:69)
+	at play.mvc.Security$AuthenticatedAction.call(Security.java:69)
+	at play.core.j.JavaAction.$anonfun$apply$2(JavaAction.scala:111)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:653)
+	at scala.util.Success.$anonfun$map$1(Try.scala:251)
+	at scala.util.Success.map(Try.scala:209)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:287)
+	at scala.concurrent.impl.Promise.liftedTree1$1(Promise.scala:29)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:29)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:60)
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:56)
+	at play.api.libs.streams.Execution$trampoline$.execute(Execution.scala:70)
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:48)
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:68)
+	at scala.concurrent.impl.Promise$KeptPromise$Kept.onComplete(Promise.scala:368)
+	at scala.concurrent.impl.Promise$KeptPromise$Kept.onComplete$(Promise.scala:367)
+	at scala.concurrent.impl.Promise$KeptPromise$Successful.onComplete(Promise.scala:375)
+	at scala.concurrent.impl.Promise.transform(Promise.scala:29)
+	at scala.concurrent.impl.Promise.transform$(Promise.scala:27)
+	at scala.concurrent.impl.Promise$KeptPromise$Successful.transform(Promise.scala:375)
+	at scala.concurrent.Future.map(Future.scala:287)
+	at scala.concurrent.Future.map$(Future.scala:287)
+	at scala.concurrent.impl.Promise$KeptPromise$Successful.map(Promise.scala:375)
+	at scala.concurrent.Future$.apply(Future.scala:653)
+	at play.core.j.JavaAction.apply(JavaAction.scala:111)
+	at play.api.mvc.Action.$anonfun$apply$2(Action.scala:96)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$4(Accumulator.scala:174)
+	at scala.util.Try$.apply(Try.scala:209)
+	at play.api.libs.streams.StrictAccumulator.$anonfun$mapFuture$3(Accumulator.scala:174)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:52)
+	at scala.Function1.$anonfun$andThen$1(Function1.scala:52)
+	at play.api.libs.streams.StrictAccumulator$$anon$1.apply(Accumulator.scala:218)
+	at play.api.libs.streams.StrictAccumulator$$anon$1.apply(Accumulator.scala:217)
+	... 31 common frames omitted
+2018-04-10 12:12:34,330 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-341 - Shutting down connection pool.
+2018-04-10 12:12:34,994 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-341 - Creating Pool for datasource 'default'
+2018-04-10 12:12:35,130 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-341 - datasource [default] bound to JNDI as DefaultDS
+2018-04-10 12:12:35,130 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-341 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-10 12:12:37,461 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-341 - Building Step Configurations.
+2018-04-10 12:12:37,513 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-341 - Setting up Kettle environment.
+2018-04-10 12:12:37,514 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-341 - The Properties systems settings are already initialised!
+2018-04-10 12:12:37,730 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-341 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-10 12:12:37,731 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-341 - Application started (Dev)
+2018-04-10 12:23:55,929 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-360 - Shutting down connection pool.
+2018-04-10 12:23:57,694 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-360 - Creating Pool for datasource 'default'
+2018-04-10 12:23:58,286 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-360 - datasource [default] bound to JNDI as DefaultDS
+2018-04-10 12:23:58,288 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-360 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-10 12:24:04,430 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-360 - Building Step Configurations.
+2018-04-10 12:24:05,005 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-360 - Setting up Kettle environment.
+2018-04-10 12:24:05,007 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-360 - The Properties systems settings are already initialised!
+2018-04-10 12:24:05,886 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-360 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-10 12:24:05,886 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-360 - Application started (Dev)

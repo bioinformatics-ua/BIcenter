@@ -43,6 +43,20 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
+    Institution.deleteServer = function (institutionId, serverId, callback) {
+        jsRoutes.controllers.InstitutionController.deleteServer(institutionId, serverId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Institution service', response);
+            }
+        })
+    };
+
     Institution.getServer = function (institutionId, serverId, callback) {
         jsRoutes.controllers.InstitutionController.getServer(institutionId, serverId).ajax({
             contentType: 'application/json; charset=utf-8',
@@ -88,6 +102,20 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
 
     Institution.getDataSource = function (institutionId, dataSourceId, callback) {
         jsRoutes.controllers.InstitutionController.getDataSource(institutionId, dataSourceId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Institution service', response);
+            }
+        })
+    };
+
+    Institution.deleteDataSource = function (institutionId, dataSourceId, callback) {
+        jsRoutes.controllers.InstitutionController.deleteDataSource(institutionId, dataSourceId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
