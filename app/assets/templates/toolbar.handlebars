@@ -3,17 +3,17 @@
         <div class="toolbar-title">Step</div>
 
         <div class="toolbar-content">
-            <button view-click="controller.showStepDialog();" class="btn btn-app btn-toolbar">
+            <button view-element="edit" view-click="controller.showStepDialog();" class="btn btn-app btn-toolbar" disabled>
                 <i class="fa fa-pencil-square-o"></i>
                 Edit
             </button>
 
-            <button view-click="controller.showStepInput();" class="btn btn-app btn-toolbar">
+            <button view-element="input" view-click="controller.showStepInput();" class="btn btn-app btn-toolbar" disabled>
                 <i class="fa fa-sign-in"></i>
                 Input
             </button>
 
-            <button view-click="controller.showStepOutput();" class="btn btn-app btn-toolbar">
+            <button view-element="output" view-click="controller.showStepOutput();" class="btn btn-app btn-toolbar" disabled>
                 <i class="fa fa-sign-out"></i>
                 Output
             </button>
@@ -25,35 +25,20 @@
     </div>
 
     <div class="toolbar-group">
-        <div class="toolbar-title">Run</div>
+        <div class="toolbar-title">Execution</div>
 
         <div class="toolbar-content">
-            <button view-click="controller.localExecution();" class="btn btn-app btn-toolbar">
+            <button view-click="controller.localExecution();" class="btn btn-app btn-toolbar" {{#unless canRun}}disabled{{/unless}}>
                 <i class="fa fa-map-marker"></i>
                 Local
             </button>
 
-            <button view-click="controller.remoteExecution();" class="btn btn-app btn-toolbar">
+            <button view-click="controller.remoteExecution();" class="btn btn-app btn-toolbar" {{#unless canRun}}disabled{{/unless}}>
                 <i class="fa fa-globe"></i>
                 Remote
             </button>
 
-            <button class="btn btn-app btn-toolbar">
-                <i class="fa fa-cog"></i>
-                Options
-            </button>
-        </div>
-    </div>
-
-    <div class="btn btn-app btn-separator">
-        <div class="separator-inner"></div>
-    </div>
-
-    <div class="toolbar-group">
-        <div class="toolbar-title">History</div>
-
-        <div class="toolbar-content">
-            <button view-click="controller.showHistory();" class="btn btn-app btn-toolbar">
+            <button view-click="controller.showHistory();" class="btn btn-app btn-toolbar" {{#unless canRun}}disabled{{/unless}}>
                 <i class="fa fa-history"></i>
                 History
             </button>

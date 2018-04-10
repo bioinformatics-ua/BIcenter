@@ -33,6 +33,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
             }
         };
 
+        var context = this;
         try {
             if (!mxClient.isBrowserSupported()) {
                 mxUtils.error('Browser is not supported!', 200, false);
@@ -42,8 +43,21 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
                 var node = mxUtils.load(config).getDocumentElement();
                 editor = new mxEditor(node);
 
+                editor.graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt) {
+                    if(sender.isEmpty()){
+                        context.view.$elements.edit.prop('disabled', true);
+                        context.view.$elements.input.prop('disabled', true);
+                        context.view.$elements.output.prop('disabled', true);
+                    }
+                    else{
+                        context.view.$elements.edit.prop('disabled', false);
+                        context.view.$elements.input.prop('disabled', false);
+                        context.view.$elements.output.prop('disabled', false);
+                    }
+                });
+
                 editor.graph.addListener(mxEvent.CELLS_ADDED, function (sender, evt) {
-                    controller.addCell(evt);
+                    controller.addCell(evt).toggleClass();
                 });
 
                 editor.graph.addListener(mxEvent.CELLS_MOVED, function (sender, evt) {
@@ -68,10 +82,10 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
                 editor.graph.timerAutoScroll = true;
 
                 // Updates the window title after opening new files
-                var title = document.title;
-                var funct = function (sender) {
-                    document.title = title + ' - ' + sender.getTitle();
-                };
+                // var title = document.title;
+                // var funct = function (sender) {
+                //     document.title = title + ' - ' + sender.getTitle();
+                // };
 
                 editor.addListener(mxEvent.OPEN, funct);
 

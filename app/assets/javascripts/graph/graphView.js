@@ -8,7 +8,11 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
     var _super_ = View.prototype;
 
     GraphView.prototype.initialize = function ($container) {
-        _super_.initialize.call(this, $container);
+        var data = {
+            canRun: this.controller.institutionId ? true : false
+        };
+
+        _super_.initialize.call(this, $container, data);
         var context = this;
 
         // Load the mxEditor after elements rendering.
