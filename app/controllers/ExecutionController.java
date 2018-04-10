@@ -12,6 +12,7 @@ import models.*;
 import models.Execution;
 import models.rbac.Category;
 import models.rbac.Operation;
+import models.rbac.User;
 import org.pentaho.di.trans.TransExecutionConfiguration;
 import org.pentaho.di.trans.TransMeta;
 import org.quartz.*;
@@ -20,6 +21,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import repositories.*;
+import repositories.user.UserRepository;
 import scheduler.ExecutionScheduler;
 import serializers.performance.*;
 import serializers.task.PerformanceTaskSerializer;
@@ -41,9 +43,10 @@ public class ExecutionController extends Controller {
     private KeyValueRepository keyValueRepository;
     private ServerRepository serverRepository;
     private ScheduleRepository scheduleRepository;
+    private UserRepository userRepository;
 
     @Inject
-    public ExecutionController(InstitutionRepository institutionRepository, TaskRepository taskRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository, ServerRepository serverRepository, ScheduleRepository scheduleRepository){
+    public ExecutionController(InstitutionRepository institutionRepository, TaskRepository taskRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository, ServerRepository serverRepository, ScheduleRepository scheduleRepository, UserRepository userRepository){
         this.institutionRepository = institutionRepository;
         this.taskRepository = taskRepository;
         this.executionRepository = executionRepository;
@@ -53,6 +56,7 @@ public class ExecutionController extends Controller {
         this.keyValueRepository = keyValueRepository;
         this.serverRepository = serverRepository;
         this.scheduleRepository = scheduleRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -95,12 +99,19 @@ public class ExecutionController extends Controller {
     @CheckPermission(category = Category.TASK, needs = {Operation.RUN})
     public Result remoteExecution(long institutionId, long taskId, long serverId) throws Exception {
         JsonNode details = request().body().as(JsonNode.class);
-        boolean schedule = details.get("schedule").asText().equals("on") ? true: false;
+
+        boolean schedule;
+        if(details.get("schedule") == null) schedule = false;
+        else schedule = details.get("schedule").asText().equals("on") ? true: false;
 
         Schedule scheduleObj = null;
 
         int hour,minutes,dayOfMonth,month,year;
         hour = minutes = dayOfMonth = month = year = 0;
+
+        boolean periodic = false;
+        String interval = "Once";
+
         if(schedule) {
             // Initialize Schedule.
             scheduleObj = new Schedule();
@@ -122,23 +133,20 @@ public class ExecutionController extends Controller {
             hour = Integer.parseInt(time.split(":")[0]);
             minutes = Integer.parseInt(time.split(":")[1]);
 
-            scheduleObj.setStart(DateBuilder.dateOf(hour,minutes,0,dayOfMonth,month,year));
-        }
+            scheduleObj.setStart(DateBuilder.dateOf(hour, minutes, 0, dayOfMonth, month, year));
 
-        boolean periodic;
-        String interval;
-        try {
-            periodic = details.get("periodic").asText().equals("on") ? true : false;
-            interval = "";
-            if (periodic) {
-                interval = details.get("intervals").asText();
-                scheduleObj.setInterval(interval);
+            try {
+                periodic = details.get("periodic").asText().equals("on") ? true : false;
+                interval = "";
+                if (periodic) {
+                    interval = details.get("intervals").asText();
+                    scheduleObj.setInterval(interval);
+                }
+            } catch (NullPointerException e) {
+                periodic = false;
+                interval = "Once";
+                scheduleObj.setInterval("Once");
             }
-        }
-        catch (NullPointerException e){
-            periodic = false;
-            interval = "Once";
-            scheduleObj.setInterval("Once");
         }
 
         // Store the execution schedule in the database.
@@ -154,7 +162,15 @@ public class ExecutionController extends Controller {
 
         // Fire the job within the scheduler.
         ExecutionScheduler executionScheduler = new ExecutionScheduler();
-        executionScheduler.fireJob(scheduleObj.getId(),schedule,hour,minutes,dayOfMonth,month,year,periodic,interval,taskId,serverId,scheduleRepository,taskRepository, serverRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository);
+        long scheduleId = 0;
+        if(scheduleObj!=null){
+            scheduleId = scheduleObj.getId();
+        }
+
+        String email = session("userEmail");
+        User user = this.userRepository.findByEmail(email);
+
+        executionScheduler.fireJob(scheduleId,schedule,hour,minutes,dayOfMonth,month,year,periodic,interval,taskId,serverId,user.getId(),scheduleRepository,taskRepository, serverRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository,userRepository);
 
         return ok();
     }
@@ -164,7 +180,6 @@ public class ExecutionController extends Controller {
     public Result localExecution(long institutionId, long taskId) throws Exception {
         // Prepare Transformation based on the JPA Task.
         Task task = taskRepository.get(taskId);
-        //initializeTask(task);
         TransMeta transMeta = TaskDecoder.decode(task);
 
         // Setting Execution Configurations.
@@ -173,8 +188,11 @@ public class ExecutionController extends Controller {
         executionConfiguration.setExecutingRemotely( false );
         executionConfiguration.setExecutingClustered( false );
 
+        String email = session("userEmail");
+        User user = this.userRepository.findByEmail(email);
+
         // Execute Transformation.
-        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository);
+        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, (long) 0, serverRepository, user.getId(), userRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository,keyValueRepository);
         new Thread(transExecutor).start();
 
         JSONObject jsonObject = new JSONObject();

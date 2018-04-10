@@ -13,6 +13,7 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import repositories.*;
+import repositories.user.UserRepository;
 
 public class ExecutionJob implements Job {
 
@@ -21,6 +22,7 @@ public class ExecutionJob implements Job {
         JobDetail jobDetail = context.getJobDetail();
         long taskId = (long) jobDetail.getJobDataMap().get("task");
         long serverId = (long) jobDetail.getJobDataMap().get("server");
+        long userId = (long) jobDetail.getJobDataMap().get("user");
         boolean periodic = (boolean) jobDetail.getJobDataMap().get("periodic");
         TaskRepository taskRepository = (TaskRepository) jobDetail.getJobDataMap().get("taskRepository");
         ServerRepository serverRepository = (ServerRepository) jobDetail.getJobDataMap().get("serverRepository");
@@ -29,6 +31,7 @@ public class ExecutionJob implements Job {
         StatusRepository statusRepository = (StatusRepository) jobDetail.getJobDataMap().get("statusRepository");
         DataRowRepository dataRowRepository = (DataRowRepository) jobDetail.getJobDataMap().get("dataRowRepository");
         KeyValueRepository keyValueRepository = (KeyValueRepository) jobDetail.getJobDataMap().get("keyValueRepository");
+        UserRepository userRepository = (UserRepository) jobDetail.getJobDataMap().get("userRepository");
 
         // Prepare Transformation based on the JPA Task.
         Task task = taskRepository.get(taskId);
@@ -64,7 +67,7 @@ public class ExecutionJob implements Job {
         }
 
         // Execute Transformation.
-        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository, keyValueRepository);
+        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, serverId, serverRepository, userId, userRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository, keyValueRepository);
         new Thread(transExecutor).start();
     }
 

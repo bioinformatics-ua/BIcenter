@@ -3,6 +3,7 @@ package scheduler;
 import models.Schedule;
 import org.quartz.*;
 import repositories.*;
+import repositories.user.UserRepository;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.concurrent.CountDownLatch;
 public class ExecutionScheduler implements ILatch {
     private CountDownLatch latch = new CountDownLatch(1);
 
-    public void fireJob(long scheduleId, boolean schedule, int hour,int minutes, int dayOfMonth, int month, int year, boolean periodic, String interval, long taskId, long serverId, ScheduleRepository scheduleRepository, TaskRepository taskRepository, ServerRepository serverRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository) throws SchedulerException, InterruptedException {
+    public void fireJob(long scheduleId, boolean schedule, int hour, int minutes, int dayOfMonth, int month, int year, boolean periodic, String interval, long taskId, long serverId, long userId, ScheduleRepository scheduleRepository, TaskRepository taskRepository, ServerRepository serverRepository, ExecutionRepository executionRepository, StepMetricRepository stepMetricRepository, StatusRepository statusRepository, DataRowRepository dataRowRepository, KeyValueRepository keyValueRepository, UserRepository userRepository) throws SchedulerException, InterruptedException {
         SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
         Scheduler scheduler = schedFact.getScheduler();
         scheduler.start();
@@ -22,6 +23,7 @@ public class ExecutionScheduler implements ILatch {
         data.put("latch", this);
         data.put("task", taskId);
         data.put("server", serverId);
+        data.put("user", userId);
         data.put("periodic", periodic);
         data.put("taskRepository", taskRepository);
         data.put("serverRepository", serverRepository);
@@ -30,6 +32,7 @@ public class ExecutionScheduler implements ILatch {
         data.put("statusRepository", statusRepository);
         data.put("dataRowRepository", dataRowRepository);
         data.put("keyValueRepository", keyValueRepository);
+        data.put("userRepository", userRepository);
 
         JobDetail jobDetail = jobBuilder
                 .usingJobData(data)

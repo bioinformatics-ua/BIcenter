@@ -1,5 +1,6 @@
 package models;
 
+import models.rbac.User;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 
@@ -18,6 +19,12 @@ public class Execution {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Task task;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Server server;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "execution", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<StepMetric> stepMetrics;
@@ -97,5 +104,21 @@ public class Execution {
 
     public Period getDuration(){
         return duration;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
     }
 }

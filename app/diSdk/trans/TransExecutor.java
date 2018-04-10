@@ -4,6 +4,7 @@ import kettleExt.App;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
 import models.*;
+import models.rbac.User;
 import org.pentaho.di.cluster.SlaveServer;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.exception.KettleException;
@@ -18,6 +19,7 @@ import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.*;
 import org.pentaho.di.www.SlaveServerTransStatus;
 import repositories.*;
+import repositories.user.UserRepository;
 
 import java.io.Serializable;
 import java.util.*;
@@ -33,11 +35,13 @@ public class TransExecutor implements Runnable, Serializable {
     /**
      * JPA repositories.
      */
+    private static ServerRepository serverRepository;
     private static ExecutionRepository executionRepository;
     private static StepMetricRepository stepMetricRepository;
     private static StatusRepository statusRepository;
     private static DataRowRepository dataRowRepository;
     private static KeyValueRepository keyValueRepository;
+    private static UserRepository userRepository;
     /**
      * Stores the output row structure of each step.
      */
@@ -86,16 +90,22 @@ public class TransExecutor implements Runnable, Serializable {
      * @param transMeta                   transaction structure.
      * @return
      */
-    public static synchronized TransExecutor initExecutor(TransExecutionConfiguration transExecutionConfiguration, TransMeta transMeta, long taskId, TaskRepository taskRepository, ExecutionRepository executions, StepMetricRepository stepMetrics, StatusRepository status, DataRowRepository dataRows, KeyValueRepository keyValues) {
+    public static synchronized TransExecutor initExecutor(TransExecutionConfiguration transExecutionConfiguration, TransMeta transMeta, long taskId, TaskRepository taskRepository, long serverId, ServerRepository servers, long userId, UserRepository users, ExecutionRepository executions, StepMetricRepository stepMetrics, StatusRepository status, DataRowRepository dataRows, KeyValueRepository keyValues) {
+        serverRepository = servers;
         executionRepository = executions;
         stepMetricRepository = stepMetrics;
         statusRepository = status;
         dataRowRepository = dataRows;
         keyValueRepository = keyValues;
+        userRepository = users;
 
         Execution execution = new Execution();
         Task task = taskRepository.get(taskId);
         execution.setTask(task);
+        Server server = serverRepository.get(serverId);
+        execution.setServer(server);
+        User user = userRepository.get(userId);
+        execution.setUser(user);
         execution = executionRepository.add(execution);
 
         TransExecutor transExecutor = new TransExecutor(execution.getId(), transExecutionConfiguration, transMeta);

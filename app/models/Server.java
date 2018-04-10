@@ -22,6 +22,9 @@ public class Server implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "server", cascade = CascadeType.ALL)
     private List<Schedule> schedules;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "server", cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<Execution> executions;
+
     public Server() { };
     public Server(String name){
         this.name = name;
@@ -70,5 +73,13 @@ public class Server implements Serializable {
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public List<Execution> getExecutions() {
+        return executions;
+    }
+
+    public void setExecutions(List<Execution> executions) {
+        this.executions = executions;
     }
 }

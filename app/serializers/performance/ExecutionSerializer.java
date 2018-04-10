@@ -47,6 +47,15 @@ public class ExecutionSerializer extends JsonSerializer<Execution> {
 
         gen.writeBooleanField("finished", value.isFinished());
         gen.writeNumberField("errors", value.getErrors());
+
+        if(value.getServer() != null) {
+            gen.writeStringField("server", value.getServer().getName());
+        }
+        else {
+            gen.writeStringField("server", "Local");
+        }
+        gen.writeStringField("user", value.getUser().getName());
+
         if(value.getStartDate()!=null){
             Date startDateTime = value.getStartDate();
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
