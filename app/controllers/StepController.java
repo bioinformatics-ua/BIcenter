@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -131,7 +132,7 @@ public class StepController extends Controller {
         StepMeta stepMeta = getStep(transMeta, step.getLabel());
         SearchFieldsProgress op = new SearchFieldsProgress(transMeta, stepMeta, true);
         op.run();
-        RowMetaInterface rowMetaInterface = op.getFields();
+        Map<String,RowMetaInterface> rowMetaMap = op.getFields();
 
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
@@ -139,7 +140,7 @@ public class StepController extends Controller {
         mapper.registerModule(module);
         Json.setObjectMapper(mapper);
 
-        return ok(Json.toJson(rowMetaInterface.getValueMetaList()));
+        return ok(Json.toJson(rowMetaMap));
     }
 
     /**
@@ -181,25 +182,27 @@ public class StepController extends Controller {
         StepMeta stepMeta = getStep(transMeta, step.getLabel());
         SearchFieldsProgress op = new SearchFieldsProgress(transMeta, stepMeta, before);
         op.run();
-        RowMetaInterface rowMetaInterface = op.getFields();
+        Map<String,RowMetaInterface> rowMetaMap = op.getFields();
 
         JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < rowMetaInterface.size(); i++) {
-            ValueMetaInterface v = rowMetaInterface.getValueMeta(i);
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("name", v.getName());
-            jsonObject.put("type", v.getTypeDesc());
-            jsonObject.put("length", v.getLength() < 0 ? "-" : "" + v.getLength());
-            jsonObject.put("precision", v.getPrecision() < 0 ? "-" : "" + v.getPrecision());
-            jsonObject.put("origin", Const.NVL(v.getOrigin(), ""));
-            jsonObject.put("storageType", ValueMeta.getStorageTypeCode(v.getStorageType()));
-            jsonObject.put("conversionMask", Const.NVL(v.getConversionMask(), ""));
-            jsonObject.put("currencySymbol", Const.NVL(v.getCurrencySymbol(), ""));
-            jsonObject.put("decimalSymbol", Const.NVL(v.getDecimalSymbol(), ""));
-            jsonObject.put("groupingSymbol", Const.NVL(v.getGroupingSymbol(), ""));
-            jsonObject.put("trimType", ValueMeta.getTrimTypeDesc(v.getTrimType()));
-            jsonObject.put("comments", Const.NVL(v.getComments(), ""));
-            jsonArray.add(jsonObject);
+        for (Map.Entry<String, RowMetaInterface> entry : rowMetaMap.entrySet()) {
+            for (int i = 0; i < entry.getValue().size(); i++) {
+                ValueMetaInterface v = entry.getValue().getValueMeta(i);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("name", v.getName());
+                jsonObject.put("type", v.getTypeDesc());
+                jsonObject.put("length", v.getLength() < 0 ? "-" : "" + v.getLength());
+                jsonObject.put("precision", v.getPrecision() < 0 ? "-" : "" + v.getPrecision());
+                jsonObject.put("origin", Const.NVL(v.getOrigin(), ""));
+                jsonObject.put("storageType", ValueMeta.getStorageTypeCode(v.getStorageType()));
+                jsonObject.put("conversionMask", Const.NVL(v.getConversionMask(), ""));
+                jsonObject.put("currencySymbol", Const.NVL(v.getCurrencySymbol(), ""));
+                jsonObject.put("decimalSymbol", Const.NVL(v.getDecimalSymbol(), ""));
+                jsonObject.put("groupingSymbol", Const.NVL(v.getGroupingSymbol(), ""));
+                jsonObject.put("trimType", ValueMeta.getTrimTypeDesc(v.getTrimType()));
+                jsonObject.put("comments", Const.NVL(v.getComments(), ""));
+                jsonArray.add(jsonObject);
+            }
         }
 
         return ok(Json.toJson(jsonArray));

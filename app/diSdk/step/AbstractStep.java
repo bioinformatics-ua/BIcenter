@@ -247,7 +247,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                 ObjectNode child = (ObjectNode) children.get(i);
 
                 Condition subCondition;
-                if(i != children.size()-1)
+                if(i != 0)
                     subCondition = buildCondition(getOperator(json.get("condition").asText()),child);
                 else
                     subCondition = buildCondition(getOperator("NONE"),child);

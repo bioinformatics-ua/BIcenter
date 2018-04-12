@@ -182,7 +182,8 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                             var shortName = tmpArr[1];
 
                             Step.getByComponentAndShortName(context.controller.institutionId, step.component.id, shortName, function (component) {
-                                context.$elements[component].attr('view-change', 'controller.cenas(' + tableId + ',' + field.name + ')');
+                                context.controller.updateColumn(tableId, field.name, component);
+                                context.$elements[component].attr('view-change', 'controller.updateColumn(' + tableId + ',' + field.name + ')');
                             });
                         }
                     }

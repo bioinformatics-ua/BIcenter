@@ -37,8 +37,17 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
             },
             function (callback) {
                 Step.inputFieldsName(context.institutionId, stepId, function (inputFields) {
-                    context.inputFields = inputFields;
-                    context.streamFields = _.groupBy(inputFields, 'origin');
+                    if(_.keys(inputFields).length == 1){
+                        _.each(inputFields, function(field){
+                            context.inputFields = field.valueMetaList;
+                        });
+                    }
+                    else{
+                        context.streamFields = {};
+                        _.each(_.keys(inputFields), function(key) {
+                           context.streamFields[key] = inputFields[key].valueMetaList;
+                        });
+                    }
 
                     callback();
                 });
@@ -75,10 +84,17 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         Router.navigatePrevious();
     }
 
-    StepController.prototype.cenas = function (tableId, name, $element) {
+    StepController.prototype.updateColumn = function (tableId, name, component, $element) {
         var table = this.view.dataTables[tableId].clear().draw();
 
-        var selectedVal = $element.val();
+        var selectedVal;
+        if(component) {
+            selectedVal = this.view.$elements[component].val();
+        }
+        else {
+            selectedVal = $element.val();
+        }
+
         if (selectedVal) {
             this.data[name] = this.streamFields[selectedVal];
         }

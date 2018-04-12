@@ -289,6 +289,10 @@
                 {
                   "name": "Case Sensitive Compare?",
                   "shortName": "caseSensitive"
+                },
+                {
+                  "name": "Presorted?",
+                  "shortName": "preSortedField"
                 }
               ]
             }

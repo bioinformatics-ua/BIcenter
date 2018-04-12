@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.lang.reflect.InvocationTargetException;
 
 import org.pentaho.di.core.exception.KettleStepException;
@@ -14,13 +16,13 @@ public class SearchFieldsProgress {
     private StepMeta stepInfo;
     private boolean before;
     private TransMeta transMeta;
-    private RowMetaInterface fields;
+    private Map<String,RowMetaInterface> fields = new HashMap<>();
 
     public SearchFieldsProgress(TransMeta transMeta, StepMeta stepMeta, boolean before) {
         this.transMeta = transMeta;
         this.stepInfo = stepMeta;
         this.before = before;
-        this.fields = null;
+        this.fields = new HashMap<>();
     }
 
     public void run() throws InvocationTargetException, InterruptedException {
@@ -28,9 +30,13 @@ public class SearchFieldsProgress {
 
         try {
             if (before) {
-                fields = transMeta.getPrevStepFields(stepInfo, null);
+                for(StepMeta prevStepInfo : transMeta.getPrevSteps(stepInfo)) {
+                    RowMetaInterface rowMeta = transMeta.getPrevStepFields(prevStepInfo, null);
+                    fields.put(prevStepInfo.getName(),rowMeta);
+                }
             } else {
-                fields = transMeta.getStepFields(stepInfo, null);
+                RowMetaInterface rowMeta = transMeta.getStepFields(stepInfo, null);
+                fields.put(stepInfo.getName(),rowMeta);
             }
         } catch (KettleStepException kse) {
             throw new InvocationTargetException(kse, BaseMessages.getString(
@@ -56,7 +62,7 @@ public class SearchFieldsProgress {
     /**
      * @return Returns the fields.
      */
-    public RowMetaInterface getFields() {
+    public Map<String,RowMetaInterface> getFields() {
         return fields;
     }
 
@@ -64,7 +70,7 @@ public class SearchFieldsProgress {
      * @param fields
      *            The fields to set.
      */
-    public void setFields(RowMetaInterface fields) {
+    public void setFields(Map<String,RowMetaInterface> fields) {
         this.fields = fields;
     }
 

@@ -60,15 +60,15 @@ public class ExecutionJob implements Job {
         );
         executionConfiguration.setRemoteServer( carteServer );
 
+        // Execute Transformation.
+        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, serverId, serverRepository, userId, userRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository, keyValueRepository);
+        new Thread(transExecutor).start();
+
         // To kill the schedule.
         if(!periodic) {
             ILatch latch = (ILatch) jobDetail.getJobDataMap().get("latch");
             latch.countDown();
         }
-
-        // Execute Transformation.
-        TransExecutor transExecutor = TransExecutor.initExecutor(executionConfiguration, transMeta, taskId, taskRepository, serverId, serverRepository, userId, userRepository, executionRepository, stepMetricRepository, statusRepository, dataRowRepository, keyValueRepository);
-        new Thread(transExecutor).start();
     }
 
     private void initializeTask(Task task){

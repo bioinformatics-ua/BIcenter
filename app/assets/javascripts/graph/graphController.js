@@ -44,12 +44,12 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
                 editor = new mxEditor(node);
 
                 editor.graph.getSelectionModel().addListener(mxEvent.UNDO, function(sender, evt) {
-                    if(sender.isEmpty()){
+                    if (sender.isEmpty()) {
                         context.view.$elements.edit.prop('disabled', true);
                         context.view.$elements.input.prop('disabled', true);
                         context.view.$elements.output.prop('disabled', true);
                     }
-                    else{
+                    else {
                         context.view.$elements.edit.prop('disabled', false);
                         context.view.$elements.input.prop('disabled', false);
                         context.view.$elements.output.prop('disabled', false);
@@ -57,7 +57,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
                 });
 
                 editor.graph.addListener(mxEvent.CELLS_ADDED, function (sender, evt) {
-                    controller.addCell(evt).toggleClass();
+                    controller.addCell(evt);
                 });
 
                 editor.graph.addListener(mxEvent.CELLS_MOVED, function (sender, evt) {
