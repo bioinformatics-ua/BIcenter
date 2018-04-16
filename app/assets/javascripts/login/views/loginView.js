@@ -17,6 +17,7 @@ define('LoginView', ['jquery', 'View'], function ($, View) {
         e.stopImmediatePropagation();
         e.stopPropagation();
         e.preventDefault();
+        this.$elements.sign.addClass('disabled');
 
         var data = $element.serializeForm();
         this.controller.login(data);

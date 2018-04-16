@@ -1,37 +1,54 @@
-2018-04-16 15:58:36,836 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-3 - Creating Pool for datasource 'default'
-2018-04-16 15:58:37,445 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-3 - datasource [default] bound to JNDI as DefaultDS
-2018-04-16 15:58:37,455 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-3 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
-2018-04-16 15:59:22,719 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-3 - Building Step Configurations.
-2018-04-16 15:59:24,644 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-3 - Building RBAC.
-2018-04-16 15:59:25,024 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-3 - Building Institutions.
-2018-04-16 15:59:25,116 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-3 - Building Auth.
-2018-04-16 15:59:25,287 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-3 - Setting up Kettle environment.
-2018-04-16 15:59:27,130 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-3 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2018-04-16 17:08:17,538 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Creating Pool for datasource 'default'
+2018-04-16 17:08:18,824 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-10 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 17:08:18,837 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-10 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 17:09:36,680 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Building Step Configurations.
+2018-04-16 17:09:40,527 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Building RBAC.
+2018-04-16 17:09:41,111 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Building Institutions.
+2018-04-16 17:09:41,275 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Building Auth.
+2018-04-16 17:09:41,581 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Setting up Kettle environment.
+2018-04-16 17:09:46,624 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-10 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     filters.ExampleFilter
 
-2018-04-16 15:59:27,136 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-3 - Application started (Dev)
-2018-04-16 16:00:07,468 [DEBUG] from application in application-akka.actor.default-dispatcher-9 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 16:00:07,539 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 16:00:07,707 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 16:00:07,820 [INFO] from application in application-akka.actor.default-dispatcher-9 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 16:00:07,865 [INFO] from application in application-akka.actor.default-dispatcher-4 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 16:00:07,907 [DEBUG] from application in application-akka.actor.default-dispatcher-10 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 16:00:08,036 [INFO] from application in application-akka.actor.default-dispatcher-5 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 16:00:08,088 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 16:00:08,149 [INFO] from application in application-akka.actor.default-dispatcher-9 - mail: leonardo.coelho@ua.pt
-2018-04-16 16:00:08,149 [DEBUG] from application in application-akka.actor.default-dispatcher-9 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 16:00:08,193 [INFO] from application in application-akka.actor.default-dispatcher-4 - mail: leonardo.coelho@ua.pt
-2018-04-16 16:00:08,193 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 16:00:08,235 [INFO] from application in application-akka.actor.default-dispatcher-10 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 16:00:08,297 [DEBUG] from application in application-akka.actor.default-dispatcher-12 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 16:00:08,362 [INFO] from application in application-akka.actor.default-dispatcher-5 - mail: leonardo.coelho@ua.pt
-2018-04-16 16:00:08,363 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 16:00:08,414 [INFO] from application in application-akka.actor.default-dispatcher-11 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 16:00:08,559 [INFO] from application in application-akka.actor.default-dispatcher-10 - mail: leonardo.coelho@ua.pt
-2018-04-16 16:00:08,559 [DEBUG] from application in application-akka.actor.default-dispatcher-10 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 16:00:08,624 [INFO] from application in application-akka.actor.default-dispatcher-12 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 16:00:08,741 [INFO] from application in application-akka.actor.default-dispatcher-11 - mail: leonardo.coelho@ua.pt
-2018-04-16 16:00:08,742 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 16:00:08,948 [INFO] from application in application-akka.actor.default-dispatcher-12 - mail: leonardo.coelho@ua.pt
-2018-04-16 16:00:08,948 [DEBUG] from application in application-akka.actor.default-dispatcher-12 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:09:46,636 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-10 - Application started (Dev)
+2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-15 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-13 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-12 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-10 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-14 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-14 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-12 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-15 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-11 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-10 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-13 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:34,941 [INFO] from application in application-akka.actor.default-dispatcher-15 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:34,941 [INFO] from application in application-akka.actor.default-dispatcher-10 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:34,941 [INFO] from application in application-akka.actor.default-dispatcher-13 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-13 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-15 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:34,942 [INFO] from application in application-akka.actor.default-dispatcher-11 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-10 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:34,942 [INFO] from application in application-akka.actor.default-dispatcher-14 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:34,941 [INFO] from application in application-akka.actor.default-dispatcher-12 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-14 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-12 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:36,519 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:36,519 [DEBUG] from application in application-akka.actor.default-dispatcher-13 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:36,519 [DEBUG] from application in application-akka.actor.default-dispatcher-17 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:36,565 [DEBUG] from application in application-akka.actor.default-dispatcher-16 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 17:11:36,846 [INFO] from application in application-akka.actor.default-dispatcher-11 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:36,846 [INFO] from application in application-akka.actor.default-dispatcher-17 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:36,847 [INFO] from application in application-akka.actor.default-dispatcher-13 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:36,894 [INFO] from application in application-akka.actor.default-dispatcher-16 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 17:11:37,171 [INFO] from application in application-akka.actor.default-dispatcher-17 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:37,171 [DEBUG] from application in application-akka.actor.default-dispatcher-17 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:37,175 [INFO] from application in application-akka.actor.default-dispatcher-11 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:37,175 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:37,177 [INFO] from application in application-akka.actor.default-dispatcher-13 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:37,177 [DEBUG] from application in application-akka.actor.default-dispatcher-13 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:37,231 [INFO] from application in application-akka.actor.default-dispatcher-16 - mail: leonardo.coelho@ua.pt
+2018-04-16 17:11:37,231 [DEBUG] from application in application-akka.actor.default-dispatcher-16 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 17:11:55,658 [DEBUG] from application in application-akka.actor.default-dispatcher-15 - Trying to authenticate via LDAP (bmd-software.com)

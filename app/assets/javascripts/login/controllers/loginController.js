@@ -20,6 +20,8 @@ define('LoginController', ['Controller', 'LoginView', 'User', 'jquery', 'jquery-
             } else {
                 document.location.href = '/';
             }
+        }, function () {
+            context.view.$elements.sign.removeClass('disabled');
         });
     };
 
