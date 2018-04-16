@@ -70,7 +70,9 @@ public class JPAUserRepository extends JPARepository implements UserRepository {
     }
 
     public User create(EntityManager em, User user) {
-        em.persist(user);
+        if(findByEmail(user.getEmail()) == null) {
+            em.persist(user);
+        }
         return user;
     }
 
