@@ -2,6 +2,7 @@ requirejs.config({
     baseUrl: '/assets/javascripts',
     paths: {
         'templates': '../templates',
+        'jsRoutes': 'jsroutes',
 
         // Libs
         'requirejs': '../../requirejs/require',
@@ -43,7 +44,6 @@ requirejs.config({
         'Color': 'core/color',
         'custom.jquery': 'core/custom.jquery',
         'Utils': 'core/utils',
-        'jsRoutes': 'jsroutes',
         'jquery-ui': '../lib/jquery-ui/jquery-ui',
 
         // services
@@ -72,10 +72,6 @@ requirejs.config({
         // Remote Execution
         'RemoteExecutionController': 'run/remoteExecutionController',
         'RemoteExecutionView': 'run/remoteExecutionView',
-
-        // Input and Ouput fields Dialog
-        'FieldsController': 'steps/fields/fieldsController',
-        'FieldsView': 'steps/fields/fieldsView',
 
         // Run Options Dialog
         'RunOptionsController': 'run/runOptionsController',
