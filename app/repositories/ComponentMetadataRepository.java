@@ -12,4 +12,6 @@ public interface ComponentMetadataRepository {
     ComponentMetadata add(ComponentMetadata component);
 
     List<ComponentMetadata> list();
+
+    ComponentMetadata getMetadataByComponentAndShortName(long componentId, String shortName);
 }

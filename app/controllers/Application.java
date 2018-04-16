@@ -97,6 +97,7 @@ public class Application extends Controller {
                 routes.javascript.StepController.getInstitution(),
 
                 routes.javascript.StepController.getByComponentAndShortName(),
+                routes.javascript.StepController.getMetadataByComponentAndShortName(),
 
                 routes.javascript.ExecutionController.logs(),
                 routes.javascript.ExecutionController.metrics(),

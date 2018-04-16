@@ -21,6 +21,21 @@ define('StepModalController', ['Controller', 'StepModalView'], function (Control
         });
     };
 
+    StepModalController.prototype.updateLengthPrecision = function (select) {
+        this.field = this.view.$elements[select].val();
+        var fields = this.module.controllers.StepController.inputFields;
+
+        var context = this;
+        _.each(fields, function(f) {
+            if (f.name == context.field) {
+                context.length = f.length;
+                context.precision = f.precision;
+            }
+        });
+        this.view.$elements[this.view.length].val(context.length);
+        this.view.$elements[this.view.precision].val(context.precision);
+    }
+
     /**
      * Update table.
      * @param event

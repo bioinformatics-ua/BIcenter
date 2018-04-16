@@ -4,10 +4,8 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-import com.google.gson.Gson;
 import com.google.inject.Inject;
 import controllers.login.Secured;
 import controllers.rbac.annotation.CheckPermission;
@@ -17,7 +15,6 @@ import kettleExt.utils.JSONObject;
 import models.*;
 import models.rbac.Category;
 import models.rbac.Operation;
-import org.hibernate.Hibernate;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMeta;
@@ -50,15 +47,17 @@ public class StepController extends Controller {
     private final StepPropertyRepository stepPropertyRepository;
     private final ComponentRepository componentRepository;
     private final ComponentPropertyRepository componentPropertyRepository;
+    private final ComponentMetadataRepository componentMetadataRepository;
 
     @Inject
-    public StepController(TaskRepository taskRepository, HopRepository hopRepository, StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentRepository componentRepository, ComponentPropertyRepository componentPropertyRepository) {
+    public StepController(TaskRepository taskRepository, HopRepository hopRepository, StepRepository stepRepository, StepPropertyRepository stepPropertyRepository, ComponentRepository componentRepository, ComponentPropertyRepository componentPropertyRepository, ComponentMetadataRepository componentMetadataRepository) {
         this.taskRepository = taskRepository;
         this.hopRepository = hopRepository;
         this.stepRepository = stepRepository;
         this.stepPropertyRepository = stepPropertyRepository;
         this.componentRepository = componentRepository;
         this.componentPropertyRepository = componentPropertyRepository;
+        this.componentMetadataRepository = componentMetadataRepository;
     }
 
     /**
@@ -451,6 +450,14 @@ public class StepController extends Controller {
         long componentPropertyId = componentPropertyRepository.getByComponentAndShortName(componentId,shortName).getId();
         return ok(String.valueOf(componentPropertyId));
     }
+
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.GET})
+    public Result getMetadataByComponentAndShortName(long institutionId, long componentId, String shortName) {
+        long componentMetadataId = componentMetadataRepository.getMetadataByComponentAndShortName(componentId,shortName).getId();
+        return ok(String.valueOf(componentMetadataId));
+    }
+
 
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.GET})

@@ -31,7 +31,7 @@ public class SearchFieldsProgress {
         try {
             if (before) {
                 for(StepMeta prevStepInfo : transMeta.getPrevSteps(stepInfo)) {
-                    RowMetaInterface rowMeta = transMeta.getPrevStepFields(prevStepInfo, null);
+                    RowMetaInterface rowMeta = transMeta.getStepFields(prevStepInfo, null);
                     fields.put(prevStepInfo.getName(),rowMeta);
                 }
             } else {

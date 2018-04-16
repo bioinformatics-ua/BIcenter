@@ -82,6 +82,7 @@ GET           /institution/:institutionId/step/:stepId/multiSelects             
 GET           /institution/:institutionId/step/:stepId/institution                                       controllers.StepController.getInstitution(institutionId:Long,stepId:Long)
 
 GET           /institution/:institutionId/component/:componentId/short/:shortName                        controllers.StepController.getByComponentAndShortName(institutionId:Long,componentId:Long,shortName:String)
+GET           /institution/:institutionId/component/:componentId/short/:shortName/meta                   controllers.StepController.getMetadataByComponentAndShortName(institutionId:Long,componentId:Long,shortName:String)
 
 # Handles the executions
 GET           /institution/:institutionId/graph/:graphId/execution/:executionId/logs                     controllers.ExecutionController.logs(institutionId:Long,graphId:Long,executionId:Long)

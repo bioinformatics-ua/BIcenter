@@ -14,6 +14,8 @@ public class ValueMetaInterfaceInputFields extends JsonSerializer<ValueMetaInter
         gen.writeStartObject();
 
         gen.writeStringField("name", value.getName());
+        gen.writeNumberField("length", value.getLength());
+        gen.writeNumberField("precision", value.getPrecision());
         gen.writeStringField("origin", value.getOrigin());
 
         gen.writeEndObject();

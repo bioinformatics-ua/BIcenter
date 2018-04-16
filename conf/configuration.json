@@ -251,11 +251,13 @@
                 },
                 {
                   "name": "Length",
-                  "shortName": "selectLength"
+                  "shortName": "selectLength",
+                  "source": "inputLength@selectName"
                 },
                 {
                   "name": "Precision",
-                  "shortName": "selectPrecision"
+                  "shortName": "selectPrecision",
+                  "source": "inputPrecision@selectName"
                 }
               ]
             }

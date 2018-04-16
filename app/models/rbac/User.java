@@ -31,9 +31,6 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Institution> institutions;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<Execution> executions;
-
     public User() {
         this.created = new Date();
         this.roles = new ArrayList<>();
@@ -130,13 +127,5 @@ public class User {
         Local,
         LDAP,
         AD
-    }
-
-    public List<Execution> getExecutions() {
-        return executions;
-    }
-
-    public void setExecutions(List<Execution> executions) {
-        this.executions = executions;
     }
 }

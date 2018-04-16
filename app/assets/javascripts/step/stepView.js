@@ -178,7 +178,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
 
                     if (field.source) {
                         var tmpArr = field.source.split('@');
-                        if (tmpArr.length > 1) {
+                        if ( tmpArr.length > 1 && (tmpArr[0] != "inputLength" && tmpArr[0] != "inputPrecision") ) {
                             var shortName = tmpArr[1];
 
                             Step.getByComponentAndShortName(context.controller.institutionId, step.component.id, shortName, function (component) {
@@ -244,10 +244,22 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                                                     });
                                                 }
                                                 else if (field.source.indexOf('@') > -1) {
-                                                    _.extend(obj, {
-                                                        type: 'select',
-                                                        options: context.controller.data[field.name]
-                                                    });
+                                                    if(field.source.split('@')[0] == "inputLength"){
+                                                        _.extend(obj, {
+                                                            type: 'number'
+                                                        });
+                                                    }
+                                                    else if(field.source.split('@')[0] == "inputPrecision"){
+                                                        _.extend(obj, {
+                                                            type: 'number'
+                                                        });
+                                                    }
+                                                    else {
+                                                        _.extend(obj, {
+                                                            type: 'select',
+                                                            options: context.controller.data[field.name]
+                                                        });
+                                                    }
                                                 }
                                                 else {
                                                     _.extend(obj, {
@@ -261,7 +273,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                                         });
 
                                         var modalController = context.controller.module.controllers['StepModalController'];
-                                        modalController.view.show(tableId, undefined, finalData);
+                                        modalController.view.show(tableId, undefined, finalData, context.step);
                                     }
                                 }
                             }
@@ -321,10 +333,18 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
                         });
                     }
                     else if (field.source.indexOf('@') > -1) {
-                        _.extend(obj, {
-                            type: 'select',
-                            options: context.controller.data[field.name]
-                        });
+                        if(field.source.split('@')[0] == "inputLength"){
+                            var shortName = field.source.split('@')[1];
+                        }
+                        else if(field.source.split('@')[0] == "inputPrecision"){
+                            var shortName = field.source.split('@')[1];
+                        }
+                        else {
+                            _.extend(obj, {
+                                type: 'select',
+                                options: context.controller.data[field.name]
+                            });
+                        }
                     }
                     else {
                         _.extend(obj, {

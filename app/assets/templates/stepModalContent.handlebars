@@ -8,10 +8,17 @@
             </div>
         {{/ifCond}}
 
+        {{#ifCond type '==' 'number'}}
+            <label for="{{id}}" class="col-sm-2 control-label">{{label}}:</label>
+            <div class="col-sm-5">
+                <input type="number" class="form-control" name="{{id}}" view-element="{{id}}" value="{{value}}">
+            </div>
+        {{/ifCond}}
+
         {{#ifCond type '==' 'select'}}
             <label for="{{id}}" class="col-sm-2 control-label">{{label}}:</label>
             <div class="col-sm-5">
-                <select name="{{id}}" view-element="{{id}}" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <select view-change="controller.updateLengthPrecision({{id}})" name="{{id}}" view-element="{{id}}" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                     {{#ifCond source '!=' 'metadata'}}
                         {{#options}}
                             {{#ifCond ../value '==' name}}

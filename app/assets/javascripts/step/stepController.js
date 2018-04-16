@@ -88,11 +88,16 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         var table = this.view.dataTables[tableId].clear().draw();
 
         var selectedVal;
-        if(component) {
+        try{
             selectedVal = this.view.$elements[component].val();
         }
-        else {
-            selectedVal = $element.val();
+        catch(err) {
+            try{
+                selectedVal = component.val();
+            }
+            catch(err) {
+                selectedVal = $element.val();
+            }
         }
 
         if (selectedVal) {
