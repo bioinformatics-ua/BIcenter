@@ -1,10 +1,10 @@
-2018-04-16 10:10:43,430 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-2 - Creating Pool for datasource 'default'
-2018-04-16 10:10:44,228 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-2 - datasource [default] bound to JNDI as DefaultDS
-2018-04-16 10:10:44,241 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-2 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
-2018-04-16 10:10:48,411 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-2 - Building Step Configurations.
-2018-04-16 10:10:49,807 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-2 - Setting up Kettle environment.
-2018-04-16 10:10:54,463 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-2 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2018-04-16 11:07:41,214 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-2 - Creating Pool for datasource 'default'
+2018-04-16 11:07:43,864 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-2 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 11:07:43,876 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-2 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 11:07:50,512 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-2 - Building Step Configurations.
+2018-04-16 11:07:51,183 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-2 - Setting up Kettle environment.
+2018-04-16 11:07:54,536 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-2 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     filters.ExampleFilter
 
-2018-04-16 10:10:54,487 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-2 - Application started (Dev)
+2018-04-16 11:07:54,566 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-2 - Application started (Dev)
