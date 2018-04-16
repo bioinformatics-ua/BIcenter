@@ -1,54 +1,165 @@
-2018-04-16 17:08:17,538 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Creating Pool for datasource 'default'
-2018-04-16 17:08:18,824 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-10 - datasource [default] bound to JNDI as DefaultDS
-2018-04-16 17:08:18,837 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-10 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
-2018-04-16 17:09:36,680 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Building Step Configurations.
-2018-04-16 17:09:40,527 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Building RBAC.
-2018-04-16 17:09:41,111 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Building Institutions.
-2018-04-16 17:09:41,275 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Building Auth.
-2018-04-16 17:09:41,581 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-10 - Setting up Kettle environment.
-2018-04-16 17:09:46,624 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-10 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2018-04-16 18:06:52,481 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Creating Pool for datasource 'default'
+2018-04-16 18:06:53,260 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-4 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 18:06:53,273 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-4 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 18:08:03,592 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Building Step Configurations.
+2018-04-16 18:08:07,451 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Building RBAC.
+2018-04-16 18:08:08,046 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Building Institutions.
+2018-04-16 18:08:08,300 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Building Auth.
+2018-04-16 18:08:08,449 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Setting up Kettle environment.
+2018-04-16 18:08:11,817 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-4 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     filters.ExampleFilter
 
-2018-04-16 17:09:46,636 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-10 - Application started (Dev)
-2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-15 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-13 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-12 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-10 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:33,665 [DEBUG] from application in application-akka.actor.default-dispatcher-14 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-14 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-12 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-15 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-11 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-10 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:34,585 [INFO] from application in application-akka.actor.default-dispatcher-13 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:34,941 [INFO] from application in application-akka.actor.default-dispatcher-15 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:34,941 [INFO] from application in application-akka.actor.default-dispatcher-10 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:34,941 [INFO] from application in application-akka.actor.default-dispatcher-13 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-13 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-15 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:34,942 [INFO] from application in application-akka.actor.default-dispatcher-11 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-10 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:34,942 [INFO] from application in application-akka.actor.default-dispatcher-14 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:34,941 [INFO] from application in application-akka.actor.default-dispatcher-12 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-14 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:34,942 [DEBUG] from application in application-akka.actor.default-dispatcher-12 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:36,519 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:36,519 [DEBUG] from application in application-akka.actor.default-dispatcher-13 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:36,519 [DEBUG] from application in application-akka.actor.default-dispatcher-17 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:36,565 [DEBUG] from application in application-akka.actor.default-dispatcher-16 - Trying to authenticate via LDAP (bmd-software.com)
-2018-04-16 17:11:36,846 [INFO] from application in application-akka.actor.default-dispatcher-11 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:36,846 [INFO] from application in application-akka.actor.default-dispatcher-17 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:36,847 [INFO] from application in application-akka.actor.default-dispatcher-13 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:36,894 [INFO] from application in application-akka.actor.default-dispatcher-16 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
-2018-04-16 17:11:37,171 [INFO] from application in application-akka.actor.default-dispatcher-17 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:37,171 [DEBUG] from application in application-akka.actor.default-dispatcher-17 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:37,175 [INFO] from application in application-akka.actor.default-dispatcher-11 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:37,175 [DEBUG] from application in application-akka.actor.default-dispatcher-11 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:37,177 [INFO] from application in application-akka.actor.default-dispatcher-13 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:37,177 [DEBUG] from application in application-akka.actor.default-dispatcher-13 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:37,231 [INFO] from application in application-akka.actor.default-dispatcher-16 - mail: leonardo.coelho@ua.pt
-2018-04-16 17:11:37,231 [DEBUG] from application in application-akka.actor.default-dispatcher-16 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
-2018-04-16 17:11:55,658 [DEBUG] from application in application-akka.actor.default-dispatcher-15 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:08:11,823 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-4 - Application started (Dev)
+2018-04-16 18:08:19,529 [DEBUG] from application in application-akka.actor.default-dispatcher-8 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:08:19,921 [DEBUG] from application in application-akka.actor.default-dispatcher-7 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:08:20,098 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:08:21,752 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:08:21,893 [DEBUG] from application in application-akka.actor.default-dispatcher-6 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:08:22,102 [INFO] from application in application-akka.actor.default-dispatcher-5 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:08:22,104 [DEBUG] from application in application-akka.actor.default-dispatcher-8 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:08:22,221 [INFO] from application in application-akka.actor.default-dispatcher-6 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:08:22,429 [INFO] from application in application-akka.actor.default-dispatcher-8 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:08:22,450 [INFO] from application in application-akka.actor.default-dispatcher-5 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:08:22,450 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:08:22,549 [INFO] from application in application-akka.actor.default-dispatcher-6 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:08:22,549 [DEBUG] from application in application-akka.actor.default-dispatcher-6 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:08:22,757 [INFO] from application in application-akka.actor.default-dispatcher-8 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:08:22,757 [DEBUG] from application in application-akka.actor.default-dispatcher-8 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:09:31,240 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-9 - Shutting down connection pool.
+2018-04-16 18:09:32,052 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-9 - Creating Pool for datasource 'default'
+2018-04-16 18:09:32,060 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-9 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 18:09:32,060 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-9 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 18:09:33,953 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-9 - Building Step Configurations.
+2018-04-16 18:09:34,049 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-9 - Setting up Kettle environment.
+2018-04-16 18:09:34,051 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-9 - The Properties systems settings are already initialised!
+2018-04-16 18:09:34,348 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-9 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-16 18:09:34,350 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-9 - Application started (Dev)
+2018-04-16 18:09:41,030 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:09:41,358 [INFO] from application in application-akka.actor.default-dispatcher-4 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:09:41,683 [INFO] from application in application-akka.actor.default-dispatcher-4 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:09:41,683 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:09:53,521 [DEBUG] from application in application-akka.actor.default-dispatcher-2 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:09:53,660 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:09:53,813 [DEBUG] from application in application-akka.actor.default-dispatcher-3 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:09:53,850 [INFO] from application in application-akka.actor.default-dispatcher-2 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:09:53,946 [DEBUG] from application in application-akka.actor.default-dispatcher-6 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:09:53,985 [INFO] from application in application-akka.actor.default-dispatcher-4 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:09:54,091 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:09:54,141 [INFO] from application in application-akka.actor.default-dispatcher-3 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:09:54,176 [INFO] from application in application-akka.actor.default-dispatcher-2 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:09:54,176 [DEBUG] from application in application-akka.actor.default-dispatcher-2 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:09:54,276 [INFO] from application in application-akka.actor.default-dispatcher-6 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:09:54,314 [INFO] from application in application-akka.actor.default-dispatcher-4 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:09:54,314 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:09:54,426 [INFO] from application in application-akka.actor.default-dispatcher-5 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:09:54,468 [INFO] from application in application-akka.actor.default-dispatcher-3 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:09:54,468 [DEBUG] from application in application-akka.actor.default-dispatcher-3 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:09:54,634 [INFO] from application in application-akka.actor.default-dispatcher-6 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:09:54,634 [DEBUG] from application in application-akka.actor.default-dispatcher-6 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:09:54,754 [INFO] from application in application-akka.actor.default-dispatcher-5 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:09:54,754 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:10:37,231 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-84 - Shutting down connection pool.
+2018-04-16 18:10:37,579 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-84 - Creating Pool for datasource 'default'
+2018-04-16 18:10:37,591 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-84 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 18:10:37,592 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-84 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 18:10:39,292 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-84 - Building Step Configurations.
+2018-04-16 18:10:39,339 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-84 - Setting up Kettle environment.
+2018-04-16 18:10:39,341 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-84 - The Properties systems settings are already initialised!
+2018-04-16 18:10:39,648 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-84 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-16 18:10:39,648 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-84 - Application started (Dev)
+2018-04-16 18:10:44,067 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:10:44,112 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:10:44,259 [DEBUG] from application in application-akka.actor.default-dispatcher-3 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:10:44,394 [INFO] from application in application-akka.actor.default-dispatcher-4 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:10:44,398 [DEBUG] from application in application-akka.actor.default-dispatcher-2 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:10:44,438 [INFO] from application in application-akka.actor.default-dispatcher-5 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:10:44,547 [DEBUG] from application in application-akka.actor.default-dispatcher-6 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:10:44,586 [INFO] from application in application-akka.actor.default-dispatcher-3 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:10:44,692 [DEBUG] from application in application-akka.actor.default-dispatcher-7 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:10:44,731 [INFO] from application in application-akka.actor.default-dispatcher-4 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:10:44,732 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:10:44,732 [INFO] from application in application-akka.actor.default-dispatcher-2 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:10:44,768 [INFO] from application in application-akka.actor.default-dispatcher-5 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:10:44,768 [DEBUG] from application in application-akka.actor.default-dispatcher-5 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:10:44,872 [INFO] from application in application-akka.actor.default-dispatcher-6 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:10:44,916 [INFO] from application in application-akka.actor.default-dispatcher-3 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:10:44,917 [DEBUG] from application in application-akka.actor.default-dispatcher-3 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:10:45,043 [INFO] from application in application-akka.actor.default-dispatcher-7 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:10:45,068 [INFO] from application in application-akka.actor.default-dispatcher-2 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:10:45,068 [DEBUG] from application in application-akka.actor.default-dispatcher-2 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:10:45,225 [INFO] from application in application-akka.actor.default-dispatcher-6 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:10:45,225 [DEBUG] from application in application-akka.actor.default-dispatcher-6 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:10:45,378 [INFO] from application in application-akka.actor.default-dispatcher-7 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:10:45,378 [DEBUG] from application in application-akka.actor.default-dispatcher-7 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:10:53,687 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:10:54,022 [INFO] from application in application-akka.actor.default-dispatcher-4 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:10:54,346 [INFO] from application in application-akka.actor.default-dispatcher-4 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:10:54,346 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:13:28,009 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-32 - Shutting down connection pool.
+2018-04-16 18:13:28,403 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-32 - Creating Pool for datasource 'default'
+2018-04-16 18:13:28,422 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-32 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 18:13:28,423 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-32 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 18:13:29,973 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-32 - Building Step Configurations.
+2018-04-16 18:13:30,031 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-32 - Setting up Kettle environment.
+2018-04-16 18:13:30,038 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-32 - The Properties systems settings are already initialised!
+2018-04-16 18:13:30,333 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-32 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-16 18:13:30,334 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-32 - Application started (Dev)
+2018-04-16 18:15:33,184 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-206 - Shutting down connection pool.
+2018-04-16 18:15:33,582 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-206 - Creating Pool for datasource 'default'
+2018-04-16 18:15:33,587 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-206 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 18:15:33,587 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-206 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 18:15:35,315 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-206 - Building Step Configurations.
+2018-04-16 18:15:35,386 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-206 - Setting up Kettle environment.
+2018-04-16 18:15:35,388 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-206 - The Properties systems settings are already initialised!
+2018-04-16 18:15:35,737 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-206 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-16 18:15:35,738 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-206 - Application started (Dev)
+2018-04-16 18:16:50,248 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Shutting down connection pool.
+2018-04-16 18:16:50,735 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Creating Pool for datasource 'default'
+2018-04-16 18:16:50,748 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-4 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 18:16:50,748 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-4 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 18:16:51,857 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Building Step Configurations.
+2018-04-16 18:16:51,910 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - Setting up Kettle environment.
+2018-04-16 18:16:51,913 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-4 - The Properties systems settings are already initialised!
+2018-04-16 18:16:52,266 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-4 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-16 18:16:52,267 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-4 - Application started (Dev)
+2018-04-16 18:17:05,887 [DEBUG] from application in application-akka.actor.default-dispatcher-2 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:17:06,220 [INFO] from application in application-akka.actor.default-dispatcher-2 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:17:06,545 [INFO] from application in application-akka.actor.default-dispatcher-2 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:17:06,545 [DEBUG] from application in application-akka.actor.default-dispatcher-2 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:17:16,494 [DEBUG] from application in application-akka.actor.default-dispatcher-3 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:17:16,821 [INFO] from application in application-akka.actor.default-dispatcher-3 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:17:17,144 [INFO] from application in application-akka.actor.default-dispatcher-3 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:17:17,144 [DEBUG] from application in application-akka.actor.default-dispatcher-3 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)
+2018-04-16 18:18:57,888 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-312 - Shutting down connection pool.
+2018-04-16 18:18:58,702 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-312 - Creating Pool for datasource 'default'
+2018-04-16 18:18:58,771 [INFO] from play.api.db.HikariCPConnectionPool in play-dev-mode-akka.actor.default-dispatcher-312 - datasource [default] bound to JNDI as DefaultDS
+2018-04-16 18:18:58,771 [INFO] from play.api.db.DefaultDBApi in play-dev-mode-akka.actor.default-dispatcher-312 - Database [default] connected at jdbc:mysql://mysql/teste?useSSL=false
+2018-04-16 18:19:00,174 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-312 - Building Step Configurations.
+2018-04-16 18:19:00,205 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-312 - Setting up Kettle environment.
+2018-04-16 18:19:00,208 [INFO] from application in play-dev-mode-akka.actor.default-dispatcher-312 - The Properties systems settings are already initialised!
+2018-04-16 18:19:00,495 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-312 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    filters.ExampleFilter
+
+2018-04-16 18:19:00,496 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-312 - Application started (Dev)
+2018-04-16 18:19:07,027 [DEBUG] from application in application-akka.actor.default-dispatcher-3 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:19:11,218 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - Trying to authenticate via LDAP (bmd-software.com)
+2018-04-16 18:19:11,546 [INFO] from application in application-akka.actor.default-dispatcher-4 - fullDN: cn=Leonardo Coelho,ou=users,dc=bmd-software,dc=com
+2018-04-16 18:19:11,876 [INFO] from application in application-akka.actor.default-dispatcher-4 - mail: leonardo.coelho@ua.pt
+2018-04-16 18:19:11,876 [DEBUG] from application in application-akka.actor.default-dispatcher-4 - LDAP: Authenticated: Leonardo Coelho (leonardo.coelho@ua.pt)

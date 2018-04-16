@@ -17,9 +17,13 @@ define('LoginView', ['jquery', 'View'], function ($, View) {
         e.stopImmediatePropagation();
         e.stopPropagation();
         e.preventDefault();
-        this.$elements.sign.addClass('disabled');
 
         var data = $element.serializeForm();
+
+        this.$elements.sign.attr('disabled', true);
+        $element.find('input').each(function (i, input) {
+            $(input).attr('disabled', true);
+        });
         this.controller.login(data);
     };
 
