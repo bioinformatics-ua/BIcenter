@@ -52,6 +52,8 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
             wrapperClass: 'toolbar'
         });
 
+        this.$elements.toolbar.css('width','');
+
         this.$elements.board.resizable();
     };
 

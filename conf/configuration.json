@@ -583,6 +583,10 @@
       "realnameAttributes": "cn",
       "roles": [
         "Administrator"
+      ],
+      "institutions": [
+        "INSA",
+        "Briosa e Gala"
       ]
     }
   ],

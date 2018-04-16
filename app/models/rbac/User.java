@@ -34,6 +34,7 @@ public class User {
     public User() {
         this.created = new Date();
         this.roles = new ArrayList<>();
+        this.institutions = new ArrayList<>();
     }
 
     public User(String email, String name, String password) {

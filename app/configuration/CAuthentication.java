@@ -19,13 +19,14 @@ public class CAuthentication {
 
     private Boolean active = true;
     private List<String> roles;
+    private List<String> institutions;
 
     public CAuthentication() {
     }
 
     public CAuthentication(String type, String hostname, String port, String baseDN, String usernameAttributes,
                            String realnameAttributes, String domain, String defaultUser, String defaultPassword,
-                           Boolean active, List<String> roles) {
+                           Boolean active, List<String> roles, List<String> institutions) {
         this.type = type;
         this.hostname = hostname;
         this.port = port;
@@ -37,6 +38,7 @@ public class CAuthentication {
         this.defaultPassword = defaultPassword;
         this.active = active;
         this.roles = roles;
+        this.institutions = institutions;
     }
 
     public String getType() {
@@ -125,6 +127,14 @@ public class CAuthentication {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public List<String> getInstitutions() {
+        return institutions;
+    }
+
+    public void setInstitutions(List<String> institutions) {
+        this.institutions = institutions;
     }
 
     @Override

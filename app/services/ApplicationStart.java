@@ -88,20 +88,20 @@ public class ApplicationStart {
             buildRBAC(configuration);
         }
 
-        boolean initAuth = authenticationRepository.findAll().size() == 0;
-        if (initAuth) {
-            try {
-                buildAuth(configuration);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         // Building Institutions.
         boolean initInstitutions = this.institutionRepository.list().size() == 0;
         if (initInstitutions) {
             try {
                 buildInstitutions(configuration);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        boolean initAuth = authenticationRepository.findAll().size() == 0;
+        if (initAuth) {
+            try {
+                buildAuth(configuration);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -144,7 +144,7 @@ public class ApplicationStart {
 
             authentication.setActive(auth.getActive());
 
-            authenticationService.createAuthentication(authentication, auth.getRoles());
+            authenticationService.createAuthentication(authentication, auth.getRoles(), auth.getInstitutions());
         }
     }
 

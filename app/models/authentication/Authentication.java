@@ -1,5 +1,6 @@
 package models.authentication;
 
+import models.Institution;
 import models.rbac.Role;
 import play.data.validation.Constraints;
 
@@ -44,12 +45,16 @@ public class Authentication {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Role> roles;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Institution> institutions;
+
     @Constraints.Required
     @Column(nullable = false)
     private Boolean active;
 
     public Authentication() {
         this.roles = new ArrayList<>();
+        this.institutions = new ArrayList<>();
         this.active = true;
     }
 
@@ -158,6 +163,14 @@ public class Authentication {
 
     public void setDefaultPassword(byte[] defaultPassword) {
         this.defaultPassword = defaultPassword;
+    }
+
+    public List<Institution> getInstitutions() {
+        return institutions;
+    }
+
+    public void setInstitutions(List<Institution> institutions) {
+        this.institutions = institutions;
     }
 
     @Override

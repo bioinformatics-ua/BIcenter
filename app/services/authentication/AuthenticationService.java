@@ -1,11 +1,13 @@
 package services.authentication;
 
 import com.google.inject.Inject;
+import models.Institution;
 import models.authentication.Authentication;
 import models.rbac.Role;
 import models.rbac.User;
 import play.Logger;
 import play.db.jpa.JPAApi;
+import repositories.JPAInstitutionRepository;
 import repositories.authentication.JPAAuthenticationRepository;
 import repositories.user.JPARBACRepository;
 import repositories.user.JPAUserRepository;
@@ -29,13 +31,15 @@ public class AuthenticationService extends JPAService {
     private final JPAAuthenticationRepository authenticationRepository;
     private final JPAUserRepository userRepository;
     private final JPARBACRepository rbacRepository;
+    private final JPAInstitutionRepository institutionRepository;
 
     @Inject
-    public AuthenticationService(JPAApi jpaApi, JPAAuthenticationRepository authenticationRepository, JPAUserRepository userRepository, JPARBACRepository rbacRepository) {
+    public AuthenticationService(JPAApi jpaApi, JPAAuthenticationRepository authenticationRepository, JPAUserRepository userRepository, JPARBACRepository rbacRepository, JPAInstitutionRepository institutionRepository) {
         super(jpaApi);
         this.authenticationRepository = authenticationRepository;
         this.userRepository = userRepository;
         this.rbacRepository = rbacRepository;
+        this.institutionRepository = institutionRepository;
     }
 
     public static String getCN(String cnName) {
@@ -83,7 +87,7 @@ public class AuthenticationService extends JPAService {
         return (new String(cipher.doFinal(password)));
     }
 
-    public Authentication createAuthentication(Authentication authentication, List<String> roles) {
+    public Authentication createAuthentication(Authentication authentication, List<String> roles, List<String> institutions) {
         return withTransaction(em -> {
             List<Role> _roles = new ArrayList<>();
             for (String r : roles) {
@@ -96,7 +100,19 @@ public class AuthenticationService extends JPAService {
                 _roles.add(role);
             }
 
+            List<Institution> _institutions = new ArrayList<>();
+            for (String i : institutions) {
+                Institution institution = institutionRepository.getByName(em, i);
+                if (institution == null) {
+                    System.err.println("User institution not found: " + i);
+                    continue;
+                }
+
+                _institutions.add(institution);
+            }
+
             authentication.getRoles().addAll(_roles);
+            authentication.getInstitutions().addAll(_institutions);
 
             authenticationRepository.create(em, authentication);
 
@@ -241,7 +257,7 @@ public class AuthenticationService extends JPAService {
 
                     User user = userRepository.findByEmail(mail);
                     if (user == null) {
-                        user = registerUser(fullName, mail, authentication.getRoles());
+                        user = registerUser(fullName, mail, authentication.getRoles(), authentication.getInstitutions());
                     } else {
                         user.setName(fullName);
                         userRepository.update(user);
@@ -313,7 +329,7 @@ public class AuthenticationService extends JPAService {
 
                     User user = userRepository.findByEmail(mail);
                     if (user == null) {
-                        user = registerUser(fullName, mail, authentication.getRoles());
+                        user = registerUser(fullName, mail, authentication.getRoles(), authentication.getInstitutions());
                     }
 
                     return user;
@@ -326,7 +342,7 @@ public class AuthenticationService extends JPAService {
         return null;
     }
 
-    private User registerUser(String fullName, String mail, List<Role> roles) {
+    private User registerUser(String fullName, String mail, List<Role> roles, List<Institution> institutions) {
         User user;
 
         user = new User(mail, fullName, "", User.UserType.LDAP);
@@ -334,6 +350,9 @@ public class AuthenticationService extends JPAService {
 
         // Roles
         user.getRoles().addAll(roles);
+
+        // Institutions
+        user.getInstitutions().addAll(institutions);
 
         user.setActive(true);
         user = userRepository.update(user);

@@ -1,5 +1,6 @@
 package models;
 
+import models.authentication.Authentication;
 import models.rbac.User;
 
 import javax.persistence.*;
