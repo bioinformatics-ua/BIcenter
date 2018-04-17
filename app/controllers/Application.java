@@ -39,6 +39,7 @@ public class Application extends Controller {
         response().setHeader(Http.HeaderNames.CONTENT_TYPE, "text/javascript");
         return ok(JavaScriptReverseRouter.create("jsRoutes",
                 routes.javascript.Application.supportedLanguages(),
+                routes.javascript.HomeController.index(),
 
                 // Login controller
                 controllers.login.routes.javascript.Login.index(),

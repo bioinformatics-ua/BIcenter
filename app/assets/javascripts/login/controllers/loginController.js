@@ -1,4 +1,4 @@
-define('LoginController', ['Controller', 'LoginView', 'User', 'jquery', 'jquery-cookie'], function (Controller, LoginView, User, $) {
+define('LoginController', ['Controller', 'LoginView', 'User', 'jquery', 'jsRoutes', 'jquery-cookie'], function (Controller, LoginView, User, $, jsRoutes) {
     var LoginController = function (module) {
         Controller.call(this, module, new LoginView(this));
     };
@@ -12,13 +12,14 @@ define('LoginController', ['Controller', 'LoginView', 'User', 'jquery', 'jquery-
     };
 
     LoginController.prototype.login = function (data) {
+        var context = this;
         User.authenticate(data, function (r) {
             var previousURL = $.cookie('previousURL');
             if (previousURL) {
                 $.removeCookie('previousURL');
                 document.location.href = previousURL;
             } else {
-                document.location.href = '/';
+                document.location.href = jsRoutes.controllers.HomeController.index().url;
             }
         }, function () {
             context.view.$elements.sign.attr('disabled', false);
