@@ -16,4 +16,6 @@ public interface TaskRepository {
     Task getByName(String name);
 
     List<String> getOpenTabs();
+
+    void delete(long task);
 }

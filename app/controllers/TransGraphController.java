@@ -191,6 +191,27 @@ public class TransGraphController extends Controller {
         return ok(taskToJson(task));
     }
 
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result updateTask(long institutionId, long taskId){
+        JsonNode formData = request().body().asJson();
+
+        Task task = taskRepository.get(taskId);
+        Institution institution = institutionRepository.get(formData.get("institution").asInt());
+        task.setInstitution(institution);
+        task.setName(formData.get("name").asText());
+        task = taskRepository.add(task);
+
+        return ok(taskToJson(task));
+    }
+
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.DELETE})
+    public Result deleteTask(long institution, long task) {
+        this.taskRepository.delete(task);
+        return ok();
+    }
+
     /**
      * Get Task by name, and returns it as a Json.
      * @param name Task name

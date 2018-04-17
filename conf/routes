@@ -50,6 +50,8 @@ GET           /institution/:institutionId/graph/:graphId/history                
 GET           /institution/:institutionId/graph/:graphId/details                                         controllers.TransGraphController.getTaskDetails(institutionId:Long,graphId:Long)
 #GET           /graph/list                                                      controllers.TransGraphController.getTasks()
 GET           /institution/:institutionId/graph/:task/create                                             controllers.TransGraphController.newTask(institutionId:Long,task:String)
+DELETE        /institution/:institutionId/graph/:task/delete                                             controllers.TransGraphController.deleteTask(institutionId:Long,task:Long)
+POST          /institution/:institutionId/graph/:task/apply                                              controllers.TransGraphController.updateTask(institutionId:Long,task:Long)
 GET           /institution/:institutionId/graph/:graphId/load                                            controllers.TransGraphController.loadTask(institutionId:Long,graphId:Long)
 GET           /institution/:institutionId/graph/:name/task                                               controllers.TransGraphController.getTask(institutionId:Long,name:String)
 POST          /institution/:institutionId/graph/:graphId/new/step                                        controllers.TransGraphController.addStep(institutionId:Long,graphId:Long)

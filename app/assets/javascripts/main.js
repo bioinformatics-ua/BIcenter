@@ -127,6 +127,10 @@ requirejs.config({
         'SidebarController': 'sidebar/controllers/sidebarController',
         'SidebarView': 'sidebar/views/sidebarView',
 
+        // Task Page
+        'TaskController': 'sidebar/controllers/taskController',
+        'TaskView': 'sidebar/views/taskView',
+
         // Server Settings Page
         'ServerController': 'sidebar/controllers/serverController',
         'ServerView': 'sidebar/views/serverView',

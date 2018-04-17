@@ -70,6 +70,17 @@ define('SidebarController', ['Controller', 'SidebarView', 'Router', 'Institution
         });
     };
 
+    SidebarController.prototype.editTask = function(institution, task, event){
+        if (event) {
+            event.preventDefault && event.preventDefault();
+            event.stopPropagation && event.stopPropagation();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+        }
+
+        var modalController = this.module.controllers['TaskController'];
+        modalController.loadTask(institution,task);
+    }
+
     SidebarController.prototype.createServer = function(institution, event) {
         if (event) {
             event.preventDefault && event.preventDefault();

@@ -15,6 +15,35 @@ define('Task', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     //     })
     // };
 
+    Task.deleteTask = function (institutionId, taskId, callback) {
+        jsRoutes.controllers.TransGraphController.deleteTask(institutionId, taskId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    };
+
+    Task.updateTask = function (institutionId, taskId, formValues, callback) {
+        jsRoutes.controllers.TransGraphController.updateTask(institutionId, taskId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(formValues),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Task service', response);
+            }
+        })
+    };
+
     Task.newTask = function (institution,name, callback) {
         jsRoutes.controllers.TransGraphController.newTask(institution,name).ajax({
             contentType: 'application/json; charset=utf-8',

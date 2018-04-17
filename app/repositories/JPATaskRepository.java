@@ -15,6 +15,12 @@ public class JPATaskRepository extends JPARepository implements TaskRepository {
         super(jpaApi, executionContext);
     }
 
+    public static boolean delete(EntityManager em, long id) {
+        Task server = em.find(Task.class, id);
+        em.remove(server);
+        return true;
+    }
+
     public static List<Task> list(EntityManager em) {
         return em.createQuery("select p from Task p", Task.class).getResultList();
     }
@@ -48,6 +54,9 @@ public class JPATaskRepository extends JPARepository implements TaskRepository {
     public Task add(Task Task) {
         return wrap(em -> createOrUpdate(em, Task));
     }
+
+    @Override
+    public void delete(long id) { wrap(em -> delete(em, id)); }
 
     @Override
     public List<Task> list() {
