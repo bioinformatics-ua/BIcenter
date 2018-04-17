@@ -38,6 +38,7 @@ public class Application extends Controller {
     public Result javascriptRoutes() {
         response().setHeader(Http.HeaderNames.CONTENT_TYPE, "text/javascript");
         return ok(JavaScriptReverseRouter.create("jsRoutes",
+                routes.javascript.Assets.versioned(),
                 routes.javascript.Application.supportedLanguages(),
                 routes.javascript.HomeController.index(),
 
@@ -47,8 +48,9 @@ public class Application extends Controller {
                 controllers.login.routes.javascript.Login.logout(),
                 controllers.rbac.routes.javascript.Users.getLoggedInUser(),
 
-                routes.javascript.SvgController.getMiddleImage(),
-                routes.javascript.SvgController.getSmallImage(),
+//                routes.javascript.SvgController.getMiddleImage(),
+//                routes.javascript.SvgController.getSmallImage(),
+                routes.javascript.SvgController.getImage(),
 
                 routes.javascript.InstitutionController.getInstitutionName(),
                 routes.javascript.InstitutionController.scheduler(),
