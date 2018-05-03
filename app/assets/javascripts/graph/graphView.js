@@ -1,4 +1,4 @@
-define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function (View, Task) {
+define('GraphView', ['View', 'Task', 'jsRoutes', 'jquery.slimscroll', 'jquery-ui'], function (View, Task, jsRoutes) {
     var GraphView = function (controller) {
         View.call(this, controller, 'graph');
     };
@@ -16,7 +16,7 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
         var context = this;
 
         // Load the mxEditor after elements rendering.
-        this.editor = this.controller.createEditor('/assets/editor/diagrameditor.xml');
+        this.editor = this.controller.createEditor(jsRoutes.controllers.Assets.versioned('editor/diagrameditor.xml').url);
 
         // Update editor with the loaded graphModel.
         if (this.controller.graphId) {
@@ -39,7 +39,8 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
 
                 var graph = context.editor.graph;
                 graph.getModel().beginUpdate();
-                graph.insertVertex(graph.getDefaultParent(), null, component, left, top, 40, 40, 'icon;image=/middle/' + shortName + '.svg');
+                var imageUrl = jsRoutes.controllers.SvgController.getImage('middle', shortName + '.svg').url;
+                graph.insertVertex(graph.getDefaultParent(), null, component, left, top, 40, 40, 'icon;image=' + imageUrl);
                 graph.getModel().endUpdate();
             }
         });
@@ -52,7 +53,7 @@ define('GraphView', ['View', 'Task', 'jquery.slimscroll', 'jquery-ui'], function
             wrapperClass: 'toolbar'
         });
 
-        this.$elements.toolbar.css('width','');
+        this.$elements.toolbar.css('width', '');
 
         this.$elements.board.resizable();
     };

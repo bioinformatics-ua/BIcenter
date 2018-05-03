@@ -1,4 +1,4 @@
-define('SidebarView', ['View', 'jquery-ui', 'templates'], function (View) {
+define('SidebarView', ['View', 'jsRoutes', 'jquery-ui', 'templates'], function (View, jsRoutes) {
     var SidebarView = function (controller) {
         View.call(this, controller, 'sidebar');
     };
@@ -38,7 +38,8 @@ define('SidebarView', ['View', 'jquery-ui', 'templates'], function (View) {
                     var $el = $(this);
                     var data = {
                         shortName: $el.data('shortname'),
-                        name: $el.data('name')
+                        name: $el.data('name'),
+                        image: jsRoutes.controllers.SvgController.getImage('middle', $el.data('shortname') + '.svg').url
                     };
                     return JST['draggable-component-helper'](data);
                 },

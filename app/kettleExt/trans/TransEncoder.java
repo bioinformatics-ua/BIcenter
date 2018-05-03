@@ -1,21 +1,14 @@
 package kettleExt.trans;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-
+import com.mxgraph.model.mxCell;
+import com.mxgraph.util.mxUtils;
+import com.mxgraph.view.mxGraph;
 import kettleExt.PluginFactory;
 import kettleExt.trans.step.StepEncoder;
 import kettleExt.utils.ColorUtils;
 import kettleExt.utils.JSONArray;
 import kettleExt.utils.JSONObject;
 import kettleExt.utils.StringEscapeHelper;
-import kettleExt.utils.SvgImageUrl;
 import org.pentaho.di.cluster.ClusterSchema;
 import org.pentaho.di.cluster.SlaveServer;
 import org.pentaho.di.core.Const;
@@ -25,12 +18,7 @@ import org.pentaho.di.core.database.DatabaseConnectionPoolParameter;
 import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.di.core.encryption.Encr;
 import org.pentaho.di.core.gui.Point;
-import org.pentaho.di.core.logging.ChannelLogTable;
-import org.pentaho.di.core.logging.LogTableField;
-import org.pentaho.di.core.logging.MetricsLogTable;
-import org.pentaho.di.core.logging.PerformanceLogTable;
-import org.pentaho.di.core.logging.StepLogTable;
-import org.pentaho.di.core.logging.TransLogTable;
+import org.pentaho.di.core.logging.*;
 import org.pentaho.di.core.variables.Variables;
 import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.partition.PartitionSchema;
@@ -43,26 +31,26 @@ import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxGraph;
+import java.util.*;
 
 /**
  * Responsible for encoding Pentaho transactions to mxGraphs.
+ *
  * @author leonardo
  */
 public class TransEncoder {
-    
+
     /**
      * Convert a pentaho transaction into a draw.io graph.
+     *
      * @param transMeta Pentaho transaction.
-     * @return Draw.io graph. 
-     * @throws Exception 
+     * @return Draw.io graph.
+     * @throws Exception
      */
     public static mxGraph encode(TransMeta transMeta) throws Exception {
         mxGraph graph = new mxGraph();
         graph.getModel().beginUpdate();
-        
+
         try {
             mxCell parent = (mxCell) graph.getDefaultParent();
             Document doc = mxUtils.createDocument();
@@ -72,7 +60,7 @@ public class TransEncoder {
             e.setAttribute("description", transMeta.getDescription());
             e.setAttribute("extended_description", transMeta.getExtendedDescription());
             e.setAttribute("trans_version", transMeta.getTransversion());
-            e.setAttribute("trans_type", transMeta.getTransformationType().getCode() );
+            e.setAttribute("trans_type", transMeta.getTransformationType().getCode());
             e.setAttribute("trans_status", String.valueOf(transMeta.getTransstatus()));
             RepositoryDirectoryInterface directory = transMeta.getRepositoryDirectory();
             e.setAttribute("directory", directory != null ? directory.getPath() : RepositoryDirectory.DIRECTORY_SEPARATOR);
@@ -81,12 +69,12 @@ public class TransEncoder {
             // named parameters
             String[] parameters = transMeta.listParameters();
             JSONArray jsonArray = new JSONArray();
-            for ( int idx = 0; idx < parameters.length; idx++ ) {
+            for (int idx = 0; idx < parameters.length; idx++) {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("name", parameters[idx]);
                 jsonObject.put("value", "");
-                jsonObject.put("default_value", transMeta.getParameterDefault( parameters[idx] ));
-                jsonObject.put("description", transMeta.getParameterDescription( parameters[idx] ));
+                jsonObject.put("default_value", transMeta.getParameterDefault(parameters[idx]));
+                jsonObject.put("description", transMeta.getParameterDescription(parameters[idx]));
                 jsonArray.add(jsonObject);
             }
             e.setAttribute("parameters", jsonArray.toString());
@@ -96,16 +84,16 @@ public class TransEncoder {
             jsonArray = new JSONArray();
 
             String[] keys = Variables.getADefaultVariableSpace().listVariables();
-            for ( int i = 0; i < keys.length; i++ ) {
-                sp.put( keys[i], Variables.getADefaultVariableSpace().getVariable( keys[i] ) );
+            for (int i = 0; i < keys.length; i++) {
+                sp.put(keys[i], Variables.getADefaultVariableSpace().getVariable(keys[i]));
             }
 
             List<String> vars = transMeta.getUsedVariables();
-            if ( vars != null && vars.size() > 0 ) {
-                for ( int i = 0; i < vars.size(); i++ ) {
-                    String varname = vars.get( i );
-                    if ( !varname.startsWith( Const.INTERNAL_VARIABLE_PREFIX ) 
-                            && Const.indexOfString( varname, transMeta.listParameters() ) < 0 ) {
+            if (vars != null && vars.size() > 0) {
+                for (int i = 0; i < vars.size(); i++) {
+                    String varname = vars.get(i);
+                    if (!varname.startsWith(Const.INTERNAL_VARIABLE_PREFIX)
+                            && Const.indexOfString(varname, transMeta.listParameters()) < 0) {
                         JSONObject param = new JSONObject();
                         param.put("var_name", varname);
                         param.put("var_value", sp.getProperty(varname, ""));
@@ -114,9 +102,9 @@ public class TransEncoder {
                 }
             }
 
-            for ( String varname : Const.INTERNAL_JOB_VARIABLES ) {
-                String value = transMeta.getVariable( varname );
-                if ( !Const.isEmpty( value ) ) {
+            for (String varname : Const.INTERNAL_JOB_VARIABLES) {
+                String value = transMeta.getVariable(varname);
+                if (!Const.isEmpty(value)) {
                     JSONObject param = new JSONObject();
                     param.put("var_name", varname);
                     param.put("var_value", value);
@@ -127,27 +115,27 @@ public class TransEncoder {
 
             TransLogTable transLogTable = transMeta.getTransLogTable();
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put( "connection", transLogTable.getConnectionName() );
-            jsonObject.put( "schema", transLogTable.getSchemaName() );
-            jsonObject.put( "table", transLogTable.getTableName() );
-            jsonObject.put( "size_limit_lines", transLogTable.getLogSizeLimit() );
-            jsonObject.put( "interval", transLogTable.getLogInterval() );
-            jsonObject.put( "timeout_days", transLogTable.getTimeoutInDays() );
+            jsonObject.put("connection", transLogTable.getConnectionName());
+            jsonObject.put("schema", transLogTable.getSchemaName());
+            jsonObject.put("table", transLogTable.getTableName());
+            jsonObject.put("size_limit_lines", transLogTable.getLogSizeLimit());
+            jsonObject.put("interval", transLogTable.getLogInterval());
+            jsonObject.put("timeout_days", transLogTable.getTimeoutInDays());
             JSONArray fields = new JSONArray();
-            
-            for ( LogTableField field : transLogTable.getFields() ) {
+
+            for (LogTableField field : transLogTable.getFields()) {
                 JSONObject jsonField = new JSONObject();
                 jsonField.put("id", field.getId());
                 jsonField.put("enabled", field.isEnabled());
                 jsonField.put("name", field.getFieldName());
                 jsonField.put("subjectAllowed", field.isSubjectAllowed());
-                
+
                 if (field.isSubjectAllowed()) {
                     jsonField.put("subject", field.getSubject() == null ? "" : field.getSubject().toString());
                 } else {
                     jsonField.put("subject", "-");
                 }
-                
+
                 jsonField.put("description", StringEscapeHelper.encode(field.getDescription()));
                 fields.add(jsonField);
             }
@@ -156,13 +144,13 @@ public class TransEncoder {
 
             StepLogTable stepLogTable = transMeta.getStepLogTable();
             jsonObject = new JSONObject();
-            jsonObject.put( "connection", stepLogTable.getConnectionName() );
-            jsonObject.put( "schema", stepLogTable.getSchemaName() );
-            jsonObject.put( "table", stepLogTable.getTableName() );
-            jsonObject.put( "timeout_days", stepLogTable.getTimeoutInDays() );
-            
+            jsonObject.put("connection", stepLogTable.getConnectionName());
+            jsonObject.put("schema", stepLogTable.getSchemaName());
+            jsonObject.put("table", stepLogTable.getTableName());
+            jsonObject.put("timeout_days", stepLogTable.getTimeoutInDays());
+
             fields = new JSONArray();
-            for ( LogTableField field : stepLogTable.getFields() ) {
+            for (LogTableField field : stepLogTable.getFields()) {
                 JSONObject jsonField = new JSONObject();
                 jsonField.put("id", field.getId());
                 jsonField.put("enabled", field.isEnabled());
@@ -175,13 +163,13 @@ public class TransEncoder {
 
             PerformanceLogTable performanceLogTable = transMeta.getPerformanceLogTable();
             jsonObject = new JSONObject();
-            jsonObject.put( "connection", performanceLogTable.getConnectionName() );
-            jsonObject.put( "schema", performanceLogTable.getSchemaName() );
-            jsonObject.put( "table", performanceLogTable.getTableName() );
-            jsonObject.put( "interval", performanceLogTable.getLogInterval() );
-            jsonObject.put( "timeout_days", performanceLogTable.getTimeoutInDays() );
+            jsonObject.put("connection", performanceLogTable.getConnectionName());
+            jsonObject.put("schema", performanceLogTable.getSchemaName());
+            jsonObject.put("table", performanceLogTable.getTableName());
+            jsonObject.put("interval", performanceLogTable.getLogInterval());
+            jsonObject.put("timeout_days", performanceLogTable.getTimeoutInDays());
             fields = new JSONArray();
-            for ( LogTableField field : performanceLogTable.getFields() ) {
+            for (LogTableField field : performanceLogTable.getFields()) {
                 JSONObject jsonField = new JSONObject();
                 jsonField.put("id", field.getId());
                 jsonField.put("enabled", field.isEnabled());
@@ -194,12 +182,12 @@ public class TransEncoder {
 
             ChannelLogTable channelLogTable = transMeta.getChannelLogTable();
             jsonObject = new JSONObject();
-            jsonObject.put( "connection", channelLogTable.getConnectionName() );
-            jsonObject.put( "schema", channelLogTable.getSchemaName() );
-            jsonObject.put( "table", channelLogTable.getTableName() );
-            jsonObject.put( "timeout_days", channelLogTable.getTimeoutInDays() );
+            jsonObject.put("connection", channelLogTable.getConnectionName());
+            jsonObject.put("schema", channelLogTable.getSchemaName());
+            jsonObject.put("table", channelLogTable.getTableName());
+            jsonObject.put("timeout_days", channelLogTable.getTimeoutInDays());
             fields = new JSONArray();
-            for ( LogTableField field : channelLogTable.getFields() ) {
+            for (LogTableField field : channelLogTable.getFields()) {
                 JSONObject jsonField = new JSONObject();
                 jsonField.put("id", field.getId());
                 jsonField.put("enabled", field.isEnabled());
@@ -212,12 +200,12 @@ public class TransEncoder {
 
             MetricsLogTable metricsLogTable = transMeta.getMetricsLogTable();
             jsonObject = new JSONObject();
-            jsonObject.put( "connection", metricsLogTable.getConnectionName() );
-            jsonObject.put( "schema", metricsLogTable.getSchemaName() );
-            jsonObject.put( "table", metricsLogTable.getTableName() );
-            jsonObject.put( "timeout_days", metricsLogTable.getTimeoutInDays() );
+            jsonObject.put("connection", metricsLogTable.getConnectionName());
+            jsonObject.put("schema", metricsLogTable.getSchemaName());
+            jsonObject.put("table", metricsLogTable.getTableName());
+            jsonObject.put("timeout_days", metricsLogTable.getTimeoutInDays());
             fields = new JSONArray();
-            for ( LogTableField field : metricsLogTable.getFields() ) {
+            for (LogTableField field : metricsLogTable.getFields()) {
                 JSONObject jsonField = new JSONObject();
                 jsonField.put("id", field.getId());
                 jsonField.put("enabled", field.isEnabled());
@@ -253,12 +241,12 @@ public class TransEncoder {
             encodeClusterSchemas(transMeta, e);
 
             e.setAttribute("created_user", transMeta.getCreatedUser());
-            e.setAttribute("created_date", XMLHandler.date2string( transMeta.getCreatedDate() ));
+            e.setAttribute("created_date", XMLHandler.date2string(transMeta.getCreatedDate()));
             e.setAttribute("modified_user", transMeta.getModifiedUser());
-            e.setAttribute("modified_date", XMLHandler.date2string( transMeta.getModifiedDate() ));
-            
+            e.setAttribute("modified_date", XMLHandler.date2string(transMeta.getModifiedDate()));
+
             try {
-                if(transMeta.getKey() == null) {
+                if (transMeta.getKey() == null) {
                     e.setAttribute("key_for_session_key", XMLHandler.encodeBinaryData(transMeta.getKey()));
                 } else {
                     e.setAttribute("key_for_session_key", "");
@@ -301,12 +289,12 @@ public class TransEncoder {
                     note.setAttribute("bG", String.valueOf(g));
                     note.setAttribute("bB", String.valueOf(b));
 
-                    if(!StringUtils.isEmpty(ni.getFontName())) {
-                            style += ";fontFamily=" + ni.getFontName();
-                            note.setAttribute("fontName", ni.getFontName());
+                    if (!StringUtils.isEmpty(ni.getFontName())) {
+                        style += ";fontFamily=" + ni.getFontName();
+                        note.setAttribute("fontName", ni.getFontName());
                     }
-                    if( ni.getFontSize() > 0 ) {
-                            note.setAttribute("fontSize", String.valueOf(ni.getFontSize()));
+                    if (ni.getFontSize() > 0) {
+                        note.setAttribute("fontSize", String.valueOf(ni.getFontSize()));
                     }
 
                     note.setAttribute("fontBold", ni.isFontBold() ? "Y" : "N");
@@ -323,16 +311,17 @@ public class TransEncoder {
             // encode steps and hops
             HashMap<StepMeta, Object> cells = new HashMap<StepMeta, Object>();
             List<StepMeta> list = transMeta.getSteps();
-            for(int i=0; i<list.size(); i++) {
+            for (int i = 0; i < list.size(); i++) {
                 StepMeta step = (StepMeta) list.get(i);
                 Point p = step.getLocation();
                 StepEncoder stepEncoder = (StepEncoder) PluginFactory.getBean(step.getStepID());
-                
-                Object cell = graph.insertVertex(parent, null, stepEncoder.encodeStep(step), p.x, p.y, 40, 40, "icon;image=" + SvgImageUrl.getUrl(step.getStepID(), SvgImageUrl.Size_Middle));
+
+                String imageUrl = controllers.routes.SvgController.getImage("middle", step.getStepID() + ".svg").url();
+                Object cell = graph.insertVertex(parent, null, stepEncoder.encodeStep(step), p.x, p.y, 40, 40, "icon;image=" + imageUrl);
                 cells.put(step, cell);
             }
-            
-            for(int i=0; i<transMeta.nrTransHops(); i++) {
+
+            for (int i = 0; i < transMeta.nrTransHops(); i++) {
                 TransHopMeta transHopMeta = transMeta.getTransHop(i);
 
                 Object v1 = cells.get(transHopMeta.getFromStep());
@@ -346,148 +335,148 @@ public class TransEncoder {
 
         return graph;
     }
-	
-	public static void encodeDatabases(TransMeta transMeta, Element e) {
-            JSONArray jsonArray = new JSONArray();
-            for(int i=0; i<transMeta.nrDatabases(); i++) {
-                DatabaseMeta databaseMeta = transMeta.getDatabase(i);
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("name", databaseMeta.getName());
-                jsonObject.put("server", databaseMeta.getHostname());
-                jsonObject.put("type", databaseMeta.getPluginId());
-                jsonObject.put("access", databaseMeta.getAccessType());
-                jsonObject.put("database", databaseMeta.getDatabaseName());
-                jsonObject.put("port", databaseMeta.getDatabasePortNumberString());
-                jsonObject.put("username", databaseMeta.getUsername());
-                jsonObject.put("password", Encr.decryptPasswordOptionallyEncrypted(databaseMeta.getPassword()));
-                jsonObject.put("servername", databaseMeta.getServername());
-                jsonObject.put("data_tablespace", databaseMeta.getDataTablespace());
-                jsonObject.put("index_tablespace", databaseMeta.getIndexTablespace());
-                jsonObject.put("read_only", databaseMeta.isReadOnly());
+    public static void encodeDatabases(TransMeta transMeta, Element e) {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < transMeta.nrDatabases(); i++) {
+            DatabaseMeta databaseMeta = transMeta.getDatabase(i);
 
-                JSONObject attributes = new JSONObject();
-                JSONArray options = new JSONArray();
-                List<String> list = new ArrayList<String>();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", databaseMeta.getName());
+            jsonObject.put("server", databaseMeta.getHostname());
+            jsonObject.put("type", databaseMeta.getPluginId());
+            jsonObject.put("access", databaseMeta.getAccessType());
+            jsonObject.put("database", databaseMeta.getDatabaseName());
+            jsonObject.put("port", databaseMeta.getDatabasePortNumberString());
+            jsonObject.put("username", databaseMeta.getUsername());
+            jsonObject.put("password", Encr.decryptPasswordOptionallyEncrypted(databaseMeta.getPassword()));
+            jsonObject.put("servername", databaseMeta.getServername());
+            jsonObject.put("data_tablespace", databaseMeta.getDataTablespace());
+            jsonObject.put("index_tablespace", databaseMeta.getIndexTablespace());
+            jsonObject.put("read_only", databaseMeta.isReadOnly());
+
+            JSONObject attributes = new JSONObject();
+            JSONArray options = new JSONArray();
+            List<String> list = new ArrayList<String>();
             Set<Object> keySet = databaseMeta.getAttributes().keySet();
-            for ( Object object : keySet ) {
-              list.add( (String) object );
+            for (Object object : keySet) {
+                list.add((String) object);
             }
-            Collections.sort( list );
+            Collections.sort(list);
             HashSet<String> poolParamsChecked = new HashSet<String>();
-                for (Iterator<String> iter = list.iterator(); iter.hasNext();) {
-                    String code = iter.next();
-                    String attribute = databaseMeta.getAttributes().getProperty(code);
-                    if (!Const.isEmpty(attribute)) {
-                        if("SQL_CONNECT".equalsIgnoreCase(code))
-                            attribute = StringEscapeHelper.encode(attribute);
-                        if(code.indexOf(".") > 0) {
-                            int index = code.indexOf(".");
-                            JSONObject jsonObject2 = new JSONObject();
-                            jsonObject2.put("prefix", code.substring(0, index));
-                            jsonObject2.put("name", code.substring(index + 1));
-                            jsonObject2.put("value", attribute);
-                            options.add(jsonObject2);
-                        } else if(code.startsWith("POOLING_")) {
-                            poolParamsChecked.add(code.substring(8));
-                        } else {
-                            attributes.put(code, attribute);
-                        }
+            for (Iterator<String> iter = list.iterator(); iter.hasNext(); ) {
+                String code = iter.next();
+                String attribute = databaseMeta.getAttributes().getProperty(code);
+                if (!Const.isEmpty(attribute)) {
+                    if ("SQL_CONNECT".equalsIgnoreCase(code))
+                        attribute = StringEscapeHelper.encode(attribute);
+                    if (code.indexOf(".") > 0) {
+                        int index = code.indexOf(".");
+                        JSONObject jsonObject2 = new JSONObject();
+                        jsonObject2.put("prefix", code.substring(0, index));
+                        jsonObject2.put("name", code.substring(index + 1));
+                        jsonObject2.put("value", attribute);
+                        options.add(jsonObject2);
+                    } else if (code.startsWith("POOLING_")) {
+                        poolParamsChecked.add(code.substring(8));
+                    } else {
+                        attributes.put(code, attribute);
                     }
                 }
-
-                JSONArray jsonArray2 = new JSONArray();
-                for (DatabaseConnectionPoolParameter parameter : BaseDatabaseMeta.poolingParameters) {
-                    JSONObject jsonObject2 = new JSONObject();
-                    jsonObject2.put("enabled", poolParamsChecked.contains(parameter.getParameter()));
-                    jsonObject2.put("name", parameter.getParameter());
-                    jsonObject2.put("defValue", parameter.getDefaultValue());
-                    jsonObject2.put("description", StringEscapeHelper.encode(parameter.getDescription()));
-                    jsonArray2.add(jsonObject2);
-                }
-                jsonObject.put("options", options);
-                jsonObject.put("attributes", attributes);
-                jsonObject.put("pool_params", jsonArray2);
-
-                jsonArray.add(jsonObject);
             }
-            e.setAttribute("databases", jsonArray.toString());
-	}
-	
-	public static void encodeClusterSchemas(TransMeta transMeta, Element e) {
-            JSONArray jsonArray = new JSONArray();
-            for (int i = 0; i < transMeta.getClusterSchemas().size(); i++) {
-                ClusterSchema clusterSchema = transMeta.getClusterSchemas().get(i);
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("name", clusterSchema.getName());
-                jsonObject.put("base_port", clusterSchema.getBasePort());
-                jsonObject.put("sockets_buffer_size", clusterSchema.getSocketsBufferSize());
-
-                jsonObject.put("sockets_flush_interval", clusterSchema.getSocketsFlushInterval());
-                jsonObject.put("sockets_compressed", clusterSchema.isSocketsCompressed() ? "Y" : "N");
-                jsonObject.put("dynamic", clusterSchema.isDynamic() ? "Y" : "N");
-
-                JSONArray slaveservers = new JSONArray();
-                for (int j = 0; j < clusterSchema.getSlaveServers().size(); j++) {
-                    SlaveServer slaveServer = clusterSchema.getSlaveServers().get(j);
-                    slaveservers.add(slaveServer.getName());
-                }
-                jsonObject.put("slaveservers", slaveservers);
-
-
-                jsonArray.add(jsonObject);
+            JSONArray jsonArray2 = new JSONArray();
+            for (DatabaseConnectionPoolParameter parameter : BaseDatabaseMeta.poolingParameters) {
+                JSONObject jsonObject2 = new JSONObject();
+                jsonObject2.put("enabled", poolParamsChecked.contains(parameter.getParameter()));
+                jsonObject2.put("name", parameter.getParameter());
+                jsonObject2.put("defValue", parameter.getDefaultValue());
+                jsonObject2.put("description", StringEscapeHelper.encode(parameter.getDescription()));
+                jsonArray2.add(jsonObject2);
             }
-            e.setAttribute("clusterSchemas", jsonArray.toString());
-	}
+            jsonObject.put("options", options);
+            jsonObject.put("attributes", attributes);
+            jsonObject.put("pool_params", jsonArray2);
 
-	public static void encodePartitionSchemas(TransMeta transMeta, Element e) {
-            JSONArray jsonArray = new JSONArray();
-	    List<PartitionSchema> partitionSchemas = transMeta.getPartitionSchemas();
-            for (int i = 0; i < partitionSchemas.size(); i++) {
-                PartitionSchema partitionSchema = partitionSchemas.get(i);
+            jsonArray.add(jsonObject);
+        }
+        e.setAttribute("databases", jsonArray.toString());
+    }
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("name", partitionSchema.getName());
-                jsonObject.put("dynamic", partitionSchema.isDynamicallyDefined());
-                jsonObject.put("partitions_per_slave", partitionSchema.getNumberOfPartitionsPerSlave());
+    public static void encodeClusterSchemas(TransMeta transMeta, Element e) {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < transMeta.getClusterSchemas().size(); i++) {
+            ClusterSchema clusterSchema = transMeta.getClusterSchemas().get(i);
 
-                JSONArray partition = new JSONArray();
-                List<String> partitionIDs = partitionSchema.getPartitionIDs();
-                for (int j = 0; j < partitionIDs.size(); j++) {
-                    jsonArray.add(partitionIDs.get(j));
-                }
-                jsonObject.put("partition", partition);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", clusterSchema.getName());
+            jsonObject.put("base_port", clusterSchema.getBasePort());
+            jsonObject.put("sockets_buffer_size", clusterSchema.getSocketsBufferSize());
 
-                jsonArray.add(jsonObject);
+            jsonObject.put("sockets_flush_interval", clusterSchema.getSocketsFlushInterval());
+            jsonObject.put("sockets_compressed", clusterSchema.isSocketsCompressed() ? "Y" : "N");
+            jsonObject.put("dynamic", clusterSchema.isDynamic() ? "Y" : "N");
+
+            JSONArray slaveservers = new JSONArray();
+            for (int j = 0; j < clusterSchema.getSlaveServers().size(); j++) {
+                SlaveServer slaveServer = clusterSchema.getSlaveServers().get(j);
+                slaveservers.add(slaveServer.getName());
             }
-            e.setAttribute("partitionschemas", jsonArray.toString());
-	}
+            jsonObject.put("slaveservers", slaveservers);
 
-	public static void encodeSlaveServers(TransMeta transMeta, Element e) {
-            JSONArray jsonArray = new JSONArray();
-            for (int i = 0; i < transMeta.getSlaveServers().size(); i++) {
-                SlaveServer slaveServer = transMeta.getSlaveServers().get(i);
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("name", slaveServer.getName());
-                jsonObject.put("hostname", slaveServer.getHostname());
-                jsonObject.put("port", slaveServer.getPort());
-                jsonObject.put("webAppName", slaveServer.getWebAppName());
-                jsonObject.put("username", slaveServer.getUsername());
-                jsonObject.put("password", Encr.decryptPasswordOptionallyEncrypted( slaveServer.getPassword() ));
-                jsonObject.put("proxy_hostname", slaveServer.getProxyHostname());
-                jsonObject.put("proxy_port", slaveServer.getProxyPort());
-                jsonObject.put("non_proxy_hosts", slaveServer.getNonProxyHosts());
-                jsonObject.put("master", slaveServer.isMaster());
-                jsonObject.put("sslMode", slaveServer.isSslMode());
-                if(slaveServer.getSslConfig() != null) {
+            jsonArray.add(jsonObject);
+        }
+        e.setAttribute("clusterSchemas", jsonArray.toString());
+    }
 
-                }
+    public static void encodePartitionSchemas(TransMeta transMeta, Element e) {
+        JSONArray jsonArray = new JSONArray();
+        List<PartitionSchema> partitionSchemas = transMeta.getPartitionSchemas();
+        for (int i = 0; i < partitionSchemas.size(); i++) {
+            PartitionSchema partitionSchema = partitionSchemas.get(i);
 
-                jsonArray.add(jsonObject);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", partitionSchema.getName());
+            jsonObject.put("dynamic", partitionSchema.isDynamicallyDefined());
+            jsonObject.put("partitions_per_slave", partitionSchema.getNumberOfPartitionsPerSlave());
+
+            JSONArray partition = new JSONArray();
+            List<String> partitionIDs = partitionSchema.getPartitionIDs();
+            for (int j = 0; j < partitionIDs.size(); j++) {
+                jsonArray.add(partitionIDs.get(j));
             }
-            e.setAttribute("slaveServers", jsonArray.toString());
-	}
-	
+            jsonObject.put("partition", partition);
+
+            jsonArray.add(jsonObject);
+        }
+        e.setAttribute("partitionschemas", jsonArray.toString());
+    }
+
+    public static void encodeSlaveServers(TransMeta transMeta, Element e) {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < transMeta.getSlaveServers().size(); i++) {
+            SlaveServer slaveServer = transMeta.getSlaveServers().get(i);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", slaveServer.getName());
+            jsonObject.put("hostname", slaveServer.getHostname());
+            jsonObject.put("port", slaveServer.getPort());
+            jsonObject.put("webAppName", slaveServer.getWebAppName());
+            jsonObject.put("username", slaveServer.getUsername());
+            jsonObject.put("password", Encr.decryptPasswordOptionallyEncrypted(slaveServer.getPassword()));
+            jsonObject.put("proxy_hostname", slaveServer.getProxyHostname());
+            jsonObject.put("proxy_port", slaveServer.getProxyPort());
+            jsonObject.put("non_proxy_hosts", slaveServer.getNonProxyHosts());
+            jsonObject.put("master", slaveServer.isMaster());
+            jsonObject.put("sslMode", slaveServer.isSslMode());
+            if (slaveServer.getSslConfig() != null) {
+
+            }
+
+            jsonArray.add(jsonObject);
+        }
+        e.setAttribute("slaveServers", jsonArray.toString());
+    }
+
 }

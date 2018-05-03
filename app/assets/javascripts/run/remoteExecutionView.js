@@ -1,7 +1,7 @@
 define('RemoteExecutionView', ['Modal', 'boostrap-datetimepicker', 'jquery-ui', 'iCheck'], function (Modal) {
 
     var RemoteExecutionView = function (controller) {
-        Modal.call(this, controller, 'run/remoteExecutionModal', 'Remote Execution');
+        Modal.call(this, controller, 'remoteExecutionModal', 'Remote Execution');
     };
 
     // Inheritance from super class
@@ -21,7 +21,7 @@ define('RemoteExecutionView', ['Modal', 'boostrap-datetimepicker', 'jquery-ui', 
 
         var context = this;
 
-        var html = JST['run/remoteExecutionModalContent']({
+        var html = JST['remoteExecutionModalContent']({
             servers: servers
         });
         this.$elements.insideContainer.html(html);

@@ -1,6 +1,6 @@
 define('FieldsView', ['View','Step'], function (View,Step) {
     var FieldsView = function (controller) {
-        View.call(this, controller, 'steps/fields');
+        View.call(this, controller, 'fields');
     };
 
     // Inheritance from super class
