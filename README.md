@@ -1,53 +1,19 @@
-[<img src="https://img.shields.io/travis/playframework/play-java-starter-example.svg"/>](https://travis-ci.org/playframework/play-java-starter-example)
+# BIcenter
 
-# play-java-starter-example
+This is a web-based platform that allows the building and management of ETL pipelines, by non-IT users, in a multi-institution environment. 
 
-This is a starter application that shows how Play works.  Please see the documentation at https://www.playframework.com/documentation/latest/Home for more details.
 
-## Running
+## Bugs and features requests
+Have a bug or a feature request?
 
-Run this using [sbt](http://www.scala-sbt.org/).  If you downloaded this project from http://www.playframework.com/download then you'll find a prepackaged version of sbt in the project directory:
+If your problem or idea is not addressed yet, please [open a new issue](https://github.com/BMDSoftware/CMT/issues/new).
 
-```
-sbt run
-```
 
-And then go to http://localhost:9000 to see the running web application.
+## Support and consulting
+[<img src="https://raw.githubusercontent.com/wiki/BMDSoftware/dicoogle/images/bmd.png" height="64" alt="BMD Software">](https://www.bmd-software.com)
 
-## Controllers
+Please contact [BMD Software](https://www.bmd-software.com) / info@bmd-software for professional support and consulting services.
 
-There are several demonstration files available in this template.
+## Copyright and license
 
-- HomeController.java:
-
-  Shows how to handle simple HTTP requests.
-
-- AsyncController.java:
-
-  Shows how to do asynchronous programming when handling a request.
-
-- CountController.java:
-
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
-
-## Components
-
-- Module.java:
-
-  Shows how to use Guice to bind all the components needed by your application.
-
-- Counter.java:
-
-  An example of a component that contains state, in this case a simple counter.
-
-- ApplicationTimer.java:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
-
-## Filters
-
-- ExampleFilter.java
-
-  A simple filter that adds a header to every response.
+Copyright (C) 2020 BMD Software 
