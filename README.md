@@ -6,7 +6,7 @@ This is a web-based platform that allows the building and management of ETL pipe
 ## Bugs and features requests
 Have a bug or a feature request?
 
-If your problem or idea is not addressed yet, please [open a new issue](https://github.com/BMDSoftware/CMT/issues/new).
+If your problem or idea is not addressed yet, please [open a new issue](https://github.com/BMDSoftware/BIcenter/issues/new).
 
 
 ## Support and consulting
