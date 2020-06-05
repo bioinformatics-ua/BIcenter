@@ -4,8 +4,6 @@ This is a web-based platform that allows the building and management of ETL pipe
 
 ## How to run
 
-- Pentaho
-    ```bash
-    $ chmod +d deploy_carte.sh
-    $ ./deploy_carte
-    ```
+```bash
+$ chmod +x run.sh && ./run.sh
+```
