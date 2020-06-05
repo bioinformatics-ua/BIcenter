@@ -15,4 +15,4 @@ carteslave:
   ports:
     - 9081:9081
   volumes:
-    - carte-slave/config:/opt/config
+    - $PWD/carte-slave/config:/opt/config
