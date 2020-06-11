@@ -62,7 +62,7 @@ define('Module', ['jquery', 'underscore', 'Utils'], function ($, _, Utils) {
                 self.controllers[name] = controller;
             },
             function (err) {
-                console.error(err);
+                // console.error(err);
                 throw new Error('Controller ' + name + ' not found.');
             }
         );

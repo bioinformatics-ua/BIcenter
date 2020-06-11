@@ -1,5 +1,24 @@
 {
-  "devDependencies": {
-    "handlebars": "^4.0.0"
-  }
+	"name": "bicenter",
+	"version": "1.0.0",
+	"description": "This is a web-based platform that allows the building and management of ETL pipelines, by non-IT users, in a multi-institution environment.",
+	"main": "index.js",
+	"dependencies": {
+		"handlebars": "^4.7.6",
+		"source-map": "^0.7.3"
+	},
+	"devDependencies": {},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bioinformatics-ua/BIcenter.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/bioinformatics-ua/BIcenter/issues"
+	},
+	"homepage": "https://github.com/bioinformatics-ua/BIcenter#readme"
 }
