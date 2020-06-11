@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////
 // Project settings
 ////////////////////////////////////////////////////////////////////////////
@@ -64,9 +63,6 @@ libraryDependencies ++= Seq(
   "pentaho" % "pentaho-capability-manager" % "6.1.0.19-384",
   "pentaho-kettle" % "kettle-ui-swt" % "6.1.0.19-384",
   "pentaho-kettle" % "kettle-json-plugin" % "7.0.0.1-37",
-
-  "javax.mail" % "mail" % "1.5.0-b01",
-  "javax.activation" % "activation" % "1.1.1",
 
   // Draw.io SDK
   "de.twentyeleven.skysail" % "jgraphx-osgi" % "1.10.3.1",
