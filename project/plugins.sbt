@@ -6,9 +6,6 @@ resolvers ++= Seq(
   Resolver.mavenLocal,
   Resolver.sbtPluginRepo("releases"),
   "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-  "BMD Software Public" at "https://dev.bmd-software.com/nexus/content/groups/public/",
-  "BMD Software Releases" at "https://dev.bmd-software.com/nexus/content/repositories/releases/",
-  "BMD Software Snapshots" at "https://dev.bmd-software.com/nexus/content/repositories/snapshots/",
   "Sonatype releases" at "https://oss.sonatype.org/content/repositories/releases/",
   "pentaho-repo" at "https://public.nexus.pentaho.org/content/groups/omni/"
 )
@@ -18,11 +15,11 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.5")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-js-engine" % "1.2.1")
 
-addSbtPlugin("com.bmdsoftware" % "sbt-rjs" % "1.0.9")
+addSbtPlugin("com.typesafe.sbt" % "sbt-rjs" % "1.0.9")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.1.2")
 
-addSbtPlugin("com.bicou.sbt" % "sbt-hbs" % "1.0.7")
+addSbtPlugin("com.bicou.sbt" % "sbt-hbs" % "1.0.5")
 
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.7.0")
 
