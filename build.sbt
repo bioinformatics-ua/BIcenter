@@ -16,7 +16,10 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 resolvers ++= Seq(
   Resolver.mavenLocal,
-  "pentaho-releases" at "https://public.nexus.pentaho.org/content/groups/omni/"
+  //"BMD Software Public" at "https://dev.bmd-software.com/nexus/content/groups/public/",
+  //"BMD Software Releases" at "https://dev.bmd-software.com/nexus/content/repositories/releases/",
+  //"BMD Software Snapshots" at "https://dev.bmd-software.com/nexus/content/repositories/snapshots/",
+  "pentaho-repo" at "https://public.nexus.pentaho.org/content/groups/omni/"
 )
 
 ////////////////////////////////////////////////////////////////////////////
@@ -46,7 +49,7 @@ libraryDependencies ++= Seq(
   // Font awesome
   "org.webjars" % "font-awesome" % "4.7.0",
   // Handlebars
-  "org.webjars" % "handlebars" % "4.0.5",
+  //%"org.webjars" % "handlebars" % "4.0.5",
   // Parse JSON
   "com.google.code.gson" % "gson" % "2.8.0",
   // Password encrypting
