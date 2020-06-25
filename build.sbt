@@ -60,15 +60,12 @@ libraryDependencies ++= Seq(
   //  libraryDependencies += "org.hibernate.javax.persistence" % "hibernate-jpa-2.0-api" % "1.0.1.Final"
 
   // Pentaho SDK
-  "pentaho-kettle" % "kettle-core" % "6.1.0.18-381",
-  "pentaho-kettle" % "kettle-dbdialog" % "6.1.0.19-384",
-  "pentaho-kettle" % "kettle-engine" % "6.1.0.19-384",
-  "pentaho" % "pentaho-capability-manager" % "6.1.0.19-384",
-  "pentaho-kettle" % "kettle-ui-swt" % "6.1.0.19-384",
-  "pentaho-kettle" % "kettle-json-plugin" % "7.0.0.1-37",
-
-  "javax.mail" % "mail" % "1.5.0-b01",
-  "javax.activation" % "activation" % "1.1.1",
+	"pentaho-kettle" % "kettle-core" % "6.1.0.17-379",
+	"pentaho-kettle" % "kettle-dbdialog" % "6.1.0.17-379",
+	"pentaho-kettle" % "kettle-engine" % "6.1.0.17-379",
+	"pentaho" % "pentaho-capability-manager" % "6.1.0.3-223",
+	"pentaho-kettle" % "kettle-ui-swt" % "6.1.0.3-223",
+	"pentaho-kettle" % "kettle-json-plugin" % "7.0.0.1-37",
 
   // Draw.io SDK
   "de.twentyeleven.skysail" % "jgraphx-osgi" % "1.10.3.1",
