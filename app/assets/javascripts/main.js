@@ -11,7 +11,7 @@ requirejs.config({
         'underscore': '../lib/underscorejs/underscore-min',
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'adminLTE': '../lib/adminLTE/js/app.min',
-        'handlebars.runtime': '../lib/handlebars/handlebars.runtime',
+        'handlebars.runtime': '../lib/handlebars/handlebars.runtime.min',
         'handlebarsHelpers': 'core/handlebarsHelpers',
         'editor': '../editor/editor',
         'bootbox': 'lib/bootbox.min',
