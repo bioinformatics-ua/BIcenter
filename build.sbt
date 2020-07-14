@@ -17,15 +17,13 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 resolvers ++= Seq(
   Resolver.mavenLocal,
-  "BMD Software Public" at "https://dev.bmd-software.com/nexus/content/groups/public/",
-  "BMD Software Releases" at "https://dev.bmd-software.com/nexus/content/repositories/releases/",
-  "BMD Software Snapshots" at "https://dev.bmd-software.com/nexus/content/repositories/snapshots/",
   "pentaho-repo" at "https://public.nexus.pentaho.org/content/groups/omni/"
 )
 
 ////////////////////////////////////////////////////////////////////////////
 // Dependencies
 ////////////////////////////////////////////////////////////////////////////
+
 libraryDependencies ++= Seq(
   guice,
   javaJdbc,
@@ -61,12 +59,12 @@ libraryDependencies ++= Seq(
   //  libraryDependencies += "org.hibernate.javax.persistence" % "hibernate-jpa-2.0-api" % "1.0.1.Final"
 
   // Pentaho SDK
-  "pentaho-kettle" % "kettle-core" % "6.1.0.0-184",
-  "pentaho-kettle" % "kettle-dbdialog" % "6.1.0.0-184",
-  "pentaho-kettle" % "kettle-engine" % "6.1.0.0-184",
-  "pentaho" % "pentaho-capability-manager" % "6.1.0.10-308",
-  "pentaho-kettle" % "kettle-ui-swt" % "6.1.0.10-308",
-  "pentaho-kettle" % "kettle-json-plugin" % "7.0.0.1-37",
+  //"pentaho-kettle" % "kettle-core" % "6.1.0.0-308",
+  //"pentaho-kettle" % "kettle-dbdialog" % "6.1.0.0-308",
+  //"pentaho-kettle" % "kettle-engine" % "6.1.0.0-308",
+  //"pentaho" % "pentaho-capability-manager" % "6.1.0.10-308",
+  //"pentaho-kettle" % "kettle-ui-swt" % "6.1.0.10-308",
+  //"pentaho-kettle" % "kettle-json-plugin" % "7.0.0.1-37",
 
   // Draw.io SDK
   "de.twentyeleven.skysail" % "jgraphx-osgi" % "1.10.3.1",
@@ -79,6 +77,7 @@ libraryDependencies ++= Seq(
   //ESAPI
   //  "org.owasp.esapi" % "esapi" % "2.1.0"
 )
+
 
 // Testing libraries for dealing with CompletionStage...
 libraryDependencies ++= Seq(
