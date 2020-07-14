@@ -218,6 +218,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
      * @param method execute transformation locally, remotely or in cluster mode.
      */
     GraphController.prototype.localExecution = function () {
+        var self = this;
         var headerController = app.modules.HeaderModule.controllers.HeaderController;
         Execution.localExecution(this.institutionId, this.graphId,
             function(returnedData){
@@ -234,7 +235,7 @@ define('GraphController', ['Controller', 'GraphView', 'Router', 'Task', 'Executi
                 // Monitor transformation's execution.
                 var interval = setInterval(
                     function () {
-                        Execution.result(headerController.executionId,function(data){
+                        Execution.result(self.institutionId, headerController.executionId,function(data){
                             if (JSON.parse(data)['finished'] == true) {
                                 headerController.view.transSubmissionNotification(headerController.transName, headerController.executionId, "Finished");
                                 clearInterval(interval);
