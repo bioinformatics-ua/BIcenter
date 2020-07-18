@@ -94,6 +94,43 @@
               "type": "textarea"
             }
           ]
+        },
+        {
+          "name": "CSVInput",
+          "description": "CSV File Input",
+          "shortName": "csvInput",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "File Name",
+              "shortName": "fileName",
+              "type": "input"
+            },
+            {
+              "name": "Delimiter",
+              "shortName": "delimiter",
+              "type": "input"
+            },
+            {
+              "name": "Enclosure",
+              "shortName": "enclosure",
+              "type": "input"
+            },
+            {
+              "name": "Lazy Conversion?",
+              "shortName": "lazyConversion",
+              "type": "checkbox"
+            },
+            {
+              "name": "Header Row Present?",
+              "shortName": "lazyConversion",
+              "type": "checkbox"
+            }
+          ]
         }
       ]
     },
