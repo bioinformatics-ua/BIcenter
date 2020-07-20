@@ -33,7 +33,7 @@ libraryDependencies ++= Seq(
   // Database
   javaJpa,
   "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final", // replace by your jpa implementation
-  "mysql" % "mysql-connector-java" % "5.1.38",
+  "mysql" % "mysql-connector-java" % "5.1.46",
   "net.sourceforge.jtds" % "jtds" % "1.3.1",
   // Multi-language
   "org.julienrf" %% "play-jsmessages" % "3.0.0",
