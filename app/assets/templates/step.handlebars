@@ -46,6 +46,10 @@
                                 {{#ifCond stepProperty.value '==' '"off"'}}
                                     <input name="{{id}}" view-element="{{id}}" type="checkbox"> {{name}}
                                 {{/ifCond}}
+
+                                {{#ifCond stepProperty.value '==' null}}
+                                    <input name="{{id}}" view-element="{{id}}" type="checkbox"> {{name}}
+                                {{/ifCond}}
                             </label>
                         </div>
                     </div>
