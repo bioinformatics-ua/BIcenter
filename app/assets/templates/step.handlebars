@@ -45,7 +45,6 @@
                     <div class="col-sm-offset-2 col-sm-5">
                         <div class="checkbox">
                             <label>
-                                {{log stepProperty}}
                                 {{#ifCond stepProperty.value '==' '"on"'}}
                                     <input name="{{id}}" view-element="{{id}}" type="checkbox" checked> {{name}}
                                 {{/ifCond}}
