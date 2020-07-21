@@ -26,6 +26,12 @@
                     </div>
                 </div>
             {{/ifCond}}
+            {{#ifCond type '==' 'fileinput'}}
+                <div class="form-group">
+                    <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
+                    <input class="form-control" type="file" name="{{id}}" view-element="{{id}}" value="{{stepProperty.value}}">
+                </div>
+            {{/ifCond}}
             {{#ifCond type '==' 'number'}}
                 <div class="form-group">
                     <label for="{{id}}" class="col-sm-2 control-label">{{name}}</label>

@@ -108,7 +108,7 @@
             {
               "name": "File Name",
               "shortName": "fileName",
-              "type": "input"
+              "type": "fileinput"
             },
             {
               "name": "Delimiter",
