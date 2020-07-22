@@ -39,11 +39,12 @@
                     <div class="col-sm-offset-2 col-sm-5">
                         <div class="checkbox">
                             <label>
-                                {{#ifCond stepProperty.value '==' '"on"'}}
+                                <input type='hidden' name="{{id}}" view-element="{{id}}" value="off">
+                                {{#ifCond stepProperty.value '==' 'on'}}
                                     <input name="{{id}}" view-element="{{id}}" type="checkbox" checked> {{name}}
                                 {{/ifCond}}
 
-                                {{#ifCond stepProperty.value '==' '"off"'}}
+                                {{#ifCond stepProperty.value '==' 'off'}}
                                     <input name="{{id}}" view-element="{{id}}" type="checkbox"> {{name}}
                                 {{/ifCond}}
 
