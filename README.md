@@ -93,3 +93,20 @@ There are several demonstration files available in this template.
 - ExampleFilter.java
 
   A simple filter that adds a header to every response.
+
+
+## Bugs and features requests
+
+Have a bug, or a feature request?
+
+If your problem or idea is not yet addressed, please [open a new issue](issues/new).
+
+## Support and consulting
+
+[<img src="https://raw.githubusercontent.com/wiki/BMDSoftware/dicoogle/images/bmd.png" height="64" alt="BMD Software">](https://www.bmd-software.com)
+
+Please contact [BMD Software](https://www.bmd-software.com) / info@bmd-software for professional support and consulting services.
+
+## Copyright and license
+
+Copyright (C) 2020 BMD Software
