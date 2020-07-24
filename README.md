@@ -99,7 +99,7 @@ There are several demonstration files available in this template.
 
 Have a bug, or a feature request?
 
-If your problem or idea is not yet addressed, please [open a new issue](issues/new).
+If your problem or idea is not yet addressed, please [open a new issue](https://github.com/bioinformatics-ua/BIcenter/issues/new).
 
 ## Support and consulting
 
