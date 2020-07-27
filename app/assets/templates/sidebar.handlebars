@@ -6,7 +6,7 @@
                 Resources
             </button>
 
-            <button view-click="controller.getComponents();" view-element="componentsBtn" class="btn btn-app btn-sidetoolbar">
+            <button view-click="controller.getComponents();" view-element="componentsBtn" class="btn btn-app btn-sidetoolbar" {{#unless hasTask}}disabled{{/unless}}>
                 <i class="fa fa-wrench"></i>
                 Components
             </button>
@@ -16,7 +16,6 @@
 
 <ul view-element="institutions" class="sidebar-menu" data-widget="tree">
 {{# institutions}}
-
     <li class="treeview menu" onclick="if(event.target.getAttribute('name') == 'institution'){ this.classList.toggle('menu-open');this.classList.toggle('menu'); }">
         <a name="institution" href="#">
             <i class="fa fa-folder"></i>  {{name}}

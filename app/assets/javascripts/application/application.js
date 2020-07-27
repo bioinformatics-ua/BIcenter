@@ -32,7 +32,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                 };
 
                 self.loadController('MainModule', 'FieldsController', opts);
-                
+
             })
             .add(new RegExp(jsRoutes.controllers.StepController.showStepOutput('(.*)','(.*)','(.*)').url.substr(1), 'i'), function (institutionId,graphId,stepId) {
                 console.log("Show Output Fields of Step " + stepId);
@@ -163,8 +163,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
                     tab: "resources"
                 }
 
-                self.loadController('MainModule', 'GraphController');
-                self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController']);
+                self.loadController('MainModule', 'GraphController', opts);
+                self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
             });
 
         // Start listening
