@@ -11,7 +11,6 @@ define('SidebarView', ['View', 'jsRoutes', 'jquery-ui', 'templates'], function (
 		var data = {
 			hasTask: this.controller.graphId ? true : false
 		};
-
 		_super_.initialize.call(this, $container, data);
 		this.$elements.tasksBtn.addClass('selected');
 	};
