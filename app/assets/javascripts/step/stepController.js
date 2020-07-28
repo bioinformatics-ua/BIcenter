@@ -131,7 +131,12 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
             });
         }
 
-        console.log(formValues)
+        // Get files
+        _.each($form[0], function(element){
+            if(element.type === "file" && element.files.length > 0){
+                formValues[element.name] = element.files[0];
+            }
+        });
 
         Step.applyChanges(this.institutionId, this.stepId, formValues, function (step) {
             console.log("Step", this.stepId, "has been updated!");
