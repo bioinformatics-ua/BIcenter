@@ -19,6 +19,13 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
     StepView.prototype.loadStep = function (step, inputSteps, inputFields, outputSteps, dataSources) {
         this.inputFields = inputFields;
 
+        //Convert File Inputs values
+        _.each(step.component.componentProperties, function(element){
+           if(element.type === "fileinput"){
+               element.stepProperty.value = JSON.parse(element.stepProperty.value);
+           }
+        });
+        
         var html = JST['step']({
             component: step.component,
             inputSteps: inputSteps,
@@ -26,6 +33,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
             outputSteps: outputSteps,
             dataSources: dataSources
         });
+
         this.$container.html(html);
         this._loadViewComponents();
 

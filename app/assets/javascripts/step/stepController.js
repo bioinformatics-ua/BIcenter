@@ -134,7 +134,17 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         // Get files
         _.each($form[0], function(element){
             if(element.type === "file" && element.files.length > 0){
-                formValues[element.name] = element.files[0];
+                var fileObject = element.files[0];
+
+                fileObject = {
+                    lastModified: fileObject.lastModified,
+                    name: fileObject.name,
+                    size: fileObject.size,
+                    type: fileObject.type,
+                    webkitRelativePath: fileObject.webkitRelativePath,
+                }
+
+                formValues[element.name] = fileObject;
             }
         });
 
