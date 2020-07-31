@@ -121,13 +121,8 @@
               "type": "input"
             },
             {
-              "name": "Lazy Conversion?",
-              "shortName": "lazyConversion",
-              "type": "checkbox"
-            },
-            {
               "name": "Header Row Present?",
-              "shortName": "lazyConversion",
+              "shortName": "headerRow",
               "type": "checkbox"
             }
           ]
