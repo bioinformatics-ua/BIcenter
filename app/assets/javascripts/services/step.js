@@ -45,8 +45,11 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
 
     Step.applyChanges = function (institutionId, stepId,formData,callback) {
         jsRoutes.controllers.StepController.applyChanges(institutionId, stepId).ajax({
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(formData),
+            data: formData,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+
             success: function (response) {
                 if (callback) {
                     callback(response);

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,8 +22,10 @@ import org.pentaho.di.core.row.ValueMeta;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.StepMeta;
+import play.api.libs.Files;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import repositories.*;
@@ -293,7 +296,18 @@ public class StepController extends Controller {
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
     public Result applyChanges(long institutionId, long stepId) {
-        JsonNode formData = request().body().asJson();
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+
+        Map<String, Object> map = new HashMap<>();
+        Map<String, String[]> bodyParams = body.asFormUrlEncoded();
+        for (Map.Entry<String, String[]> entry : bodyParams.entrySet()) {
+            map.put(entry.getKey(), entry.getValue()[0]);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode formData = mapper.valueToTree(map);
+
+        Http.MultipartFormData.FilePart<Files.TemporaryFile> csvFile = body.getFile("file");
 
         formData.fields().forEachRemaining(
             (node) ->
