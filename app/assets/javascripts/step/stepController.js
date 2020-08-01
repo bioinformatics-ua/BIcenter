@@ -118,13 +118,13 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         var formData = new FormData();
 
         // Get regular values
-        Object.keys(formValues).forEach(e => formData.append(e, JSON.stringify(formValues[e])));
+        //Object.keys(formValues).forEach(e => formData.append(e, JSON.stringify(formValues[e])));
 
         // Get condition values
         if (this.view.conditions) {
             _.each(this.view.conditions, function (condition) {
-                //formValues[condition.id] = context.view.$elements[condition.id].queryBuilder('getRules');
-                formData.append(condition.id, JSON.stringify(context.view.$elements[condition.id].queryBuilder('getRules')));
+                formValues[condition.id] = context.view.$elements[condition.id].queryBuilder('getRules');
+                //formData.append(condition.id, JSON.stringify(context.view.$elements[condition.id].queryBuilder('getRules')));
             });
         }
 
@@ -134,8 +134,8 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
                 var tableId = table.id;
                 var table = context.view.$elements[tableId].DataTable();
 
-                //formValues[tableId] = table.rows().data().toArray();
-                formData.append(tableId, JSON.stringify(table.rows().data().toArray()));
+                formValues[tableId] = table.rows().data().toArray();
+                //formData.append(tableId, JSON.stringify(table.rows().data().toArray()));
             });
         }
 
@@ -158,15 +158,24 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
             }
         });
 
-        // Check contents of formData
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]);
-        }
 
-        Step.applyChanges(this.institutionId, this.stepId, formData, function (step) {
-            console.log("Step", this.stepId, "has been updated!");
-            Router.navigatePrevious();
-        });
+        // Todo: make sure both functions execute properly before calling Router.navigatePrevious!
+
+        Step.applyChanges(this.institutionId, this.stepId, formValues,
+            function (step) {
+                console.log("Step", this.stepId, "has been updated!");
+            }
+        );
+
+        Step.uploadFile(this.institutionId, this.stepId, formData,
+            function (step) {
+                console.log("Step", this.stepId, "has uploaded a file!");
+            }
+        );
+
+        Router.navigatePrevious();
+
+
     };
 
     /**

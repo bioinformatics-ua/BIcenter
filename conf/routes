@@ -75,6 +75,7 @@ GET           /institution/:institutionId/step/:stepId/outputStepsName          
 GET           /institution/:institutionId/step/inputOutputFields                                         controllers.StepController.inputOutputFields(institutionId:Long,stepId:Long,before:Boolean)
 GET           /institution/:institutionId/step/:stepId/schema                                            controllers.StepController.getSchema(institutionId:Long,stepId:Long)
 POST          /institution/:institutionId/step/:stepId/apply                                             controllers.StepController.applyChanges(institutionId:Long,stepId:Long)
+POST          /institution/:institutionId/step/:stepId/upload                                            controllers.StepController.uploadFile(institutionId:Long,stepId:Long)
 GET           /institution/:institutionId/step/:stepId/name                                              controllers.StepController.getStepName(institutionId:Long,stepId:Long)
 GET           /institution/:institutionId/step/:stepId                                                   controllers.StepController.getStep(institutionId:Long,stepId:Long)
 GET           /institution/:institutionId/step/:stepId/tables                                            controllers.StepController.getTables(institutionId:Long,stepId:Long)

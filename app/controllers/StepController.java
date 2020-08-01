@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -134,7 +135,7 @@ public class StepController extends Controller {
         StepMeta stepMeta = getStep(transMeta, step.getLabel());
         SearchFieldsProgress op = new SearchFieldsProgress(transMeta, stepMeta, true);
         op.run();
-        Map<String,RowMetaInterface> rowMetaMap = op.getFields();
+        Map<String, RowMetaInterface> rowMetaMap = op.getFields();
 
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
@@ -147,6 +148,7 @@ public class StepController extends Controller {
 
     /**
      * Returns the labels of the output steps.
+     *
      * @param stepId
      * @return
      * @throws Exception
@@ -184,7 +186,7 @@ public class StepController extends Controller {
         StepMeta stepMeta = getStep(transMeta, step.getLabel());
         SearchFieldsProgress op = new SearchFieldsProgress(transMeta, stepMeta, before);
         op.run();
-        Map<String,RowMetaInterface> rowMetaMap = op.getFields();
+        Map<String, RowMetaInterface> rowMetaMap = op.getFields();
 
         JSONArray jsonArray = new JSONArray();
         for (Map.Entry<String, RowMetaInterface> entry : rowMetaMap.entrySet()) {
@@ -296,50 +298,59 @@ public class StepController extends Controller {
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
     public Result applyChanges(long institutionId, long stepId) {
-        Http.MultipartFormData body = request().body().asMultipartFormData();
+        System.out.println("Processing Data");
 
-        Map<String, Object> map = new HashMap<>();
-        Map<String, String[]> bodyParams = body.asFormUrlEncoded();
-        for (Map.Entry<String, String[]> entry : bodyParams.entrySet()) {
-            map.put(entry.getKey(), entry.getValue()[0]);
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode formData = mapper.valueToTree(map);
-
-        Http.MultipartFormData.FilePart<Files.TemporaryFile> csvFile = body.getFile("file");
+        JsonNode formData = request().body().asJson();
 
         formData.fields().forEachRemaining(
-            (node) ->
-            {
-                try {
-                    String value = node.getValue() instanceof TextNode ? node.getValue().asText() : node.getValue().toString();
-                    long componentPropertyId = Long.parseLong(node.getKey().toString());
-                    StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId,componentPropertyId);
+                (node) ->
+                {
+                    try {
+                        String value = node.getValue() instanceof TextNode ? node.getValue().asText() : node.getValue().toString();
+                        long componentPropertyId = Long.parseLong(node.getKey().toString());
+                        StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentPropertyId);
 
-                    ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertyId);
-                    if (stepProperty == null) {
-                        stepProperty = new StepProperty(value);
-                        stepProperty.setComponentProperty(componentProperty);
-                        stepProperty.setStep(stepRepository.get(stepId));
-                        stepPropertyRepository.add(stepProperty);
-                    } else {
-                        stepProperty.setValue(value);
-                        stepPropertyRepository.add(stepProperty);
-                    }
+                        ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertyId);
+                        if (stepProperty == null) {
+                            stepProperty = new StepProperty(value);
+                            stepProperty.setComponentProperty(componentProperty);
+                            stepProperty.setStep(stepRepository.get(stepId));
+                            stepPropertyRepository.add(stepProperty);
+                        } else {
+                            stepProperty.setValue(value);
+                            stepPropertyRepository.add(stepProperty);
+                        }
 
-                    if(componentProperty.getShortName().equals("stepName")){
-                        Step step = stepRepository.get(stepId);
-                        step.setLabel(value);
-                        stepRepository.add(step);
+                        if (componentProperty.getShortName().equals("stepName")) {
+                            Step step = stepRepository.get(stepId);
+                            step.setLabel(value);
+                            stepRepository.add(step);
+                        }
+                    } catch (Exception e) {
                     }
                 }
-                catch(Exception e){ }
-            }
         );
 
         return ok();
     }
+
+    /**
+     * Upload a file and apply changes to a given step
+     *
+     * @return
+     */
+    @Security.Authenticated(Secured.class)
+    @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
+    public Result uploadFile(long institutionId, long stepId) {
+        System.out.println("Processing File");
+
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+
+        Http.MultipartFormData.FilePart<Files.TemporaryFile> csvFile = body.getFile("file");
+
+        return ok();
+    }
+
 
     /**
      * Return ComponentProperty Ids of table elements.
@@ -381,8 +392,10 @@ public class StepController extends Controller {
         ObjectNode jsonObject = Json.newObject();
 
         JsonNode value = Json.toJson(new String[0]);
-        try { value = Json.parse(stepProperty.getValue()); }
-        catch(NullPointerException e){ }
+        try {
+            value = Json.parse(stepProperty.getValue());
+        } catch (NullPointerException e) {
+        }
 
         jsonObject.put("data", value);
         return ok(jsonObject);
@@ -423,12 +436,11 @@ public class StepController extends Controller {
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.GET})
     public Result getConditionValue(long institutionId, long stepId, long componentId) {
-        try{
+        try {
             Step step = stepRepository.get(stepId);
             StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentId);
             return ok(Json.parse(stepProperty.getValue()));
-        }
-        catch(NullPointerException e){
+        } catch (NullPointerException e) {
             return ok();
         }
     }
@@ -461,14 +473,14 @@ public class StepController extends Controller {
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.GET})
     public Result getByComponentAndShortName(long institutionId, long componentId, String shortName) {
-        long componentPropertyId = componentPropertyRepository.getByComponentAndShortName(componentId,shortName).getId();
+        long componentPropertyId = componentPropertyRepository.getByComponentAndShortName(componentId, shortName).getId();
         return ok(String.valueOf(componentPropertyId));
     }
 
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.GET})
     public Result getMetadataByComponentAndShortName(long institutionId, long componentId, String shortName) {
-        long componentMetadataId = componentMetadataRepository.getMetadataByComponentAndShortName(componentId,shortName).getId();
+        long componentMetadataId = componentMetadataRepository.getMetadataByComponentAndShortName(componentId, shortName).getId();
         return ok(String.valueOf(componentMetadataId));
     }
 

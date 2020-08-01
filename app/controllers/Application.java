@@ -94,6 +94,7 @@ public class Application extends Controller {
                 routes.javascript.StepController.getStepName(),
                 routes.javascript.StepController.getStep(),
                 routes.javascript.StepController.applyChanges(),
+                routes.javascript.StepController.uploadFile(),
                 routes.javascript.StepController.getTables(),
                 routes.javascript.StepController.getTableValue(),
                 routes.javascript.StepController.getConditions(),
