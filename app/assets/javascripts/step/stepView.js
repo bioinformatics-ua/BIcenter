@@ -22,7 +22,7 @@ define('StepView', ['View', 'Step', 'jsRoutes', 'underscore', 'templates', 'data
         //Convert File Inputs values
         _.each(step.component.componentProperties, function(element){
            if(element.type === "fileinput" && element.stepProperty != null){
-               element.stepProperty.value = JSON.parse(element.stepProperty.value);
+               element.stepProperty.value = element.stepProperty.value;
            }
         });
 

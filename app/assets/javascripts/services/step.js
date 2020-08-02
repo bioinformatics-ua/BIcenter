@@ -43,40 +43,40 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Step.applyChanges = function (institutionId, stepId, formData, callback) {
-        console.log("Updating")
+    Step.applyChanges = function (institutionId, stepId, formData, fileData, callback) {
         jsRoutes.controllers.StepController.applyChanges(institutionId, stepId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(formData),
             success: function (response) {
-                if (callback) {
-                    callback(response);
+                // If there's a file to upload, upload it
+                if (fileData != null) {
+                    jsRoutes.controllers.StepController.uploadFile(institutionId, stepId).ajax({
+                        data: fileData,
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+
+                        success: function (response) {
+                            if (callback) {
+                                callback(response);
+                            }
+                        },
+                        error: function (response) {
+                            console.error('Error in Step service when uploading file', response);
+                        }
+                    })
+                } else {
+                    if (callback) {
+                        callback(response);
+                    }
                 }
             },
             error: function (response) {
-                console.error('Error in Step service', response);
+                console.error('Error in Step service when updating step', response);
             }
         })
     };
 
-    Step.uploadFile = function(institutionId, stepId, formData, callback){
-        console.log("Sending File")
-        jsRoutes.controllers.StepController.uploadFile(institutionId, stepId).ajax({
-            data: formData,
-            type: 'POST',
-            contentType: false,
-            processData: false,
-
-            success: function (response) {
-                if (callback) {
-                    callback(response);
-                }
-            },
-            error: function (response) {
-                console.error('Error in Step service', response);
-            }
-        })
-    }
 
     Step.getTables = function (institutionId, stepId, callback) {
         jsRoutes.controllers.StepController.getTables(institutionId, stepId).ajax({

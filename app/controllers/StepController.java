@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,13 +18,13 @@ import kettleExt.utils.JSONObject;
 import models.*;
 import models.rbac.Category;
 import models.rbac.Operation;
+import org.apache.commons.lang.RandomStringUtils;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMeta;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.StepMeta;
-import play.api.libs.Files;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -342,11 +343,36 @@ public class StepController extends Controller {
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.UPDATE})
     public Result uploadFile(long institutionId, long stepId) {
-        System.out.println("Processing File");
-
         Http.MultipartFormData body = request().body().asMultipartFormData();
 
-        Http.MultipartFormData.FilePart<Files.TemporaryFile> csvFile = body.getFile("file");
+        List<Http.MultipartFormData.FilePart<Object>> filePart = body.getFiles();
+        if (filePart != null && !filePart.isEmpty()) {
+            /*
+            int length = 25;
+            boolean useLetters = true;
+            boolean useNumbers = false;
+            String randomName = RandomStringUtils.random(length, useLetters, useNumbers);
+            */
+            
+            File file = (File) filePart.get(0).getFile();
+
+            try {
+                long componentPropertyId = Long.parseLong(filePart.get(0).getKey());
+                StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentPropertyId);
+
+                ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertyId);
+                if (stepProperty == null) {
+                    stepProperty = new StepProperty(file.getPath());
+                    stepProperty.setComponentProperty(componentProperty);
+                    stepProperty.setStep(stepRepository.get(stepId));
+                    stepPropertyRepository.add(stepProperty);
+                } else {
+                    stepProperty.setValue(file.getPath());
+                    stepPropertyRepository.add(stepProperty);
+                }
+            } catch (Exception e) {
+            }
+        }
 
         return ok();
     }

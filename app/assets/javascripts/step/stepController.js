@@ -115,7 +115,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
 
         var context = this;
 
-        var formData = new FormData();
+        var formData = null;
 
         // Get regular values
         //Object.keys(formValues).forEach(e => formData.append(e, JSON.stringify(formValues[e])));
@@ -142,39 +142,19 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         // Get files
         _.each($form[0], function(element){
             if(element.type === "file" && element.files.length > 0){
+                formData = new FormData();
+
                 var fileObject = element.files[0];
-
-                /*
-                fileObject = {
-                    lastModified: fileObject.lastModified,
-                    name: fileObject.name,
-                    size: fileObject.size,
-                    type: fileObject.type,
-                    webkitRelativePath: fileObject.webkitRelativePath,
-                }
-                 */
-
                 formData.append(element.name, fileObject);
             }
         });
 
-
-        // Todo: make sure both functions execute properly before calling Router.navigatePrevious!
-
-        Step.applyChanges(this.institutionId, this.stepId, formValues,
+        Step.applyChanges(this.institutionId, this.stepId, formValues, formData,
             function (step) {
                 console.log("Step", this.stepId, "has been updated!");
+                Router.navigatePrevious();
             }
         );
-
-        Step.uploadFile(this.institutionId, this.stepId, formData,
-            function (step) {
-                console.log("Step", this.stepId, "has uploaded a file!");
-            }
-        );
-
-        Router.navigatePrevious();
-
 
     };
 
