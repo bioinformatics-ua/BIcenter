@@ -121,8 +121,18 @@
               "type": "input"
             },
             {
+              "name": "NIO Buffer Size",
+              "shortName": "bufferSize",
+              "type": "number"
+            },
+            {
+              "name": "Lazy Conversion?",
+              "shortName": "lazyConversionActive",
+              "type": "checkbox"
+            },
+            {
               "name": "Header Row Present?",
-              "shortName": "headerRow",
+              "shortName": "headerPresent",
               "type": "checkbox"
             }
           ]
