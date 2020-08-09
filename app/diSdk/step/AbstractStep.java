@@ -49,6 +49,10 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         PluginInterface sp = registry.findPluginWithId(StepPluginType.class, stepid);
         StepMetaInterface stepMetaInterface = (StepMetaInterface) registry.loadClass(sp);
 
+        // Variables used for CSV File Reading
+        String fileName = null;
+        String delimiter = null;
+
         System.out.println(stepname);
 
         if (stepMetaInterface != null) {
@@ -101,21 +105,25 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
                         // If dealing with CSVFileInput get the input fields and define them
                         if (shortName.equals("InputFields")) {
-                            Optional<StepProperty> fileNameStepProperty = stepProperties.stream()
-                                    .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Filename"))
-                                    .findFirst();
+                            if(fileName == null){
+                                Optional<StepProperty> fileNameStepProperty = stepProperties.stream()
+                                        .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Filename"))
+                                        .findFirst();
 
-                            if (!fileNameStepProperty.isPresent())
-                                continue;
-                            String fileName = fileNameStepProperty.get().getValue();
+                                if (!fileNameStepProperty.isPresent())
+                                    continue;
+                                fileName = fileNameStepProperty.get().getValue();
+                            }
 
-                            Optional<StepProperty> delimiterStepProperty = stepProperties.stream()
-                                    .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Delimiter"))
-                                    .findFirst();
+                            if(delimiter == null){
+                                Optional<StepProperty> delimiterStepProperty = stepProperties.stream()
+                                        .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Delimiter"))
+                                        .findFirst();
 
-                            if (!delimiterStepProperty.isPresent())
-                                continue;
-                            String delimiter = delimiterStepProperty.get().getValue();
+                                if (!delimiterStepProperty.isPresent())
+                                    continue;
+                                delimiter = delimiterStepProperty.get().getValue();
+                            }
 
                             try{
                                 BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -137,10 +145,6 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                                 // Invoke the current method with the StepProperty value.
                                 invokeMethod(stepMetaInterface, method, value, databases);
 
-                                stepProperties.remove(fileNameStepProperty.get());
-                                stepProperties.remove(delimiterStepProperty.get());
-
-
                             }catch (FileNotFoundException e){
 
                             }
@@ -158,9 +162,9 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
                     if (optStepProperty.get().getComponentProperty().getType().equals("checkbox")) {
                         if (optStepProperty.get().getValue().equals("on")) {
-                            value = "true";
+                            value = true;
                         } else {
-                            value = "false";
+                            value = false;
                         }
                     }
 
@@ -174,11 +178,17 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
                     System.out.println("VALUE - " + value.toString() + "\n");
 
-                    // Invoke the current method with the StepProperty value.
-                    invokeMethod(stepMetaInterface, method, value, databases);
+                    if(shortName.equals("Filename")){
+                        fileName = value.toString();
+                    }
+                    if(shortName.equals("Delimiter")){
+                        delimiter = value.toString();
+                    }
 
-                    if(!shortName.equals("Delimiter") && !shortName.equals("Filename"))
-                        stepProperties.remove(optStepProperty.get());
+                        // Invoke the current method with the StepProperty value.
+                    invokeMethod(stepMetaInterface, method, value, databases);
+                    stepProperties.remove(optStepProperty.get());
+
                 }
             }
 

@@ -126,13 +126,17 @@
               "type": "number"
             },
             {
-              "name": "Lazy Conversion?",
-              "shortName": "lazyConversionActive",
-              "type": "checkbox"
+              "name": "File Encoding",
+              "shortName": "encoding",
+              "type": "select",
+              "componentMetadatas": [
+                {"value":"UTF-8","name":"UTF-8"},
+                {"value":"ANSI","name":"ANSI"}
+              ]
             },
             {
-              "name": "Header Row Present?",
-              "shortName": "headerPresent",
+              "name": "Lazy Conversion?",
+              "shortName": "lazyConversionActive",
               "type": "checkbox"
             }
           ]
