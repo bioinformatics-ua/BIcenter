@@ -11,7 +11,6 @@ define('HeaderController', ['Controller', 'HeaderView', 'jsRoutes', 'Router', 'T
         var self = this;
         this.getUser(function (user) {
             _super_.initialize.call(self, $container, user);
-            console.log(user);
         });
 
         this.executions = [];

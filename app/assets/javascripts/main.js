@@ -54,16 +54,17 @@ requirejs.config({
         'User': 'services/user',
         'Svg': 'services/svg',
 
+		// Login
         'LoginController': 'login/controllers/loginController',
         'LoginView': 'login/views/loginView',
+
+		// Home
+		'HomeController': 'home/homeController',
+		'HomeView': 'home/homeView',
 
         // Header
         'HeaderController': 'header/headerController',
         'HeaderView': 'header/headerView',
-
-        // Main Container
-        'ContainerController': 'container/containerController',
-        'ContainerView': 'container/containerView',
 
         // Graph
         'GraphController': 'graph/graphController',

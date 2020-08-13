@@ -20,7 +20,12 @@ public class HomeController extends Controller {
      */
     @Security.Authenticated(Secured.class)
     public Result index() {
-        return ok(index.render());
+        return ok(views.html.home.render());
     }
+
+	@Security.Authenticated(Secured.class)
+	public Result graph() {
+		return ok(index.render());
+	}
 
 }
