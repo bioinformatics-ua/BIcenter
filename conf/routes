@@ -8,6 +8,8 @@
 # An example controller showing a sample home page
 GET           /                                                                                          controllers.HomeController.index()
 GET           /home                                                                                      controllers.HomeController.index()
+
+# TODO: remove this handler when no longer need
 GET           /graph                                                                                     controllers.HomeController.graph()
 GET           /assets/javascripts/jsroutes.js                                                            controllers.Application.javascriptRoutes
 GET           /assets/javascripts/messages.js                                                            controllers.Application.jsMessages
