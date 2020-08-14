@@ -18,7 +18,6 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 		// Add routes
 		Router
 			.add(new RegExp(jsRoutes.controllers.login.Login.index().url.substr(1), 'i'), function () {
-				console.log(new RegExp(jsRoutes.controllers.login.Login.index().url.substr(1), 'i'));
 				console.log("LOGIN PAGE");
 			})
 			.add(new RegExp(jsRoutes.controllers.StepController.showStepInput('(.*)', '(.*)', '(.*)').url.substr(1), 'i'), function (institutionId, graphId, stepId) {
@@ -157,7 +156,8 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 				self.loadControllers('MainModule', ['SchedulerController'], opts);
 				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
 			})
-			.add(new RegExp("graph", "i"),function () {
+			.add(new RegExp("graph", "i"), function () {
+				// TODO: remove this handler when no longer need
 				console.log('graph');
 
 				const opts = {

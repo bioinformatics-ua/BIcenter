@@ -1,4 +1,4 @@
-define('HomeController', ['Controller', 'HomeView', 'User', 'jquery', 'jsRoutes', 'jquery-cookie'], function (Controller, HomeView, $, jsRoutes) {
+define('HomeController', ['Controller', 'HomeView', 'Institution', 'jquery', 'jsRoutes', 'jquery-cookie'], function (Controller, HomeView, Institution, $, jsRoutes) {
 	const HomeController = function (module) {
 		Controller.call(this, module, new HomeView(this));
 	};
@@ -9,6 +9,11 @@ define('HomeController', ['Controller', 'HomeView', 'User', 'jquery', 'jsRoutes'
 
 	HomeController.prototype.initialize = function ($container) {
 		_super_.initialize.call(this, $container);
+
+		const context = this;
+		Institution.getInstitutions(function (institutions) {
+			context.view.loadInstitutions(institutions);
+		});
 	};
 
 	return HomeController;

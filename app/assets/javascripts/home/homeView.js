@@ -11,5 +11,13 @@ define('HomeView', ['jquery', 'View'], function ($, View) {
 		_super_.initialize.call(this, $container);
 	};
 
+	HomeView.prototype.loadInstitutions = function (institutions) {
+		var html = JST['home']({
+			institutions: institutions
+		});
+		this.$container.html(html);
+		this._loadViewComponents();
+	};
+
 	return HomeView;
 });
