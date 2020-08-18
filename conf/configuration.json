@@ -392,6 +392,18 @@
               "type": "input"
             }
           ]
+        },
+        {
+          "name": "Usagi Conversion",
+          "description": "Usagi Conversion",
+          "shortName": "usagi",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            }
+          ]
         }
       ]
     },
