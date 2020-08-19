@@ -41,6 +41,13 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
      */
     @Override
     public StepMeta decodeStep(Step step, List<DatabaseMeta> databases) throws Exception {
+        /*TODO
+        1. Where do I put the mapping logic?
+        2. Can it be done? Não sei onde no flow de execucao é que posso fazer este tipo de cena
+        3. Toda a logica do BICenter revolve à volta da interpretação de input e feeding ao PentahoPDI..this breaks from that
+        4. What am I supposed to do with the conversion?
+         */
+
         String stepid = step.getComponent().getName();
         String stepname = step.getLabel();
 
@@ -52,6 +59,9 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         // Variables used for CSV File Reading
         String fileName = null;
         String delimiter = null;
+        Map<String,String> usagiExportMapping = null;
+        String usagiExportFilename = null;
+
 
         System.out.println(stepname);
 
@@ -67,6 +77,31 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                     .filter(method -> method.getName().startsWith("set") || method.getName().equals("getStepIOMeta"))
                     .filter(method -> method.getParameterCount() == 1 || method.getName().equals("getStepIOMeta"))
                     .toArray(Method[]::new);
+
+            // USAGI PREPROCESSING //
+            Optional<StepProperty> usagiStepProperty = stepProperties.stream()
+                    .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Usagi"))
+                    .findFirst();
+
+            if (usagiStepProperty.isPresent()){
+                usagiExportFilename = usagiStepProperty.get().getValue();
+                try{
+                    BufferedReader br = new BufferedReader(new FileReader(usagiExportFilename));
+                    br.readLine(); //Skip Header
+
+                    usagiExportMapping = new HashMap<>();
+
+                    String row;
+                    while ((row = br.readLine()) != null) {
+                        String[] data = row.split(",");
+                        usagiExportMapping.put(data[1], data[5]);
+                    }
+
+                }catch (FileNotFoundException e){
+
+                }
+            }
+            /////////////////////////
 
             for (Method method : methods) {
                 if (method.getName().equals("getStepIOMeta")) {

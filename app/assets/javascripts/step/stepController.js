@@ -142,7 +142,8 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         // Get files
         _.each($form[0], function(element){
             if(element.type === "file" && element.files.length > 0){
-                formData = new FormData();
+                if(formData === null)
+                    formData = new FormData();
 
                 var fileObject = element.files[0];
                 formData.append(element.name, fileObject);

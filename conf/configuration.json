@@ -138,6 +138,11 @@
               "name": "Lazy Conversion?",
               "shortName": "lazyConversionActive",
               "type": "checkbox"
+            },
+            {
+              "name": "USAGI Mapping",
+              "shortName": "usagi",
+              "type": "fileinput"
             }
           ]
         }
@@ -385,18 +390,6 @@
           "name": "Dummy",
           "description": "Dummy (do nothing)",
           "shortName": "dummy",
-          "componentProperties": [
-            {
-              "name": "Step Name",
-              "shortName": "stepName",
-              "type": "input"
-            }
-          ]
-        },
-        {
-          "name": "Usagi Conversion",
-          "description": "Usagi Conversion",
-          "shortName": "usagi",
           "componentProperties": [
             {
               "name": "Step Name",
