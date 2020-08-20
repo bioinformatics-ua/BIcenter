@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
  */
 @Singleton
 public class ApplicationStart {
-    private static String filePath = "conf" + File.separator + "configuration.json";
+    private static final String filePath = "conf" + File.separator + "configuration.json";
 
     private final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger("application");
 
@@ -230,10 +230,10 @@ public class ApplicationStart {
         }
     }
 
-    /**
-     * Build Quartz Schedules based on the JPA Schedules.
-     */
-    private void buildSchedulers(){
-        // TODO
-    }
+	/**
+	 * Build Quartz Schedules based on the JPA Schedules.
+	 */
+	private void buildSchedulers() {
+		// TODO: missing implementation
+	}
 }
