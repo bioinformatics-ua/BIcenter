@@ -156,19 +156,10 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 				self.loadControllers('MainModule', ['SchedulerController'], opts);
 				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
 			})
-			.add(new RegExp("graph", "i"), function () {
-				// TODO: remove this handler when no longer need
-				console.log('graph');
-
-				const opts = {
-					tab: "resources"
-				}
-
-				self.loadController('MainModule', 'GraphController', opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
-			})
 			.add(function () {
 				console.log("homepage");
+
+				self.loadControllers('MainModule', ['HomeController', 'TaskController', 'ServerController', 'DataSourceController']);
 			});
 
 		// Start listening

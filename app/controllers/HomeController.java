@@ -4,7 +4,6 @@ import controllers.login.Secured;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.index;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -21,13 +20,6 @@ public class HomeController extends Controller {
 	@Security.Authenticated(Secured.class)
 	public Result index() {
 		return ok(views.html.home.render());
-	}
-
-	// temporary entry to assist development
-	// TODO: remove this handler when no longer need
-	@Security.Authenticated(Secured.class)
-	public Result graph() {
-		return ok(index.render());
 	}
 
 }

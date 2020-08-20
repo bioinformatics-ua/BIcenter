@@ -12,13 +12,6 @@
 						<h3 class="panel-title"><b>{{name}}</b></h3>
 					</div>
 					<div class="panel-body">
-						{{!--
-						{{#tasks}}<p>{{name}}</p>{{/tasks}}
-						<hr>
-						{{#servers}}<p>{{name}}</p>{{/servers}}
-						<hr>
-						{{#dataSources}}<p>{{connectionName}}</p>{{/dataSources}}
-						--}}
 						<ul class="treeview-menu" data-widget="tree">
 							<!-- Execution Scheduler -->
 							<li>
@@ -30,7 +23,7 @@
 
 							<!-- Tasks -->
 							<li class="treeview menu"
-								onclick="if(event.target.getAttribute('name') === 'tasks'){this.classList.toggle('menu-open');this.classList.toggle('menu');;this.classList.toggle('active');}">
+								onclick="if(event.target.getAttribute('name') === 'tasks'){this.classList.toggle('menu-open');this.classList.toggle('menu');this.classList.toggle('active');}">
 								<a name="tasks">
 									<i class="fa fa-folder"></i> <span>Tasks</span>
 									<span class="pull-right-container">
@@ -72,7 +65,7 @@
 
 							<!-- Servers -->
 							<li class="treeview menu"
-								onclick="if(event.target.getAttribute('name') == 'servers'){this.classList.toggle('menu-open');this.classList.toggle('menu');}">
+								onclick="if(event.target.getAttribute('name') === 'servers'){this.classList.toggle('menu-open');this.classList.toggle('menu');this.classList.toggle('active');}">
 								<a name="servers">
 									<i class="fa fa-folder"></i> <span>Servers</span>
 									<span class="pull-right-container">
@@ -115,7 +108,7 @@
 
 							<!-- Data Sources -->
 							<li class="treeview menu"
-								onclick="if(event.target.getAttribute('name') == 'sources'){this.classList.toggle('menu-open');this.classList.toggle('menu');}">
+								onclick="if(event.target.getAttribute('name') === 'sources'){this.classList.toggle('menu-open');this.classList.toggle('menu');this.classList.toggle('active');}">
 								<a name="sources">
 									<i class="fa fa-folder"></i> <span>Data Sources</span>
 									<span class="pull-right-container">

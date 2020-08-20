@@ -45,33 +45,47 @@ define('DataSourceController', ['Controller', 'DataSourceView', 'async', 'Router
                 }
             ],
             function (err) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
+				if (err) {
+					console.error(err);
+					return;
+				}
 
-                context.view.show(context.dataSource,context.institutions);
-            }
-        );
-    }
+				context.view.show(context.dataSource, context.institutions);
+			}
+		);
+	}
 
-    DataSourceController.prototype.updateDataSource = function(event) {
-        if (event) {
-            event.preventDefault && event.preventDefault();
-            event.stopPropagation && event.stopPropagation();
-            event.stopImmediatePropagation && event.stopImmediatePropagation();
-        }
+	DataSourceController.prototype.reloadInstitutionInfo = function () {
+		let institutionDisplayController;
 
-        var $form = this.view.$elements[this.dataSource.id];
-        var formValues = $form.serializeForm();
+		const sidebarController = this.module.controllers['SidebarController'];
+		if (sidebarController !== undefined) {
+			institutionDisplayController = sidebarController;
+		} else {
+			institutionDisplayController = this.module.controllers['HomeController'];
+		}
 
-        var context = this;
-        Institution.updateDataSource(this.institutionId,this.dataSource.id, formValues, function (dataSource) {
-            console.log("DataSource", dataSource.id, "has been updated!");
-        });
+		institutionDisplayController.getTasks();
+	};
 
-        this.view.hide();
-    };
+	DataSourceController.prototype.updateDataSource = function (event) {
+		if (event) {
+			event.preventDefault && event.preventDefault();
+			event.stopPropagation && event.stopPropagation();
+			event.stopImmediatePropagation && event.stopImmediatePropagation();
+		}
+
+		const $form = this.view.$elements[this.dataSource.id];
+		const formValues = $form.serializeForm();
+
+		const context = this;
+		Institution.updateDataSource(this.institutionId, this.dataSource.id, formValues, function (dataSource) {
+			console.log("DataSource", dataSource.id, "has been updated!");
+			context.reloadInstitutionInfo();
+		});
+
+		this.view.hide();
+	};
 
     DataSourceController.prototype.deleteDataSource = function(event) {
         if (event) {
@@ -81,11 +95,10 @@ define('DataSourceController', ['Controller', 'DataSourceView', 'async', 'Router
         }
 
         var context = this;
-        Institution.deleteDataSource(this.institutionId, this.dataSource.id, function(){
-            context.view.hide();
-            var sidebarController = context.module.controllers['SidebarController'];
-            sidebarController.getTasks();
-        });
+		Institution.deleteDataSource(this.institutionId, this.dataSource.id, function () {
+			context.view.hide();
+			context.reloadInstitutionInfo();
+		});
     }
 
     /**
