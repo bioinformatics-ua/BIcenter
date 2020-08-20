@@ -21,6 +21,31 @@ define('HomeController', ['Controller', 'HomeView', 'Router', 'Institution', 'Ta
 		});
 	};
 
+	// INSTITUTIONS //
+	// TODO: check with @joaorafaelalmeida the underlying logic of this operation
+	HomeController.prototype.createInstitution = function (event) {
+		if (event) {
+			event.preventDefault && event.preventDefault();
+			event.stopPropagation && event.stopPropagation();
+			event.stopImmediatePropagation && event.stopImmediatePropagation();
+		}
+
+		const $form = this.view.$elements['_newInstitution'];
+		const formValues = $form.serializeForm();
+		this.institutionName = formValues['institutionName'];
+
+		const context = this;
+
+		Institution.newInstitution(this.institutionName, institution => {
+			if (institution === "not found") {
+				Alert.flash(ALERT_TYPE.DANGER, 'Institution', 'Institution \'' + context.institutionName + '\' already exists!');
+			} else {
+				Alert.flash(ALERT_TYPE.SUCCESS, 'Institution', 'Institution \'' + context.institutionName + '\' was successfully created!');
+			}
+			context.getTasks();
+		});
+	};
+
 	// SCHEDULER //
 	HomeController.prototype.showSchedule = function (institution) {
 		const configStepUrl = jsRoutes.controllers.InstitutionController.scheduler(institution).url;

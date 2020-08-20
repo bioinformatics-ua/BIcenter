@@ -94,7 +94,7 @@ define('DataSourceController', ['Controller', 'DataSourceView', 'async', 'Router
             event.stopImmediatePropagation && event.stopImmediatePropagation();
         }
 
-        var context = this;
+        const context = this;
 		Institution.deleteDataSource(this.institutionId, this.dataSource.id, function () {
 			context.view.hide();
 			context.reloadInstitutionInfo();

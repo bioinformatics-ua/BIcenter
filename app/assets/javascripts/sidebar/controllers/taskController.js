@@ -44,32 +44,44 @@ define('TaskController', ['Controller', 'TaskView', 'async', 'Router', 'Institut
                     });
                 }
             ],
-            function (err) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
+			function (err) {
+				if (err) {
+					console.error(err);
+					return;
+				}
 
-                context.view.show(context.task,context.institutions);
-            }
-        );
-    }
+				context.view.show(context.task, context.institutions);
+			}
+		);
+	}
 
-    TaskController.prototype.updateTask = function(event) {
-        if (event) {
-            event.preventDefault && event.preventDefault();
-            event.stopPropagation && event.stopPropagation();
-            event.stopImmediatePropagation && event.stopImmediatePropagation();
-        }
+	TaskController.prototype.reloadInstitutionInfo = function () {
+		let institutionDisplayController;
 
-        var $form = this.view.$elements[this.task.id];
-        var formValues = $form.serializeForm();
+		const sidebarController = this.module.controllers['SidebarController'];
+		if (sidebarController !== undefined) {
+			institutionDisplayController = sidebarController;
+		} else {
+			institutionDisplayController = this.module.controllers['HomeController'];
+		}
+
+		institutionDisplayController.getTasks();
+	};
+
+	TaskController.prototype.updateTask = function (event) {
+		if (event) {
+			event.preventDefault && event.preventDefault();
+			event.stopPropagation && event.stopPropagation();
+			event.stopImmediatePropagation && event.stopImmediatePropagation();
+		}
+
+		var $form = this.view.$elements[this.task.id];
+		var formValues = $form.serializeForm();
 
         var context = this;
         Task.updateTask(this.institutionId, this.task.id, formValues, function (task) {
-            console.log("Task", task.id, "has been updated!");
-            var sidebarController = context.module.controllers['SidebarController'];
-            sidebarController.getTasks();
+			console.log("Task", task.id, "has been updated!");
+			context.reloadInstitutionInfo();
         });
 
         this.view.hide();
@@ -83,11 +95,10 @@ define('TaskController', ['Controller', 'TaskView', 'async', 'Router', 'Institut
         }
 
         var context = this;
-        Task.deleteTask(this.institutionId, this.task.id, function(){
-            context.view.hide();
-            var sidebarController = context.module.controllers['SidebarController'];
-            sidebarController.getTasks();
-        });
+        Task.deleteTask(this.institutionId, this.task.id, function() {
+			context.view.hide();
+			context.reloadInstitutionInfo();
+		});
     }
 
     /**

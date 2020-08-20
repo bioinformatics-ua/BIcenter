@@ -44,27 +44,13 @@ public class Application extends Controller {
 
                 // Login controller
                 controllers.login.routes.javascript.Login.index(),
-                controllers.login.routes.javascript.Login.login(),
-                controllers.login.routes.javascript.Login.logout(),
-                controllers.rbac.routes.javascript.Users.getLoggedInUser(),
+                controllers.login.routes.javascript.Login.login(), controllers.login.routes.javascript.Login.logout(), controllers.rbac.routes.javascript.Users.getLoggedInUser(),
 
 //                routes.javascript.SvgController.getMiddleImage(),
 //                routes.javascript.SvgController.getSmallImage(),
-                routes.javascript.SvgController.getImage(),
+				routes.javascript.SvgController.getImage(),
 
-                routes.javascript.InstitutionController.getInstitutionName(),
-                routes.javascript.InstitutionController.scheduler(),
-                routes.javascript.InstitutionController.getInstitutions(),
-                routes.javascript.InstitutionController.newServer(),
-                routes.javascript.InstitutionController.deleteServer(),
-                routes.javascript.InstitutionController.getServer(),
-                routes.javascript.InstitutionController.updateServer(),
-                routes.javascript.InstitutionController.newDataSource(),
-                routes.javascript.InstitutionController.deleteDataSource(),
-                routes.javascript.InstitutionController.getDataSource(),
-                routes.javascript.InstitutionController.updateDataSource(),
-                routes.javascript.InstitutionController.getDataSources(),
-                routes.javascript.InstitutionController.getComponents(),
+				routes.javascript.InstitutionController.getInstitutionName(), routes.javascript.InstitutionController.scheduler(), routes.javascript.InstitutionController.getInstitutions(), routes.javascript.InstitutionController.newInstitution(), routes.javascript.InstitutionController.newServer(), routes.javascript.InstitutionController.deleteServer(), routes.javascript.InstitutionController.getServer(), routes.javascript.InstitutionController.updateServer(), routes.javascript.InstitutionController.newDataSource(), routes.javascript.InstitutionController.deleteDataSource(), routes.javascript.InstitutionController.getDataSource(), routes.javascript.InstitutionController.updateDataSource(), routes.javascript.InstitutionController.getDataSources(), routes.javascript.InstitutionController.getComponents(),
                 routes.javascript.InstitutionController.getSchedules(),
 
                 routes.javascript.TransGraphController.getTaskDetails(),

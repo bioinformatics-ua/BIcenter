@@ -153,6 +153,28 @@
 				</div>
 			</div>
 		{{/institutions}}
+
+		<div class="institution col-lg-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><b>New Institution</b></h3>
+				</div>
+				<div class="panel-body">
+					<form view-element="_newInstitution"
+						  view-submit="controller.createInstitution();" class="sidebar-form">
+						<div class="input-group">
+							<input name="institutionName" class="form-control"
+								   placeholder="Add an Institution...">
+							<span class="input-group-btn">
+								<button type="submit" name="search" id="search-btn" class="btn btn-flat">
+									<i class="fa fa-plus-circle"></i>
+								</button>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </div>

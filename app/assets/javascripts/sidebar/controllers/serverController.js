@@ -45,33 +45,47 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
                 }
             ],
             function (err) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
+				if (err) {
+					console.error(err);
+					return;
+				}
 
-                context.view.show(context.server,context.institutions);
-            }
-        );
-    }
+				context.view.show(context.server, context.institutions);
+			}
+		);
+	}
 
-    ServerController.prototype.updateServer = function(event) {
-        if (event) {
-            event.preventDefault && event.preventDefault();
-            event.stopPropagation && event.stopPropagation();
-            event.stopImmediatePropagation && event.stopImmediatePropagation();
-        }
+	DataSourceController.prototype.reloadInstitutionInfo = function () {
+		let institutionDisplayController;
 
-        var $form = this.view.$elements[this.server.id];
-        var formValues = $form.serializeForm();
+		const sidebarController = this.module.controllers['SidebarController'];
+		if (sidebarController !== undefined) {
+			institutionDisplayController = sidebarController;
+		} else {
+			institutionDisplayController = this.module.controllers['HomeController'];
+		}
 
-        var context = this;
-        Institution.updateServer(this.institutionId, this.server.id, formValues, function (server) {
-            console.log("Server", server.id, "has been updated!");
-        });
+		institutionDisplayController.getTasks();
+	};
 
-        this.view.hide();
-    };
+	ServerController.prototype.updateServer = function (event) {
+		if (event) {
+			event.preventDefault && event.preventDefault();
+			event.stopPropagation && event.stopPropagation();
+			event.stopImmediatePropagation && event.stopImmediatePropagation();
+		}
+
+		const $form = this.view.$elements[this.server.id];
+		const formValues = $form.serializeForm();
+
+		const context = this;
+		Institution.updateServer(this.institutionId, this.server.id, formValues, function (server) {
+			console.log("Server", server.id, "has been updated!");
+			context.reloadInstitutionInfo();
+		});
+
+		this.view.hide();
+	};
 
     ServerController.prototype.deleteServer = function(event) {
         if (event) {
@@ -80,12 +94,11 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
             event.stopImmediatePropagation && event.stopImmediatePropagation();
         }
 
-        var context = this;
-        Institution.deleteServer(this.institutionId, this.server.id, function(){
-            context.view.hide();
-            var sidebarController = context.module.controllers['SidebarController'];
-            sidebarController.getTasks();
-        });
+		const context = this;
+        Institution.deleteServer(this.institutionId, this.server.id, function() {
+			context.view.hide();
+			context.reloadInstitutionInfo();
+		});
     }
 
     /**

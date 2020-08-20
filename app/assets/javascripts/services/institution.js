@@ -18,26 +18,40 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     Institution.getInstitutions = function (callback) {
         jsRoutes.controllers.InstitutionController.getInstitutions().ajax({
             contentType: 'application/json; charset=utf-8',
-            success: function (response) {
-                if (callback) {
-                    callback(response);
-                }
-            },
-            error: function (response) {
-                console.error('Error in Institution service', response);
-            }
-        })
-    };
+			success: function (response) {
+				if (callback) {
+					callback(response);
+				}
+			},
+			error: function (response) {
+				console.error('Error in Institution service', response);
+			}
+		})
+	};
 
-    Institution.newServer = function (institution,name, callback) {
-        jsRoutes.controllers.InstitutionController.newServer(institution,name).ajax({
-            contentType: 'application/json; charset=utf-8',
-            success: function (response) {
-                if (callback) {
-                    callback(response);
-                }
-            },
-            error: function (response) {
+	Institution.newInstitution = function (name, callback) {
+		jsRoutes.controllers.InstitutionController.newInstitution(name).ajax({
+			contentType: 'application/json; charset=utf-8',
+			success: function (response) {
+				if (callback) {
+					callback(response);
+				}
+			},
+			error: function (response) {
+				console.error('Error in Institution service', response);
+			}
+		})
+	};
+
+	Institution.newServer = function (institution, name, callback) {
+		jsRoutes.controllers.InstitutionController.newServer(institution, name).ajax({
+			contentType: 'application/json; charset=utf-8',
+			success: function (response) {
+				if (callback) {
+					callback(response);
+				}
+			},
+			error: function (response) {
                 console.error('Error in Institution service', response);
             }
         })
