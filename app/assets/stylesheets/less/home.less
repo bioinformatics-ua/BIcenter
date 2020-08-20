@@ -34,9 +34,120 @@
 }
 
 .panel:hover, .panel-default:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.panel-body {
+  text-align: left;
+}
 
 #institutions {
   display: flex;
   justify-content: center;
+}
+
+//Sidebar Menu. First level links
+.panel-body > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+
+  //First Level
+  > li {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	> a {
+	  padding: 12px 5px 12px 15px;
+	  display: block;
+	  > .fa,
+	  > .glyphicon,
+	  > .ion {
+		width: 20px;
+	  }
+	}
+	.label,
+	.badge {
+	  margin-right: 5px;
+	}
+	.badge {
+	  margin-top: 3px;
+	}
+  }
+  li.header {
+	padding: 10px 25px 10px 15px;
+	font-size: 12px;
+  }
+  li:hover {
+	background-color: @sidebar-light-hover-bg;
+  }
+  li > a > .fa-angle-left,
+  li > a > .pull-right-container > .fa-angle-left {
+	width: auto;
+	height: auto;
+	padding: 0;
+	margin-right: 10px;
+	.transition(transform .5s ease);
+  }
+  li > a > .fa-angle-left {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	margin-top: -8px;
+  }
+
+  .menu-open {
+	> a > .fa-angle-left,
+	> a > .pull-right-container > .fa-angle-left {
+	  .rotate(-90deg);
+	}
+  }
+
+  .active > .treeview-menu {
+	display: block;
+  }
+
+  //Section Headning
+  &.header {
+	color: lighten(@sidebar-dark-bg, 20%);
+	background: darken(@sidebar-dark-bg, 4%);
+  }
+  //links
+  > a {
+	border-left: 3px solid transparent;
+  }
+  //Hover and active states
+  &:hover > a,
+  &.active > a,
+  &.menu-open > a {
+	color: @sidebar-light-hover-color;
+	background: @sidebar-light-hover-bg;
+  }
+  &.active > a {
+	  // border-left-color: @link-hover-border-color;
+  }
+  //First Level Submenu
+  > .treeview-menu {
+		margin: 0 1px;
+	background: @sidebar-light-submenu-bg;
+  }
+}
+//All links within the sidebar menu
+.institutions a {
+  color: @sidebar-light-color;
+  &:hover {
+	text-decoration: none;
+  }
+}
+//All submenus
+.institution .treeview-menu {
+  > li {
+	> a {
+	  color: @sidebar-light-submenu-color;
+	}
+	&.active > a, > a:hover {
+	  color: @sidebar-light-submenu-hover-color;
+	}
+  }
 }
