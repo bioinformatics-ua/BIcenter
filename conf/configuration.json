@@ -138,11 +138,6 @@
               "name": "Lazy Conversion?",
               "shortName": "lazyConversionActive",
               "type": "checkbox"
-            },
-            {
-              "name": "USAGI Mapping",
-              "shortName": "usagi",
-              "type": "fileinput"
             }
           ]
         }
@@ -348,6 +343,29 @@
                   "shortName": "preSortedField"
                 }
               ]
+            }
+          ]
+        },
+        {
+          "name": "ValueMapper",
+          "description": "Usagi Mapper",
+          "shortName": "valueMapper",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "Field",
+              "shortName": "fieldName",
+              "type": "select",
+              "source": "inputFields"
+            },
+            {
+              "name": "USAGI File Name",
+              "shortName": "usagiFile",
+              "type": "fileinput"
             }
           ]
         }

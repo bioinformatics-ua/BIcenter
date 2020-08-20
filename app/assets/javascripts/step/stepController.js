@@ -11,7 +11,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         _super_.initialize.call(this, $container);
 
         this.data = {};
-        if(this.stepId){
+        if (this.stepId) {
             this.getStep(this.stepId);
         }
     };
@@ -37,15 +37,14 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
             },
             function (callback) {
                 Step.inputFieldsName(context.institutionId, stepId, function (inputFields) {
-                    if(_.keys(inputFields).length == 1){
-                        _.each(inputFields, function(field){
+                    if (_.keys(inputFields).length == 1) {
+                        _.each(inputFields, function (field) {
                             context.inputFields = field.valueMetaList;
                         });
-                    }
-                    else{
+                    } else {
                         context.streamFields = {};
-                        _.each(_.keys(inputFields), function(key) {
-                           context.streamFields[key] = inputFields[key].valueMetaList;
+                        _.each(_.keys(inputFields), function (key) {
+                            context.streamFields[key] = inputFields[key].valueMetaList;
                         });
                     }
 
@@ -60,7 +59,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
                 });
             },
             function (callback) {
-                Step.getInstitution(context.institutionId, stepId, function(institutionId) {
+                Step.getInstitution(context.institutionId, stepId, function (institutionId) {
                     Institution.getDataSources(institutionId, function (dataSources) {
                         context.dataSources = dataSources;
                         callback();
@@ -80,7 +79,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
     /**
      * Returns to the pipeline view.
      */
-    StepController.prototype.cancelClick = function(){
+    StepController.prototype.cancelClick = function () {
         Router.navigatePrevious();
     }
 
@@ -88,14 +87,12 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         var table = this.view.dataTables[tableId].clear().draw();
 
         var selectedVal;
-        try{
+        try {
             selectedVal = this.view.$elements[component].val();
-        }
-        catch(err) {
-            try{
+        } catch (err) {
+            try {
                 selectedVal = component.val();
-            }
-            catch(err) {
+            } catch (err) {
                 selectedVal = $element.val();
             }
         }
@@ -140,9 +137,9 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         }
 
         // Get files
-        _.each($form[0], function(element){
-            if(element.type === "file" && element.files.length > 0){
-                if(formData === null)
+        _.each($form[0], function (element) {
+            if (element.type === "file" && element.files.length > 0) {
+                if (formData === null)
                     formData = new FormData();
 
                 var fileObject = element.files[0];

@@ -41,13 +41,6 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
      */
     @Override
     public StepMeta decodeStep(Step step, List<DatabaseMeta> databases) throws Exception {
-        /*TODO
-        1. Where do I put the mapping logic?
-        2. Can it be done? Não sei onde no flow de execucao é que posso fazer este tipo de cena
-        3. Toda a logica do BICenter revolve à volta da interpretação de input e feeding ao PentahoPDI..this breaks from that
-        4. What am I supposed to do with the conversion?
-         */
-
         String stepid = step.getComponent().getName();
         String stepname = step.getLabel();
 
@@ -59,6 +52,8 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         // Variables used for CSV File Reading
         String fileName = null;
         String delimiter = null;
+
+        // USAGI Value Mapper
         Map<String,String> usagiExportMapping = null;
         String usagiExportFilename = null;
 

@@ -71,7 +71,7 @@ public class FilterRows extends AbstractStep {
             ValueMetaAndData valueMetaAndData = new ValueMetaAndData();
 
             String valname = jsonObject.optString("name");
-            int valtype = ValueMetaBase.getType(jsonObject.optString("type"));
+            int valtype = ValueMetaBase.getType(jsonObject.optString("tconditionype"));
             String text = jsonObject.optString("text");
             boolean isnull = jsonObject.optBoolean("isnull");
             int len = jsonObject.optInt("length", -1);
