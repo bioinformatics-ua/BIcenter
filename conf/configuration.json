@@ -357,8 +357,8 @@
               "type": "input"
             },
             {
-              "name": "Field",
-              "shortName": "fieldName",
+              "name": "Fields to use",
+              "shortName": "fieldToUse",
               "type": "select",
               "source": "inputFields"
             },
