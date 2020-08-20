@@ -5,14 +5,157 @@
 	</div>
 
 	<div id="institutions" view-element="institutions" class="row">
-		{{# institutions}}
-			<div class="institution col-lg-3">
+		{{#institutions}}
+			<div class="institution col-lg-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title"><b>{{name}}</b></h3>
 					</div>
 					<div class="panel-body">
-						Panel content
+						{{!--
+						{{#tasks}}<p>{{name}}</p>{{/tasks}}
+						<hr>
+						{{#servers}}<p>{{name}}</p>{{/servers}}
+						<hr>
+						{{#dataSources}}<p>{{connectionName}}</p>{{/dataSources}}
+						--}}
+						<ul class="treeview-menu" data-widget="tree">
+							<!-- Execution Scheduler -->
+							<li>
+								<a view-click="controller.showSchedule({{id}})">
+									<i class="fa fa-calendar"></i>
+									<span>Execution Scheduler</span>
+								</a>
+							</li>
+
+							<!-- Tasks -->
+							<li class="treeview menu"
+								onclick="if(event.target.getAttribute('name') === 'tasks'){this.classList.toggle('menu-open');this.classList.toggle('menu');;this.classList.toggle('active');}">
+								<a name="tasks">
+									<i class="fa fa-folder"></i> <span>Tasks</span>
+									<span class="pull-right-container">
+                        				<i class="fa fa-angle-left pull-right"></i>
+                    				</span>
+								</a>
+								<ul class="treeview-menu">
+									{{#tasks}}
+										<li>
+											<a view-click="controller.selectTask({{../id}},{{id}})">
+												<i class="fa fa-file-text-o"></i>
+												<span>{{name}}</span>
+												<span class="pull-rigth-container">
+                                					<button view-click="controller.editTask({{../id}},{{id}})"
+															type="button"
+															class="btn btn-xs pull-right">
+														<i class="fa fa-pencil fa-fw"></i>
+													</button>
+                            					</span>
+											</a>
+										</li>
+									{{/tasks}}
+									<li>
+										<form view-element="{{id}}_newTask" view-submit="controller.createTask({{id}});"
+											  class="sidebar-form">
+											<div class="input-group">
+												<input name="taskName" class="form-control"
+													   placeholder="Create a new task..."/>
+												<span class="input-group-btn">
+                                    				<button type="submit" class="btn btn-flat">
+                                      					<i class="fa fa-plus-circle"></i>
+                                    				</button>
+                                				</span>
+											</div>
+										</form>
+									</li>
+								</ul>
+							</li>
+
+							<!-- Servers -->
+							<li class="treeview menu"
+								onclick="if(event.target.getAttribute('name') == 'servers'){this.classList.toggle('menu-open');this.classList.toggle('menu');}">
+								<a name="servers">
+									<i class="fa fa-folder"></i> <span>Servers</span>
+									<span class="pull-right-container">
+                        				<i class="fa fa-angle-left pull-right"></i>
+                    				</span>
+								</a>
+								<ul class="treeview-menu">
+									{{#servers}}
+										<li>
+											<a>
+												<i class="fa fa-server"></i>
+												<span>{{name}}</span>
+												<span class="pull-rigth-container">
+                                					<button view-click="controller.editServer({{../id}},{{id}})"
+															type="button"
+															class="btn btn-xs pull-right">
+														<i class="fa fa-pencil fa-fw"></i>
+													</button>
+                            					</span>
+											</a>
+										</li>
+									{{/servers}}
+									<li>
+										<form view-element="{{id}}_newServer"
+											  view-submit="controller.createServer({{id}});" class="sidebar-form">
+											<div class="input-group">
+												<input name="serverName" class="form-control"
+													   placeholder="Add a server...">
+												<span class="input-group-btn">
+													<button type="submit" name="search" id="search-btn"
+															class="btn btn-flat">
+														<i class="fa fa-plus-circle"></i>
+													</button>
+												</span>
+											</div>
+										</form>
+									</li>
+								</ul>
+							</li>
+
+							<!-- Data Sources -->
+							<li class="treeview menu"
+								onclick="if(event.target.getAttribute('name') == 'sources'){this.classList.toggle('menu-open');this.classList.toggle('menu');}">
+								<a name="sources">
+									<i class="fa fa-folder"></i> <span>Data Sources</span>
+									<span class="pull-right-container">
+                        				<i class="fa fa-angle-left pull-right"></i>
+                    				</span>
+								</a>
+								<ul class="treeview-menu">
+									{{#dataSources}}
+										<li>
+											<a>
+												<i class="fa fa-database"></i>
+												<span>{{connectionName}}</span>
+												<span class="pull-rigth-container">
+                                					<button view-click="controller.editDataSource({{../id}},{{id}})"
+															type="button"
+															class="btn btn-xs pull-right">
+														<i class="fa fa-pencil fa-fw"></i>
+													</button>
+                            					</span>
+											</a>
+										</li>
+									{{/dataSources}}
+									<li>
+										<form view-element="{{id}}_newDataSource"
+											  view-submit="controller.createDataSource({{id}});" class="sidebar-form">
+											<div class="input-group">
+												<input name="dataSourceName" class="form-control"
+													   placeholder="Add a Data Source...">
+												<span class="input-group-btn">
+                                    				<button type="submit" name="search" id="search-btn"
+															class="btn btn-flat">
+                                      					<i class="fa fa-plus-circle"></i>
+                                    				</button>
+                                				</span>
+											</div>
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
