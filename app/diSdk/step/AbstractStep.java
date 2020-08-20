@@ -54,7 +54,8 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         String delimiter = null;
 
         // USAGI Value Mapper
-        Map<String,String> usagiExportMapping = null;
+        List<String> usagiSourceValues = null;
+        List<String> usagiTargetValues = null;
         String usagiExportFilename = null;
 
 
@@ -75,27 +76,31 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
             // USAGI PREPROCESSING //
             Optional<StepProperty> usagiStepProperty = stepProperties.stream()
-                    .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Usagi"))
+                    .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("usagiFile"))
                     .findFirst();
 
-            if (usagiStepProperty.isPresent()){
+            if (usagiStepProperty.isPresent()) {
                 usagiExportFilename = usagiStepProperty.get().getValue();
-                try{
+                try {
                     BufferedReader br = new BufferedReader(new FileReader(usagiExportFilename));
                     br.readLine(); //Skip Header
 
-                    usagiExportMapping = new HashMap<>();
+                    usagiSourceValues = new ArrayList<>();
+                    usagiTargetValues = new ArrayList<>();
 
                     String row;
                     while ((row = br.readLine()) != null) {
                         String[] data = row.split(",");
-                        usagiExportMapping.put(data[1], data[5]);
+                        usagiSourceValues.add(data[1]);
+                        usagiTargetValues.add(data[6]);
                     }
 
-                }catch (FileNotFoundException e){
+                } catch (FileNotFoundException e) {
 
                 }
             }
+            System.out.println(usagiSourceValues);
+            System.out.println(usagiTargetValues);
             /////////////////////////
 
             for (Method method : methods) {
@@ -135,7 +140,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
                         // If dealing with CSVFileInput get the input fields and define them
                         if (shortName.equals("InputFields")) {
-                            if(fileName == null){
+                            if (fileName == null) {
                                 Optional<StepProperty> fileNameStepProperty = stepProperties.stream()
                                         .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Filename"))
                                         .findFirst();
@@ -145,7 +150,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                                 fileName = fileNameStepProperty.get().getValue();
                             }
 
-                            if(delimiter == null){
+                            if (delimiter == null) {
                                 Optional<StepProperty> delimiterStepProperty = stepProperties.stream()
                                         .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Delimiter"))
                                         .findFirst();
@@ -155,7 +160,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                                 delimiter = delimiterStepProperty.get().getValue();
                             }
 
-                            try{
+                            try {
                                 BufferedReader br = new BufferedReader(new FileReader(fileName));
                                 String header = br.readLine();
 
@@ -165,7 +170,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                                 }
 
                                 TextFileInputField[] value = new TextFileInputField[fields.length];
-                                for(int i = 0 ; i < fields.length ; i++){
+                                for (int i = 0; i < fields.length; i++) {
                                     String field = fields[i];
                                     value[i] = new TextFileInputField();
                                     value[i].setName(field);
@@ -175,10 +180,20 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                                 // Invoke the current method with the StepProperty value.
                                 invokeMethod(stepMetaInterface, method, value, databases);
 
-                            }catch (FileNotFoundException e){
+                            } catch (FileNotFoundException e) {
 
                             }
 
+                        } else if (usagiSourceValues != null && shortName.equals("SourceValue")) {
+                            System.out.println("VALUE - " + usagiSourceValues.toString() + "\n");
+
+                            // Invoke the current method with the StepProperty value.
+                            invokeMethod(stepMetaInterface, method, usagiSourceValues, databases);
+                        } else if (usagiTargetValues != null && shortName.equals("TargetValue")) {
+                            System.out.println("VALUE - " + usagiTargetValues.toString() + "\n");
+
+                            // Invoke the current method with the StepProperty value.
+                            invokeMethod(stepMetaInterface, method, usagiTargetValues, databases);
                         }
 
                         continue;
@@ -208,14 +223,14 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
                     System.out.println("VALUE - " + value.toString() + "\n");
 
-                    if(shortName.equals("Filename")){
+                    if (shortName.equals("Filename")) {
                         fileName = value.toString();
                     }
-                    if(shortName.equals("Delimiter")){
+                    if (shortName.equals("Delimiter")) {
                         delimiter = value.toString();
                     }
 
-                        // Invoke the current method with the StepProperty value.
+                    // Invoke the current method with the StepProperty value.
                     invokeMethod(stepMetaInterface, method, value, databases);
                     stepProperties.remove(optStepProperty.get());
 
