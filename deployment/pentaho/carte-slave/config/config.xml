@@ -1,0 +1,23 @@
+<slave_config>
+    <!-- the masters node defines one or more load balancing Carte instances that will manage this slave -->
+    <masters>
+        <slaveserver>
+            <name>Master</name>
+            <hostname>0.0.0.0</hostname>
+            <port>9080</port>
+            <username>cluster</username>
+            <password>cluster</password>
+            <master>Y</master>
+        </slaveserver>
+    </masters>
+    <report_to_masters>Y</report_to_masters>
+    <!-- the slaveserver node contains information about this Carte slave instance -->
+    <slaveserver>
+        <name>SlaveOne</name>
+        <hostname>0.0.0.0</hostname>
+        <port>9081</port>
+        <username>cluster</username>
+        <password>cluster</password>
+        <master>N</master>
+    </slaveserver>
+</slave_config>
