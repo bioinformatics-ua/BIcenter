@@ -3,11 +3,12 @@ logLevel := Level.Warn
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 resolvers ++= Seq(
-  Resolver.mavenLocal,
-  Resolver.sbtPluginRepo("releases"),
-  "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-  "Sonatype releases" at "https://oss.sonatype.org/content/repositories/releases/",
-  "pentaho-repo" at "https://public.nexus.pentaho.org/content/groups/omni/"
+	Resolver.mavenLocal,
+	Resolver.sbtPluginRepo("releases"),
+	Resolver.bintrayIvyRepo("vascoalramos", "sbt-plugins"), //TODO: change this to organization repo
+	"Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/",
+	"Sonatype releases" at "https://oss.sonatype.org/content/repositories/releases/",
+	"pentaho-repo" at "https://public.nexus.pentaho.org/content/groups/omni/"
 )
 
 // The Play plugin
@@ -15,11 +16,11 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.5")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-js-engine" % "1.2.1")
 
-addSbtPlugin("com.bmdsoftware" % "sbt-rjs" % "1.0.9")
+addSbtPlugin("com.ieeta" % "sbt-rjs" % "1.0.9")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.1.2")
 
-addSbtPlugin("com.bicou.sbt" % "sbt-hbs" % "1.0.8")
+addSbtPlugin("com.ieeta" % "sbt-hbs" % "1.0.8")
 
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.7.0")
 
