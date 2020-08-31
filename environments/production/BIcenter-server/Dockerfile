@@ -4,9 +4,9 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM nimmis/java:oracle-8-jdk 
+FROM nimmis/java:oracle-8-jdk
 MAINTAINER Luis Bastiao Silva <bastiao@bmd-software.com>
-MAINTAINER Renato Rodrigues 
+MAINTAINER Renato Rodrigues
 
 # update and install unzip
 RUN apt-get update
@@ -22,7 +22,7 @@ RUN unzip bicenter.zip
 # Expose the default port
 EXPOSE 9000
 
-# add run.sh to Docker
+# add entrypoint.sh to Docker
 ADD ./entrypoint.sh /opt/entrypoint.sh
 
 # Set default container command

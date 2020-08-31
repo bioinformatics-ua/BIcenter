@@ -68,14 +68,14 @@ libraryDependencies ++= Seq(
   "org.quartz-scheduler" % "quartz" % "2.3.0",
 
   // Pentaho SDK
+	"javax.activation" % "activation" % "1.0.2",
+	"javax.mail" % "mail" % "1.3.2",
   "pentaho-kettle" % "kettle-core" % "6.1.0.19-384",
   "pentaho-kettle" % "kettle-dbdialog" % "6.1.0.19-384",
   "pentaho-kettle" % "kettle-engine" % "6.1.0.19-384",
   "pentaho" % "pentaho-capability-manager" % "6.1.0.19-384",
   "pentaho-kettle" % "kettle-ui-swt" % "6.1.0.19-384",
   "pentaho-kettle" % "kettle-json-plugin" % "7.0.0.1-37",
-	"javax.activation" % "activation" % "1.0.2",
-	"javax.mail" % "mail" % "1.3.2",
 
   // Draw.io SDK
   "de.twentyeleven.skysail" % "jgraphx-osgi" % "1.10.3.1",

@@ -1,7 +1,8 @@
+#!/bin/bash
 base_path=$(pwd)
 
 ## Pentaho execution
-cd "$base_path/deployment/pentaho"
+cd "$base_path/environments/production/pentaho-cluster"
 chmod +x deploy_carte.sh
 ./deploy_carte.sh
 

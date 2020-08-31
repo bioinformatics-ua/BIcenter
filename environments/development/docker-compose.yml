@@ -2,6 +2,7 @@ version: "3.3"
 
 services:
   db:
+    container_name: bicenter-dev-db
     image: mysql:5.7
     restart: always
     ports:
@@ -15,11 +16,19 @@ services:
       - db_data:/var/lib/mysql
 
   sbt:
-    build: .
+    container_name: bicenter-dev-server
+    build:
+      context: ..
+      dockerfile: development/Dockerfile
+    image: bicenter:dev
     stdin_open: true
     tty: true
     ports:
       - 9001:9000
+    volumes:
+      - ../..:/opt/BIcenter
+      - dependencies_cache:/root/.ivy2
+      - sbt_cache:/root/.sbt
     environment:
       DB_HOST: db
       DB_PORT: 3306
@@ -31,3 +40,5 @@ services:
 
 volumes:
   db_data:
+  dependencies_cache:
+  sbt_cache:

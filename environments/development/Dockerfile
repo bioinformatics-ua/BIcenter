@@ -1,8 +1,6 @@
 FROM openjdk:8
 MAINTAINER Vasco Ramos
 
-ENV SBT_VERSION 0.13.18
-
 # install sbt
 RUN \
   echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list && \
@@ -10,14 +8,14 @@ RUN \
   apt-get update && \
   apt-get install -y sbt nodejs npm
 
-COPY . /opt/BIcenter
+COPY development/entrypoint.sh /opt/dev/dev-entrypoint.sh
+COPY publish-local-plugins.sh /opt/dev/publish-local-plugins.sh
 
 WORKDIR /opt
 
-# UNCOMMENT THIS SECTION IF IS TO REVERT THE ONLINE PLUGIN PUBLISHMENT
-# RUN chmod 777 "BIcenter/publish-local-plugins.sh"
-# RUN "/opt/BIcenter/publish-local-plugins.sh"
+RUN chmod 777 "dev/publish-local-plugins.sh"
+RUN "dev/publish-local-plugins.sh"
 
-RUN chmod 777 BIcenter/dev-entrypoint.sh
+RUN chmod 777 dev/dev-entrypoint.sh
 
-ENTRYPOINT ["/opt/BIcenter/dev-entrypoint.sh"]
+ENTRYPOINT ["dev/dev-entrypoint.sh"]
