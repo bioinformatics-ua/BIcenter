@@ -60,7 +60,7 @@ This is a web-based platform that allows the building and management of ETL pipe
 <details>
   <summary>Docker</summary>
 
-  ## Usage
+  ### Usage
   Run: `sh launch-dev.sh`
 
 </details>
