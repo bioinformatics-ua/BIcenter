@@ -16,7 +16,5 @@ dist
 /logs
 
 ## zip and jar files
-deployment/pentaho/mysql-*
-deployment/pentaho/*/mysql-*
-deployment/pentaho/pdi*
-deployment/*pentaho/*/pdi*
+mysql-*
+pdi*
