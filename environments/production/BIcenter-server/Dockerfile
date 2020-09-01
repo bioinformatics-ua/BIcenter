@@ -1,29 +1,14 @@
-############################################################
-# Dockerfile to build BIcenter Platform
-# Based on airdock/oracle-jdk:1.7
-############################################################
+FROM openjdk:8
+MAINTAINER Vasco Ramos
 
-# Set the base image to Ubuntu
-FROM nimmis/java:oracle-8-jdk
-MAINTAINER Luis Bastiao Silva <bastiao@bmd-software.com>
-MAINTAINER Renato Rodrigues
+RUN apt-get update && apt-get install -y unzip
 
-# update and install unzip
-RUN apt-get update
-RUN apt-get install -y unzip
-
-# Install hemospec
-ADD bicenter.zip /opt/bicenter.zip
+COPY bicenter.zip /opt/bicenter.zip
 WORKDIR /opt
-RUN unzip bicenter.zip
+RUN unzip bicenter.zip || true && mv bicenter-1.0.0-SNAPSHOT BIcenter
 
-# setup symbolic links for persistent data
+COPY conf /opt/BIcenter/conf
 
-# Expose the default port
-EXPOSE 9000
+COPY entrypoint.sh entrypoint.sh
 
-# add entrypoint.sh to Docker
-ADD ./entrypoint.sh /opt/entrypoint.sh
-
-# Set default container command
-ENTRYPOINT ["/opt/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "entrypoint.sh"]

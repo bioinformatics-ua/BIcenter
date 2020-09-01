@@ -1,0 +1,34 @@
+version: "3.3"
+
+services:
+  db:
+    container_name: bicenter-prod-db
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: teste
+      MYSQL_USER: bicenter
+      MYSQL_PASSWORD: papepipopu1
+    volumes:
+      - db_data:/var/lib/mysql
+
+  sbt:
+    container_name: bicenter-prod-server
+    build: .
+    image: bicenter:prod
+    ports:
+      - 9002:9000
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: teste
+      DB_USERNAME: bicenter
+      DB_PASSWORD: papepipopu1
+    depends_on:
+      - db
+
+volumes:
+  db_data:

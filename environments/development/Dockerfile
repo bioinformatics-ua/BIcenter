@@ -13,9 +13,6 @@ COPY publish-local-plugins.sh /opt/dev/publish-local-plugins.sh
 
 WORKDIR /opt
 
-RUN chmod 777 "dev/publish-local-plugins.sh"
-RUN "dev/publish-local-plugins.sh"
+RUN bash dev/publish-local-plugins.sh
 
-RUN chmod 777 dev/dev-entrypoint.sh
-
-ENTRYPOINT ["dev/dev-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "dev/dev-entrypoint.sh"]
