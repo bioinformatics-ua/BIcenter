@@ -53,10 +53,8 @@ define('HomeController', ['Controller', 'HomeView', 'Router', 'Institution', 'Ta
 	};
 
 	// TASKS //
-	// TODO: check the faulty render of the task page
 	HomeController.prototype.selectTask = function (institutionId, taskId) {
-		const configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(institutionId, taskId).url;
-		Router.navigate(configStepUrl);
+		document.location.href = jsRoutes.controllers.TransGraphController.selectTask(institutionId, taskId).url;
 	};
 
 	HomeController.prototype.createTask = function (institution, event) {
@@ -75,17 +73,15 @@ define('HomeController', ['Controller', 'HomeView', 'Router', 'Institution', 'Ta
 
 		Task.getTask(institution, taskName, task => {
 			if (task === "not found") {
-				Task.newTask(context.institution, taskName, () => {
+				Task.newTask(context.institution, taskName, (newTask) => {
 					// Open new task.
-					const configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(context.institution, task.id).url;
-					Router.navigate(configStepUrl);
+					document.location.href = jsRoutes.controllers.TransGraphController.selectTask(context.institution, newTask.id).url;
 
 					Alert.flash(ALERT_TYPE.SUCCESS, 'Task', 'Task \'' + taskName + '\' was successfully created!');
 				});
 			} else {
 				// Open already existent task.
-				const configStepUrl = jsRoutes.controllers.TransGraphController.selectTask(context.institution, task.id).url;
-				Router.navigate(configStepUrl);
+				document.location.href = jsRoutes.controllers.TransGraphController.selectTask(context.institution, task.id).url;
 
 				Alert.flash(ALERT_TYPE.DANGER, 'Task', 'Task \'' + taskName + '\' already exists!');
 			}

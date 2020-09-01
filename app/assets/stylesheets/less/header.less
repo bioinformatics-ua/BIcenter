@@ -138,7 +138,7 @@
 // Content Header
 .content-header {
   position: relative;
-  padding: 15px 15px 0 15px;
+  margin: 15px 15px 0 15px;
   // Header Text
   > h1 {
     margin: 0;
@@ -152,15 +152,14 @@
   }
 
   > .breadcrumb {
-    float: right;
     background: transparent;
     margin-top: 0;
     margin-bottom: 0;
     font-size: 12px;
     padding: 7px 5px;
     position: absolute;
-    top: 15px;
-    left: 10px;
+    top: 10px;
+	width: 100%;
     .border-radius(2px);
     > li > a {
       color: #444;
@@ -173,6 +172,10 @@
     > li + li:before {
       content: '>\00a0';
     }
+
+	> #lastChild:before {
+	  content: '';
+	}
   }
 
   @media (max-width: @screen-sm-max) {

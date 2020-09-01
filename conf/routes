@@ -6,12 +6,12 @@
 ##########  Application
 ############################################################################
 # An example controller showing a sample home page
-GET           /                                                                                          controllers.HomeController.index()
-GET           /home                                                                                      controllers.HomeController.index()
+GET           /                                                                 controllers.HomeController.index()
+GET           /home                                                             controllers.HomeController.index()
 
-GET           /assets/javascripts/jsroutes.js                                                            controllers.Application.javascriptRoutes
-GET           /assets/javascripts/messages.js                                                            controllers.Application.jsMessages
-GET           /langs                                                                                     controllers.Application.supportedLanguages
+GET           /assets/javascripts/jsroutes.js                                   controllers.Application.javascriptRoutes
+GET           /assets/javascripts/messages.js                                   controllers.Application.jsMessages
+GET           /langs                                                            controllers.Application.supportedLanguages
 
 # LOGIN
 GET           /login                                                            controllers.login.Login.index()

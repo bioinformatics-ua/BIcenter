@@ -8,28 +8,14 @@ define('SidebarView', ['View', 'jsRoutes', 'jquery-ui', 'templates'], function (
 	var _super_ = View.prototype;
 
 	SidebarView.prototype.initialize = function ($container) {
-		var data = {
-			hasTask: this.controller.graphId ? true : false
-		};
-		_super_.initialize.call(this, $container, data);
-		this.$elements.tasksBtn.addClass('selected');
-	};
-
-	SidebarView.prototype.loadInstitutions = function (institutions) {
-		var html = JST['sidebar']({
-			institutions: institutions
-		});
-		this.$container.html(html);
-		this._loadViewComponents();
-		this.$elements.components.hide();
-
-		this.$elements.componentsBtn.removeClass('selected');
-		this.$elements.tasksBtn.addClass('selected');
+		_super_.initialize.call(this, $container);
 	};
 
 	SidebarView.prototype.loadComponents = function (components) {
-		var html = JST['sidebar-components']({categories: components});
-		this.$elements.components.html(html);
+		let html = JST['sidebar']({
+			categories: components
+		});
+		this.$container.html(html);
 		this._loadViewComponents();
 
 		this.$elements.components
@@ -53,10 +39,7 @@ define('SidebarView', ['View', 'jsRoutes', 'jquery-ui', 'templates'], function (
 				scope: 'components'
 			});
 
-		this.$elements.institutions.hide();
 		this.$elements.components.show();
-
-		this.$elements.tasksBtn.removeClass('selected');
 		this.$elements.componentsBtn.addClass('selected');
 	};
 

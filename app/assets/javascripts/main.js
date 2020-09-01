@@ -59,8 +59,8 @@ requirejs.config({
 		'LoginView': 'login/views/loginView',
 
 		// Home
-		'HomeController': 'home/homeController',
-		'HomeView': 'home/homeView',
+		'HomeController': 'home/controllers/homeController',
+		'HomeView': 'home/views/homeView',
 
 		// Header
 		'HeaderController': 'header/headerController',
@@ -121,24 +121,24 @@ requirejs.config({
 		'ResultView': 'result/resultView',
 
 		// Sidebar
-		'SidebarController': 'sidebar/controllers/sidebarController',
-		'SidebarView': 'sidebar/views/sidebarView',
+		'SidebarController': 'sidebar/sidebarController',
+		'SidebarView': 'sidebar/sidebarView',
 
 		// Task Page
-		'TaskController': 'sidebar/controllers/taskController',
-		'TaskView': 'sidebar/views/taskView',
+		'TaskController': 'home/controllers/taskController',
+		'TaskView': 'home/views/taskView',
 
 		// Server Settings Page
-		'ServerController': 'sidebar/controllers/serverController',
-		'ServerView': 'sidebar/views/serverView',
+		'ServerController': 'home/controllers/serverController',
+		'ServerView': 'home/views/serverView',
 
 		// Data Source Page
-		'DataSourceController': 'sidebar/controllers/dataSourceController',
-		'DataSourceView': 'sidebar/views/dataSourceView',
+		'DataSourceController': 'home/controllers/dataSourceController',
+		'DataSourceView': 'home/views/dataSourceView',
 
 		// Execution Scheduler Page
-		'SchedulerController': 'sidebar/controllers/scheduleController',
-		'SchedulerView': 'sidebar/views/scheduleView',
+		'SchedulerController': 'home/controllers/scheduleController',
+		'SchedulerView': 'home/views/scheduleView',
 	},
 	shim: {
 		'messages': {

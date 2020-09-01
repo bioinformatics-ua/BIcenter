@@ -55,7 +55,7 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
 		);
 	}
 
-	DataSourceController.prototype.reloadInstitutionInfo = function () {
+	ServerController.prototype.reloadInstitutionInfo = function () {
 		let institutionDisplayController;
 
 		const sidebarController = this.module.controllers['SidebarController'];

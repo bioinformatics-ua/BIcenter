@@ -27,8 +27,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 					institutionId: institutionId,
 					graphId: graphId,
 					stepId: stepId,
-					before: true,
-					tab: "resources"
+					before: true
 				};
 
 				self.loadController('MainModule', 'FieldsController', opts);
@@ -41,12 +40,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 					institutionId: institutionId,
 					graphId: graphId,
 					stepId: stepId,
-					before: false,
-					tab: "resources"
+					before: false
 				};
 
 				self.loadController('MainModule', 'FieldsController', opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 			})
 			.add(new RegExp(jsRoutes.controllers.TransGraphController.history('(.*)', '(.*)').url.substr(1), 'i'), function (institutionId, graphId) {
 				console.log("History of Graph " + graphId);
@@ -54,12 +52,11 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 				var opts = {
 					institutionId: institutionId,
 					graphId: graphId,
-					section: 'history',
-					tab: "resources"
+					section: 'history'
 				}
 
 				self.loadController('MainModule', 'HistoryController', opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 				self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
 			})
 			.add(new RegExp(jsRoutes.controllers.StepController.configure('(.*)', '(.*)', '(.*)').url.substr(1), 'i'), function (institutionId, graphId, stepId) {
@@ -69,11 +66,10 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 					institutionId: institutionId,
 					graphId: graphId,
 					stepId: stepId,
-					section: 'configure',
-					tab: "resources"
+					section: 'configure'
 				};
 				self.loadControllers('MainModule', ['StepController', 'StepModalController'], opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 				self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
 			})
 			.add(new RegExp(jsRoutes.controllers.ExecutionController.logs('(.*)', '(.*)', '(.*)').url.substr(1), 'i'), function (institutionId, graphId, executionId) {
@@ -83,11 +79,10 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 					institutionId: institutionId,
 					graphId: graphId,
 					executionId: executionId,
-					section: 'logs',
-					tab: "resources"
+					section: 'logs'
 				};
 				self.loadController('MainModule', 'LogsController', opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 				self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
 			})
 			.add(new RegExp(jsRoutes.controllers.ExecutionController.metrics('(.*)', '(.*)', '(.*)').url.substr(1), 'i'), function (institutionId, graphId, executionId) {
@@ -97,11 +92,10 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 					institutionId: institutionId,
 					graphId: graphId,
 					executionId: executionId,
-					section: 'metrics',
-					tab: "resources"
+					section: 'metrics'
 				};
 				self.loadController('MainModule', 'StepMetricsController', opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 				self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
 			})
 			.add(new RegExp(jsRoutes.controllers.ExecutionController.previewStep('(.*)', '(.*)', '(.*)', '(.*)').url.substr(1), 'i'), function (institutionId, graphId, executionId, stepId) {
@@ -112,11 +106,10 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 					graphId: graphId,
 					executionId: executionId,
 					stepId: stepId,
-					section: 'previewStep',
-					tab: "resources"
+					section: 'previewStep'
 				};
 				self.loadController('MainModule', 'PreviewStepController', opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 				self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
 			})
 			.add(new RegExp(jsRoutes.controllers.ExecutionController.previewData('(.*)', '(.*)', '(.*)').url.substr(1), 'i'), function (institutionId, graphId, executionId) {
@@ -126,11 +119,10 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 					institutionId: institutionId,
 					graphId: graphId,
 					executionId: executionId,
-					section: 'previewData',
-					tab: "resources"
+					section: 'previewData'
 				};
 				self.loadController('MainModule', 'PreviewDataController', opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 				self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
 			})
 			.add(new RegExp(jsRoutes.controllers.TransGraphController.selectTask('(.*)', '(.*)').url.substr(1), 'i'), function (institutionId, graphId) {
@@ -139,22 +131,20 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 				var opts = {
 					institutionId: institutionId,
 					graphId: graphId,
-					section: 'selectTask',
-					tab: "components"
+					section: 'selectTask'
 				}
 				self.loadControllers('MainModule', ['GraphController', 'RemoteExecutionController'], opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 				self.loadController('BreadcrumbModule', 'BreadcrumbController', opts);
 			})
 			.add(new RegExp(jsRoutes.controllers.InstitutionController.scheduler('(.*)').url.substr(1), 'i'), function (institutionId) {
 				console.log("Institution " + institutionId + " Scheduler");
 
-				var opts = {
-					institutionId: institutionId,
-					tab: "resources"
+				const opts = {
+					institutionId: institutionId
 				}
 				self.loadControllers('MainModule', ['SchedulerController'], opts);
-				self.loadControllers('SidebarModule', ['SidebarController', 'TaskController', 'ServerController', 'DataSourceController'], opts);
+				self.loadControllers('SidebarModule', ['SidebarController'], opts);
 			})
 			.add(function () {
 				console.log("homepage");

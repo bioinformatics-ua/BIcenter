@@ -5,7 +5,7 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 resolvers ++= Seq(
   Resolver.mavenLocal,
   Resolver.sbtPluginRepo("releases"),
-  "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
+  "Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/",
   "Sonatype releases" at "https://oss.sonatype.org/content/repositories/releases/",
   "pentaho-repo" at "https://public.nexus.pentaho.org/content/groups/omni/"
 )
