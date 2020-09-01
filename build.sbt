@@ -55,9 +55,6 @@ libraryDependencies ++= Seq(
   // Font awesome
   "org.webjars" % "font-awesome" % "4.7.0",
 
-  // Handlebars
-  //"org.webjars" % "handlebars" % "4.0.5",
-
   // Parse JSON
   "com.google.code.gson" % "gson" % "2.8.0",
 
@@ -148,6 +145,8 @@ HbsKeys.amd := true
 // RequireJS settings
 ////////////////////////////////////////////////////////////////////////////
 RjsKeys.paths += ("jsRoutes" -> ("/jsroutes" -> "empty:"))
+RjsKeys.paths += ("messages" -> ("/messages" -> "empty:"))
+
 
 RjsKeys.webJarCdns := Map()
 
