@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Download necessary sofware (Pentaho and MySQl connector)
-chmod +x "download_pentaho.sh"
-./download_pentaho.sh
+sh "download_pentaho.sh"
 
 echo ""
 
@@ -22,13 +21,13 @@ fi
 
 if [ ! -d "mysql-connector-java-5.1.46" ]; then
     unzip mysql-connector.zip "*/*connector*bin.jar"
-    cp mysql-connector-java-5.1.46/*.jar carte-master/ 
-    cp mysql-connector-java-5.1.46/*.jar carte-slave/ 
+    cp mysql-connector-java-5.1.46/*.jar carte-master/
+    cp mysql-connector-java-5.1.46/*.jar carte-slave/
 else
     echo "MySQL connector 5.1.46 jar alreay exists"
 fi
 
 echo ""
- 
+
 # Build and run Pentaho related services
-docker-compose up -d --build
+docker-compose up -d
