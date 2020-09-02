@@ -1,18 +1,21 @@
-cartemaster:
-  container_name: cartemaster
-  build: carte-master
-  ports:
-    - 9080:9080
-  environment:
-    - MASTER_PORT=9080
-    - MASTER_IP=0.0.0.0
+version: "3.8"
 
-carteslave:
-  container_name: carteslave
-  build: carte-slave
-  links:
-    - cartemaster:master
-  ports:
-    - 9081:9081
-  volumes:
-    - $PWD/carte-slave/config:/opt/config
+services:
+  cartemaster:
+    container_name: cartemaster
+    build: carte-master
+    ports:
+      - 9080:9080
+    environment:
+      - MASTER_PORT=9080
+      - MASTER_IP=0.0.0.0
+
+  carteslave:
+    container_name: carteslave
+    build: carte-slave
+    links:
+      - cartemaster:master
+    ports:
+      - 9081:9081
+    volumes:
+      - $PWD/carte-slave/config:/opt/config
