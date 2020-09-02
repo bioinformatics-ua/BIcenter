@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: bicenter-${INSTALLATION_ENV}-db
+    image: mysql:5.7
+    restart: always
+    ports:
+      - ${MYSQL_EXTERNAL_PORT}:${MYSQL_INTERNAL_PORT}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+
+  sbt:
+    container_name: bicenter-${INSTALLATION_ENV}-server
+    build: BIcenter
+    image: bicenter:${INSTALLATION_ENV}
+    restart: always
+    stdin_open: ${STDIN_OPEN}
+    tty: ${TTY}
+    ports:
+      - ${BICENTER_PORT}:9000
+    volumes:
+      - ..:/opt/BIcenter
+    environment:
+      DB_HOST: db
+      DB_PORT: ${MYSQL_INTERNAL_PORT}
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USERNAME: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      INSTALLATION_ENV: ${INSTALLATION_ENV}
+    depends_on:
+      - db
+
+volumes:
+  db_data:
