@@ -12,7 +12,7 @@ function runInSlaveMode {
 	bash carte.sh /opt/config.xml
 }
 
-	if [ "$IS_MASTER" == "true" ]; then
+if [ "$IS_MASTER" == "true" ]; then
 	runInMasterMode
 else
 	runInSlaveMode
