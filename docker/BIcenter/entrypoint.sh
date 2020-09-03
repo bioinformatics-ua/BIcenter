@@ -23,9 +23,9 @@ function runInProdMode {
 	cd prod && rm -rf RUNNING_PID && bash bin/bicenter
 }
 
-if [ $INSTALLATION_ENV = "development" ]; then
+if [ "$INSTALLATION_ENV" == "development" ]; then
 	runInDevMode
-elif [ $INSTALLATION_ENV = "production" ]; then
+elif [ "$INSTALLATION_ENV" == "production" ]; then
 	runInProdMode
 else
 	echo "$INSTALLATION_ENV not supported"

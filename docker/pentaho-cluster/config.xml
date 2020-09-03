@@ -3,7 +3,7 @@
     <masters>
         <slaveserver>
             <name>Master</name>
-            <hostname>0.0.0.0</hostname>
+            <hostname>cartemaster</hostname>
             <port>9080</port>
             <username>cluster</username>
             <password>cluster</password>

@@ -1,6 +1,35 @@
 version: "3.8"
 
+x-carte-build: &carte-build
+  context: pentaho-cluster
+  args:
+    PENTAHO_VERSION: ${PENTAHO_VERSION}
+    PDI_BUILD: ${PDI_BUILD}
+    MYSQL_CONNECTOR_VERSION: ${MYSQL_CONNECTOR_VERSION}
+
 services:
+  cartemaster:
+    container_name: cartemaster
+    build: *carte-build
+    image: cartemaster
+    restart: always
+    ports:
+      - ${CLUSTER_MASTER_EXTERNAL_PORT}:${CLUSTER_MASTER_INTERNAL_PORT}
+    environment:
+      IS_MASTER: 'true'
+      MASTER_PORT: ${CLUSTER_MASTER_INTERNAL_PORT}
+      MASTER_IP: ${CLUSTER_MASTER_IP}
+
+  carteslave:
+    container_name: carteslave
+    build: *carte-build
+    image: carteslave
+    restart: always
+    ports:
+      - ${CLUSTER_SLAVE_EXTERNAL_PORT}:${CLUSTER_SLAVE_INTERNAL_PORT}
+    depends_on:
+      - cartemaster
+
   db:
     container_name: bicenter-${INSTALLATION_ENV}-db
     image: mysql:5.7
