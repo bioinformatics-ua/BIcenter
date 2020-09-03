@@ -8,7 +8,7 @@ update-ca-certificates -f
 
 # com.bmdsoftware/sbt-rjs;1.0.9
 printf "\n\n${BLUE}SBT-RJS${NORMAL}\n"
-git clone https://github.com/vascoalramos/sbt-rjs.git # FIXME: update to the main repo when new version is available
+git clone https://github.com/bioinformatics-ua/sbt-rjs.git
 cd sbt-rjs && sbt publishLocal && cd ..
 
 # com.bicou.sbt/sbt-hbs;1.0.8
