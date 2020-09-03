@@ -14,7 +14,7 @@ function runInProdMode {
 	cp target/universal/bicenter-*.zip ../bicenter.zip
 
 	# extract distributable package
-	cd .. && unzip bicenter.zip || true && mkdir prod && mv bicenter-*/* prod && rm bicenter.zip
+	cd .. && unzip bicenter.zip || true && [[ -d prod ]] || mkdir prod && mv bicenter-*/* prod && rm bicenter.zip
 
 	# copy configuration folder
 	cp -r BIcenter/conf prod/conf
