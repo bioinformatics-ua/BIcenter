@@ -17,9 +17,9 @@ function runInProdMode {
 	cd .. && unzip bicenter.zip || true
 
 	if [ -d prod ]; then
-  	rm -rf prod/*
-  else
-  	mkdir prod
+  		rm -rf prod/*
+  	else
+  		mkdir prod
 	fi
 
 	mv bicenter-*/* prod && rm bicenter.zip

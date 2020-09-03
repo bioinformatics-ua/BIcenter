@@ -13,7 +13,7 @@ cd sbt-rjs && sbt publishLocal && cd ..
 
 # com.bicou.sbt/sbt-hbs;1.0.8
 printf "\n\n${BLUE}SBT-HBS${NORMAL}\n"
-git clone https://github.com/vascoalramos/sbt-hbs.git sbt-hbs # FIXME: update to the main repo when new version is available
+git clone https://github.com/bioinformatics-ua/sbt-hbs.git
 cd sbt-hbs && sbt publishLocal
 
 # add repositories into the file ~/.sbt/repositories
