@@ -24,6 +24,7 @@ function runInProdMode {
 
 	mv bicenter-*/* prod && rm bicenter.zip
 
+
 	# copy configuration folder
 	cp -r BIcenter/conf prod/conf
 
