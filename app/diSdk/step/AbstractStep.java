@@ -81,6 +81,27 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
             if (usagiStepProperty.isPresent()) {
                 usagiExportFilename = usagiStepProperty.get().getValue();
+
+                int inputColumn;
+                Optional<StepProperty> inputColumnStep = stepProperties.stream()
+                        .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("inputColumn"))
+                        .findFirst();
+
+                if (!inputColumnStep.isPresent())
+                    inputColumn=1;
+                else
+                    inputColumn = Integer.parseInt(inputColumnStep.get().getValue());
+
+                int outputColumn;
+                Optional<StepProperty> outputColumnStep = stepProperties.stream()
+                        .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("outputColumn"))
+                        .findFirst();
+
+                if (!outputColumnStep.isPresent())
+                    outputColumn=5;
+                else
+                    outputColumn = Integer.parseInt(outputColumnStep.get().getValue());
+
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(usagiExportFilename));
                     br.readLine(); //Skip Header
@@ -91,8 +112,8 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                     String row;
                     while ((row = br.readLine()) != null) {
                         String[] data = row.split(",");
-                        usagiSourceValues.add(data[1]);
-                        usagiTargetValues.add(data[6]);
+                        usagiSourceValues.add(data[inputColumn]);
+                        usagiTargetValues.add(data[outputColumn]);
                     }
 
                 } catch (FileNotFoundException e) {

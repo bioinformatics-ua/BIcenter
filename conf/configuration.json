@@ -130,8 +130,14 @@
               "shortName": "encoding",
               "type": "select",
               "componentMetadatas": [
-                {"value":"UTF-8","name":"UTF-8"},
-                {"value":"ANSI","name":"ANSI"}
+                {
+                  "value": "UTF-8",
+                  "name": "UTF-8"
+                },
+                {
+                  "value": "ANSI",
+                  "name": "ANSI"
+                }
               ]
             },
             {
@@ -236,10 +242,22 @@
               "shortName": "checkSumType",
               "type": "select",
               "componentMetadatas": [
-                {"value":"0","name":"CRC 32"},
-                {"value":"1","name":"ADLER 32"},
-                {"value":"2","name":"MD5"},
-                {"value":"3","name":"SHA-1"}
+                {
+                  "value": "0",
+                  "name": "CRC 32"
+                },
+                {
+                  "value": "1",
+                  "name": "ADLER 32"
+                },
+                {
+                  "value": "2",
+                  "name": "MD5"
+                },
+                {
+                  "value": "3",
+                  "name": "SHA-1"
+                }
               ]
             },
             {
@@ -247,9 +265,18 @@
               "shortName": "resultType",
               "type": "select",
               "componentMetadatas": [
-                {"value":"0","name":"String"},
-                {"value":"1","name":"Hexadecimal"},
-                {"value":"2","name":"Binary"}
+                {
+                  "value": "0",
+                  "name": "String"
+                },
+                {
+                  "value": "1",
+                  "name": "Hexadecimal"
+                },
+                {
+                  "value": "2",
+                  "name": "Binary"
+                }
               ]
             },
             {
@@ -366,6 +393,164 @@
               "name": "USAGI File Name",
               "shortName": "usagiFile",
               "type": "fileinput"
+            },
+            {
+              "name": "Input Column",
+              "shortName": "inputColumn",
+              "type": "select",
+              "componentMetadatas": [
+                {
+                  "value": "1",
+                  "name": "sourceName"
+                },
+                {
+                  "value": "0",
+                  "name": "sourceCode"
+                },
+                {
+                  "value": "2",
+                  "name": "sourceFrequency"
+                },
+                {
+                  "value": "3",
+                  "name": "sourceAutoAssignedConceptIds"
+                },
+                {
+                  "value": "4",
+                  "name": "matchScore"
+                },
+                {
+                  "value": "5",
+                  "name": "targetConceptId"
+                },
+                {
+                  "value": "6",
+                  "name": "targetConceptName"
+                },
+                {
+                  "value": "7",
+                  "name": "targetVocabularyId"
+                },
+                {
+                  "value": "8",
+                  "name": "targetDomainId"
+                },
+                {
+                  "value": "9",
+                  "name": "targetStandardConcept"
+                },
+                {
+                  "value": "10",
+                  "name": "targetChildCount"
+                },
+                {
+                  "value": "11",
+                  "name": "targetParentCount"
+                },
+                {
+                  "value": "12",
+                  "name": "targetChildCount"
+                },
+                {
+                  "value": "13",
+                  "name": "targetConceptClassId"
+                },
+                {
+                  "value": "14",
+                  "name": "targetConceptCode"
+                },
+                {
+                  "value": "15",
+                  "name": "targetValidStartDate"
+                },
+                {
+                  "value": "16",
+                  "name": "targetValidEndDate"
+                },
+                {
+                  "value": "17",
+                  "name": "targetInvalidReason"
+                }
+              ]
+            },
+            {
+              "name": "Output Column",
+              "shortName": "outputColumn",
+              "type": "select",
+              "componentMetadatas": [
+                {
+                  "value": "5",
+                  "name": "targetConceptId"
+                },
+                {
+                  "value": "0",
+                  "name": "sourceCode"
+                },
+                {
+                  "value": "1",
+                  "name": "sourceName"
+                },
+                {
+                  "value": "2",
+                  "name": "sourceFrequency"
+                },
+                {
+                  "value": "3",
+                  "name": "sourceAutoAssignedConceptIds"
+                },
+                {
+                  "value": "4",
+                  "name": "matchScore"
+                },
+                {
+                  "value": "6",
+                  "name": "targetConceptName"
+                },
+                {
+                  "value": "7",
+                  "name": "targetVocabularyId"
+                },
+                {
+                  "value": "8",
+                  "name": "targetDomainId"
+                },
+                {
+                  "value": "9",
+                  "name": "targetStandardConcept"
+                },
+                {
+                  "value": "10",
+                  "name": "targetChildCount"
+                },
+                {
+                  "value": "11",
+                  "name": "targetParentCount"
+                },
+                {
+                  "value": "12",
+                  "name": "targetChildCount"
+                },
+                {
+                  "value": "13",
+                  "name": "targetConceptClassId"
+                },
+                {
+                  "value": "14",
+                  "name": "targetConceptCode"
+                },
+                {
+                  "value": "15",
+                  "name": "targetValidStartDate"
+                },
+                {
+                  "value": "16",
+                  "name": "targetValidEndDate"
+                },
+                {
+                  "value": "17",
+                  "name": "targetInvalidReason"
+                }
+              ]
             }
           ]
         }
@@ -378,8 +563,7 @@
           "name": "FilterRows",
           "description": "Filter Rows",
           "shortName": "filterRows",
-          "componentProperties":
-          [
+          "componentProperties": [
             {
               "name": "Step Name",
               "shortName": "stepName",
@@ -448,10 +632,22 @@
               "shortName": "joinType",
               "type": "select",
               "componentMetadatas": [
-                {"value":"INNER","name":"INNER"},
-                {"value":"LEFT OUTER","name":"LEFT OUTER"},
-                {"value":"RIGHT OUTER","name":"RIGHT OUTER"},
-                {"value":"FULL OUTER","name":"FULL OUTER"}
+                {
+                  "value": "INNER",
+                  "name": "INNER"
+                },
+                {
+                  "value": "LEFT OUTER",
+                  "name": "LEFT OUTER"
+                },
+                {
+                  "value": "RIGHT OUTER",
+                  "name": "RIGHT OUTER"
+                },
+                {
+                  "value": "FULL OUTER",
+                  "name": "FULL OUTER"
+                }
               ]
             },
             {
@@ -515,24 +711,78 @@
                   "type": "select",
                   "source": "metadata",
                   "metadatas": [
-                    {"value":"1","name":"Sum"},
-                    {"value":"2","name":"Average (Mean)"},
-                    {"value":"3","name":"Median"},
-                    {"value":"4","name":"Percentile"},
-                    {"value":"5","name":"Minimum"},
-                    {"value":"6","name":"Maximum"},
-                    {"value":"7","name":"Number of values (N)"},
-                    {"value":"8","name":"Concatenate strings separated by , (comma)"},
-                    {"value":"9","name":"First non-null value"},
-                    {"value":"10","name":"Last non-null value"},
-                    {"value":"11","name":"First value (including null)"},
-                    {"value":"12","name":"Last value (including null)"},
-                    {"value":"13","name":"Cumulative sum (all rows option only!)"},
-                    {"value":"14","name":"Cumulative average (all rows option only!)"},
-                    {"value":"16","name":"Standard deviation"},
-                    {"value":"16","name":"Concatenate strings separated by <Value>: specify the separator in the Value column"},
-                    {"value":"17","name":"Number of distinct values"},
-                    {"value":"18","name":"Number of rows (without field argument)"}
+                    {
+                      "value": "1",
+                      "name": "Sum"
+                    },
+                    {
+                      "value": "2",
+                      "name": "Average (Mean)"
+                    },
+                    {
+                      "value": "3",
+                      "name": "Median"
+                    },
+                    {
+                      "value": "4",
+                      "name": "Percentile"
+                    },
+                    {
+                      "value": "5",
+                      "name": "Minimum"
+                    },
+                    {
+                      "value": "6",
+                      "name": "Maximum"
+                    },
+                    {
+                      "value": "7",
+                      "name": "Number of values (N)"
+                    },
+                    {
+                      "value": "8",
+                      "name": "Concatenate strings separated by , (comma)"
+                    },
+                    {
+                      "value": "9",
+                      "name": "First non-null value"
+                    },
+                    {
+                      "value": "10",
+                      "name": "Last non-null value"
+                    },
+                    {
+                      "value": "11",
+                      "name": "First value (including null)"
+                    },
+                    {
+                      "value": "12",
+                      "name": "Last value (including null)"
+                    },
+                    {
+                      "value": "13",
+                      "name": "Cumulative sum (all rows option only!)"
+                    },
+                    {
+                      "value": "14",
+                      "name": "Cumulative average (all rows option only!)"
+                    },
+                    {
+                      "value": "16",
+                      "name": "Standard deviation"
+                    },
+                    {
+                      "value": "16",
+                      "name": "Concatenate strings separated by <Value>: specify the separator in the Value column"
+                    },
+                    {
+                      "value": "17",
+                      "name": "Number of distinct values"
+                    },
+                    {
+                      "value": "18",
+                      "name": "Number of rows (without field argument)"
+                    }
                   ]
                 },
                 {
