@@ -36,29 +36,16 @@ define('HomeController', ['Controller', 'HomeView', 'Router', 'Institution', 'Ta
 		modalController.loadNewInstitutionForm(this.institutionName);
 	}
 
-	// TODO: check with @joaorafaelalmeida the underlying logic of this operation
-	HomeController.prototype.createInstitution = function (event) {
+	HomeController.prototype.editInstitution = function (institutionId, event) {
 		if (event) {
 			event.preventDefault && event.preventDefault();
 			event.stopPropagation && event.stopPropagation();
 			event.stopImmediatePropagation && event.stopImmediatePropagation();
 		}
 
-		const $form = this.view.$elements['_newInstitution'];
-		const formValues = $form.serializeForm();
-		this.institutionName = formValues['institutionName'];
-
-		const context = this;
-
-		Institution.newInstitution(this.institutionName, institution => {
-			if (institution === "already exists") {
-				Alert.flash(ALERT_TYPE.DANGER, 'Institution', 'Institution \'' + context.institutionName + '\' already exists!');
-			} else {
-				Alert.flash(ALERT_TYPE.SUCCESS, 'Institution', 'Institution \'' + context.institutionName + '\' was successfully created!');
-			}
-			context.getTasks();
-		});
-	};
+		const modalController = this.module.controllers["InstitutionController"];
+		modalController.loadInstitution(institutionId);
+	}
 
 	// SCHEDULER //
 	HomeController.prototype.showSchedule = function (institution) {

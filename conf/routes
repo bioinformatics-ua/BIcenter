@@ -32,7 +32,9 @@ GET           /image/:size/:image                                               
 # Handles insititutions.
 GET           /institution/:institutionId/scheduler                             controllers.InstitutionController.scheduler(institutionId:Long)
 
-GET           /institution/:institutionId/name                                  controllers.InstitutionController.getInstitutionName(institutionId:Long)
+GET           /institution/:institution/name                                    controllers.InstitutionController.getInstitutionName(institution:Long)
+GET           /institution/institution                                          controllers.InstitutionController.getInstitution(institution:Long)
+DELETE        /institution/:institution/delete                                  controllers.InstitutionController.deleteInstitution(institution:Long)
 GET           /institution/list                                                 controllers.InstitutionController.getInstitutions
 POST          /institution/create                                               controllers.InstitutionController.newInstitution()
 GET           /institution/:institution/server/:server/create                   controllers.InstitutionController.newServer(institution:Long,server:String)

@@ -11,7 +11,7 @@ define('InstitutionView', ['Modal'], function (Modal) {
     InstitutionView.prototype.clear = function () {
     };
 
-    InstitutionView.prototype.show = function (users, institutionName, modalTitle=null) {
+    InstitutionView.prototype.showNewInstitution = function (users, institutionName, modalTitle=null) {
         // Clear modal before show
         this.clear();
 
@@ -20,12 +20,33 @@ define('InstitutionView', ['Modal'], function (Modal) {
             _super_.addTitle.call(this, modalTitle);
         }
 
+        _super_.hide.call(this, ".btn-danger");
+
         // Show modal
         _super_.show.call(this);
 
-        console.log(users);
+        let html = JST['newInstitutionModalContent']({name: institutionName, users: users});
+        this.$elements.insideContainer.html(html);
+        this._loadViewComponents();
+    };
 
-        let html = JST['institutionModalContent']({name: institutionName, users: users});
+    InstitutionView.prototype.show = function (users, institution, modalTitle=null) {
+        // Clear modal before show
+        this.clear();
+
+        // update modalTitle
+        if (modalTitle !== null) {
+            _super_.addTitle.call(this, modalTitle);
+        }
+
+        _super_.show.call(this, ".btn-danger");
+
+        // Show modal
+        _super_.show.call(this);
+
+        institution.users = institution.users.map((user) => { return user.id });
+
+        let html = JST['institutionModalContent']({institution: institution, users: users});
         this.$elements.insideContainer.html(html);
         this._loadViewComponents();
     };

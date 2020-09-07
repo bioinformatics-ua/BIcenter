@@ -3,6 +3,7 @@ package repositories;
 import com.google.inject.ImplementedBy;
 import models.Hop;
 import models.Institution;
+import models.rbac.User;
 
 import java.util.List;
 
@@ -12,13 +13,15 @@ public interface InstitutionRepository {
 
     Institution add(Institution institution);
 
-    void delete(Institution institution);
+    void delete(long institutionId);
 
     List<Institution> list(String email);
 
     List<Institution> list();
 
     Institution getByName(String name);
+
+    Institution update(Institution institution);
 
     boolean hasUser(long institutionId, String userEmail);
 }

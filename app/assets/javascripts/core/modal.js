@@ -90,19 +90,30 @@ define('Modal', ['View', 'jquery', 'underscore', 'messages', 'bootbox', 'templat
         this._loadViewComponents();
     };
 
-    Modal.prototype.show = function () {
-        if (!this.modal) {
-            // Init and show modal
-            this.initModal();
+    Modal.prototype.show = function (elementClass = null) {
+        if (elementClass !== null) {
+            let $elem = this.modal.find(elementClass);
+            $elem.show();
         } else {
-            this.modal.modal('show');
+            if (!this.modal) {
+                // Init and show modal
+                this.initModal();
+            } else {
+                this.modal.modal('show');
+            }
         }
+
     };
 
-    Modal.prototype.hide = function () {
-        if (this.modal) {
-            // Hide modal
-            this.modal.modal('hide');
+    Modal.prototype.hide = function (elementClass = null) {
+        if (elementClass !== null) {
+            let $elem = this.modal.find(elementClass);
+            $elem.hide();
+        } else {
+            if (this.modal) {
+                // Hide modal
+                this.modal.modal('hide');
+            }
         }
     };
 

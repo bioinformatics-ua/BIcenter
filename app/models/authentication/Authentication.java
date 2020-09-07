@@ -42,10 +42,13 @@ public class Authentication {
     private String defaultUser;
     private byte[] defaultPassword;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH })
     private List<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(name = "Authentication_Institution",
+            joinColumns = @JoinColumn(name = "authentication_id"),
+            inverseJoinColumns = @JoinColumn(name = "institution_id"))
     private List<Institution> institutions;
 
     @Constraints.Required

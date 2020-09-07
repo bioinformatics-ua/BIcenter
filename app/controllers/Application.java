@@ -55,6 +55,8 @@ public class Application extends Controller {
 
 				// Institution Controller
 				routes.javascript.InstitutionController.getInstitutionName(),
+                routes.javascript.InstitutionController.getInstitution(),
+                routes.javascript.InstitutionController.deleteInstitution(),
                 routes.javascript.InstitutionController.scheduler(),
                 routes.javascript.InstitutionController.getInstitutions(),
                 routes.javascript.InstitutionController.newInstitution(),

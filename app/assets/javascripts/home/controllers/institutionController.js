@@ -1,4 +1,4 @@
-define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Router', 'Institution', 'User'], function (Controller, InstitutionView, async, Router, Institution, User) {
+define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Alert', 'Router', 'Institution', 'User'], function (Controller, InstitutionView, async, Alert, Router, Institution, User) {
     var InstitutionController = function (module) {
         Controller.call(this, module, new InstitutionView(this));
     };
@@ -16,6 +16,11 @@ define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Rout
                 label: '<i class="fa fa-check-circle"></i> Save',
                 className: 'btn-success',
                 callback: 'controller.createInstitution()'
+            },
+            delete: {
+                label: '<i class="fa fa-times-circle"></i> Delete',
+                className: 'btn-danger pull-left',
+                callback: 'controller.deleteInstitution()'
             }
         });
     };
@@ -30,9 +35,8 @@ define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Rout
         const context = this;
 
         User.getAllUsers(function (users) {
-            context.view.show(users, context.institutionName);
+            context.view.showNewInstitution(users, context.institutionName, "Create New Institution");
         });
-
     }
 
     InstitutionController.prototype.createInstitution = function (event) {
@@ -50,15 +54,46 @@ define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Rout
         const context = this;
 
         Institution.newInstitution(formValues, function (institution) {
-            console.log(institution);
-            console.log("Institution", institution.id, "was successfully created!");
+            if (institution === "already exists") {
+                Alert.flash(ALERT_TYPE.DANGER, 'Institution', 'Institution \'' + context.institutionName + '\' already exists!');
+            } else {
+                Alert.flash(ALERT_TYPE.SUCCESS, 'Institution', 'Institution \'' + context.institutionName + '\' was successfully created!');
+            }
             context.reloadInstitutionInfo();
         });
 
         this.view.hide();
-
-
     };
+
+    InstitutionController.prototype.loadInstitution = function (institutionId) {
+        this.institutionId = institutionId
+        const context = this;
+
+        async.parallel(
+            [
+                function (callback) {
+                    User.getAllUsers( function(users){
+                        context.users = users;
+                        callback();
+                    });
+                },
+                function (callback) {
+                    Institution.getInstitution(context.institutionId, function(institution){
+                        context.institution = institution;
+                        callback();
+                    });
+                }
+            ],
+            function (err) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                context.view.show(context.users, context.institution, "Edit Institution");
+            }
+        );
+    }
 
     InstitutionController.prototype.deleteInstitution = function (event) {
         if (event) {
@@ -68,7 +103,7 @@ define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Rout
         }
 
         const context = this;
-        Institution.deleteServer(this.institutionId, this.server.id, function () {
+        Institution.deleteInstitution(this.institutionId, function () {
             context.view.hide();
             context.reloadInstitutionInfo();
         });
