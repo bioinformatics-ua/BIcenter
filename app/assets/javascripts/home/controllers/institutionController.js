@@ -14,11 +14,19 @@ define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Aler
         this.view.addButtons({
             save: {
                 label: '<i class="fa fa-check-circle"></i> Save',
+                id: "createBtn",
                 className: 'btn-success',
                 callback: 'controller.createInstitution()'
             },
+            update: {
+                label: '<i class="fa fa-check-circle"></i> Update',
+                id: "updateBtn",
+                className: 'btn-success',
+                callback: 'controller.updateInstitution()'
+            },
             delete: {
                 label: '<i class="fa fa-times-circle"></i> Delete',
+                id: "deleteBtn",
                 className: 'btn-danger pull-left',
                 callback: 'controller.deleteInstitution()'
             }
@@ -61,6 +69,36 @@ define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Aler
             }
             context.reloadInstitutionInfo();
         });
+
+        this.view.hide();
+    };
+
+    InstitutionController.prototype.updateInstitution = function (event) {
+        if (event) {
+            event.preventDefault && event.preventDefault();
+            event.stopPropagation && event.stopPropagation();
+            event.stopImmediatePropagation && event.stopImmediatePropagation();
+        }
+
+        const formValues = {
+            name: this.view.$elements["name"].val(),
+            users: this.view.$elements["users"].val()
+        };
+
+        console.log(formValues);
+
+        const context = this;
+
+        Institution.updateInstitution(this.institutionId, formValues, function (institution) {
+            if (institution === "already exists") {
+                Alert.flash(ALERT_TYPE.DANGER, 'Institution', 'Institution \'' + formValues.name + '\' already exists!');
+            } else {
+                Alert.flash(ALERT_TYPE.SUCCESS, 'Institution', 'Institution \'' + formValues.name + '\' was successfully created!');
+            }
+            context.reloadInstitutionInfo();
+        });
+
+
 
         this.view.hide();
     };

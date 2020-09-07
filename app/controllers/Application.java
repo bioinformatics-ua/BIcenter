@@ -54,22 +54,26 @@ public class Application extends Controller {
 				controllers.rbac.routes.javascript.Users.getAllUsers(),
 
 				// Institution Controller
-				routes.javascript.InstitutionController.getInstitutionName(),
-                routes.javascript.InstitutionController.getInstitution(),
-                routes.javascript.InstitutionController.deleteInstitution(),
-                routes.javascript.InstitutionController.scheduler(),
-                routes.javascript.InstitutionController.getInstitutions(),
                 routes.javascript.InstitutionController.newInstitution(),
+                routes.javascript.InstitutionController.getInstitutionName(),
+                routes.javascript.InstitutionController.getInstitution(),
+                routes.javascript.InstitutionController.getInstitutions(),
+                routes.javascript.InstitutionController.getUsers(),
+                routes.javascript.InstitutionController.updateInstitution(),
+                routes.javascript.InstitutionController.deleteInstitution(),
+
                 routes.javascript.InstitutionController.newServer(),
                 routes.javascript.InstitutionController.deleteServer(),
                 routes.javascript.InstitutionController.getServer(),
                 routes.javascript.InstitutionController.updateServer(),
+
                 routes.javascript.InstitutionController.newDataSource(),
                 routes.javascript.InstitutionController.deleteDataSource(),
                 routes.javascript.InstitutionController.getDataSource(),
                 routes.javascript.InstitutionController.updateDataSource(),
                 routes.javascript.InstitutionController.getDataSources(),
-                routes.javascript.InstitutionController.getUsers(),
+
+                routes.javascript.InstitutionController.scheduler(),
                 routes.javascript.InstitutionController.getComponents(),
                 routes.javascript.InstitutionController.getSchedules(),
 

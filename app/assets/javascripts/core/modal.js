@@ -80,6 +80,10 @@ define('Modal', ['View', 'jquery', 'underscore', 'messages', 'bootbox', 'templat
                 $btn.attr('view-click', button.callback);
             }
 
+            if (button.id) {
+                $btn.prop('id', button.id);
+            }
+
             // Add to array of initialized buttons
             $btns.push($btn);
         });

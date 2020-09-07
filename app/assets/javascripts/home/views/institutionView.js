@@ -20,7 +20,9 @@ define('InstitutionView', ['Modal'], function (Modal) {
             _super_.addTitle.call(this, modalTitle);
         }
 
-        _super_.hide.call(this, ".btn-danger");
+        _super_.hide.call(this, "#deleteBtn");
+        _super_.hide.call(this, "#updateBtn");
+        _super_.show.call(this, "#createBtn");
 
         // Show modal
         _super_.show.call(this);
@@ -39,7 +41,9 @@ define('InstitutionView', ['Modal'], function (Modal) {
             _super_.addTitle.call(this, modalTitle);
         }
 
-        _super_.show.call(this, ".btn-danger");
+        _super_.show.call(this, "#deleteBtn");
+        _super_.show.call(this, "#updateBtn");
+        _super_.hide.call(this, "#createBtn");
 
         // Show modal
         _super_.show.call(this);

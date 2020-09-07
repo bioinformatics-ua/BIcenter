@@ -35,6 +35,7 @@ GET           /institution/:institutionId/scheduler                             
 GET           /institution/:institution/name                                    controllers.InstitutionController.getInstitutionName(institution:Long)
 GET           /institution/institution                                          controllers.InstitutionController.getInstitution(institution:Long)
 DELETE        /institution/:institution/delete                                  controllers.InstitutionController.deleteInstitution(institution:Long)
+PUT           /institution/:institution/update                                  controllers.InstitutionController.updateInstitution(institution:Long)
 GET           /institution/list                                                 controllers.InstitutionController.getInstitutions
 POST          /institution/create                                               controllers.InstitutionController.newInstitution()
 GET           /institution/:institution/server/:server/create                   controllers.InstitutionController.newServer(institution:Long,server:String)

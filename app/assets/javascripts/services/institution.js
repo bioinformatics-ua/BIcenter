@@ -72,6 +72,21 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
 		})
 	};
 
+    Institution.updateInstitution = function (institutionId, formValues, callback) {
+        jsRoutes.controllers.InstitutionController.updateInstitution(institutionId).ajax({
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(formValues),
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                console.error('Error in Institution service', response);
+            }
+        })
+    };
+
 	Institution.newServer = function (institution, name, callback) {
 		jsRoutes.controllers.InstitutionController.newServer(institution, name).ajax({
 			contentType: 'application/json; charset=utf-8',
