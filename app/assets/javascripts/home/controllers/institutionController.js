@@ -98,8 +98,6 @@ define('InstitutionController', ['Controller', 'InstitutionView', 'async', 'Aler
             context.reloadInstitutionInfo();
         });
 
-
-
         this.view.hide();
     };
 
