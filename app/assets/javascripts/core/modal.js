@@ -61,6 +61,11 @@ define('Modal', ['View', 'jquery', 'underscore', 'messages', 'bootbox', 'templat
         });
     };
 
+    Modal.prototype.addTitle = function (title) {
+        let $title = this.modal.find(".modal-title");
+        $title.text(title);
+    }
+
     Modal.prototype.addButtons = function (buttons) {
         var $footer = this.modal.find('.modal-footer');
 
