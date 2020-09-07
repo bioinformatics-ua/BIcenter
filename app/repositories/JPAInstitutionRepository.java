@@ -45,6 +45,17 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
                 .getSingleResult();
     }
 
+    public Institution findInstitution(EntityManager em, String name) {
+        try {
+            return em.createQuery("SELECT p FROM Institution p WHERE p.name=:name", Institution.class)
+                    .setParameter("name", name)
+                    .setMaxResults(1)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     public static boolean hasUser(EntityManager em, long institutionId, String userEmail) {
         try {
             return em

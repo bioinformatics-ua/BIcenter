@@ -82,12 +82,6 @@ public class ApplicationStart {
         // Building Step Configurations.
         buildComponents(configuration);
 
-        // Building users
-        boolean initRBAC = rbacRepository.findAllRoles().size() == 0;
-        if (initRBAC) {
-            buildRBAC(configuration);
-        }
-
         // Building Institutions.
         boolean initInstitutions = this.institutionRepository.list().size() == 0;
         if (initInstitutions) {
@@ -96,6 +90,12 @@ public class ApplicationStart {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        // Building users
+        boolean initRBAC = rbacRepository.findAllRoles().size() == 0;
+        if (initRBAC) {
+            buildRBAC(configuration);
         }
 
         boolean initAuth = authenticationRepository.findAll().size() == 0;
@@ -158,7 +158,7 @@ public class ApplicationStart {
             User user = new User(u.getEmail(), u.getName(), BCrypt.hashpw(u.getPassword(), BCrypt.gensalt()));
             user.setActive(u.getActive());
 
-            userService.createUserWithRoles(user, u.getRoles());
+            userService.createUserWithRolesAndInstitutions(user, u.getRoles(), u.getInstitutions());
         }
     }
 

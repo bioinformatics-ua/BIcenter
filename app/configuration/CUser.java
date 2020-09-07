@@ -11,17 +11,19 @@ public class CUser {
     private String password;
     private Boolean active = true;
     private List<String> roles;
+    private List<String> institutions;
 
     public CUser() {
     }
 
     public CUser(final String name, final String email, final String password,
-                 final Boolean active, final List<String> roles) {
+                 final Boolean active, final List<String> roles, final List<String> institutions) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.active = active;
         this.roles = roles;
+        this.institutions = institutions;
     }
 
     public String getName() {
@@ -62,6 +64,14 @@ public class CUser {
 
     public void setRoles(final List<String> roles) {
         this.roles = roles;
+    }
+
+    public List<String> getInstitutions() {
+        return institutions;
+    }
+
+    public void setInstitutions(List<String> institutions) {
+        this.institutions = institutions;
     }
 
     @Override
