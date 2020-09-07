@@ -34,7 +34,7 @@ GET           /institution/:institutionId/scheduler                             
 
 GET           /institution/:institutionId/name                                  controllers.InstitutionController.getInstitutionName(institutionId:Long)
 GET           /institution/list                                                 controllers.InstitutionController.getInstitutions
-GET           /institution/create                                               controllers.InstitutionController.newInstitution(institution:String)
+POST          /institution/create                                               controllers.InstitutionController.newInstitution()
 GET           /institution/:institution/server/:server/create                   controllers.InstitutionController.newServer(institution:Long,server:String)
 DELETE        /institution/:institution/server/:server/delete                   controllers.InstitutionController.deleteServer(institution:Long,server:Long)
 GET           /institution/:institution/dataSource/:dataSource/create           controllers.InstitutionController.newDataSource(institution:Long,dataSource:String)
@@ -44,6 +44,7 @@ GET           /institution/:institutionId/dataSource/:dataSourceId              
 POST          /institution/:institutionId/server/:serverId/apply                controllers.InstitutionController.updateServer(institutionId:Long,serverId:Long)
 POST          /institution/:institutionId/dataSource/:dataSourceId/apply        controllers.InstitutionController.updateDataSource(institutionId:Long,dataSourceId:Long)
 GET           /institution/:institutionId/dataSources                           controllers.InstitutionController.getDataSources(institutionId:Long)
+GET           /institution/:institutionId/users                                 controllers.InstitutionController.getUsers(institutionId:Long)
 GET           /institution/:institutionId/schedules                             controllers.InstitutionController.getSchedules(institutionId:Long)
 
 GET           /components/list                                                  controllers.InstitutionController.getComponents

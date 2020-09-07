@@ -158,12 +158,12 @@ public class TransGraphController extends Controller {
      * @param name
      * @return
      */
-    public boolean existsTask(String name){
+    public boolean existsTask(long institutionId, String name){
         boolean exists = true;
         if(taskRepository.list().isEmpty()) exists = false;
         else{
             try{
-                taskRepository.getByName(name);
+                taskRepository.getByInstitutionAndName(institutionId, name);
             }
             catch(NoResultException e){
                 exists = false;
@@ -181,7 +181,7 @@ public class TransGraphController extends Controller {
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.ADD})
     public Result newTask(long institutionId, String name){
-        if(existsTask(name)) forbidden();
+        if(existsTask(institutionId, name)) forbidden();
 
         Task task = new Task(name);
         Institution inst = institutionRepository.get(institutionId);
@@ -220,7 +220,7 @@ public class TransGraphController extends Controller {
     @Security.Authenticated(Secured.class)
     @CheckPermission(category = Category.TASK, needs = {Operation.GET})
     public Result getTask(long institutionId, String name) {
-        if(!existsTask(name)) return ok("not found");
+        if(!existsTask(institutionId, name)) return ok("not found");
 
         Task task = taskRepository.getByName(name);
         return ok(taskToJson(task));

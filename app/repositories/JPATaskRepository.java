@@ -31,6 +31,13 @@ public class JPATaskRepository extends JPARepository implements TaskRepository {
                 .getSingleResult();
     }
 
+    public static Task getByInstitutionAndName(EntityManager em, long institutionId, String name) {
+        return em.createQuery("select p from Task p where institution_id=:institutionidparam and name=:nameparam", Task.class)
+                .setParameter("nameparam",name)
+                .setParameter("institutionidparam", institutionId)
+                .getSingleResult();
+    }
+
     public static List<String> getOpenTabs(EntityManager em){
         return em.createQuery("select name from Task p where open=1", String.class)
                 .getResultList();
@@ -65,6 +72,9 @@ public class JPATaskRepository extends JPARepository implements TaskRepository {
 
     @Override
     public Task getByName(String name) { return wrap(em -> getByName(em,name)); }
+
+    @Override
+    public Task getByInstitutionAndName(long institutionId, String name) { return wrap(em -> getByInstitutionAndName(em, institutionId, name)); }
 
     @Override
     public List<String> getOpenTabs() { return wrap(em -> getOpenTabs(em)); }

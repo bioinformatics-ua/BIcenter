@@ -29,10 +29,11 @@ define('Institution', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
 		})
 	};
 
-	Institution.newInstitution = function (name, callback) {
-		jsRoutes.controllers.InstitutionController.newInstitution(name).ajax({
+	Institution.newInstitution = function (formValues, callback) {
+		jsRoutes.controllers.InstitutionController.newInstitution().ajax({
 			contentType: 'application/json; charset=utf-8',
-			success: function (response) {
+            data: JSON.stringify(formValues),
+            success: function (response) {
 				if (callback) {
 					callback(response);
 				}

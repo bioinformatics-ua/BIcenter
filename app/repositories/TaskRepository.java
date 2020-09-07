@@ -15,6 +15,8 @@ public interface TaskRepository {
 
     Task getByName(String name);
 
+    Task getByInstitutionAndName(long institutionId, String name);
+
     List<String> getOpenTabs();
 
     void delete(long task);

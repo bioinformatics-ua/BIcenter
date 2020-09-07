@@ -15,6 +15,7 @@ define('HomeView', ['jquery', 'View'], function ($, View) {
 		const html = JST['home']({
 			institutions: institutions
 		});
+		console.log(institutions);
 		this.$container.html(html);
 		this._loadViewComponents();
 	};

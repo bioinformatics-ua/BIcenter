@@ -9,16 +9,21 @@ import controllers.rbac.annotation.CheckPermission;
 import models.*;
 import models.rbac.Category;
 import models.rbac.Operation;
+import models.rbac.User;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import repositories.*;
+import repositories.user.UserRepository;
 import serializers.component.SimpleComponentSerializer;
 import serializers.institution.*;
 import serializers.task.SimpleTaskSerializer;
+import serializers.user.UserNoChildSerializer;
 
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class InstitutionController extends Controller {
@@ -27,14 +32,16 @@ public class InstitutionController extends Controller {
 	private final DataSourceRepository dataSourceRepository;
 	private final ComponentRepository componentRepository;
 	private final ComponentCategoryRepository componentCategoryRepository;
+	private final UserRepository userRepository;
 
 	@Inject
-	public InstitutionController(InstitutionRepository institutionRepository, ServerRepository serverRepository, DataSourceRepository dataSourceRepository, ComponentRepository componentRepository, ComponentCategoryRepository componentCategoryRepository) {
+	public InstitutionController(InstitutionRepository institutionRepository, ServerRepository serverRepository, DataSourceRepository dataSourceRepository, ComponentRepository componentRepository, ComponentCategoryRepository componentCategoryRepository, UserRepository userRepository) {
 		this.institutionRepository = institutionRepository;
 		this.serverRepository = serverRepository;
 		this.dataSourceRepository = dataSourceRepository;
 		this.componentRepository = componentRepository;
 		this.componentCategoryRepository = componentCategoryRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Security.Authenticated(Secured.class)
@@ -63,10 +70,26 @@ public class InstitutionController extends Controller {
 
 	@Security.Authenticated(Secured.class)
 	@CheckPermission(category = Category.INSTITUTION, needs = {Operation.ADD})
-	public Result newInstitution(String institutionName) {
-		if (existsInstitution(institutionName)) return ok("not found");
+	public Result newInstitution() {
+		JsonNode formData = request().body().asJson();
+
+		String institutionName = formData.get("name").asText();
+
+		if (existsInstitution(institutionName)) return ok("already exists");
 
 		Institution institution = new Institution(institutionName);
+		List<User> users = new ArrayList<>();
+
+		for (Iterator<JsonNode> it = formData.get("users").elements(); it.hasNext(); ) {
+			User user = userRepository.get(it.next().asLong());
+			List<Institution> institutions = user.getInstitutions();
+			institutions.add(institution);
+			user.setInstitutions(institutions);
+			user = userRepository.update(user);
+			users.add(user);
+		}
+
+		institution.setUsers(users);
 		institution = institutionRepository.add(institution);
 
 		return ok(Json.toJson(institution));
@@ -104,6 +127,7 @@ public class InstitutionController extends Controller {
 		module.addSerializer(Task.class, new SimpleTaskSerializer());
 		module.addSerializer(Server.class, new ServerSerializer());
 		module.addSerializer(DataSource.class, new DataSourceSerializer());
+		module.addSerializer(User.class, new UserNoChildSerializer());
 		mapper.registerModule(module);
 		Json.setObjectMapper(mapper);
 
@@ -255,6 +279,21 @@ public class InstitutionController extends Controller {
 	public Result getDataSources(long institutionId) {
 		Institution institution = institutionRepository.get(institutionId);
 		List<DataSource> dataSources = institution.getDataSources();
+
+		ObjectMapper mapper = new ObjectMapper();
+		SimpleModule module = new SimpleModule();
+		module.addSerializer(DataSource.class, new ConnectionSerializer());
+		mapper.registerModule(module);
+		Json.setObjectMapper(mapper);
+
+		return ok(Json.toJson(dataSources));
+	}
+
+	@Security.Authenticated(Secured.class)
+	@CheckPermission(category = Category.INSTITUTION, needs = {Operation.GET})
+	public Result getUsers(long institutionId) {
+		Institution institution = institutionRepository.get(institutionId);
+		List<User> dataSources = institution.getUsers();
 
 		ObjectMapper mapper = new ObjectMapper();
 		SimpleModule module = new SimpleModule();

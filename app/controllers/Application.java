@@ -67,6 +67,7 @@ public class Application extends Controller {
                 routes.javascript.InstitutionController.getDataSource(),
                 routes.javascript.InstitutionController.updateDataSource(),
                 routes.javascript.InstitutionController.getDataSources(),
+                routes.javascript.InstitutionController.getUsers(),
                 routes.javascript.InstitutionController.getComponents(),
                 routes.javascript.InstitutionController.getSchedules(),
 

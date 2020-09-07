@@ -1,0 +1,19 @@
+<form view-element="{{name}}" class="form-horizontal">
+    <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">Name:</label>
+        <div class="col-sm-5">
+            <input class="form-control" name="name" view-element="name" value="{{name}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="institution" class="col-sm-3 control-label">Users:</label>
+        <div class="col-sm-5">
+            <select name="users" view-element="users" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true" multiple>
+                {{#users}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/users}}
+            </select>
+        </div>
+    </div>
+</form>

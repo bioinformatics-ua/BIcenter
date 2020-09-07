@@ -139,6 +139,10 @@ requirejs.config({
 		// Execution Scheduler Page
 		'SchedulerController': 'home/controllers/scheduleController',
 		'SchedulerView': 'home/views/scheduleView',
+
+		// Institution Page
+		'InstitutionController': 'home/controllers/institutionController',
+		'InstitutionView': 'home/views/institutionView',
 	},
 	shim: {
 		'messages': {

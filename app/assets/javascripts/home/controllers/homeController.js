@@ -10,8 +10,7 @@ define('HomeController', ['Controller', 'HomeView', 'Router', 'Institution', 'Ta
 	HomeController.prototype.initialize = function ($container) {
 		_super_.initialize.call(this, $container);
 
-		const context = this;
-		context.getTasks();
+		this.getTasks();
 	};
 
 	HomeController.prototype.getTasks = function () {
@@ -22,6 +21,21 @@ define('HomeController', ['Controller', 'HomeView', 'Router', 'Institution', 'Ta
 	};
 
 	// INSTITUTIONS //
+	HomeController.prototype.addInstitutionInfo = function (event) {
+		if (event) {
+			event.preventDefault && event.preventDefault();
+			event.stopPropagation && event.stopPropagation();
+			event.stopImmediatePropagation && event.stopImmediatePropagation();
+		}
+
+		const $form = this.view.$elements['_newInstitution'];
+		const formValues = $form.serializeForm();
+		this.institutionName = formValues['institutionName'];
+
+		const modalController = this.module.controllers["InstitutionController"];
+		modalController.loadNewInstitutionForm(this.institutionName);
+	}
+
 	// TODO: check with @joaorafaelalmeida the underlying logic of this operation
 	HomeController.prototype.createInstitution = function (event) {
 		if (event) {
@@ -37,7 +51,7 @@ define('HomeController', ['Controller', 'HomeView', 'Router', 'Institution', 'Ta
 		const context = this;
 
 		Institution.newInstitution(this.institutionName, institution => {
-			if (institution === "not found") {
+			if (institution === "already exists") {
 				Alert.flash(ALERT_TYPE.DANGER, 'Institution', 'Institution \'' + context.institutionName + '\' already exists!');
 			} else {
 				Alert.flash(ALERT_TYPE.SUCCESS, 'Institution', 'Institution \'' + context.institutionName + '\' was successfully created!');

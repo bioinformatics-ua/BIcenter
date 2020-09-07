@@ -149,7 +149,7 @@ define('Application', ['jquery', 'Router', 'Module', 'jsRoutes', 'Svg', 'Institu
 			.add(function () {
 				console.log("homepage");
 
-				self.loadControllers('MainModule', ['HomeController', 'TaskController', 'ServerController', 'DataSourceController']);
+				self.loadControllers('MainModule', ['HomeController', 'InstitutionController', 'TaskController', 'ServerController', 'DataSourceController']);
 			});
 
 		// Start listening
