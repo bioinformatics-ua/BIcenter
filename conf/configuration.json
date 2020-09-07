@@ -570,6 +570,10 @@
       "active": true,
       "roles": [
         "Administrator"
+      ],
+      "institutions": [
+        "INSA",
+        "Briosa e Gala"
       ]
     }
   ],

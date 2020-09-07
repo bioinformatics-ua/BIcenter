@@ -71,7 +71,6 @@ public class UserService extends JPAService {
 
 			for (String r : institutions) {
 				Institution institution = institutionRepository.findInstitution(em, r);
-				System.out.println(institution.getName());
 				if (institution == null) {
 					System.err.println("User institutions not found: " + r);
 					continue;
@@ -81,6 +80,7 @@ public class UserService extends JPAService {
 
 			user.getRoles().addAll(_roles);
 			user.getInstitutions().addAll(_institutions);
+
 			userRepository.create(em, user);
 
 			return user;
