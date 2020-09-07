@@ -56,15 +56,7 @@ define('ServerController', ['Controller', 'ServerView', 'async', 'Router', 'Inst
 	}
 
 	ServerController.prototype.reloadInstitutionInfo = function () {
-		let institutionDisplayController;
-
-		const sidebarController = this.module.controllers['SidebarController'];
-		if (sidebarController !== undefined) {
-			institutionDisplayController = sidebarController;
-		} else {
-			institutionDisplayController = this.module.controllers['HomeController'];
-		}
-
+		let institutionDisplayController = this.module.controllers['HomeController'];
 		institutionDisplayController.getTasks();
 	};
 

@@ -56,15 +56,7 @@ define('TaskController', ['Controller', 'TaskView', 'async', 'Router', 'Institut
 	}
 
 	TaskController.prototype.reloadInstitutionInfo = function () {
-		let institutionDisplayController;
-
-		const sidebarController = this.module.controllers['SidebarController'];
-		if (sidebarController !== undefined) {
-			institutionDisplayController = sidebarController;
-		} else {
-			institutionDisplayController = this.module.controllers['HomeController'];
-		}
-
+		let institutionDisplayController = this.module.controllers['HomeController'];
 		institutionDisplayController.getTasks();
 	};
 
