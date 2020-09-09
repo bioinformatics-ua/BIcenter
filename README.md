@@ -1,43 +1,30 @@
-# BIcenter
-This is a web-based platform that allows the building and management of ETL pipelines, by non-IT users, in a multi-institution environment.
+[<img src="https://img.shields.io/travis/playframework/play-java-starter-example.svg"/>](https://travis-ci.org/playframework/play-java-starter-example)
+
+# play-java-starter-example
+
+This is a starter application that shows how Play works.  Please see the documentation at https://www.playframework.com/documentation/latest/Home for more details.
 
 ## Running
 
-### Setup a Docker Enviroment
-1. Create a `.env` file on `docker` directory, using `.env-example` as reference, setting all the necessary environment variables.
-2. Build containers' images: `docker compose build` (this might take several minutes).
-3. Bring up the containers: `docker-compose up -d`.
-4. If you used the default ports, go to http://localhost:9000 to access BIcenter web platform.
+Run this using [sbt](http://www.scala-sbt.org/).  If you downloaded this project from http://www.playframework.com/download then you'll find a prepackaged version of sbt in the project directory:
 
-#### TL;DR
-1. Create a `.env` file on this directory, using `.env-example` as reference, setting all the necessary environment variables.
-2. Run `sh run.sh`, present in the root of this repository.
-3. If you used the default ports, go to http://localhost:9000 to access BIcenter web platform.
+```
+sbt run
+```
 
-### Troubleshooting and Workarounds
-If you run into any problems, please check the following suggestions (bear in mind that most of these problems only happen if you choose not to use the docker environments and run the project yourself)
-- In case of not being able to access any of the existent institutions:
-    1. In the MySQL database used by BIcenter server, add the necessary items to User_Institution:
-        ```mysql
-        use teste;
-        insert into User_Institution values (1, 1);
-        insert into User_Institution values (1, 2);
-        ```
-    2. On the [web app](http://localhost:9000), preform the following operations:
-          1. On the resources tab, add:
-              * The **Data source(s)**. In here you should specify the databases you want to connect to.
-              * The **Task(s)**. These are the tasks to which you can drag components into and define your flux.
-          2. After having defined at least one task, choose it and add the components you desire into the graph editor and edit them as you see fit.
+And then go to http://localhost:9000 to see the running web application.
 
-- In case of `sun.security.validator.ValidatorException` or `sun.security.provider.certpath.SunCertPathBuilderException`:
+### Troubleshooting
+
+If you run into any problems, please check the following suggestions:
+
+-   In case of `sun.security.validator.ValidatorException` or `sun.security.provider.certpath.SunCertPathBuilderException`:
     1. Export the CA certificate from the specified URL
-
     2. Update java certificates with the specific certificate
         ```bash
         cd $JAVA_HOME/lib/security
         sudo keytool -import -trustcacerts -cacerts -alias sectigo -file path/to/file
         ```
-
 - In the case of missing dependencies during the installation, such as:
     - sbt.ResolveException: unresolved dependency: com.bmdsoftware#sbt-rjs;1.0.9: not found
         ```bash
@@ -53,22 +40,48 @@ If you run into any problems, please check the following suggestions (bear in mi
         ```
     - sbt.ResolveException: unresolved dependency: jline#jline;2.11: not found
         - Add repositories into the file `~/.sbt/repositories` (This file may not exist) [more details](https://stackoverflow.com/questions/42438544/sbt-installation-error-module-not-found-org-scala-sbt-ivyivy2-3-0-sbt-2cf13e)
-            ```ini
-            [repositories]
-            local
-            sbt-releases-repo: https://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
-            sbt-plugins-repo: https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
-            maven-central: https://repo1.maven.org/maven2/
-            ```
+        ```ini
+        [repositories]
+        local
+        sbt-releases-repo: https://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
+        sbt-plugins-repo: https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
+        maven-central: https://repo1.maven.org/maven2/
+        ```
+      
+## Controllers
 
-## Bugs and features requests
-Have a bug, or a feature request?
-If your problem or idea is not yet addressed, please [open a new issue](https://github.com/bioinformatics-ua/BIcenter/issues/new).
+There are several demonstration files available in this template.
 
-## Support and consulting
-[<img src="https://raw.githubusercontent.com/wiki/BMDSoftware/dicoogle/images/bmd.png" height="64" alt="BMD Software">](https://www.bmd-software.com)
+- HomeController.java:
 
-Please contact [BMD Software](https://www.bmd-software.com) / info@bmd-software for professional support and consulting services.
+  Shows how to handle simple HTTP requests.
 
-## Copyright and license
-Copyright (C) 2020 BMD Software
+- AsyncController.java:
+
+  Shows how to do asynchronous programming when handling a request.
+
+- CountController.java:
+
+  Shows how to inject a component into a controller and use the component when
+  handling requests.
+
+## Components
+
+- Module.java:
+
+  Shows how to use Guice to bind all the components needed by your application.
+
+- Counter.java:
+
+  An example of a component that contains state, in this case a simple counter.
+
+- ApplicationTimer.java:
+
+  An example of a component that starts when the application starts and stops
+  when the application stops.
+
+## Filters
+
+- ExampleFilter.java
+
+  A simple filter that adds a header to every response.
