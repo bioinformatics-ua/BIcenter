@@ -88,7 +88,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                         .findFirst();
 
                 if (!inputColumnStep.isPresent())
-                    inputColumn=1;
+                    inputColumn = 1;
                 else
                     inputColumn = Integer.parseInt(inputColumnStep.get().getValue());
 
@@ -98,7 +98,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                         .findFirst();
 
                 if (!outputColumnStep.isPresent())
-                    outputColumn=5;
+                    outputColumn = 5;
                 else
                     outputColumn = Integer.parseInt(outputColumnStep.get().getValue());
 
@@ -205,6 +205,11 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
                             }
 
+                        } else if (shortName.equals("BufferSize")) { //If BufferSize isn't defined, use the default value
+                            // Invoke the current method with the StepProperty value.
+                            System.out.println("oof");
+                            invokeMethod(stepMetaInterface, method, "50000", databases);
+
                         } else if (usagiSourceValues != null && shortName.equals("SourceValue")) {
                             System.out.println("VALUE - " + usagiSourceValues.toString() + "\n");
 
@@ -242,13 +247,17 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                                 .collect(Collectors.toList());
                     }
 
-                    System.out.println("VALUE - " + value.toString() + "\n");
+                    System.out.println("VALUE - " + value.toString() +"\n");
 
                     if (shortName.equals("Filename")) {
                         fileName = value.toString();
                     }
                     if (shortName.equals("Delimiter")) {
                         delimiter = value.toString();
+                    }
+
+                    if (shortName.equals("BufferSize") && value.toString().length()==0) {
+                        value="50000";
                     }
 
                     // Invoke the current method with the StepProperty value.
