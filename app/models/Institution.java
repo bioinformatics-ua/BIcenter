@@ -6,6 +6,7 @@ import models.rbac.User;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Institution implements Serializable {
@@ -27,8 +28,14 @@ public class Institution implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "institution", cascade = CascadeType.ALL)
     private List<Schedule> schedules;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "institutions", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(name = "Institution_User",
+            joinColumns = @JoinColumn(name = "institution_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
+
+    @ManyToMany(mappedBy = "institutions", cascade = CascadeType.ALL)
+    private List<Authentication> authentications;
 
     public Institution() { }
     public Institution(String name) {

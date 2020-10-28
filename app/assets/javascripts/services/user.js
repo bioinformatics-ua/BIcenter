@@ -43,5 +43,23 @@ define('User', ['jsRoutes', 'Alert', 'messages'], function (jsRoutes, Alert, Mes
         });
     };
 
+    User.getAllUsers = function(callback) {
+        jsRoutes.controllers.rbac.Users.getAllUsers().ajax({
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (response) {
+                DEBUG && console.log(response);
+                if (response.status >= 500) {
+                    Alert.flash(ALERT_TYPE.DANGER, Messages('common.entities.user'), Messages('common.messages.problem'), true);
+                } else {
+                    Alert.flash(ALERT_TYPE.WARNING, Messages('common.entities.user'), response.responseText, false);
+                }
+            }
+        });
+    };
+
     return User;
 });

@@ -26,7 +26,10 @@ define(['handlebars.runtime','md5'], function (Handlebars,md5) {
                 if(v1==null) return false;
                 return (JSON.parse(v1).includes(v2)) ? options.fn(this) : options.inverse(this);
             case 'in':
-                return (v2.indexOf(v1) !== -1) ? options.fn(this) : options.inverse(this);;
+                return (v2.indexOf(v1) !== -1) ? options.fn(this) : options.inverse(this);
+            case '!in':
+                return (v2.indexOf(v1) === -1) ? options.fn(this) : options.inverse(this);
+
             default:
                 return options.inverse(this);
         }

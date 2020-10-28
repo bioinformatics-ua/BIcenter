@@ -2,6 +2,7 @@ package repositories;
 
 import com.google.inject.Inject;
 import models.Institution;
+import models.rbac.User;
 import play.db.jpa.JPAApi;
 
 import javax.persistence.EntityManager;
@@ -33,8 +34,8 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
         return institution;
     }
 
-    public static boolean delete(EntityManager em, Institution institution) {
-        institution = em.find(Institution.class, institution.getId());
+    public static boolean delete(EntityManager em, long institutionId) {
+        Institution institution = em.find(Institution.class, institutionId);
         em.remove(institution);
         return true;
     }
@@ -72,8 +73,8 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
     }
 
     @Override
-    public void delete(Institution institution) {
-        wrap(em -> delete(em, institution));
+    public void delete(long institutionId) {
+        wrap(em -> delete(em, institutionId));
     }
 
     @Override
@@ -94,5 +95,15 @@ public class JPAInstitutionRepository extends JPARepository implements Instituti
     @Override
     public boolean hasUser(long institutionId, String userEmail) {
         return wrap(em -> hasUser(em, institutionId, userEmail));
+    }
+
+    @Override
+    public Institution update(Institution institution) {
+        return wrap(em -> update(em, institution));
+    }
+
+    private Institution update(EntityManager em, Institution institution) {
+        em.merge(institution);
+        return institution;
     }
 }

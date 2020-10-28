@@ -6,51 +6,59 @@
 ##########  Application
 ############################################################################
 # An example controller showing a sample home page
-GET           /                                                                                          controllers.HomeController.index
-GET           /assets/javascripts/jsroutes.js                                                            controllers.Application.javascriptRoutes
-GET           /assets/javascripts/messages.js                                                            controllers.Application.jsMessages
-GET           /langs                                                                                     controllers.Application.supportedLanguages
+GET           /                                                                 controllers.HomeController.index()
+GET           /home                                                             controllers.HomeController.index()
+
+GET           /assets/javascripts/jsroutes.js                                   controllers.Application.javascriptRoutes
+GET           /assets/javascripts/messages.js                                   controllers.Application.jsMessages
+GET           /langs                                                            controllers.Application.supportedLanguages
 
 # LOGIN
-GET           /login                                                                                     controllers.login.Login.index()
-POST          /login                                                                                     controllers.login.Login.login()
-GET           /logout                                                                                    controllers.login.Login.logout()
+GET           /login                                                            controllers.login.Login.index()
+POST          /login                                                            controllers.login.Login.login()
+GET           /logout                                                           controllers.login.Login.logout()
 
-GET           /user                                                                                      controllers.rbac.Users.getLoggedInUser()
+GET           /user                                                             controllers.rbac.Users.getLoggedInUser
+GET           /users                                                            controllers.rbac.Users.getAllUsers
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                                                                              controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                                                     controllers.Assets.versioned(path="/public", file: Asset)
 
 # Handles the pipeline step svg images.
 #GET           /middle/:image                                                                             controllers.SvgController.getMiddleImage(image:String)
 #GET           /small/:image                                                                              controllers.SvgController.getSmallImage(image:String)
-GET           /image/:size/:image                                                                        controllers.SvgController.getImage(size:String, image:String)
+GET           /image/:size/:image                                               controllers.SvgController.getImage(size:String, image:String)
 
 # Handles insititutions.
-GET           /institution/:institutionId/scheduler                                                      controllers.InstitutionController.scheduler(institutionId:Long)
+GET           /institution/:institutionId/scheduler                             controllers.InstitutionController.scheduler(institutionId:Long)
 
-GET           /institution/:institutionId/name                                                           controllers.InstitutionController.getInstitutionName(institutionId:Long)
-GET           /institution/list                                                                          controllers.InstitutionController.getInstitutions()
-GET           /institution/:institution/server/:server/create                                            controllers.InstitutionController.newServer(institution:Long,server:String)
-DELETE        /institution/:institution/server/:server/delete                                            controllers.InstitutionController.deleteServer(institution:Long,server:Long)
-GET           /institution/:institution/dataSource/:dataSource/create                                    controllers.InstitutionController.newDataSource(institution:Long,dataSource:String)
-DELETE        /institution/:institution/dataSource/:dataSource/delete                                    controllers.InstitutionController.deleteDataSource(institution:Long,dataSource:Long)
-GET           /institution/:institutionId/server/:serverId                                               controllers.InstitutionController.getServer(institutionId:Long,serverId:Long)
-GET           /institution/:institutionId/dataSource/:dataSourceId                                       controllers.InstitutionController.getDataSource(institutionId:Long,dataSourceId:Long)
-POST          /institution/:institutionId/server/:serverId/apply                                         controllers.InstitutionController.updateServer(institutionId:Long,serverId:Long)
-POST          /institution/:institutionId/dataSource/:dataSourceId/apply                                 controllers.InstitutionController.updateDataSource(institutionId:Long,dataSourceId:Long)
-GET           /institution/:institutionId/dataSources                                                    controllers.InstitutionController.getDataSources(institutionId:Long)
-GET           /institution/:institutionId/schedules                                                      controllers.InstitutionController.getSchedules(institutionId:Long)
+GET           /institution/:institution/name                                    controllers.InstitutionController.getInstitutionName(institution:Long)
+GET           /institution/institution                                          controllers.InstitutionController.getInstitution(institution:Long)
+DELETE        /institution/:institution/delete                                  controllers.InstitutionController.deleteInstitution(institution:Long)
+PUT           /institution/:institution/update                                  controllers.InstitutionController.updateInstitution(institution:Long)
+GET           /institution/list                                                 controllers.InstitutionController.getInstitutions
+POST          /institution/create                                               controllers.InstitutionController.newInstitution()
+GET           /institution/:institution/server/:server/create                   controllers.InstitutionController.newServer(institution:Long,server:String)
+DELETE        /institution/:institution/server/:server/delete                   controllers.InstitutionController.deleteServer(institution:Long,server:Long)
+GET           /institution/:institution/dataSource/:dataSource/create           controllers.InstitutionController.newDataSource(institution:Long,dataSource:String)
+DELETE        /institution/:institution/dataSource/:dataSource/delete           controllers.InstitutionController.deleteDataSource(institution:Long,dataSource:Long)
+GET           /institution/:institutionId/server/:serverId                      controllers.InstitutionController.getServer(institutionId:Long,serverId:Long)
+GET           /institution/:institutionId/dataSource/:dataSourceId              controllers.InstitutionController.getDataSource(institutionId:Long,dataSourceId:Long)
+POST          /institution/:institutionId/server/:serverId/apply                controllers.InstitutionController.updateServer(institutionId:Long,serverId:Long)
+POST          /institution/:institutionId/dataSource/:dataSourceId/apply        controllers.InstitutionController.updateDataSource(institutionId:Long,dataSourceId:Long)
+GET           /institution/:institutionId/dataSources                           controllers.InstitutionController.getDataSources(institutionId:Long)
+GET           /institution/:institutionId/users                                 controllers.InstitutionController.getUsers(institutionId:Long)
+GET           /institution/:institutionId/schedules                             controllers.InstitutionController.getSchedules(institutionId:Long)
 
-GET           /components/list                                                                           controllers.InstitutionController.getComponents()
+GET           /components/list                                                  controllers.InstitutionController.getComponents
 
 # Handles the pipeline.
-GET           /institution/:institutionId/graph/:graphId/select                                          controllers.TransGraphController.selectTask(institutionId:Long,graphId:Long)
-GET           /institution/:institutionId/graph/:graphId/history                                         controllers.TransGraphController.history(institutionId:Long,graphId:Long)
+GET           /institution/:institutionId/graph/:graphId/select                 controllers.TransGraphController.selectTask(institutionId:Long,graphId:Long)
+GET           /institution/:institutionId/graph/:graphId/history                controllers.TransGraphController.history(institutionId:Long,graphId:Long)
 
-GET           /institution/:institutionId/graph/:graphId/details                                         controllers.TransGraphController.getTaskDetails(institutionId:Long,graphId:Long)
+GET           /institution/:institutionId/graph/:graphId/details                controllers.TransGraphController.getTaskDetails(institutionId:Long,graphId:Long)
 #GET           /graph/list                                                      controllers.TransGraphController.getTasks()
-GET           /institution/:institutionId/graph/:task/create                                             controllers.TransGraphController.newTask(institutionId:Long,task:String)
+GET           /institution/:institutionId/graph/:task/create                    controllers.TransGraphController.newTask(institutionId:Long,task:String)
 DELETE        /institution/:institutionId/graph/:task/delete                                             controllers.TransGraphController.deleteTask(institutionId:Long,task:Long)
 POST          /institution/:institutionId/graph/:task/apply                                              controllers.TransGraphController.updateTask(institutionId:Long,task:Long)
 GET           /institution/:institutionId/graph/:graphId/load                                            controllers.TransGraphController.loadTask(institutionId:Long,graphId:Long)

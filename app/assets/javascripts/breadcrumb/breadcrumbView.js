@@ -136,16 +136,14 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
                 callback();
             }
         ]);
-
-
     };
 
     BreadcrumbView.prototype.setBreadcrumbs = function (breadcrumbs) {
         var context = this;
-        _.each(breadcrumbs, function (bc) {
+        _.each(breadcrumbs, function (bc, idx) {
             var $elem;
             if (bc.url) {
-                $elem = $('<li><a view-router href="' + bc.url + '">' + bc.name + '</a></li>');
+                $elem = $('<li style="float: left"><a view-router href="' + bc.url + '">' + bc.name + '</a></li>');
             } else {
                 $elem = $('<li>' + bc.name + '</li>');
             }
@@ -154,7 +152,11 @@ define('BreadcrumbView', ['View', 'async', 'Task', 'jsRoutes', 'Router', 'Execut
                 $elem.prepend('<i class="' + bc.icon + '"></i> ')
             }
 
-            context.$elements.breadcrumb.append($elem);
+            if (idx === 0) {
+				context.$elements.breadcrumb.prepend($elem);
+			} else {
+				context.$elements.breadcrumb.append($elem);
+			}
         });
         Router.updatePageLinks();
     };

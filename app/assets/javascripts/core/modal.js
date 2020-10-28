@@ -61,6 +61,11 @@ define('Modal', ['View', 'jquery', 'underscore', 'messages', 'bootbox', 'templat
         });
     };
 
+    Modal.prototype.addTitle = function (title) {
+        let $title = this.modal.find(".modal-title");
+        $title.text(title);
+    }
+
     Modal.prototype.addButtons = function (buttons) {
         var $footer = this.modal.find('.modal-footer');
 
@@ -75,6 +80,10 @@ define('Modal', ['View', 'jquery', 'underscore', 'messages', 'bootbox', 'templat
                 $btn.attr('view-click', button.callback);
             }
 
+            if (button.id) {
+                $btn.prop('id', button.id);
+            }
+
             // Add to array of initialized buttons
             $btns.push($btn);
         });
@@ -85,19 +94,30 @@ define('Modal', ['View', 'jquery', 'underscore', 'messages', 'bootbox', 'templat
         this._loadViewComponents();
     };
 
-    Modal.prototype.show = function () {
-        if (!this.modal) {
-            // Init and show modal
-            this.initModal();
+    Modal.prototype.show = function (elementClass = null) {
+        if (elementClass !== null) {
+            let $elem = this.modal.find(elementClass);
+            $elem.show();
         } else {
-            this.modal.modal('show');
+            if (!this.modal) {
+                // Init and show modal
+                this.initModal();
+            } else {
+                this.modal.modal('show');
+            }
         }
+
     };
 
-    Modal.prototype.hide = function () {
-        if (this.modal) {
-            // Hide modal
-            this.modal.modal('hide');
+    Modal.prototype.hide = function (elementClass = null) {
+        if (elementClass !== null) {
+            let $elem = this.modal.find(elementClass);
+            $elem.hide();
+        } else {
+            if (this.modal) {
+                // Hide modal
+                this.modal.modal('hide');
+            }
         }
     };
 
