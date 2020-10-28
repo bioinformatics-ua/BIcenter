@@ -85,6 +85,18 @@
                             {{/../dataSources}}
                         {{/ifCond}}
 
+                        {{#ifCond source '==' 'inputFields'}}
+                            <option></option>
+                            {{#../inputFields}}
+                                {{#ifCond ../stepProperty.value '==' name}}
+                                    <option value="{{name}}" selected>{{name}}</option>
+                                {{/ifCond}}
+                                {{#ifCond ../stepProperty.value '!=' name}}
+                                    <option value="{{name}}">{{name}}</option>
+                                {{/ifCond}}
+                            {{/../inputFields}}
+                        {{/ifCond}}
+
                         {{#ifCond source '==' 'inputSteps'}}
                             <option></option>
                             {{#../inputSteps}}

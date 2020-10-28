@@ -353,24 +353,25 @@ public class StepController extends Controller {
             boolean useNumbers = false;
             String randomName = RandomStringUtils.random(length, useLetters, useNumbers);
             */
-            
-            File file = (File) filePart.get(0).getFile();
+            for (int i = 0; i < filePart.size(); i++) {
+                File file = (File) filePart.get(i).getFile();
 
-            try {
-                long componentPropertyId = Long.parseLong(filePart.get(0).getKey());
-                StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentPropertyId);
+                try {
+                    long componentPropertyId = Long.parseLong(filePart.get(i).getKey());
+                    StepProperty stepProperty = stepPropertyRepository.getByStepAndComponentProperty(stepId, componentPropertyId);
 
-                ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertyId);
-                if (stepProperty == null) {
-                    stepProperty = new StepProperty(file.getPath());
-                    stepProperty.setComponentProperty(componentProperty);
-                    stepProperty.setStep(stepRepository.get(stepId));
-                    stepPropertyRepository.add(stepProperty);
-                } else {
-                    stepProperty.setValue(file.getPath());
-                    stepPropertyRepository.add(stepProperty);
+                    ComponentProperty componentProperty = componentPropertyRepository.get(componentPropertyId);
+                    if (stepProperty == null) {
+                        stepProperty = new StepProperty(file.getPath());
+                        stepProperty.setComponentProperty(componentProperty);
+                        stepProperty.setStep(stepRepository.get(stepId));
+                        stepPropertyRepository.add(stepProperty);
+                    } else {
+                        stepProperty.setValue(file.getPath());
+                        stepPropertyRepository.add(stepProperty);
+                    }
+                } catch (Exception e) {
                 }
-            } catch (Exception e) {
             }
         }
 
