@@ -3,7 +3,7 @@
         <h3 class="box-title">{{component.description}}</h3>
     </div>
     <div class="box-body">
-        <form view-element="{{component.shortName}}_form" class="form-horizontal">
+        <form view-element="{{component.shortName}}_form" class="form-horizontal" enctype="multipart/form-data">
         {{#component.componentProperties}}
             {{#ifCond type '==' 'input'}}
                 <div class="form-group">
@@ -26,6 +26,14 @@
                     </div>
                 </div>
             {{/ifCond}}
+            {{#ifCond type '==' 'fileinput'}}
+                <div class="form-group">
+                    <label for="{{id}}" class="col-sm-2 control-label">{{name}}:</label>
+                    <div class="col-sm-5">
+                        <input type="file" name="{{id}}" view-element="{{id}}" value="{{stepProperty.value}}">
+                    </div>
+                </div>
+            {{/ifCond}}
             {{#ifCond type '==' 'number'}}
                 <div class="form-group">
                     <label for="{{id}}" class="col-sm-2 control-label">{{name}}</label>
@@ -45,6 +53,10 @@
                                 {{/ifCond}}
 
                                 {{#ifCond stepProperty.value '==' 'off'}}
+                                    <input name="{{id}}" view-element="{{id}}" type="checkbox"> {{name}}
+                                {{/ifCond}}
+
+                                {{#ifCond stepProperty.value '==' null}}
                                     <input name="{{id}}" view-element="{{id}}" type="checkbox"> {{name}}
                                 {{/ifCond}}
 

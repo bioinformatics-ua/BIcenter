@@ -94,6 +94,52 @@
               "type": "textarea"
             }
           ]
+        },
+        {
+          "name": "CSVInput",
+          "description": "CSV File Input",
+          "shortName": "csvInput",
+          "componentProperties": [
+            {
+              "name": "Step Name",
+              "shortName": "stepName",
+              "type": "input"
+            },
+            {
+              "name": "File Name",
+              "shortName": "fileName",
+              "type": "fileinput"
+            },
+            {
+              "name": "Delimiter",
+              "shortName": "delimiter",
+              "type": "input"
+            },
+            {
+              "name": "Enclosure",
+              "shortName": "enclosure",
+              "type": "input"
+            },
+            {
+              "name": "NIO Buffer Size",
+              "shortName": "bufferSize",
+              "type": "number"
+            },
+            {
+              "name": "File Encoding",
+              "shortName": "encoding",
+              "type": "select",
+              "componentMetadatas": [
+                {"value":"UTF-8","name":"UTF-8"},
+                {"value":"ANSI","name":"ANSI"}
+              ]
+            },
+            {
+              "name": "Lazy Conversion?",
+              "shortName": "lazyConversionActive",
+              "type": "checkbox"
+            }
+          ]
         }
       ]
     },

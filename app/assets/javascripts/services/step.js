@@ -43,20 +43,40 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Step.applyChanges = function (institutionId, stepId,formData,callback) {
+    Step.applyChanges = function (institutionId, stepId, formData, fileData, callback) {
         jsRoutes.controllers.StepController.applyChanges(institutionId, stepId).ajax({
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(formData),
             success: function (response) {
-                if (callback) {
-                    callback(response);
+                // If there's a file to upload, upload it
+                if (fileData != null) {
+                    jsRoutes.controllers.StepController.uploadFile(institutionId, stepId).ajax({
+                        data: fileData,
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+
+                        success: function (response) {
+                            if (callback) {
+                                callback(response);
+                            }
+                        },
+                        error: function (response) {
+                            console.error('Error in Step service when uploading file', response);
+                        }
+                    })
+                } else {
+                    if (callback) {
+                        callback(response);
+                    }
                 }
             },
             error: function (response) {
-                console.error('Error in Step service', response);
+                console.error('Error in Step service when updating step', response);
             }
         })
     };
+
 
     Step.getTables = function (institutionId, stepId, callback) {
         jsRoutes.controllers.StepController.getTables(institutionId, stepId).ajax({
@@ -87,7 +107,7 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     };
 
     Step.getConditionValue = function (institutionId, stepId, componentId, callback) {
-        jsRoutes.controllers.StepController.getConditionValue(institutionId, stepId,componentId).ajax({
+        jsRoutes.controllers.StepController.getConditionValue(institutionId, stepId, componentId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -115,7 +135,7 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
     };
 
     Step.showStepInput = function (institutionId, stepId, callback) {
-        jsRoutes.controllers.StepController.inputOutputFields(institutionId, stepId,true).ajax({
+        jsRoutes.controllers.StepController.inputOutputFields(institutionId, stepId, true).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -128,8 +148,8 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Step.showStepOutput = function (institutionId, stepId,callback) {
-        jsRoutes.controllers.StepController.inputOutputFields(institutionId, stepId,false).ajax({
+    Step.showStepOutput = function (institutionId, stepId, callback) {
+        jsRoutes.controllers.StepController.inputOutputFields(institutionId, stepId, false).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (callback) {
@@ -142,7 +162,7 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Step.inputStepsName = function (institutionId, stepId,callback) {
+    Step.inputStepsName = function (institutionId, stepId, callback) {
         jsRoutes.controllers.StepController.inputStepsName(institutionId, stepId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
@@ -156,7 +176,7 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Step.inputFieldsName = function (institutionId, stepId,callback) {
+    Step.inputFieldsName = function (institutionId, stepId, callback) {
         jsRoutes.controllers.StepController.inputFieldsName(institutionId, stepId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
@@ -170,7 +190,7 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Step.outputStepsName = function (institutionId, stepId,callback) {
+    Step.outputStepsName = function (institutionId, stepId, callback) {
         jsRoutes.controllers.StepController.outputStepsName(institutionId, stepId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
@@ -212,7 +232,7 @@ define('Step', ['jsRoutes', 'messages'], function (jsRoutes, Messages) {
         })
     };
 
-    Step.getInstitution = function (institutionId, stepId,callback) {
+    Step.getInstitution = function (institutionId, stepId, callback) {
         jsRoutes.controllers.StepController.getInstitution(institutionId, stepId).ajax({
             contentType: 'application/json; charset=utf-8',
             success: function (response) {

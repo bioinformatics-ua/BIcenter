@@ -19,9 +19,13 @@ import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.trans.step.StepMetaInterface;
 import org.pentaho.di.trans.step.errorhandling.StreamInterface;
+import org.pentaho.di.trans.steps.textfileinput.TextFileInputField;
 import org.w3c.dom.Element;
 import play.libs.Json;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -45,6 +49,12 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         PluginInterface sp = registry.findPluginWithId(StepPluginType.class, stepid);
         StepMetaInterface stepMetaInterface = (StepMetaInterface) registry.loadClass(sp);
 
+        // Variables used for CSV File Reading
+        String fileName = null;
+        String delimiter = null;
+
+        System.out.println(stepname);
+
         if (stepMetaInterface != null) {
             // Initialize the step with the default values.
             stepMetaInterface.setDefault();
@@ -59,9 +69,9 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                     .toArray(Method[]::new);
 
             for (Method method : methods) {
-                if(method.getName().equals("getStepIOMeta")) {
+                if (method.getName().equals("getStepIOMeta")) {
                     List<StreamInterface> targetStreams = stepMetaInterface.getStepIOMeta().getTargetStreams();
-                    if(!targetStreams.isEmpty()) {
+                    if (!targetStreams.isEmpty()) {
                         stepProperties.forEach(stepProperty -> {
                             String shortName = stepProperty.getComponentProperty().getShortName();
                             if (shortName.startsWith("stream")) {
@@ -72,7 +82,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                     }
 
                     List<StreamInterface> infoStreams = stepMetaInterface.getStepIOMeta().getInfoStreams();
-                    if(!infoStreams.isEmpty()) {
+                    if (!infoStreams.isEmpty()) {
                         stepProperties.forEach(stepProperty -> {
                             String shortName = stepProperty.getComponentProperty().getShortName();
                             if (shortName.startsWith("stream")) {
@@ -81,18 +91,84 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                             }
                         });
                     }
-                }
-                else {
+                } else {
                     // Find StepProperty that holds the value of the current StepMetaInterface method.
                     String shortName = method.getName().substring(3);
                     Optional<StepProperty> optStepProperty = stepProperties.stream()
                             .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase(shortName))
                             .findFirst();
-                    if (!optStepProperty.isPresent()) continue;
 
-                    // Check if the value is an array. In this case, properly parse it.
+                    System.out.println(shortName);
+
+                    if (!optStepProperty.isPresent()) {
+                        System.out.println("NOT FOUND\n");
+
+                        // If dealing with CSVFileInput get the input fields and define them
+                        if (shortName.equals("InputFields")) {
+                            if(fileName == null){
+                                Optional<StepProperty> fileNameStepProperty = stepProperties.stream()
+                                        .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Filename"))
+                                        .findFirst();
+
+                                if (!fileNameStepProperty.isPresent())
+                                    continue;
+                                fileName = fileNameStepProperty.get().getValue();
+                            }
+
+                            if(delimiter == null){
+                                Optional<StepProperty> delimiterStepProperty = stepProperties.stream()
+                                        .filter(stepProperty -> stepProperty.getComponentProperty().getShortName().equalsIgnoreCase("Delimiter"))
+                                        .findFirst();
+
+                                if (!delimiterStepProperty.isPresent())
+                                    continue;
+                                delimiter = delimiterStepProperty.get().getValue();
+                            }
+
+                            try{
+                                BufferedReader br = new BufferedReader(new FileReader(fileName));
+                                String header = br.readLine();
+
+                                String[] fields = new String[0];
+                                if (header != null) {
+                                    fields = header.split(delimiter);
+                                }
+
+                                TextFileInputField[] value = new TextFileInputField[fields.length];
+                                for(int i = 0 ; i < fields.length ; i++){
+                                    String field = fields[i];
+                                    value[i] = new TextFileInputField();
+                                    value[i].setName(field);
+                                    System.out.println(field);
+                                }
+
+                                // Invoke the current method with the StepProperty value.
+                                invokeMethod(stepMetaInterface, method, value, databases);
+
+                            }catch (FileNotFoundException e){
+
+                            }
+
+                        }
+
+                        continue;
+                    }
+
+                    System.out.println("FOUND");
+
+                    //Check if the value is a checkbox. In that case, swap the values from on to true and off to false
                     String tmp = optStepProperty.get().getValue();
                     Object value = tmp;
+
+                    if (optStepProperty.get().getComponentProperty().getType().equals("checkbox")) {
+                        if (optStepProperty.get().getValue().equals("on")) {
+                            value = true;
+                        } else {
+                            value = false;
+                        }
+                    }
+
+                    // Check if the value is an array. In this case, properly parse it.
                     if (tmp.length() > 0 && tmp.charAt(0) == '[' && tmp.charAt(tmp.length() - 1) == ']') {
                         tmp = tmp.substring(1, tmp.length() - 1);
                         value = Arrays.asList(tmp.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")).stream()
@@ -100,9 +176,19 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                                 .collect(Collectors.toList());
                     }
 
-                    // Invoke the current method with the StepProperty value.
+                    System.out.println("VALUE - " + value.toString() + "\n");
+
+                    if(shortName.equals("Filename")){
+                        fileName = value.toString();
+                    }
+                    if(shortName.equals("Delimiter")){
+                        delimiter = value.toString();
+                    }
+
+                        // Invoke the current method with the StepProperty value.
                     invokeMethod(stepMetaInterface, method, value, databases);
                     stepProperties.remove(optStepProperty.get());
+
                 }
             }
 
@@ -149,6 +235,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                 }
             }
 
+            System.out.println("\n\n");
 
             StepMeta stepMeta = new StepMeta(stepid, stepname, stepMetaInterface);
             stepMeta.setLocation(step.getCell().getX(), step.getCell().getY());
@@ -174,14 +261,11 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         Object parameter;
         if (parameterType == Boolean.class || parameterType == boolean.class) {
             parameter = value.toString().equalsIgnoreCase("Y");
-        }
-        else if (parameterType == int.class || parameterType == Integer.class) {
+        } else if (parameterType == int.class || parameterType == Integer.class) {
             parameter = Integer.parseInt(value.toString());
-        }
-        else if (parameterType == (new String[0]).getClass()) {
+        } else if (parameterType == (new String[0]).getClass()) {
             parameter = ((List<String>) value).stream().toArray(String[]::new);
-        }
-        else if (parameterType == (new boolean[0]).getClass()) {
+        } else if (parameterType == (new boolean[0]).getClass()) {
             boolean[] tmp = new boolean[((List<String>) value).size()];
             int idx = 0;
 
@@ -189,32 +273,27 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
                 tmp[idx++] = val.toString().equalsIgnoreCase("Y");
             }
             parameter = tmp;
-        }
-        else if (parameterType == (new int[1]).getClass()) {
+        } else if (parameterType == (new int[1]).getClass()) {
             int[] tmp = new int[((List<String>) value).size()];
             int idx = 0;
 
             for (String val : (List<String>) value) {
-                if(!val.toString().equals(""))
+                if (!val.toString().equals(""))
                     tmp[idx++] = Integer.parseInt(val.toString());
                 else
                     idx++;
             }
             parameter = tmp;
-        }
-        else if(parameterType == Condition.class) {
-            try{
+        } else if (parameterType == Condition.class) {
+            try {
                 parameter = buildCondition(getOperator("NONE"), (ObjectNode) Json.parse((String) value));
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 parameter = null;
             }
-        }
-        else if (method.getParameterTypes()[0] == DatabaseMeta.class) {
+        } else if (method.getParameterTypes()[0] == DatabaseMeta.class) {
             // Search for the database connection within the institution.
-            parameter = DatabaseMeta.findDatabase( databases, value.toString() );
-        }
-        else {
+            parameter = DatabaseMeta.findDatabase(databases, value.toString());
+        } else {
             parameter = parameterType.cast(value);
         }
 
@@ -224,6 +303,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
 
     /**
      * Initialize Boolean Condition.
+     *
      * @param operator
      * @param json
      * @return
@@ -231,7 +311,7 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
     private Condition buildCondition(int operator, ObjectNode json) {
         Condition condition = new Condition();
 
-        if(json.get("rules") == null){
+        if (json.get("rules") == null) {
             condition.setLeftValuename(json.get("field").asText());
             condition.setFunction(getFunction(json.get("operator").asText()));
 
@@ -240,32 +320,31 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             value.setValueMeta(meta);
             value.setValueData(json.get("value").asText());
             condition.setRightExact(value);
-        }
-        else{
+        } else {
             ArrayNode children = (ArrayNode) json.get("rules");
-            for(int i=0; i<children.size(); i++){
+            for (int i = 0; i < children.size(); i++) {
                 ObjectNode child = (ObjectNode) children.get(i);
 
                 Condition subCondition;
-                if(i != 0)
-                    subCondition = buildCondition(getOperator(json.get("condition").asText()),child);
+                if (i != 0)
+                    subCondition = buildCondition(getOperator(json.get("condition").asText()), child);
                 else
-                    subCondition = buildCondition(getOperator("NONE"),child);
+                    subCondition = buildCondition(getOperator("NONE"), child);
 
                 condition.addCondition(subCondition);
-                condition.setCondition(i,subCondition);
+                condition.setCondition(i, subCondition);
             }
         }
 
-        if(operator != getOperator("NONE"))
+        if (operator != getOperator("NONE"))
             condition.setOperator(operator);
 
         return condition;
     }
 
-    public int getOperator(String operator){
+    public int getOperator(String operator) {
         int operatorCode;
-        switch (operator){
+        switch (operator) {
             case "NOT":
                 operatorCode = Condition.OPERATOR_NOT;
                 break;
@@ -291,9 +370,9 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
         return operatorCode;
     }
 
-    public int getFunction(String function){
+    public int getFunction(String function) {
         int functionCode;
-        switch (function){
+        switch (function) {
             case "=":
                 functionCode = Condition.FUNC_EQUAL;
                 break;
@@ -336,7 +415,8 @@ public abstract class AbstractStep implements StepEncoder, StepDecoder {
             case "LIKE":
                 functionCode = Condition.FUNC_LIKE;
                 break;
-            default: functionCode = Condition.FUNC_TRUE;
+            default:
+                functionCode = Condition.FUNC_TRUE;
         }
         return functionCode;
     }

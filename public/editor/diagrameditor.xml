@@ -220,6 +220,7 @@
 		<br/><br/>
 		<add as="Generate Rows" template="RowGenerator" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Table Input" template="TableInput" icon="/assets/images/editor/rectangle.gif"/>
+		<add as="CSV File Input" template="CSVInput" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Table Output" template="TableOutput" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Add Checksum" template="Checksum" icon="/assets/images/editor/rectangle.gif"/>
 		<add as="Select Values" template="SelectValues" icon="/assets/images/editor/rectangle.gif"/>
