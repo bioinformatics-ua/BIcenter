@@ -1,26 +1,18 @@
-# BIcenter
+[<img src="https://img.shields.io/travis/playframework/play-java-starter-example.svg"/>](https://travis-ci.org/playframework/play-java-starter-example)
 
-This is a web-based platform that allows the building and management of ETL pipelines, by non-IT users, in a multi-institution environment.
+# play-java-starter-example
+
+This is a starter application that shows how Play works.  Please see the documentation at https://www.playframework.com/documentation/latest/Home for more details.
+
 ## Running
 
-Run this using [sbt](http://www.scala-sbt.org/) (you need to have `sbt` installed for this to work).
+Run this using [sbt](http://www.scala-sbt.org/).  If you downloaded this project from http://www.playframework.com/download then you'll find a prepackaged version of sbt in the project directory:
 
+```
+sbt run
+```
 
-1. Run Pentaho server: `sh run.sh`. In case it fails due to permissions, either configure your docker to run without requiring *sudo* or run ```sudo sh run.sh``` instead.
-2. Create database with the specifications found in [application.conf](conf/application.conf)
-3. Run Web App: `sbt run`
-4. In the MySQL database, add the necessary items to User_Institution:
-    ```mysql
-    use teste;
-    insert into User_Institution values (1, 1);
-    insert into User_Institution values (1, 2);
-    ```
-5. On the [web app](http://localhost:9000), preform the following operations:
-    1. On the resources tab, add:
-        * The **Data source(s)**. In here you should specify the databases you want to connect to.
-        * The **Task(s)**. These are the tasks to which you can drag components into and define your flux.
-    2. After having defined at least one task, choose it and add the components you desire into the graph editor and edit them as you see fit.
-
+And then go to http://localhost:9000 to see the running web application.
 
 ### Troubleshooting
 
@@ -55,7 +47,7 @@ If you run into any problems, please check the following suggestions:
         sbt-plugins-repo: https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
         maven-central: https://repo1.maven.org/maven2/
         ```
-
+      
 ## Controllers
 
 There are several demonstration files available in this template.
@@ -93,20 +85,3 @@ There are several demonstration files available in this template.
 - ExampleFilter.java
 
   A simple filter that adds a header to every response.
-
-
-## Bugs and features requests
-
-Have a bug, or a feature request?
-
-If your problem or idea is not yet addressed, please [open a new issue](https://github.com/bioinformatics-ua/BIcenter/issues/new).
-
-## Support and consulting
-
-[<img src="https://raw.githubusercontent.com/wiki/BMDSoftware/dicoogle/images/bmd.png" height="64" alt="BMD Software">](https://www.bmd-software.com)
-
-Please contact [BMD Software](https://www.bmd-software.com) / info@bmd-software for professional support and consulting services.
-
-## Copyright and license
-
-Copyright (C) 2020 BMD Software

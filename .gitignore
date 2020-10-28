@@ -15,9 +15,9 @@ dist
 /node_modules
 package-lock.json
 /logs
+*.env
 
 ## zip and jar files
-deployment/pentaho/mysql-*
-deployment/pentaho/*/mysql-*
-deployment/pentaho/pdi*
-deployment/*pentaho/*/pdi*
+mysql-*
+pdi*
+bicenter.zip
