@@ -17,7 +17,7 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 resolvers ++= Seq(
   Resolver.mavenLocal,
-  "pentaho-repo" at "https://public.nexus.pentaho.org/content/groups/omni/"
+  "Pentaho Repository" at "https://public.nexus.pentaho.org/content/groups/omni/"
 )
 
 ////////////////////////////////////////////////////////////////////////////
@@ -30,41 +30,47 @@ libraryDependencies ++= Seq(
   javaWs,
   cacheApi,
   ehcache,
+
   // Database
   javaJpa,
-  "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final", // replace by your jpa implementation
-  "mysql" % "mysql-connector-java" % "5.1.38",
+  "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final",
+  "mysql" % "mysql-connector-java" % "5.1.49",
   "net.sourceforge.jtds" % "jtds" % "1.3.1",
+
   // Multi-language
   "org.julienrf" %% "play-jsmessages" % "3.0.0",
+
   // RequireJS
   "org.webjars" % "requirejs" % "2.3.3",
+
   // jQuery
   "org.webjars" % "jquery" % "3.2.1",
+
   // Underscore
   "org.webjars" % "underscorejs" % "1.8.3",
+
   // Bootstrap
   "org.webjars" % "bootstrap" % "3.3.7" exclude("org.webjars", "jquery"),
+
   // Font awesome
   "org.webjars" % "font-awesome" % "4.7.0",
-  // Handlebars
-  //"org.webjars" % "handlebars" % "4.0.5",
+
   // Parse JSON
   "com.google.code.gson" % "gson" % "2.8.0",
+
   // Password encrypting
   "org.mindrot" % "jbcrypt" % "0.3m",
+
   // Quartz
   "org.quartz-scheduler" % "quartz" % "2.3.0",
 
-  //  libraryDependencies += "org.hibernate.javax.persistence" % "hibernate-jpa-2.0-api" % "1.0.1.Final"
-
   // Pentaho SDK
-  //"pentaho-kettle" % "kettle-core" % "6.1.0.0-308",
-  //"pentaho-kettle" % "kettle-dbdialog" % "6.1.0.0-308",
-  //"pentaho-kettle" % "kettle-engine" % "6.1.0.0-308",
-  //"pentaho" % "pentaho-capability-manager" % "6.1.0.10-308",
-  //"pentaho-kettle" % "kettle-ui-swt" % "6.1.0.10-308",
-  //"pentaho-kettle" % "kettle-json-plugin" % "7.0.0.1-37",
+  "pentaho-kettle" % "kettle-core" % "6.1.0.19-384",
+  "pentaho-kettle" % "kettle-dbdialog" % "6.1.0.19-384",
+  "pentaho-kettle" % "kettle-engine" % "6.1.0.19-384",
+  "pentaho" % "pentaho-capability-manager" % "6.1.0.19-384",
+  "pentaho-kettle" % "kettle-ui-swt" % "6.1.0.19-384",
+  "pentaho-kettle" % "kettle-json-plugin" % "7.0.0.1-37",
 
   // Draw.io SDK
   "de.twentyeleven.skysail" % "jgraphx-osgi" % "1.10.3.1",
@@ -72,10 +78,10 @@ libraryDependencies ++= Seq(
   // Jackson
   "com.fasterxml.jackson.core" % "jackson-core" % "2.3.3",
   "org.codehaus.jackson" % "jackson-core-asl" % "1.9.2",
-  "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.2"
+  "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.2",
 
-  //ESAPI
-  //  "org.owasp.esapi" % "esapi" % "2.1.0"
+  // ESAPI
+  "org.owasp.esapi" % "esapi" % "2.1.0"
 )
 
 
@@ -83,12 +89,10 @@ libraryDependencies ++= Seq(
 libraryDependencies ++= Seq(
   "org.assertj" % "assertj-core" % "3.6.2" % Test,
   "org.awaitility" % "awaitility" % "2.0.0" % Test,
+
   // Test Database
   "com.h2database" % "h2" % "1.4.194"
 )
-
-//libraryDependencies += jcache
-//libraryDependencies += "org.jsr107.ri" % "cache-annotations-ri-guice" % "1.0.0"
 
 ////////////////////////////////////////////////////////////////////////////
 // Test settings
@@ -139,6 +143,8 @@ HbsKeys.amd := true
 // RequireJS settings
 ////////////////////////////////////////////////////////////////////////////
 RjsKeys.paths += ("jsRoutes" -> ("/jsroutes" -> "empty:"))
+RjsKeys.paths += ("messages" -> ("/messages" -> "empty:"))
+
 
 RjsKeys.webJarCdns := Map()
 

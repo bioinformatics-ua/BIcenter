@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+		<title>BIcenter</title>
+
+			<!-- Boostrap Select2 -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/select2/select2.min.css")">
+
+			<!-- Font Awesome -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/font-awesome/css/font-awesome.min.css")">
+			<!-- PNotify -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/pnotify/pnotify.css")">
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/pnotify/pnotify.nonblock.css")">
+			<!-- query-builder -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/jQuery-QueryBuilder/css/query-builder.default.min.css")">
+
+		<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+
+			<!--DataTable dependencies -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/datatables/dataTables.bootstrap.min.css")">
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/datatables/buttons.dataTables.min.css")">
+
+			<!-- jQuery UI -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/jquery-ui/jquery-ui.css")">
+
+			<!-- Boostrap DateTime-Picker -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css")">
+
+			<!-- iCheck -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/iCheck/all.css")">
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/iCheck/square/blue.css")">
+
+			<!-- Main CSS: Bootstrap + AdminLTE + Custom css -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.min.css")">
+	</head>
+	<body style="height:auto;" class="skin-darkblue-light fixed home-page">
+		<script type="text/javascript" src="@routes.Assets.versioned("lib/mxgraph2/js/mxClient.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("editor/editor.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("editor/graph.js")"></script>
+
+		<div class="container">
+			<div module="HeaderModule">
+				@header()
+			</div>
+
+			<div module="MainModule">
+				<div controller="HomeController"></div>
+			</div>
+
+			<div class="navbar-fixed-bottom">
+				@footer()
+			</div>
+		</div>
+
+		<script type="text/javascript" data-main="@routes.Assets.versioned("javascripts/main")" src="@routes.Assets.versioned("lib/requirejs/require.min.js")"></script>
+	</body>
+</html>

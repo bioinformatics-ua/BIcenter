@@ -11,7 +11,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         _super_.initialize.call(this, $container);
 
         this.data = {};
-        if(this.stepId){
+        if (this.stepId) {
             this.getStep(this.stepId);
         }
     };
@@ -37,15 +37,14 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
             },
             function (callback) {
                 Step.inputFieldsName(context.institutionId, stepId, function (inputFields) {
-                    if(_.keys(inputFields).length == 1){
-                        _.each(inputFields, function(field){
+                    if (_.keys(inputFields).length == 1) {
+                        _.each(inputFields, function (field) {
                             context.inputFields = field.valueMetaList;
                         });
-                    }
-                    else{
+                    } else {
                         context.streamFields = {};
-                        _.each(_.keys(inputFields), function(key) {
-                           context.streamFields[key] = inputFields[key].valueMetaList;
+                        _.each(_.keys(inputFields), function (key) {
+                            context.streamFields[key] = inputFields[key].valueMetaList;
                         });
                     }
 
@@ -60,7 +59,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
                 });
             },
             function (callback) {
-                Step.getInstitution(context.institutionId, stepId, function(institutionId) {
+                Step.getInstitution(context.institutionId, stepId, function (institutionId) {
                     Institution.getDataSources(institutionId, function (dataSources) {
                         context.dataSources = dataSources;
                         callback();
@@ -80,7 +79,7 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
     /**
      * Returns to the pipeline view.
      */
-    StepController.prototype.cancelClick = function(){
+    StepController.prototype.cancelClick = function () {
         Router.navigatePrevious();
     }
 
@@ -88,14 +87,12 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
         var table = this.view.dataTables[tableId].clear().draw();
 
         var selectedVal;
-        try{
+        try {
             selectedVal = this.view.$elements[component].val();
-        }
-        catch(err) {
-            try{
+        } catch (err) {
+            try {
                 selectedVal = component.val();
-            }
-            catch(err) {
+            } catch (err) {
                 selectedVal = $element.val();
             }
         }
@@ -115,10 +112,16 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
 
         var context = this;
 
+        var formData = null;
+
+        // Get regular values
+        //Object.keys(formValues).forEach(e => formData.append(e, JSON.stringify(formValues[e])));
+
         // Get condition values
         if (this.view.conditions) {
             _.each(this.view.conditions, function (condition) {
                 formValues[condition.id] = context.view.$elements[condition.id].queryBuilder('getRules');
+                //formData.append(condition.id, JSON.stringify(context.view.$elements[condition.id].queryBuilder('getRules')));
             });
         }
 
@@ -127,14 +130,30 @@ define('StepController', ['Controller', 'StepView', 'Institution', 'Step', 'Rout
             _.each(this.view.tables, function (table) {
                 var tableId = table.id;
                 var table = context.view.$elements[tableId].DataTable();
+
                 formValues[tableId] = table.rows().data().toArray();
+                //formData.append(tableId, JSON.stringify(table.rows().data().toArray()));
             });
         }
 
-        Step.applyChanges(this.institutionId, this.stepId, formValues, function (step) {
-            console.log("Step", this.stepId, "has been updated!");
-            Router.navigatePrevious();
+        // Get files
+        _.each($form[0], function (element) {
+            if (element.type === "file" && element.files.length > 0) {
+                if (formData === null)
+                    formData = new FormData();
+
+                var fileObject = element.files[0];
+                formData.append(element.name, fileObject);
+            }
         });
+
+        Step.applyChanges(this.institutionId, this.stepId, formValues, formData,
+            function (step) {
+                console.log("Step", this.stepId, "has been updated!");
+                Router.navigatePrevious();
+            }
+        );
+
     };
 
     /**

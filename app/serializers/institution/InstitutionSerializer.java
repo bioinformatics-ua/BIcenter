@@ -10,6 +10,7 @@ import models.DataSource;
 import models.Institution;
 import models.Server;
 import models.Task;
+import models.rbac.User;
 
 import java.io.IOException;
 
@@ -29,6 +30,9 @@ public class InstitutionSerializer extends JsonSerializer<Institution> {
         serializer = serializers.findValueSerializer(DataSource.class);
         module.addSerializer(DataSource.class, serializer);
 
+        serializer = serializers.findValueSerializer(User.class);
+        module.addSerializer(User.class, serializer);
+
         mapper.registerModule(module);
 
         // Start composing output
@@ -41,6 +45,7 @@ public class InstitutionSerializer extends JsonSerializer<Institution> {
         gen.writeObjectField("tasks", mapper.valueToTree(value.getTasks()));
         gen.writeObjectField("servers", mapper.valueToTree(value.getServers()));
         gen.writeObjectField("dataSources", mapper.valueToTree(value.getDataSources()));
+        gen.writeObjectField("users", mapper.valueToTree(value.getUsers()));
 
         // Finish output
         gen.writeEndObject();

@@ -1,0 +1,24 @@
+<form view-element="{{institution.id}}" class="form-horizontal">
+    <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">Name:</label>
+        <div class="col-sm-5">
+            <input class="form-control" name="name" view-element="name" value="{{institution.name}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="institution" class="col-sm-3 control-label">Users:</label>
+        <div class="col-sm-5">
+            <select name="users" view-element="users" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true" multiple>
+                {{#users}}
+                    {{#ifCond id 'in' ../institution.users}}
+                        <option value="{{id}}" selected>{{name}}</option>
+                    {{/ifCond}}
+                    {{#ifCond id '!in' ../institution.users}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/ifCond}}
+                {{/users}}
+            </select>
+        </div>
+    </div>
+</form>

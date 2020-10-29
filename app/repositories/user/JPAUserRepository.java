@@ -9,6 +9,7 @@ import repositories.JPARepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -79,5 +80,19 @@ public class JPAUserRepository extends JPARepository implements UserRepository {
     private User update(EntityManager em, User user) {
         em.merge(user);
         return user;
+    }
+
+    @Override
+    public List<User> findAll() {
+        return wrap(this::findAll);
+    }
+
+    private List<User> findAll(EntityManager em) {
+        try {
+            return em.createQuery("SELECT u FROM User u", User.class)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

@@ -11,5 +11,9 @@ define('BreadcrumbController', ['Controller', 'BreadcrumbView'], function (Contr
         _super_.initialize.call(this, $container);
     };
 
+	BreadcrumbController.prototype.goHome = function () {
+		document.location.href = jsRoutes.controllers.HomeController.index().url;
+	};
+
     return BreadcrumbController;
 });
