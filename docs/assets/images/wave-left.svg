@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="129px" height="368px" viewBox="0 0 129 368" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>moutain/element/wave/wave-left</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#0D66F3" offset="0%"></stop>
+            <stop stop-color="#4356BF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Ressources" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="moutain/element/wave/wave-left" fill="url(#linearGradient-1)">
+            <g id="Wave" transform="translate(15.000000, 192.500000) scale(-1, 1) translate(-15.000000, -192.500000) translate(-117.000000, 1.000000)">
+                <path d="M50.085356,76.5983758 C107.561887,84.7648529 158.997154,95.0643259 181.313087,107.43174 C225.978483,132.185149 227.250242,200.894841 171.849244,361.273031 C123.892486,249.116812 88.0147436,163.314495 50.085356,76.5983758 Z" id="wave" transform="translate(132.127204, 218.935703) scale(-1, 1) rotate(23.000000) translate(-132.127204, -218.935703) "></path>
+                <path d="M117.297013,7.09509962 C130.01222,10.6942572 140.421231,14.516746 147.717462,18.5602922 C177.58821,35.1145584 188.051178,71.3282487 175.134503,141.47236 C156.748318,100.533944 137.350805,52.2769602 117.297013,7.09509962 Z" id="wave" opacity="0.22803442" transform="translate(148.935220, 74.283730) scale(-1, 1) rotate(23.000000) translate(-148.935220, -74.283730) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

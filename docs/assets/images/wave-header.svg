@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1294px" height="140px" viewBox="0 0 1294 140" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>wave_header</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="116.70788%" cy="110.133192%" fx="116.70788%" fy="110.133192%" r="147.799618%" gradientTransform="translate(1.167079,1.101332),scale(0.096080,1.000000),rotate(-174.580171),translate(-1.167079,-1.101332)" id="radialGradient-1">
+            <stop stop-color="#0069FF" offset="0%"></stop>
+            <stop stop-color="#0269FD" offset="2.91250472%"></stop>
+            <stop stop-color="#0369FC" offset="4.5053357%"></stop>
+            <stop stop-color="#0468FB" offset="6.00516035%"></stop>
+            <stop stop-color="#1165EF" offset="25.4821693%"></stop>
+            <stop stop-color="#4457C0" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Ressource" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="wave_header">
+            <g id="Group-4-Copy" transform="translate(-5.000000, 0.000000)">
+                <path d="M0,7.64775368e-15 L1300,0 C1299.84369,26.6567778 1299.84369,69.7043914 1300,129.142841 C990.95958,139.998481 1034.96657,114.449017 701.50349,123.93182 C368.040412,133.414622 390.605992,144.317251 0,121.342804 C1,88.1264067 1,47.6788053 0,7.64775368e-15 Z" id="Wave" fill="#C4C4C4" opacity="0.15"></path>
+                <path d="M1,0 L925.701033,0 L1302,0 C1302,60.1195162 1302,98.476269 1302,115.070259 C1221.60515,111.869944 1147.81359,107.19642 958.281571,111.869944 C768.749548,116.543469 701.823954,135.235999 426.321472,117.515161 C242.65315,105.701268 100.879326,106.570567 1,120.123056 L1,0 Z" id="Wave" fill="url(#radialGradient-1)" transform="translate(651.500000, 62.500000) scale(-1, 1) translate(-651.500000, -62.500000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -21,3 +21,4 @@ package-lock.json
 mysql-*
 pdi*
 bicenter.zip
+.DS_Store
