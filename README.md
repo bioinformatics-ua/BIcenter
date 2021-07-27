@@ -1,4 +1,4 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
 <p align="center"><img src="docs/assets/images/logo.png" alt="BIcenter" height="100" border="0" /></p>
 
@@ -30,8 +30,8 @@ Have a bug or a feature request?
 If your problem or idea is not addressed yet, please [open a new issue](https://github.com/bioinformatics-ua/BIcenter/issues).
 
 ### License
-BIcenter is under GPL-3.0 license. For more information, click
-[here](https://github.com/bioinformatics-ua/DrAC/blob/master/LICENSE).
+BIcenter is under MIT license. For more information, click
+[here](https://github.com/bioinformatics-ua/BIcenter/blob/master/LICENSE).
 
 ### Support and consulting
 [<img src="https://raw.githubusercontent.com/wiki/BMDSoftware/dicoogle/images/bmd.png" height="64" alt="BMD Software">](https://www.bmd-software.com)
