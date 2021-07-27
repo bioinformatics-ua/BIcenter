@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
-<p align="center"><img src="docs/assets/images/logo.png" alt="BIcenter" height="100" border="0" /></p>
+<p align="center"><img src="docs/assets/images/logo.png" alt="BIcenter" height="75" border="0" /></p>
 
 This is a web-based platform that allows the building and management of ETL pipelines, by non-IT users, in a multi-institution environment.
 
