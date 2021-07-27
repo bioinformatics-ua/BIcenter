@@ -1,24 +1,102 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1294px" height="140px" viewBox="0 0 1294 140" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
-    <title>wave_header</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <radialGradient cx="116.70788%" cy="110.133192%" fx="116.70788%" fy="110.133192%" r="147.799618%" gradientTransform="translate(1.167079,1.101332),scale(0.096080,1.000000),rotate(-174.580171),translate(-1.167079,-1.101332)" id="radialGradient-1">
-            <stop stop-color="#0069FF" offset="0%"></stop>
-            <stop stop-color="#0269FD" offset="2.91250472%"></stop>
-            <stop stop-color="#0369FC" offset="4.5053357%"></stop>
-            <stop stop-color="#0468FB" offset="6.00516035%"></stop>
-            <stop stop-color="#1165EF" offset="25.4821693%"></stop>
-            <stop stop-color="#4457C0" offset="100%"></stop>
-        </radialGradient>
-    </defs>
-    <g id="Ressource" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="wave_header">
-            <g id="Group-4-Copy" transform="translate(-5.000000, 0.000000)">
-                <path d="M0,7.64775368e-15 L1300,0 C1299.84369,26.6567778 1299.84369,69.7043914 1300,129.142841 C990.95958,139.998481 1034.96657,114.449017 701.50349,123.93182 C368.040412,133.414622 390.605992,144.317251 0,121.342804 C1,88.1264067 1,47.6788053 0,7.64775368e-15 Z" id="Wave" fill="#C4C4C4" opacity="0.15"></path>
-                <path d="M1,0 L925.701033,0 L1302,0 C1302,60.1195162 1302,98.476269 1302,115.070259 C1221.60515,111.869944 1147.81359,107.19642 958.281571,111.869944 C768.749548,116.543469 701.823954,135.235999 426.321472,117.515161 C242.65315,105.701268 100.879326,106.570567 1,120.123056 L1,0 Z" id="Wave" fill="url(#radialGradient-1)" transform="translate(651.500000, 62.500000) scale(-1, 1) translate(-651.500000, -62.500000) "></path>
-            </g>
-        </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1294px"
+   height="140px"
+   viewBox="0 0 1294 140"
+   version="1.1"
+   id="svg849"
+   sodipodi:docname="wave-header.svg"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview851"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.89799073"
+     inkscape:cx="647"
+     inkscape:cy="69.599828"
+     inkscape:window-width="1331"
+     inkscape:window-height="1003"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg849" />
+  <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title824">wave_header</title>
+  <desc
+     id="desc826">Created with Sketch.</desc>
+  <defs
+     id="defs841">
+    <radialGradient
+       cx="116.70788%"
+       cy="110.133192%"
+       fx="116.70788%"
+       fy="110.133192%"
+       r="147.799618%"
+       gradientTransform="translate(1.167079,1.101332),scale(0.096080,1.000000),rotate(-174.580171),translate(-1.167079,-1.101332)"
+       id="radialGradient-1">
+      <stop
+         stop-color="#0069FF"
+         offset="0%"
+         id="stop828" />
+      <stop
+         stop-color="#0269FD"
+         offset="2.91250472%"
+         id="stop830" />
+      <stop
+         stop-color="#0369FC"
+         offset="4.5053357%"
+         id="stop832" />
+      <stop
+         stop-color="#0468FB"
+         offset="6.00516035%"
+         id="stop834" />
+      <stop
+         stop-color="#1165EF"
+         offset="25.4821693%"
+         id="stop836" />
+      <stop
+         stop-color="#4457C0"
+         offset="100%"
+         id="stop838" />
+    </radialGradient>
+  </defs>
+  <g
+     id="Ressource"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     style="fill:#005653;fill-opacity:1">
+    <g
+       id="wave_header"
+       style="fill:#005653;fill-opacity:1">
+      <g
+         id="Group-4-Copy"
+         transform="translate(-5.000000, 0.000000)"
+         style="fill:#005653;fill-opacity:1">
+        <path
+           d="M0,7.64775368e-15 L1300,0 C1299.84369,26.6567778 1299.84369,69.7043914 1300,129.142841 C990.95958,139.998481 1034.96657,114.449017 701.50349,123.93182 C368.040412,133.414622 390.605992,144.317251 0,121.342804 C1,88.1264067 1,47.6788053 0,7.64775368e-15 Z"
+           id="Wave"
+           fill="#C4C4C4"
+           opacity="0.15"
+           style="fill:#005653;fill-opacity:1" />
+        <path
+           d="M1,0 L925.701033,0 L1302,0 C1302,60.1195162 1302,98.476269 1302,115.070259 C1221.60515,111.869944 1147.81359,107.19642 958.281571,111.869944 C768.749548,116.543469 701.823954,135.235999 426.321472,117.515161 C242.65315,105.701268 100.879326,106.570567 1,120.123056 L1,0 Z"
+           id="path844"
+           fill="url(#radialGradient-1)"
+           transform="translate(651.500000, 62.500000) scale(-1, 1) translate(-651.500000, -62.500000) "
+           style="fill:#005653;fill-opacity:1" />
+      </g>
     </g>
+  </g>
 </svg>

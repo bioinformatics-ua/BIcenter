@@ -1,24 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1300px" height="499px" viewBox="0 0 1300 499" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
-    <title>wave_background</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <radialGradient cx="116.70788%" cy="110.133192%" fx="116.70788%" fy="110.133192%" r="147.799618%" gradientTransform="translate(1.167079,1.101332),scale(0.357923,1.000000),rotate(-160.534454),translate(-1.167079,-1.101332)" id="radialGradient-1">
-            <stop stop-color="#0069FF" offset="0%"></stop>
-            <stop stop-color="#0269FD" offset="2.91250472%"></stop>
-            <stop stop-color="#0369FC" offset="4.5053357%"></stop>
-            <stop stop-color="#0468FB" offset="6.00516035%"></stop>
-            <stop stop-color="#1165EF" offset="25.4821693%"></stop>
-            <stop stop-color="#4457C0" offset="100%"></stop>
-        </radialGradient>
-    </defs>
-    <g id="Ressource" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="wave_background">
-            <g id="Group-4">
-                <path d="M0,1.89326617e-29 L1300,-2.84217094e-14 C1299.84369,99.0658466 1299.84369,259.045733 1300,479.93966 C939.379367,522.288692 978.893507,439.694844 650,450.952014 C321.106493,462.209185 306.589562,511.200484 0,450.952014 C1,327.508342 1,177.191004 0,1.89326617e-29 Z" id="Wave" fill="#C4C4C4" opacity="0.15"></path>
-                <path d="M1.00076864,0 L925.701255,0 L1302,0 C1302,223.960943 1302,366.849893 1302,428.66685 C1221.6052,416.744841 1147.81368,399.334739 958.281774,416.744841 C768.749863,434.154944 701.824308,503.789515 426.321989,437.77475 C242.653776,393.764907 100.880036,397.003272 1.00076864,447.489845 L1.00076864,0 Z" id="Wave" fill="url(#radialGradient-1)" transform="translate(651.500384, 232.828869) scale(-1, 1) translate(-651.500384, -232.828869) "></path>
-            </g>
-        </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1300px"
+   height="499px"
+   viewBox="0 0 1300 499"
+   version="1.1"
+   id="svg1216"
+   sodipodi:docname="wave-hero-background.svg"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1218"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.87076923"
+     inkscape:cx="300.88339"
+     inkscape:cy="185.4682"
+     inkscape:window-width="1301"
+     inkscape:window-height="1003"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1216" />
+  <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title1191">wave_background</title>
+  <desc
+     id="desc1193">Created with Sketch.</desc>
+  <defs
+     id="defs1208">
+    <radialGradient
+       cx="116.70788%"
+       cy="110.133192%"
+       fx="116.70788%"
+       fy="110.133192%"
+       r="147.799618%"
+       gradientTransform="translate(1.167079,1.101332),scale(0.357923,1.000000),rotate(-160.534454),translate(-1.167079,-1.101332)"
+       id="radialGradient-1">
+      <stop
+         stop-color="#0069FF"
+         offset="0%"
+         id="stop1195" />
+      <stop
+         stop-color="#0269FD"
+         offset="2.91250472%"
+         id="stop1197" />
+      <stop
+         stop-color="#0369FC"
+         offset="4.5053357%"
+         id="stop1199" />
+      <stop
+         stop-color="#0468FB"
+         offset="6.00516035%"
+         id="stop1201" />
+      <stop
+         stop-color="#1165EF"
+         offset="25.4821693%"
+         id="stop1203" />
+      <stop
+         stop-color="#4457C0"
+         offset="100%"
+         id="stop1205" />
+    </radialGradient>
+  </defs>
+  <g
+     id="Ressource"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="wave_background">
+      <g
+         id="Group-4">
+        <path
+           d="M0,1.89326617e-29 L1300,-2.84217094e-14 C1299.84369,99.0658466 1299.84369,259.045733 1300,479.93966 C939.379367,522.288692 978.893507,439.694844 650,450.952014 C321.106493,462.209185 306.589562,511.200484 0,450.952014 C1,327.508342 1,177.191004 0,1.89326617e-29 Z"
+           id="Wave"
+           fill="#C4C4C4"
+           opacity="0.15" />
+        <path
+           d="M1.00076864,0 L925.701255,0 L1302,0 C1302,223.960943 1302,366.849893 1302,428.66685 C1221.6052,416.744841 1147.81368,399.334739 958.281774,416.744841 C768.749863,434.154944 701.824308,503.789515 426.321989,437.77475 C242.653776,393.764907 100.880036,397.003272 1.00076864,447.489845 L1.00076864,0 Z"
+           id="path1211"
+           fill="url(#radialGradient-1)"
+           transform="translate(651.500384, 232.828869) scale(-1, 1) translate(-651.500384, -232.828869) " />
+      </g>
     </g>
+  </g>
+  <path
+     style="fill:#005653;stroke-width:1.14841"
+     d="M 1.7966334,0.57420495 C 2.198058,48.088036 0.87502386,95.694227 2.8508379,143.15198 83.858239,191.38479 148.81532,266.48307 183.47932,354.32303 c 7.4902,17.92678 12.84341,36.88945 18.59147,55.23089 84.45221,1.1423 169.26928,6.39321 251.99363,24.22053 67.97749,13.71403 135.88669,31.36336 205.6742,31.91116 39.69084,0.64174 79.42013,-2.90742 118.68815,-8.5624 77.02229,-11.57127 151.89864,-34.67597 229.36493,-43.5662 57.0254,-6.74138 115.0271,-8.514 172.1456,-1.84757 40.4944,5.14824 80.1574,16.31338 117.2814,33.38239 2.4979,-2.26609 0.6315,-7.77877 1.43,-11.07784 1.346,-141.17842 0.4245,-282.37087 0.703,-423.554937 2.3411,-9.1134292 -2.1017,-12.350912 -10.8358,-10.3850344 -428.73969,0 -857.47939,10e-9 -1286.2190802,0 z"
+     id="path1368" />
+  <path
+     style="fill:#005653;stroke-width:1.14841"
+     d="M 1.4534563,125.28658 C 0.95932937,222.30152 0.3898011,319.32937 1.2167186,416.34293 2.067902,419.94738 0.17706069,425.5802 2.9764452,428.28062 59.542522,419.79858 116.23636,410.65328 173.57776,410.04328 c 9.46257,-0.68303 19.86206,0.38399 28.75322,-1.36637 C 189.28357,366.76151 173.9962,325.14067 150.39684,287.87631 113.64904,228.76129 62.569346,178.5202 2.8530808,142.75273 2.7127227,136.87666 2.6445065,130.99721 2.4672869,125.12285 l -0.9958867,-0.009 z"
+     id="path959" />
 </svg>
