@@ -1,3 +1,4 @@
+fig:view
 introduction
 main-requirements
 information-security
@@ -5,3 +6,15 @@ system-reliability
 solution-scalability
 to-do
 to-do-1
+developers-guidelines
+branching-convention
+adding-an-rest-api-endpoint
+example
+creation-of-rest-api-endpoint
+creation-of-utility-function-to-consume-the-rest-endpoint
+adding-web-view
+example-1
+creation-of-a-new-base-view
+creation-of-a-ui-component-handlebars
+adding-new-pdi-step
+example-2
