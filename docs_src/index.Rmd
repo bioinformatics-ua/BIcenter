@@ -1,0 +1,30 @@
+--- 
+title: "BIcenter: A collaborative Web ETL solution"
+author: "J. R. Almeida, L. Coelho and J. L. Oliveira"
+date: "`r Sys.Date()`"
+documentclass: krantz
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+bibliography: [refs.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+graphics: yes
+lot: yes
+lof: yes
+fontsize: 11pt
+monofontoptions: "Scale=0.8"
+github-repo: rstudio/bookdown-demo
+description: "To do"
+---
+
+
+
+# Preface {-}
+
+<!--<img src="images/Cover/Cover.png" width="250" height="375" alt="Cover image" align="right" style="margin: 0 1em 0 1em" /> -->
+
+
+## License {-}
+
+This document was written in [RMarkdown](https://rmarkdown.rstudio.com) using the [bookdown](https://bookdown.org) package.
