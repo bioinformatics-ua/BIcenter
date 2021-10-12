@@ -883,9 +883,9 @@
   ],
   "users": [
     {
-      "name": "BMD Software",
-      "email": "info@bmd-software.com",
-      "password": "BmdBIcenter",
+      "name": "Admin",
+      "email": "demo@ua.pt",
+      "password": "Admin",
       "active": true,
       "roles": [
         "Administrator"
@@ -895,26 +895,26 @@
   "authentications": [
     {
       "type": "LDAP",
-      "hostname": "bmd-software.com",
-      "port": 389,
-      "baseDN": "dc=bmd-software,dc=com",
+      "hostname": "my-host.com",
+      "port": 636,
+      "baseDN": "dc=my-host,dc=com",
       "usernameAttributes": "uid",
       "realnameAttributes": "cn",
       "roles": [
         "Administrator"
       ],
       "institutions": [
-        "INSA",
-        "Briosa e Gala"
+        "UA",
+        "Demo"
       ]
     }
   ],
   "institutions": [
     {
-      "name": "INSA"
+      "name": "UA"
     },
     {
-      "name": "Briosa e Gala"
+      "name": "Demo"
     }
   ]
 }
