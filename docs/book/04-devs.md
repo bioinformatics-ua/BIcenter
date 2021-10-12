@@ -1,4 +1,4 @@
-# Developers Guidelines
+# Guidelines for Developers
 
 In this chapter, it is described the main guidelines for contributing to BIcenter.
 

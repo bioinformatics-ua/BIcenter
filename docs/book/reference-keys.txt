@@ -1,9 +1,14 @@
 fig:view
 introduction
 main-requirements
-to-do
-to-do-1
-developers-guidelines
+system-implementation
+requirements
+architecture
+etl-sdk
+execution-servers
+task-scheduler
+software-user-manual
+guidelines-for-developers
 branching-convention
 adding-an-rest-api-endpoint
 example
