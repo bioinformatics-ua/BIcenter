@@ -6,7 +6,11 @@ name := """BIcenter"""
 
 version := "1.0.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava, SbtWeb, BuildInfoPlugin)
+lazy val root = (project in file(".")).enablePlugins(PlayJava, SbtWeb, BuildInfoPlugin).settings(
+    // Disable NPM node modules
+    JsEngineKeys.npmNodeModules in Assets := Nil,
+    JsEngineKeys.npmNodeModules in TestAssets := Nil
+  )
 
 scalaVersion := "2.12.2"
 
