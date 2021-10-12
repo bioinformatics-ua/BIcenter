@@ -178,16 +178,6 @@
 }
 \listoffigures
 \listoftables
-\hypertarget{preface}{%
-\chapter*{Preface}\label{preface}}
-
-
-\hypertarget{license}{%
-\section*{License}\label{license}}
-
-
-This document was written in \href{https://rmarkdown.rstudio.com}{RMarkdown} using the \href{https://bookdown.org}{bookdown} package.
-
 \mainmatter
 
 \hypertarget{introduction}{%
@@ -210,19 +200,13 @@ BIcenter is a web-based platform that allows the building and management of ETL 
 \hypertarget{main-requirements}{%
 \section{Main requirements}\label{main-requirements}}
 
-\hypertarget{information-security}{%
-\subsection{Information Security}\label{information-security}}
-
+\textbf{Information Security}
 Since ETL tasks parse and handle sensitive data that belongs to a particular institution, the system must be designed and implemented taking in account these security issues, namely user authentication, access control, data protection and isolation.
 
-\hypertarget{system-reliability}{%
-\subsection{System Reliability}\label{system-reliability}}
-
+\textbf{System Reliability}
 Considering the periodic execution of ETL tasks, it is important to ensure that each execution is correctly initialized, started, motorized and concluded. When some fatal error occurs during an ETL task execution, the system must be able to handle the error and successfully conclude the execution.
 
-\hypertarget{solution-scalability}{%
-\subsection{Solution Scalability}\label{solution-scalability}}
-
+\textbf{Solution Scalability}
 Since a complete ETL tool typically encompasses a wide variety of components, it is crucial to build an agile approach to the development and integration of new ETL components.
 
 \hypertarget{to-do}{%

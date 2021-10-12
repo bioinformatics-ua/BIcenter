@@ -10,21 +10,11 @@ biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 graphics: yes
-lot: yes
-lof: yes
+lot: no
+lof: no
 fontsize: 11pt
 monofontoptions: "Scale=0.8"
 github-repo: rstudio/bookdown-demo
-description: "To do"
+description: "BIcenter is a web-based platform that allows the building and management of ETL pipelines, by non-IT users, in a multi-institution environment."
 ---
 
-
-
-# Preface {-}
-
-<!--<img src="images/Cover/Cover.png" width="250" height="375" alt="Cover image" align="right" style="margin: 0 1em 0 1em" /> -->
-
-
-## License {-}
-
-This document was written in [RMarkdown](https://rmarkdown.rstudio.com) using the [bookdown](https://bookdown.org) package.

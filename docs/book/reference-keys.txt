@@ -1,9 +1,6 @@
 fig:view
 introduction
 main-requirements
-information-security
-system-reliability
-solution-scalability
 to-do
 to-do-1
 developers-guidelines

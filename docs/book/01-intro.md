@@ -11,13 +11,13 @@ BIcenter is a web-based platform that allows the building and management of ETL 
 
 ## Main requirements
 
-### Information Security
+**Information Security**
 Since ETL tasks parse and handle sensitive data that belongs to a particular institution, the system must be designed and implemented taking in account these security issues, namely user authentication, access control, data protection and isolation.
 
-### System Reliability
+**System Reliability**
 Considering the periodic execution of ETL tasks, it is important to ensure that each execution is correctly initialized, started, motorized and concluded. When some fatal error occurs during an ETL task execution, the system must be able to handle the error and successfully conclude the execution.
 
-### Solution Scalability
+**Solution Scalability**
 Since a complete ETL tool typically encompasses a wide variety of components, it is crucial to build an agile approach to the development and integration of new ETL components.
 
 

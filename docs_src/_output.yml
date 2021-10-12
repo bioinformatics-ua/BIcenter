@@ -4,7 +4,7 @@ bookdown::gitbook:
     toc:
       collapse: section
       before: |
-        <li><a href="/">GTO 2: The genomics-proteomics toolkit</a></li>
+        <li><a href="https://bioinformatics-ua.github.io/BIcenter/">BIcenter: A collaborative Web ETL solution</a></li>
     download: ["pdf"]
 bookdown::pdf_book:
   includes:
