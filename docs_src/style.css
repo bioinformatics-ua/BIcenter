@@ -12,3 +12,7 @@ pre {
 pre code {
   white-space: inherit;
 }
+img[src*='#center'] { 
+    display: block;
+    margin: auto;
+}

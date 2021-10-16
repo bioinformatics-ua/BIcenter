@@ -1,7 +1,7 @@
 --- 
 title: "BIcenter: A collaborative Web ETL solution"
 author: "J. R. Almeida, L. Coelho and J. L. Oliveira"
-date: "2021-10-12"
+date: "2021-10-16"
 documentclass: krantz
 site: bookdown::bookdown_site
 output: bookdown::gitbook
@@ -23,6 +23,3 @@ description: "BIcenter is a web-based platform that allows the building and mana
  <!--<img src="images/Cover/Cover.png" width="250" height="375" alt="Cover image" align="right" style="margin: 0 1em 0 1em" /> -->
 
 
- ## License {-}
-
- This document was written in [RMarkdown](https://rmarkdown.rstudio.com) using the [bookdown](https://bookdown.org) package.

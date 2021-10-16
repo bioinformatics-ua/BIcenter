@@ -8,6 +8,8 @@ etl-sdk
 execution-servers
 task-scheduler
 software-user-manual
+first-views
+etl-task-editor
 guidelines-for-developers
 branching-convention
 adding-an-rest-api-endpoint
