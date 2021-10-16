@@ -18,3 +18,8 @@ github-repo: rstudio/bookdown-demo
 description: "BIcenter is a web-based platform that allows the building and management of ETL pipelines, by non-IT users, in a multi-institution environment."
 ---
 
+# Preface {-}
+
+ <!--<img src="images/Cover/Cover.png" width="250" height="375" alt="Cover image" align="right" style="margin: 0 1em 0 1em" /> -->
+
+
