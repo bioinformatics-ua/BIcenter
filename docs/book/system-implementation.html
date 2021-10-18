@@ -24,7 +24,7 @@
 <meta name="author" content="J. R. Almeida, L. Coelho and J. L. Oliveira" />
 
 
-<meta name="date" content="2021-10-16" />
+<meta name="date" content="2021-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -147,13 +147,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="system-implementation.html"><a href="system-implementation.html#requirements"><i class="fa fa-check"></i><b>2.1</b> Requirements</a></li>
 <li class="chapter" data-level="2.2" data-path="system-implementation.html"><a href="system-implementation.html#architecture"><i class="fa fa-check"></i><b>2.2</b> Architecture</a></li>
 <li class="chapter" data-level="2.3" data-path="system-implementation.html"><a href="system-implementation.html#etl-sdk"><i class="fa fa-check"></i><b>2.3</b> ETL SDK</a></li>
-<li class="chapter" data-level="2.4" data-path="system-implementation.html"><a href="system-implementation.html#execution-servers"><i class="fa fa-check"></i><b>2.4</b> Execution Servers</a></li>
-<li class="chapter" data-level="2.5" data-path="system-implementation.html"><a href="system-implementation.html#task-scheduler"><i class="fa fa-check"></i><b>2.5</b> Task Scheduler</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="software-user-manual.html"><a href="software-user-manual.html"><i class="fa fa-check"></i><b>3</b> Software User Manual</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="software-user-manual.html"><a href="software-user-manual.html#first-views"><i class="fa fa-check"></i><b>3.1</b> First views</a></li>
-<li class="chapter" data-level="3.2" data-path="software-user-manual.html"><a href="software-user-manual.html#etl-task-editor"><i class="fa fa-check"></i><b>3.2</b> ETL Task Editor</a></li>
+<li class="chapter" data-level="3.1" data-path="software-user-manual.html"><a href="software-user-manual.html#initial-views"><i class="fa fa-check"></i><b>3.1</b> Initial views</a></li>
+<li class="chapter" data-level="3.2" data-path="software-user-manual.html"><a href="software-user-manual.html#institutional-features"><i class="fa fa-check"></i><b>3.2</b> Institutional features</a></li>
+<li class="chapter" data-level="3.3" data-path="software-user-manual.html"><a href="software-user-manual.html#etl-task-editor"><i class="fa fa-check"></i><b>3.3</b> ETL Task Editor</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="guidelines-for-developers.html"><a href="guidelines-for-developers.html"><i class="fa fa-check"></i><b>4</b> Guidelines for Developers</a>
 <ul>
@@ -192,25 +191,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="system-implementation" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> System Implementation</h1>
+<p>This chapter contains the description of the main aspects of BIcenter implementation.</p>
 <div id="requirements" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Requirements</h2>
-<p>to do</p>
+<p>The main goal of this application was to allow the building and management of ETL pipelines, by non-IT users, in a multi-institution environment. Therefore, some functional requirements were were considered to implement a proper and reliable solution.</p>
+<p>Each institution manages and mantains ETL tasks and provides the resources for the execution of the associated tasks. Thus, each institution owns its private data sources, servers for ETL task execution and a task scheduler that allows periodic execution. In order to provide access and management control of ETL tasks and institutions, there are four distinct types of users: 1) Administrator, entity that moderates the platform, and it has permissions to create and delete institutions; 2) Resource Manager, entity that manages private data sources and execution servers, and it has permissions to create and delete private data sources and execution servers, within specific institutions; 3) Task Manager, entity that builds and executes ETL tasks, and it can create and configure ETL tasks, within specific institutions; and 4) Data Analyst, actor with permissions to inspect task execution history, namely the resulting data, execution logs and performance metrics.</p>
+<p>The functional model was derived from the identification of all key components from a top-down analysis of the system requirements. Figure <a href="system-implementation.html#fig:workflow">2.1</a> illustrates step by step all actions and interactions between the main actors in order to build and execute ETL tasks and to analyze the output results. Firstly, the administrator must create an institution. A resource manager with access to the institution can create and configure all desired private data sources and task execution servers. Thereafter, a task manager can build and configure the ETL task and then schedule it for periodic or non-periodic execution. At the configured times the task will be sent to the execution server and executed. At the end of the execution, a notification will be sent to the data analysts, so they can check the execution results.</p>
+<div class="figure"><span style="display:block;" id="fig:workflow"></span>
+<img src="images/workflow.png" alt="" />
+<p class="caption">Figure 2.1:  System workfow to build, manage and execute ETL tasks.</p>
+</div>
 </div>
 <div id="architecture" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Architecture</h2>
-<p>to do</p>
+<p>The architecture considers four different tiers: 1) Application tier controls all application functionalities and maintains the system business logic; 2) Data tier is responsible for the maintenance of the private data sources; 3) Processing tier has the duty of executing and monitoring ETL task executions; and 4) Client tier is responsible for the solution presentation and page rendering. Figure <a href="system-implementation.html#fig:architecture">2.2</a> illustrates this architecture.</p>
+<div class="figure"><span style="display:block;" id="fig:architecture"></span>
+<img src="images/architecture.png" alt="" />
+<p class="caption">Figure 2.2:  Components diagram of system architecture.</p>
+</div>
+<p>The system logic is built upon five different controllers: 1) RBAC controller provides user identity and evaluates access requests to resources; 2) Institution controller allows the creation and destruction of institutions, and resource allocation in institutions; 4) Task controller enables the creation, configuration and destruction of ETL tasks; and 5) Execution controller uses Kettle and Carte servers, so it can build, remotely execute and monitor ETL tasks.</p>
+<p>Data Integration (DI) Software Development Kit (SDK) seeks to bridge the gap between Kettle and the stored information in BIcenter database (DB). It provides methods to build Pentaho’s ETL processes according to the stored information, and also to execute them. Nevertheless, task execution is a periodic process. Therefore, Execution Scheduler manages the task execution scheduling. When the appropriated time arrives, a Execution Job is triggered. That job will communicate with DI SDK so that the given task is indeed executed. SVG controller maps between images and components, with the intent to build the visual pipeline.</p>
+<p>BIcenter Web client adopted Model-View-Controller (MVC) architectural pattern. This pattern divides the web application in three different components:</p>
+<ul>
+<li>Model: represents the knowledge and data in an application. It has the responsability to respond to information requests, proceed to information changes according to given instructions requests, and to notify observers in event-driven systems when information changes. Typically, the application data is stored in a database.</li>
+<li>View: it represents the user interface. The View updates the UI upon changes in the Model, by rendering the data into the suitable UI form.</li>
+<li>Controller: it handles events that occurs in the View, such as user interactions, and updates the Model accordingly.</li>
+</ul>
 </div>
 <div id="etl-sdk" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> ETL SDK</h2>
-<p>to do</p>
+<p>The ETL Task Editor was idealized to allow users to build a visual representation of the desired ETL pipeline. This editor must be able to process a similar structure to the ones used by the desktop ETL tools and generate the correspondent visual representation of the ETL task. MxGraph was used to build the ETL pipeline editor, and this Java/JavaScript diagramming library enables the building of interactive graphs. A graph consists in a set of cells. A cell can either be a vertex or an hop. Thus, a graph is formed by a group of vertices connected by edges. The vertices correspond to the ETL steps and the edges correspond to the ETL hops. Hence, in order to exhibit the desired task within the mxEditor, it is necessary to translate the task to the corresponding mxGraph object. GraphDecoder is responsible for creating a mxGraph and defining the appropriated model, according to the given Task. To insert vertices and edges in the graph model, a transaction must be created (beginUpdate and endUpdate). This is required for the model to remain in a consistent state. A default parent is automatically created and represents the first child of the root cell in the model. Subsequent elements must be added to the default parent.</p>
+<p>The ETL SDK was built on top of PDI SDK. Kettle contains a rich set of data integration functionality that is exposed in a set of data integration tools. However, we can also use Kettle as a library in our own software and solutions. Pentaho Data Integration can be used as a Java API composed by three main components: 1) Core, that contains the core classes for Kettle; 2) Database, that contains the database-related classes; and 3) Engine, that contains the Kettle’s runtime classes.</p>
+<p>Figure <a href="system-implementation.html#fig:kettle">2.3</a> explains step by step how an ETL task is executed. The initialization of the Kettle environment loads all available plugins, initializes the logging environment and set up and reads the system variables. After the environment initialization, the transformation metadata is loaded and a transformation engine object is instantiated. Then, the execution is prepared and the transformation threads are started. Finally, because the whole transformation runs multi- threaded, it waits until all processing is completed.</p>
+<div class="figure"><span style="display:block;" id="fig:kettle"></span>
+<img src="images/kettle.png" alt="" />
+<p class="caption">Figure 2.3:  ETL task execution flowchart.</p>
 </div>
-<div id="execution-servers" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Execution Servers</h2>
-<p>to do</p>
-</div>
-<div id="task-scheduler" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Task Scheduler</h2>
-<p>to do</p>
+<p>In Kettle, an ETL process can be represented by six classes [31]:</p>
+<ul>
+<li>TransMeta: is the class that defines the information about the ETL process and offers methods to save and load it from XML, as well as methods to alter an ETL process by adding/removing databases, steps, hops, etc.</li>
+<li>Trans: represents the information and operations associated with the concept of an ETL process. It can loads, instantiates, initializes, runs, and monitors the execution of the ETL process.</li>
+<li>DatabaseMeta: defines the database specific parameters for a certain database type.</li>
+<li>StepMeta: is the class that defines the information about a ETL process’s Step.</li>
+<li>TransHopMeta: defines a link between two steps in an ETL process.</li>
+<li>BaseStep: represents the information and operations associated with the concept of an ETL process Step. It offers initialization, row processing and step clean-up methods.</li>
+</ul>
+<p>Initially a TransMeta must be properly configured with all proper DatabaseMetas, StepMetas and TransHopMetas. TransDecoder is responsible to create a TransMeta and define all underlying information, according to the given Task. GenericStep is a class that has a generic algorithm to encode or decode a given Step to or from a Kettle’s StepMeta. In order to provide interface segregation, TransDecoder must use the StepDecoder interface that only provides the GenericStep decoding method.</p>
+<p>After having a correctly configured TransMeta, it can be executed with the associated Trans object. TransExecutor is a singleton responsible for the initialization, execution and monitoring of the Trans object. Moreover, it writes and stores the execution logs, step measures and status, and the resulting data in real-time. To accomplish this, listeners are coupled to the Trans and Steps objects in order to obtain the results and metrics throughout the transformation’s execution.</p>
 
 </div>
 </div>

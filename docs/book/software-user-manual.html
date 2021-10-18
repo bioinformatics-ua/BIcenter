@@ -24,7 +24,7 @@
 <meta name="author" content="J. R. Almeida, L. Coelho and J. L. Oliveira" />
 
 
-<meta name="date" content="2021-10-16" />
+<meta name="date" content="2021-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -147,13 +147,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="system-implementation.html"><a href="system-implementation.html#requirements"><i class="fa fa-check"></i><b>2.1</b> Requirements</a></li>
 <li class="chapter" data-level="2.2" data-path="system-implementation.html"><a href="system-implementation.html#architecture"><i class="fa fa-check"></i><b>2.2</b> Architecture</a></li>
 <li class="chapter" data-level="2.3" data-path="system-implementation.html"><a href="system-implementation.html#etl-sdk"><i class="fa fa-check"></i><b>2.3</b> ETL SDK</a></li>
-<li class="chapter" data-level="2.4" data-path="system-implementation.html"><a href="system-implementation.html#execution-servers"><i class="fa fa-check"></i><b>2.4</b> Execution Servers</a></li>
-<li class="chapter" data-level="2.5" data-path="system-implementation.html"><a href="system-implementation.html#task-scheduler"><i class="fa fa-check"></i><b>2.5</b> Task Scheduler</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="software-user-manual.html"><a href="software-user-manual.html"><i class="fa fa-check"></i><b>3</b> Software User Manual</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="software-user-manual.html"><a href="software-user-manual.html#first-views"><i class="fa fa-check"></i><b>3.1</b> First views</a></li>
-<li class="chapter" data-level="3.2" data-path="software-user-manual.html"><a href="software-user-manual.html#etl-task-editor"><i class="fa fa-check"></i><b>3.2</b> ETL Task Editor</a></li>
+<li class="chapter" data-level="3.1" data-path="software-user-manual.html"><a href="software-user-manual.html#initial-views"><i class="fa fa-check"></i><b>3.1</b> Initial views</a></li>
+<li class="chapter" data-level="3.2" data-path="software-user-manual.html"><a href="software-user-manual.html#institutional-features"><i class="fa fa-check"></i><b>3.2</b> Institutional features</a></li>
+<li class="chapter" data-level="3.3" data-path="software-user-manual.html"><a href="software-user-manual.html#etl-task-editor"><i class="fa fa-check"></i><b>3.3</b> ETL Task Editor</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="guidelines-for-developers.html"><a href="guidelines-for-developers.html"><i class="fa fa-check"></i><b>4</b> Guidelines for Developers</a>
 <ul>
@@ -192,59 +191,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="software-user-manual" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Software User Manual</h1>
-<p>to do</p>
-<div id="first-views" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> First views</h2>
-<div class="figure">
+<p>This chapter presents the main interfaces of BIcenter, aiming to help users to navigate through the system.</p>
+<div id="initial-views" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Initial views</h2>
+<p>The login page presented in Figure <a href="software-user-manual.html#fig:login">3.1</a> allows users to be authenticated using their credentials. This can be connected with the institution LDAP, which provides a central place to store usernames and passwords.</p>
+<div class="figure"><span style="display:block;" id="fig:login"></span>
 <img src="images/login.png" alt="" />
-<p class="caption">Login page.</p>
+<p class="caption">Figure 3.1:  Login page.</p>
 </div>
-<div class="figure">
+<p>After the authentication process, the user is redirected to the application’s home page represented in Figure <a href="software-user-manual.html#fig:home">3.2</a>. This page contains all the institutions that the user belongs to. In this case, this user has permission to create a new instance of an institution in the application using the modal illustrated in Figure <a href="software-user-manual.html#fig:newinstitution">3.3</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:home"></span>
 <img src="images/home.png" alt="" />
-<p class="caption">Home page after login with all institutions assigned to the user.</p>
+<p class="caption">Figure 3.2:  Home page after login with all institutions assigned to the user.</p>
 </div>
-<div class="figure">
-<img src="images/newInstitution.png" alt="" />
-<p class="caption">Modal to create new institution.</p>
+<div class="figure"><span style="display:block;" id="fig:newinstitution"></span>
+<img src="images/newInstitution.png" style="width:75.0%" alt="" />
+<p class="caption">Figure 3.3:  Modal to create new institution.</p>
 </div>
-<div class="figure">
+</div>
+<div id="institutional-features" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Institutional features</h2>
+<p>The configuration of a data source is illustrated in Figures <a href="software-user-manual.html#fig:newds1">3.4</a> and <a href="software-user-manual.html#fig:newds2">3.5</a>. Firstly is created the data source instance in the institution, and then, the details of this connection are inserted in the modal represented in Figure <a href="software-user-manual.html#fig:newds2">3.5</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:newds1"></span>
 <img src="images/newDataSource1.png" style="width:50.0%" alt="" />
-<p class="caption">Creation of connection to a data source (first step).</p>
+<p class="caption">Figure 3.4:  Creation of connection to a data source (first step).</p>
 </div>
-<div class="figure">
-<img src="images/newDataSource2.png" alt="" />
-<p class="caption">Modal to insert information regarding the new connection to a data source (second step).</p>
+<div class="figure"><span style="display:block;" id="fig:newds2"></span>
+<img src="images/newDataSource2.png" style="width:75.0%" alt="" />
+<p class="caption">Figure 3.5:  Modal to insert information regarding the new connection to a data source (second step).</p>
 </div>
-<div class="figure">
+<p>The connection to the remote server follows a similar flow. This configuration is illustrated in Figures <a href="software-user-manual.html#fig:newserver1">3.6</a> and <a href="software-user-manual.html#fig:newserver2">3.7</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:newserver1"></span>
 <img src="images/newServer1.png" style="width:50.0%" alt="" />
-<p class="caption">Creation of connection to a remote server (first step).</p>
+<p class="caption">Figure 3.6:  Creation of connection to a remote server (first step).</p>
 </div>
-<div class="figure">
-<img src="images/newServer2.png" alt="" />
-<p class="caption">Modal to insert information regarding the new connection to a remote server (second step).</p>
+<div class="figure"><span style="display:block;" id="fig:newserver2"></span>
+<img src="images/newServer2.png" style="width:75.0%" alt="" />
+<p class="caption">Figure 3.7:  Modal to insert information regarding the new connection to a remote server (second step).</p>
 </div>
-<div class="figure">
+<p>Finally, the ETL tasks are also created for the institutions. This feature redirects the users to the ETL Task Editor, in which they can design and implement an ETL pipeline using the web interface. The creation of a new task can be done by using the option represented in Figure <a href="software-user-manual.html#fig:newtask">3.8</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:newtask"></span>
 <img src="images/newTask.png" style="width:50.0%" alt="" />
-<p class="caption">Creation of a new ETL task (first step).</p>
+<p class="caption">Figure 3.8:  Creation of a new ETL task (first step).</p>
 </div>
 </div>
-<div id="etl-task-editor" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> ETL Task Editor</h2>
-<div class="figure">
-<img src="images/componentsOverview.png" style="width:50.0%" alt="" />
-<p class="caption">optional caption text</p>
-</div>
-<div class="figure">
+<div id="etl-task-editor" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> ETL Task Editor</h2>
+<p>The ETL Task Editor allows users to create an ETL pipeline by dragging and dropping ETL components. Figure <a href="software-user-manual.html#fig:editor">3.9</a> shows an overview of this web editor.</p>
+<div class="figure"><span style="display:block;" id="fig:editor"></span>
 <img src="images/editor.png" alt="" />
-<p class="caption">optional caption text</p>
+<p class="caption">Figure 3.9:  Overview of the ETL Task Editor.</p>
 </div>
-<div class="figure">
+<p>Figure  shows an example of an ETL pipeline implemented in the ETL Task Editor using the four most common ETL components.</p>
+<div class="figure"><span style="display:block;" id="fig:example"></span>
 <img src="images/example.png" alt="" />
-<p class="caption">optional caption text</p>
+<p class="caption">Figure 3.10:  Simple example of an ETL pipeline represented on this editor</p>
 </div>
-<div class="figure">
+<p>The components available to implement these ETL pipelines are available on the left menu. Part of this menu is represented in Figure , which is expanded the components for input, output and transformations.</p>
+<div class="figure"><span style="display:block;" id="fig:components"></span>
+<img src="images/componentsOverview.png" style="width:25.0%" alt="" />
+<p class="caption">Figure 3.11:  Overview of part of the ETL components currently deployed in the system.</p>
+</div>
+<p>The navigation bar illustrated in Figure  allows the uses to operate over the ETL Task. This menu is divided into sub-menus: 1) step, which contains the features to configure each ETL component in the pipeline and analyse the input and output of each step; 2) execution, which defined if the ETL task will be executed locally or in a remote server; edit, contain the editing usual features, such as cut, copy, paste, delete, undo and redo; and 4) select, which is related with the drawing features.</p>
+<div class="figure"><span style="display:block;" id="fig:navbar"></span>
 <img src="images/navBarMenus.png" alt="" />
-<p class="caption">optional caption text</p>
+<p class="caption">Figure 3.12:  Main features of the ETL Task Editor.</p>
 </div>
 
 </div>

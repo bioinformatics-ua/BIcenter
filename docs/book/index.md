@@ -1,7 +1,7 @@
 --- 
 title: "BIcenter: A collaborative Web ETL solution"
 author: "J. R. Almeida, L. Coelho and J. L. Oliveira"
-date: "2021-10-16"
+date: "2021-10-18"
 documentclass: krantz
 site: bookdown::bookdown_site
 output: bookdown::gitbook
