@@ -6,7 +6,11 @@ This is a web-based platform that allows the building and management of ETL pipe
 
 ### Documentation
 
-More documentation about the system is available [here](https://github.com/bioinformatics-ua/BIcenter/wiki).
+More documentation about the system is available [here](https://bioinformatics-ua.github.io/BIcenter/book/).
+
+### Demo
+
+A demo instalation of the system is available [here](https://bicenter.bioinformatics-ua.pt).
 
 ### Team
   * João R. Almeida<sup id="a1">[1](#f1)</sup><sup id="a2">[2](#f2)</sup>
