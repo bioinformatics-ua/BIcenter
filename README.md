@@ -25,7 +25,7 @@ A demo instalation of the system is available [here](https://bicenter.bioinforma
 Please cite the following, if you use BIcenter in your work:
 
 ```bib
-in progress
+João R. Almeida, Leonardo Coelho, and José L. Oliveira. "BIcenter: A collaborative Web ETL solution based on a reflective software approach." SoftwareX, 16 (2021): 100892.
 ```
 
 ### Bugs and features requests
